@@ -1,7 +1,12 @@
 com_content
+com_jce
+com_rsfirewall
 com_fabrik
 com_newsfeeds
 com_portabillinguser
+com_joomlaboard
+com_joomlaconnect_be
+com_bookjoomlas
 com_jimtawl
 com_pofos
 com_timetableschedule

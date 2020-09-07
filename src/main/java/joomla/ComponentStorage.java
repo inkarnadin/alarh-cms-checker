@@ -14,6 +14,8 @@ public class ComponentStorage {
 
     @Getter
     private List<String> components = new ArrayList<>();
+    @Getter
+    private int count;
 
     @SneakyThrows
     public void feedComponents() {
@@ -28,6 +30,7 @@ public class ComponentStorage {
 
     private void counter() {
        System.out.println("Components: " + components.size());
+       count = components.size();
     }
 
 }

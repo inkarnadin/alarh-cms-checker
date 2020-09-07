@@ -14,9 +14,9 @@ public class CheckComponentRequest implements IRequest {
         Request request = new Request.Builder()
                 .url(params[0] + "://" + params[1] + "/index.php?option=" + params[2])
                 .method("GET", null)
+                .addHeader("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0")
                 .build();
-        Response response = client.newCall(request).execute();
-        return response;
+        return client.newCall(request).execute();
     }
 
 }
