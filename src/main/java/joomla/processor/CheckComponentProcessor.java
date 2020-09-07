@@ -26,11 +26,25 @@ public class CheckComponentProcessor implements IProcessor {
     public void process() {
         List<String> components = storage.getComponents();
 
+        if (chechJoomla()) {
+            System.out.println("Not the Joomla-build site!");
+            return;
+        }
+
+        int i = 0;
         for (String component : components) {
             Response response = request.send(protocol, url, component);
-            if (response.code() == 200)
+            if (response.code() == 200) {
                 System.out.println(String.format("FIND: %s", component));
+                i++;
+            }
         }
+        System.out.println(String.format("\nFind %1s of %2s", i, storage.getCount()));
+    }
+
+    private boolean chechJoomla() {
+        Response response = request.send(protocol, url, "not_exists_com");
+        return response.code() == 200;
     }
 
 }
