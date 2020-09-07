@@ -12,7 +12,7 @@ public class CheckComponentRequest implements IRequest {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url(params[0] + "://" + params[1] + "/index.php?option=" + params[2])
+                .url(params[0] + "://" + params[1] + "/administrator/components/" + params[2])
                 .method("GET", null)
                 .addHeader("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0")
                 .build();
