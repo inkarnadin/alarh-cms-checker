@@ -10,22 +10,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class JoomlaComponentStorage {
+public class ExtensionStorage {
 
     @Getter
     private List<String> components = new ArrayList<>();
     @Getter
-    private int count;
+    private List<String> plugins = new ArrayList<>();
 
     @SneakyThrows
-    public void feedComponents() {
-        Path path = Paths.get("src/main/resources/web.joomla-components.txt");
+    public void feedJoomlaComponents() {
+        Path path = Paths.get("src/main/resources/joomla-ext.txt");
 
         Stream<String> lines = Files.lines(path);
         lines.forEach(str -> components.add(str));
         lines.close();
+    }
 
-        count = components.size();
+    @SneakyThrows
+    public void feedWordPressPlugins() {
+        Path path = Paths.get("src/main/resources/wordpress-ext.txt");
+
+        Stream<String> lines = Files.lines(path);
+        lines.forEach(str -> plugins.add(str));
+        lines.close();
     }
 
 }

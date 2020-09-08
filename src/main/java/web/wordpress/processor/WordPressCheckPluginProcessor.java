@@ -1,38 +1,33 @@
-package web.joomla.processor;
+package web.wordpress.processor;
 
+import okhttp3.Response;
 import web.IProcessor;
 import web.IRequest;
 import web.ExtensionStorage;
 import web.ResultStorage;
-import web.joomla.request.JoomlaCheckComponentRequest;
-import okhttp3.Response;
+import web.wordpress.request.WordPressCheckPluginRequest;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class JoomlaCheckComponentProcessor implements IProcessor {
+public class WordPressCheckPluginProcessor implements IProcessor {
 
-    private IRequest request = new JoomlaCheckComponentRequest();
+    private IRequest request = new WordPressCheckPluginRequest();
     private ExtensionStorage storage = new ExtensionStorage();
 
     private final String protocol;
     private final String url;
 
-    public JoomlaCheckComponentProcessor(String protocol, String url) {
+    public WordPressCheckPluginProcessor(String protocol, String url) {
         this.protocol = protocol;
         this.url = url;
 
-        storage.feedJoomlaComponents();
+        storage.feedWordPressPlugins();
     }
 
     @Override
     public void process() {
-        List<String> extensions = storage.getComponents();
-
-        if (chechJoomla()) {
-            System.out.println("Not the Joomla-build site!");
-            return;
-        }
+        List<String> extensions = storage.getPlugins();
 
         int success = 0;
         int failure = 0;
@@ -44,7 +39,7 @@ public class JoomlaCheckComponentProcessor implements IProcessor {
             try {
                 remain--;
                 Response response = request.send(protocol, url, ext);
-                if (response.code() == 200) {
+                if (response.code() != 404) {
                     result.add(ext);
                     success++;
                 } else {
@@ -57,12 +52,6 @@ public class JoomlaCheckComponentProcessor implements IProcessor {
             System.out.print(String.format("\rRemain: %1s, found: %2s, not found: %3s, exception: %4s", remain, success, failure, error));
         }
         ResultStorage.save(null, result);
-    }
-
-    private boolean chechJoomla() {
-        Response response = request.send(protocol, url, "com_exactly_not_existing");
-        response.close();
-        return response.code() == 200;
     }
 
 }
