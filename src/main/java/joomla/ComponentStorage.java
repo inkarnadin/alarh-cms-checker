@@ -25,12 +25,7 @@ public class ComponentStorage {
         lines.forEach(str -> components.add(str));
         lines.close();
 
-        counter();
-    }
-
-    private void counter() {
-       System.out.println("Components: " + components.size());
-       count = components.size();
+        count = components.size();
     }
 
 }

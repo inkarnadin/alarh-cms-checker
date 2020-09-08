@@ -1,10 +1,12 @@
 package joomla.processor;
 
 import joomla.ComponentStorage;
+import joomla.ResultStorage;
 import joomla.request.CheckComponentRequest;
 import joomla.request.IRequest;
 import okhttp3.Response;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CheckComponentProcessor implements IProcessor {
@@ -31,19 +33,34 @@ public class CheckComponentProcessor implements IProcessor {
             return;
         }
 
-        int i = 0;
+        int success = 0;
+        int failure = 0;
+        int remain = storage.getCount();
+        int error = 0;
+
+        List<String> result = new ArrayList<>();
         for (String component : components) {
-            Response response = request.send(protocol, url, component);
-            if (response.code() == 200) {
-                System.out.println(String.format("FIND: %s", component));
-                i++;
+            try {
+                remain--;
+                Response response = request.send(protocol, url, component);
+                if (response.code() == 200) {
+                    result.add(component);
+                    success++;
+                } else {
+                    failure++;
+                }
+                response.close();
+            } catch (Exception e) {
+                error++;
             }
+            System.out.print(String.format("\rRemain: %1s, found: %2s, not found: %3s, exception: %4s", remain, success, failure, error));
         }
-        System.out.println(String.format("\nFind %1s of %2s", i, storage.getCount()));
+        ResultStorage.save(null, result);
     }
 
     private boolean chechJoomla() {
-        Response response = request.send(protocol, url, "not_exists_com");
+        Response response = request.send(protocol, url, "com_exactly_not_existing");
+        response.close();
         return response.code() == 200;
     }
 
