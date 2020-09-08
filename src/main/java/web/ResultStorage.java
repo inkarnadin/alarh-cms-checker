@@ -1,4 +1,4 @@
-package joomla;
+package web;
 
 import lombok.SneakyThrows;
 

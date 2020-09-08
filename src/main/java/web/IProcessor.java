@@ -1,4 +1,4 @@
-package joomla.processor;
+package web;
 
 public interface IProcessor {
 

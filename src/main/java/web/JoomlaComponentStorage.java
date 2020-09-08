@@ -1,4 +1,4 @@
-package joomla;
+package web;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class ComponentStorage {
+public class JoomlaComponentStorage {
 
     @Getter
     private List<String> components = new ArrayList<>();
@@ -19,7 +19,7 @@ public class ComponentStorage {
 
     @SneakyThrows
     public void feedComponents() {
-        Path path = Paths.get("src/main/resources/joomla-components.txt");
+        Path path = Paths.get("src/main/resources/web.joomla-components.txt");
 
         Stream<String> lines = Files.lines(path);
         lines.forEach(str -> components.add(str));

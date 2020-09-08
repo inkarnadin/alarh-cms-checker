@@ -1,4 +1,4 @@
-package joomla.request;
+package web;
 
 import okhttp3.Response;
 

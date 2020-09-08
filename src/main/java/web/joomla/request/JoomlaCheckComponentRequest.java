@@ -1,11 +1,12 @@
-package joomla.request;
+package web.joomla.request;
 
 import lombok.SneakyThrows;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import web.IRequest;
 
-public class CheckComponentRequest implements IRequest {
+public class JoomlaCheckComponentRequest implements IRequest {
 
     @SneakyThrows
     public Response send(String... params) {

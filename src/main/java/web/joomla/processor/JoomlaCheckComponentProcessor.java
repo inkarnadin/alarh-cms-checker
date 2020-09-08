@@ -1,23 +1,24 @@
-package joomla.processor;
+package web.joomla.processor;
 
-import joomla.ComponentStorage;
-import joomla.ResultStorage;
-import joomla.request.CheckComponentRequest;
-import joomla.request.IRequest;
+import web.IProcessor;
+import web.IRequest;
+import web.JoomlaComponentStorage;
+import web.ResultStorage;
+import web.joomla.request.JoomlaCheckComponentRequest;
 import okhttp3.Response;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckComponentProcessor implements IProcessor {
+public class JoomlaCheckComponentProcessor implements IProcessor {
 
-    private IRequest request = new CheckComponentRequest();
-    private ComponentStorage storage = new ComponentStorage();
+    private IRequest request = new JoomlaCheckComponentRequest();
+    private JoomlaComponentStorage storage = new JoomlaComponentStorage();
 
     private final String protocol;
     private final String url;
 
-    public CheckComponentProcessor(String protocol, String url) {
+    public JoomlaCheckComponentProcessor(String protocol, String url) {
         this.protocol = protocol;
         this.url = url;
 
