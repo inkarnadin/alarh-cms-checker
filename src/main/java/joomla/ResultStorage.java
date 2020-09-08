@@ -25,6 +25,7 @@ public class ResultStorage {
             }
         });
         file.close();
+        System.out.println("\n");
         System.out.println("Result path: " + new File(path).getAbsolutePath());
     }
 
