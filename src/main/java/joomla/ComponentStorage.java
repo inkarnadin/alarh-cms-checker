@@ -19,7 +19,7 @@ public class ComponentStorage {
 
     @SneakyThrows
     public void feedComponents() {
-        Path path = Paths.get("src/main/resources/components.txt");
+        Path path = Paths.get("src/main/resources/joomla-components.txt");
 
         Stream<String> lines = Files.lines(path);
         lines.forEach(str -> components.add(str));
