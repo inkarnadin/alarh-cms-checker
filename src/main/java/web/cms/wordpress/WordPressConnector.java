@@ -1,13 +1,13 @@
 package web.cms.wordpress;
 
 import lombok.RequiredArgsConstructor;
+import web.Processor;
 import web.cms.AbstractConnector;
-import web.PluginProcessor;
 
 @RequiredArgsConstructor
 public class WordPressConnector extends AbstractConnector {
 
-    private final PluginProcessor pluginProcessor;
+    private final Processor pluginProcessor;
 
     @Override
     public boolean check() {

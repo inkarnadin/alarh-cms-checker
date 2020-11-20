@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class WordPressCheckPluginProcessor implements PluginProcessor {
+public class WordPressCheckPluginProcessor implements Processor {
 
     private final Request request;
     private final Source source;

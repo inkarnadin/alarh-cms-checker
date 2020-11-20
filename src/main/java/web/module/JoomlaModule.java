@@ -14,7 +14,7 @@ public class JoomlaModule extends AbstractModule {
     protected void configure() {
         bind(Request.class).annotatedWith(JoomlaPlugin.class).to(JoomlaCheckComponentRequest.class);
         bind(Source.class).annotatedWith(JoomlaPlugin.class).to(JoomlaExtensionSource.class);
-        bind(PluginProcessor.class).annotatedWith(JoomlaPlugin.class).to(JoomlaCheckComponentProcessor.class);
+        bind(Processor.class).annotatedWith(JoomlaPlugin.class).to(JoomlaCheckComponentProcessor.class);
 
         bind(Connector.class).annotatedWith(Joomla.class).toProvider(JoomlaProvider.class);
     }

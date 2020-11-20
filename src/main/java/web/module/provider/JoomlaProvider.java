@@ -8,16 +8,16 @@ import web.cms.joomla.annotation.JoomlaPlugin;
 
 public class JoomlaProvider implements Provider<Connector> {
 
-    private final PluginProcessor pluginProcessor;
+    private final Processor processor;
 
     @Inject
-    JoomlaProvider(@JoomlaPlugin PluginProcessor pluginProcessor) {
-        this.pluginProcessor = pluginProcessor;
+    JoomlaProvider(@JoomlaPlugin Processor processor) {
+        this.processor = processor;
     }
 
     @Override
     public Connector get() {
-        return new JoomlaConnector(pluginProcessor);
+        return new JoomlaConnector(processor);
     }
 
 }
