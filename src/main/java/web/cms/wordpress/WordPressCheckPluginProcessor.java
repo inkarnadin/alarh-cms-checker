@@ -3,34 +3,22 @@ package web.cms.wordpress;
 import com.google.inject.Inject;
 import okhttp3.Response;
 import web.*;
+import web.cms.AbstractProcessor;
 import web.cms.wordpress.annotation.WordPressPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class WordPressCheckPluginProcessor implements Processor {
+public class WordPressCheckPluginProcessor extends AbstractProcessor {
 
     private final Request request;
     private final Source source;
-
-    private String protocol;
-    private String url;
 
     @Inject
     WordPressCheckPluginProcessor(@WordPressPlugin Request request,
                                   @WordPressPlugin Source source) {
         this.request = request;
         this.source = source;
-    }
-
-    @Override
-    public void configure(String protocol, String url) {
-        Objects.requireNonNull(protocol, "Empty protocol value!");
-        Objects.requireNonNull(url, "Empty url value!");
-
-        this.protocol = protocol;
-        this.url = url;
     }
 
     @Override

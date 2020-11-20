@@ -3,34 +3,22 @@ package web.cms.joomla;
 import com.google.inject.Inject;
 import web.*;
 import okhttp3.Response;
+import web.cms.AbstractProcessor;
 import web.cms.joomla.annotation.JoomlaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class JoomlaCheckComponentProcessor implements Processor {
+public class JoomlaCheckComponentProcessor extends AbstractProcessor {
 
     private final Request request;
     private final Source source;
-
-    private String protocol;
-    private String url;
 
     @Inject
     JoomlaCheckComponentProcessor(@JoomlaPlugin Request request,
                                   @JoomlaPlugin Source source) {
         this.request = request;
         this.source = source;
-    }
-
-    @Override
-    public void configure(String protocol, String url) {
-        Objects.requireNonNull(protocol, "Empty protocol value!");
-        Objects.requireNonNull(url, "Empty url value!");
-
-        this.protocol = protocol;
-        this.url = url;
     }
 
     @Override
