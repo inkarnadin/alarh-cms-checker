@@ -3,12 +3,12 @@ package web;
 public class AbstractConnector implements Connector {
 
     protected String protocol;
-    protected String url;
+    protected String host;
 
     @Override
-    public void configure(String protocol, String url) {
+    public void configure(String protocol, String host) {
         this.protocol = protocol;
-        this.url = url;
+        this.host = host;
     }
 
 }

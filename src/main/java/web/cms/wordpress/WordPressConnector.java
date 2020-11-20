@@ -16,7 +16,7 @@ public class WordPressConnector extends AbstractConnector {
 
     @Override
     public void checkPlugins() {
-        pluginProcessor.configure(protocol, url);
+        pluginProcessor.configure(protocol, host);
         pluginProcessor.process();
     }
 

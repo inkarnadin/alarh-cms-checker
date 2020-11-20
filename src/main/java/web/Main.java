@@ -1,11 +1,6 @@
 package web;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Provider;
-import web.module.CmsPluginModule;
-import web.module.JoomlaProvider;
-import web.module.WordPressProvider;
+import web.plugin.CmsPluginChecker;
 
 public class Main {
 
@@ -16,20 +11,7 @@ public class Main {
         System.out.println("===========================================================");
         System.out.println("\n");
 
-        Injector injector = Guice.createInjector(new CmsPluginModule());
-        Provider<Connector> provider = injector.getInstance(WordPressProvider.class);
-
-        Connector connector = provider.get();
-        connector.configure("http", "example.com");
-        connector.checkPlugins();
-
-        provider = injector.getInstance(JoomlaProvider.class);
-
-        connector = provider.get();
-        connector.configure("http", "example.com");
-        connector.checkPlugins();
-
-        // CmsPluginChecker.checkPlugins();
+        CmsPluginChecker.check();
     }
 
 }
