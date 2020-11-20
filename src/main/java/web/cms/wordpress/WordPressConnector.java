@@ -7,7 +7,7 @@ import web.cms.AbstractConnector;
 @RequiredArgsConstructor
 public class WordPressConnector extends AbstractConnector {
 
-    private final Processor pluginProcessor;
+    private final Processor processor;
 
     @Override
     public boolean check() {
@@ -16,8 +16,8 @@ public class WordPressConnector extends AbstractConnector {
 
     @Override
     public void checkPlugins() {
-        pluginProcessor.configure(protocol, host);
-        pluginProcessor.process();
+        processor.configure(protocol, host);
+        processor.process();
     }
 
 }
