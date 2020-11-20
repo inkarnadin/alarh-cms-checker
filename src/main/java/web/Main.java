@@ -1,6 +1,6 @@
 package web;
 
-import web.plugin.CmsPluginChecker;
+import web.cms.CMSChecker;
 
 public class Main {
 
@@ -11,7 +11,7 @@ public class Main {
         System.out.println("===========================================================");
         System.out.println("\n");
 
-        CmsPluginChecker.check();
+        CMSChecker.check();
     }
 
 }

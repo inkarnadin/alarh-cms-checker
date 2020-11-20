@@ -4,7 +4,7 @@ import lombok.SneakyThrows;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import web.AbstractRequest;
+import web.cms.AbstractRequest;
 
 public class WordPressCheckPluginRequest extends AbstractRequest {
 

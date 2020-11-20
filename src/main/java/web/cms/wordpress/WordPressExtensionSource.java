@@ -1,7 +1,7 @@
 package web.cms.wordpress;
 
 import lombok.SneakyThrows;
-import web.AbstractSource;
+import web.cms.AbstractSource;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

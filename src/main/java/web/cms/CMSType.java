@@ -1,9 +1,9 @@
-package web.plugin;
+package web.cms;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public enum CmsType {
+public enum CMSType {
 
     WORDPRESS(0, "wp"),
     JOOMLA(1, "joomla"),
@@ -12,8 +12,8 @@ public enum CmsType {
     private final int id;
     private final String name;
 
-    public static CmsType search(String name) {
-        for (CmsType cmsType : CmsType.values()) {
+    public static CMSType search(String name) {
+        for (CMSType cmsType : CMSType.values()) {
             if (name.equalsIgnoreCase(cmsType.name))
                 return cmsType;
         }

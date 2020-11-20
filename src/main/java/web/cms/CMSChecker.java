@@ -1,11 +1,10 @@
-package web.plugin;
+package web.cms;
 
-import web.CMSFactory;
 import web.Connector;
 
 import java.util.Scanner;
 
-public class CmsPluginChecker {
+public class CMSChecker {
 
     public static void check() {
         try (Scanner scanner = new Scanner(System.in)) {

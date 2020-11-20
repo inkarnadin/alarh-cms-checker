@@ -1,7 +1,7 @@
 package web.cms.joomla;
 
 import lombok.RequiredArgsConstructor;
-import web.AbstractConnector;
+import web.cms.AbstractConnector;
 import web.PluginProcessor;
 
 @RequiredArgsConstructor

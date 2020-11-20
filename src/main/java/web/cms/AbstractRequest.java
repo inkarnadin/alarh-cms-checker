@@ -1,6 +1,7 @@
-package web;
+package web.cms;
 
 import okhttp3.Response;
+import web.Request;
 
 public class AbstractRequest implements Request {
 

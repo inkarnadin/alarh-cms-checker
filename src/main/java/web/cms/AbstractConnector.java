@@ -1,4 +1,6 @@
-package web;
+package web.cms;
+
+import web.Connector;
 
 public class AbstractConnector implements Connector {
 
