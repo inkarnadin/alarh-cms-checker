@@ -1,9 +1,8 @@
-package web.cms;
+package web;
 
 import okhttp3.Response;
-import web.Request;
 
-public class AbstractRequest implements Request {
+public abstract class AbstractRequest implements Request {
 
     protected final static String GET = "GET";
 

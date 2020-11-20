@@ -3,7 +3,7 @@ package web.cms.joomla;
 import com.google.inject.Inject;
 import web.*;
 import okhttp3.Response;
-import web.cms.AbstractProcessor;
+import web.AbstractProcessor;
 import web.cms.joomla.annotation.JoomlaPlugin;
 
 import java.util.ArrayList;
@@ -37,16 +37,14 @@ public class JoomlaCheckComponentProcessor extends AbstractProcessor {
 
         List<String> result = new ArrayList<>();
         for (String ext : extensions) {
-            try {
+            try (Response response = request.send(protocol, url, ext)) {
                 remain--;
-                Response response = request.send(protocol, url, ext);
                 if (response.code() == 200) {
                     result.add(ext);
                     success++;
                 } else {
                     failure++;
                 }
-                response.close();
             } catch (Exception e) {
                 error++;
             }

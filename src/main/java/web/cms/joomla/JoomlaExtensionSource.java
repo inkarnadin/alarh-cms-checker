@@ -1,7 +1,7 @@
 package web.cms.joomla;
 
 import lombok.SneakyThrows;
-import web.cms.AbstractSource;
+import web.AbstractSource;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

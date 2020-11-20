@@ -1,11 +1,9 @@
-package web.cms;
-
-import web.Source;
+package web;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbstractSource implements Source {
+public abstract class AbstractSource implements Source {
 
     protected final List<String> sources = new ArrayList<>();
 

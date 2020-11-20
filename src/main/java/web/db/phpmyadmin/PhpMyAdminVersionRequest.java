@@ -4,7 +4,7 @@ import lombok.SneakyThrows;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import web.cms.AbstractRequest;
+import web.AbstractRequest;
 
 public class PhpMyAdminVersionRequest extends AbstractRequest {
 
@@ -18,7 +18,7 @@ public class PhpMyAdminVersionRequest extends AbstractRequest {
                 .addHeader(USER_AGENT_HEADER, USER_AGENT_HEADER_VALUE)
                 .build();
         Response response = client.newCall(request).execute();
-        response.close();
+        //response.close();
 
         return response;
     }

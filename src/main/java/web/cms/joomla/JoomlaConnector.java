@@ -2,10 +2,10 @@ package web.cms.joomla;
 
 import lombok.RequiredArgsConstructor;
 import web.Processor;
-import web.cms.AbstractConnector;
+import web.cms.AbstractCMSConnector;
 
 @RequiredArgsConstructor
-public class JoomlaConnector extends AbstractConnector {
+public class JoomlaConnector extends AbstractCMSConnector {
 
     private final Processor processor;
 

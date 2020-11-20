@@ -1,10 +1,8 @@
-package web.cms;
-
-import web.Processor;
+package web;
 
 import java.util.Objects;
 
-public class AbstractProcessor implements Processor {
+public abstract class AbstractProcessor implements Processor {
 
     protected String protocol;
     protected String url;
@@ -19,8 +17,6 @@ public class AbstractProcessor implements Processor {
     }
 
     @Override
-    public void process() {
-
-    }
+    public void process() {}
 
 }

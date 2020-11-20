@@ -4,7 +4,7 @@ import lombok.SneakyThrows;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import web.cms.AbstractRequest;
+import web.AbstractRequest;
 
 public class WordPressCheckPluginRequest extends AbstractRequest {
 
@@ -17,10 +17,7 @@ public class WordPressCheckPluginRequest extends AbstractRequest {
                 .method(GET, null)
                 .addHeader(USER_AGENT_HEADER, USER_AGENT_HEADER_VALUE)
                 .build();
-        Response response = client.newCall(request).execute();
-        response.close();
-
-        return response;
+        return client.newCall(request).execute();
     }
 
 }

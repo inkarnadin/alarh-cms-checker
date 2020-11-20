@@ -1,8 +1,8 @@
-package web.cms;
+package web.db;
 
 import web.Connector;
 
-public class AbstractConnector implements Connector {
+public abstract class AbstractDBConnector implements Connector {
 
     protected String protocol;
     protected String host;

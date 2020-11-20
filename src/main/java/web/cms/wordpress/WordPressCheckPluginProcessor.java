@@ -3,7 +3,7 @@ package web.cms.wordpress;
 import com.google.inject.Inject;
 import okhttp3.Response;
 import web.*;
-import web.cms.AbstractProcessor;
+import web.AbstractProcessor;
 import web.cms.wordpress.annotation.WordPressPlugin;
 
 import java.util.ArrayList;
@@ -32,16 +32,14 @@ public class WordPressCheckPluginProcessor extends AbstractProcessor {
 
         List<String> result = new ArrayList<>();
         for (String ext : extensions) {
-            try {
+            try (Response response = request.send(protocol, url, ext)) {
                 remain--;
-                Response response = request.send(protocol, url, ext);
                 if (response.code() != 404) {
                     result.add(ext);
                     success++;
                 } else {
                     failure++;
                 }
-                response.close();
             } catch (Exception e) {
                 error++;
             }
