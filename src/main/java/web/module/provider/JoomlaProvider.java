@@ -1,4 +1,4 @@
-package web.module;
+package web.module.provider;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
