@@ -1,12 +1,12 @@
-package web.wordpress.request;
+package web.cms.wordpress;
 
 import lombok.SneakyThrows;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import web.IRequest;
+import web.AbstractRequest;
 
-public class WordPressCheckPluginRequest implements IRequest {
+public class WordPressCheckPluginRequest extends AbstractRequest {
 
     @Override
     @SneakyThrows

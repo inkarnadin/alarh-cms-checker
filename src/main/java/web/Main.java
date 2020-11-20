@@ -1,9 +1,11 @@
 package web;
 
-import web.joomla.processor.JoomlaCheckComponentProcessor;
-import web.wordpress.processor.WordPressCheckPluginProcessor;
-
-import java.util.Scanner;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Provider;
+import web.module.CmsPluginModule;
+import web.module.JoomlaProvider;
+import web.module.WordPressProvider;
 
 public class Main {
 
@@ -14,37 +16,20 @@ public class Main {
         System.out.println("===========================================================");
         System.out.println("\n");
 
-        try (Scanner scanner = new Scanner(System.in)) {
-            while (true) {
-                IProcessor processor;
+        Injector injector = Guice.createInjector(new CmsPluginModule());
+        Provider<Connector> provider = injector.getInstance(WordPressProvider.class);
 
-                System.out.print("Choose CMS type [Joomla|WP]: ");
-                String cms = scanner.nextLine();
+        Connector connector = provider.get();
+        connector.configure("http", "example.com");
+        connector.checkPlugins();
 
-                System.out.print("Set protocol [http|https]: ");
-                String protocol = scanner.nextLine();
+        provider = injector.getInstance(JoomlaProvider.class);
 
-                System.out.print("Set target host [example.com]: ");
-                String host = scanner.nextLine();
+        connector = provider.get();
+        connector.configure("http", "example.com");
+        connector.checkPlugins();
 
-                if ("Joomla".equalsIgnoreCase(cms)) {
-                    processor = new JoomlaCheckComponentProcessor(protocol, host);
-                } else if ( "WP".equalsIgnoreCase(cms)) {
-                    processor = new WordPressCheckPluginProcessor(protocol, host);
-                } else {
-                    throw new IllegalArgumentException("Unsupported CMS type");
-                }
-                processor.process();
-
-                System.out.println("===========================================================");
-                System.out.println("\n");
-                System.out.print("Try again? (y/n): ");
-                String answer = scanner.nextLine();
-
-                if ("n".equalsIgnoreCase(answer) || "no".equalsIgnoreCase(answer))
-                    System.exit(1);
-            }
-        }
+        // CmsPluginChecker.checkPlugins();
     }
 
 }

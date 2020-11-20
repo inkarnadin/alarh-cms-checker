@@ -1,33 +1,41 @@
-package web.joomla.processor;
+package web.cms.joomla;
 
-import web.IProcessor;
-import web.IRequest;
-import web.ExtensionStorage;
-import web.ResultStorage;
-import web.joomla.request.JoomlaCheckComponentRequest;
+import com.google.inject.Inject;
+import web.*;
 import okhttp3.Response;
+import web.cms.joomla.annotation.JoomlaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class JoomlaCheckComponentProcessor implements IProcessor {
+public class JoomlaCheckComponentProcessor implements PluginProcessor {
 
-    private IRequest request = new JoomlaCheckComponentRequest();
-    private ExtensionStorage storage = new ExtensionStorage();
+    private final Request request;
+    private final Source source;
 
-    private final String protocol;
-    private final String url;
+    private String protocol;
+    private String url;
 
-    public JoomlaCheckComponentProcessor(String protocol, String url) {
+    @Inject
+    JoomlaCheckComponentProcessor(@JoomlaPlugin Request request,
+                                  @JoomlaPlugin Source source) {
+        this.request = request;
+        this.source = source;
+    }
+
+    @Override
+    public void configure(String protocol, String url) {
+        Objects.requireNonNull(protocol, "Empty protocol value!");
+        Objects.requireNonNull(url, "Empty url value!");
+
         this.protocol = protocol;
         this.url = url;
-
-        storage.feedJoomlaComponents();
     }
 
     @Override
     public void process() {
-        List<String> extensions = storage.getComponents();
+        List<String> extensions = source.getSources();
 
         if (chechJoomla()) {
             System.out.println("Not the Joomla-build site!");
@@ -54,7 +62,7 @@ public class JoomlaCheckComponentProcessor implements IProcessor {
             } catch (Exception e) {
                 error++;
             }
-            System.out.print(String.format("\rRemain: %1s, found: %2s, not found: %3s, exception: %4s", remain, success, failure, error));
+            System.out.printf("\rRemain: %1s, found: %2s, not found: %3s, exception: %4s", remain, success, failure, error);
         }
         ResultStorage.save(null, result);
     }

@@ -8,22 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class ExtensionStorage {
+public class ExtensionSource {
 
     @Getter
-    private List<String> components = new ArrayList<>();
+    private final List<String> components = new ArrayList<>();
     @Getter
-    private List<String> plugins = new ArrayList<>();
+    private final List<String> plugins = new ArrayList<>();
 
     @SneakyThrows
     public void feedJoomlaComponents() {
         InputStream in = getClass().getResourceAsStream("/joomla-ext.txt");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
             Stream<String> lines = reader.lines();
-            lines.forEach(str -> plugins.add(str));
+            lines.forEach(plugins::add);
             lines.close();
         }
-
     }
 
     @SneakyThrows
@@ -31,7 +30,7 @@ public class ExtensionStorage {
         InputStream in = getClass().getResourceAsStream("/wordpress-ext.txt");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
             Stream<String> lines = reader.lines();
-            lines.forEach(str -> plugins.add(str));
+            lines.forEach(plugins::add);
             lines.close();
         }
     }
