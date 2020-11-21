@@ -2,7 +2,7 @@ package web;
 
 public interface Connector {
 
-    void configure(String protocol, String host);
+    void configure(Params params);
 
     default boolean check() {
         return true;

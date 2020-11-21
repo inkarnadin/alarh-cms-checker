@@ -11,7 +11,7 @@ public class PhpMyAdminConnector extends AbstractDBConnector {
 
     @Override
     public void checkVersion() {
-        processor.configure(protocol, host);
+        processor.configure(params.getProtocol(), params.getHost());
         processor.process();
     }
 }

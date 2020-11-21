@@ -18,7 +18,7 @@ public class CMSFactory {
 
         switch (CMSType.search(cmsType)) {
             case JOOMLA:
-                 injector.getInstance(JoomlaProvider.class).get();
+                return injector.getInstance(JoomlaProvider.class).get();
             case WORDPRESS:
                 return injector.getInstance(WordPressProvider.class).get();
             default:

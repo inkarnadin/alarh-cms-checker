@@ -40,8 +40,8 @@ public class PhpMyAdminCheckVersionProcessor extends AbstractProcessor {
             Pattern pattern = Pattern.compile("<title>.*phpMyAdmin\\s(.*)\\s.*</title>");
             Matcher matcher = pattern.matcher(textBuilder.toString());
 
-            if (matcher.find())
-                System.out.println("PhpMyAdmin Version = " + matcher.group(1));
+            String version = matcher.find() ? matcher.group(1) : "???";
+            System.out.println("PhpMyAdmin Version = " + version);
         }
     }
 

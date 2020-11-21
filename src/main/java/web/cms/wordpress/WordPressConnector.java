@@ -16,7 +16,7 @@ public class WordPressConnector extends AbstractCMSConnector {
 
     @Override
     public void checkPlugins() {
-        processor.configure(protocol, host);
+        processor.configure(params.getProtocol(), params.getHost());
         processor.process();
     }
 

@@ -1,16 +1,15 @@
 package web.db;
 
 import web.Connector;
+import web.Params;
 
 public abstract class AbstractDBConnector implements Connector {
 
-    protected String protocol;
-    protected String host;
+    protected Params params;
 
     @Override
-    public void configure(String protocol, String host) {
-        this.protocol = protocol;
-        this.host = host;
+    public void configure(Params params) {
+        this.params = params;
     }
 
 }

@@ -1,12 +1,15 @@
 package web.db;
 
+import web.AbstractChecker;
 import web.Connector;
+import web.Params;
 
-public class DBAdminChecker {
+public class DBAdminChecker extends AbstractChecker {
 
-    public static void check() {
+    @Override
+    public void check(Params params) {
         Connector connector = DBAdminFactory.getDBAdmin();
-        connector.configure("http", "ban-dvor.ru");
+        connector.configure(params);
         connector.checkVersion();
     }
 

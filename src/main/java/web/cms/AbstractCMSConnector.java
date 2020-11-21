@@ -1,16 +1,15 @@
 package web.cms;
 
 import web.Connector;
+import web.Params;
 
 public abstract class AbstractCMSConnector implements Connector {
 
-    protected String protocol;
-    protected String host;
+    protected Params params;
 
     @Override
-    public void configure(String protocol, String host) {
-        this.protocol = protocol;
-        this.host = host;
+    public void configure(Params params) {
+        this.params = params;
     }
 
 }

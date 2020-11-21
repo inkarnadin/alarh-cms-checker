@@ -28,7 +28,6 @@ public class WordPressCheckPluginProcessor extends AbstractProcessor {
         int success = 0;
         int failure = 0;
         int remain = extensions.size();
-        int error = 0;
 
         List<String> result = new ArrayList<>();
         for (String ext : extensions) {
@@ -38,13 +37,14 @@ public class WordPressCheckPluginProcessor extends AbstractProcessor {
                     result.add(ext);
                     success++;
                 } else {
+                    errorMap.put(response.message(), response.code());
                     failure++;
                 }
-            } catch (Exception e) {
-                error++;
             }
-            System.out.printf("\rRemain: %1s, found: %2s, not found: %3s, exception: %4s", remain, success, failure, error);
+            System.out.printf("\rRemain: %1s, found: %2s, not found: %3s", remain, success, failure);
         }
+
+        RequestErrorHandler.printError(errorMap);
         ResultStorage.save(null, result);
     }
 
