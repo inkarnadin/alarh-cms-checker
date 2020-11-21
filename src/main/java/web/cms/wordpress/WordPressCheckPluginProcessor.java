@@ -7,12 +7,15 @@ import web.AbstractProcessor;
 import web.cms.wordpress.annotation.WordPressPlugin;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class WordPressCheckPluginProcessor extends AbstractProcessor {
 
     private final Request request;
     private final Source source;
+
+    private final Integer[] codes = { 200, 403 };
 
     @Inject
     WordPressCheckPluginProcessor(@WordPressPlugin Request request,
@@ -33,7 +36,9 @@ public class WordPressCheckPluginProcessor extends AbstractProcessor {
         for (String ext : extensions) {
             try (Response response = request.send(protocol, url, ext)) {
                 remain--;
-                if (response.code() != 404) {
+
+                Integer code = response.code();
+                if (Arrays.asList(codes).contains(code)) {
                     result.add(ext);
                     success++;
                 } else {

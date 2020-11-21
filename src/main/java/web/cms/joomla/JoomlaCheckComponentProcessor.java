@@ -7,12 +7,15 @@ import web.AbstractProcessor;
 import web.cms.joomla.annotation.JoomlaPlugin;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class JoomlaCheckComponentProcessor extends AbstractProcessor {
 
     private final Request request;
     private final Source source;
+
+    private final Integer[] codes = { 200 };
 
     @Inject
     JoomlaCheckComponentProcessor(@JoomlaPlugin Request request,
@@ -38,7 +41,9 @@ public class JoomlaCheckComponentProcessor extends AbstractProcessor {
         for (String ext : extensions) {
             try (Response response = request.send(protocol, url, ext)) {
                 remain--;
-                if (response.code() == 200) {
+
+                Integer code = response.code();
+                if (Arrays.asList(codes).contains(code)) {
                     result.add(ext);
                     success++;
                 } else {
