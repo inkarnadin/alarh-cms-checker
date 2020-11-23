@@ -2,6 +2,8 @@ package web.cms.wordpress;
 
 import com.google.inject.Inject;
 import okhttp3.Response;
+import web.http.Host;
+import web.module.annotation.Get;
 import web.struct.*;
 import web.cms.wordpress.annotation.WordPressPlugin;
 
@@ -11,13 +13,15 @@ import java.util.List;
 
 public class WordPressPluginProcessor extends AbstractProcessor {
 
+    private final String path = "/wp-content/plugins/";
+
     private final Request request;
     private final Source source;
 
     private final Integer[] codes = { 200, 403 };
 
     @Inject
-    WordPressPluginProcessor(@WordPressPlugin Request request,
+    WordPressPluginProcessor(@Get Request request,
                              @WordPressPlugin Source source) {
         this.request = request;
         this.source = source;
@@ -33,7 +37,8 @@ public class WordPressPluginProcessor extends AbstractProcessor {
 
         List<String> result = new ArrayList<>();
         for (String ext : extensions) {
-            try (Response response = request.send(protocol, host, ext)) {
+            Host host = new Host(protocol, server, path + ext);
+            try (Response response = request.send(host)) {
                 remain--;
 
                 Integer code = response.code();

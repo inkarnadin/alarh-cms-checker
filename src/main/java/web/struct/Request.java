@@ -1,9 +1,10 @@
 package web.struct;
 
 import okhttp3.Response;
+import web.http.Host;
 
 public interface Request {
 
-    Response send(String... params);
+    Response send(Host host);
 
 }

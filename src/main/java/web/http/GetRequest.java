@@ -1,16 +1,18 @@
-package web.cms.joomla;
+package web.http;
 
-import okhttp3.*;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import web.struct.AbstractRequest;
 
-public class JoomlaComponentRequest extends AbstractRequest {
+public class GetRequest extends AbstractRequest {
 
-    @Override
-    public Response send(String... params) {
+    //@Override
+    public Response send(Host host) {
         try {
             OkHttpClient client = new OkHttpClient().newBuilder().build();
             Request request = new Request.Builder()
-                    .url(params[0] + "://" + params[1] + "/administrator/components/" + params[2])
+                    .url(host.createUrl())
                     .get()
                     .addHeader(USER_AGENT_HEADER, USER_AGENT_HEADER_VALUE)
                     .build();

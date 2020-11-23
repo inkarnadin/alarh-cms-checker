@@ -1,7 +1,7 @@
 package web.struct;
 
 import com.google.inject.Inject;
-import web.module.annotation.CMS;
+import web.module.annotation.Cms;
 import web.module.annotation.DBAdmin;
 
 import java.util.Objects;
@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Runner {
 
-    @Inject @CMS
+    @Inject @Cms
     Checker cmsChecker;
 
     @Inject @DBAdmin

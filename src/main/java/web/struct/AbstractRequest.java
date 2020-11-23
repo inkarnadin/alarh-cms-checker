@@ -4,6 +4,7 @@ import okhttp3.MediaType;
 import okhttp3.Protocol;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import web.http.Host;
 
 public abstract class AbstractRequest implements Request {
 
@@ -11,7 +12,7 @@ public abstract class AbstractRequest implements Request {
     protected final static String USER_AGENT_HEADER_VALUE = "Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0";
 
     @Override
-    public Response send(String... params) {
+    public Response send(Host host) {
         return null;
     }
 

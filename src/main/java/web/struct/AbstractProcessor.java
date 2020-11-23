@@ -9,15 +9,15 @@ public abstract class AbstractProcessor implements Processor {
     protected final Map<String, Integer> errorMap = new HashMap<>();
 
     protected String protocol;
-    protected String host;
+    protected String server;
 
     @Override
-    public void configure(String protocol, String host) {
+    public void configure(String protocol, String server) {
         Objects.requireNonNull(protocol, "Empty protocol value!");
-        Objects.requireNonNull(host, "Empty url value!");
+        Objects.requireNonNull(server, "Empty url value!");
 
         this.protocol = protocol;
-        this.host = host;
+        this.server = server;
     }
 
     @Override

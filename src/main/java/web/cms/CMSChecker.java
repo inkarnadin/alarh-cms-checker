@@ -1,7 +1,7 @@
 package web.cms;
 
 import com.google.inject.Inject;
-import web.module.annotation.CMS;
+import web.module.annotation.Cms;
 import web.struct.AbstractChecker;
 import web.struct.Connector;
 import web.struct.Determinant;
@@ -20,7 +20,7 @@ public class CMSChecker extends AbstractChecker {
     private final List<CMSType> types = new ArrayList<>();
 
     @Inject
-    CMSChecker(@CMS Determinant determinant) {
+    CMSChecker(@Cms Determinant determinant) {
         this.determinant = determinant;
     }
 
