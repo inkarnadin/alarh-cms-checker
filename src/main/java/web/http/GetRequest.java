@@ -3,11 +3,10 @@ package web.http;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import web.struct.AbstractRequest;
 
 public class GetRequest extends AbstractRequest {
 
-    //@Override
+    @Override
     public Response send(Host host) {
         try {
             OkHttpClient client = new OkHttpClient().newBuilder().build();

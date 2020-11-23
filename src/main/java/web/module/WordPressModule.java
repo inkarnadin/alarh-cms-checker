@@ -11,7 +11,7 @@ import web.module.annotation.Get;
 import web.module.provider.WordPressProvider;
 import web.struct.Connector;
 import web.struct.Processor;
-import web.struct.Request;
+import web.http.Request;
 import web.struct.Source;
 
 public class WordPressModule extends AbstractModule {

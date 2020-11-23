@@ -6,7 +6,7 @@ import web.http.GetRequest;
 import web.module.annotation.Get;
 import web.struct.Connector;
 import web.struct.Processor;
-import web.struct.Request;
+import web.http.Request;
 import web.db.phpmyadmin.PhpMyAdminCheckVersionProcessor;
 import web.db.phpmyadmin.annotation.PhpMyAdmin;
 import web.db.phpmyadmin.annotation.PhpMyAdminVersion;

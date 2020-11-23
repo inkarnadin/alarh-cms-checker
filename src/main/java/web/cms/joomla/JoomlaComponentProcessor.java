@@ -3,6 +3,8 @@ package web.cms.joomla;
 import com.google.inject.Inject;
 import okhttp3.Response;
 import web.http.Host;
+import web.http.Request;
+import web.http.RequestErrorHandler;
 import web.module.annotation.Get;
 import web.struct.*;
 import web.cms.joomla.annotation.JoomlaPlugin;

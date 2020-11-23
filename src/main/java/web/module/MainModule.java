@@ -11,6 +11,7 @@ import web.cms.wordpress.WordPressCheckProcessor;
 import web.cms.wordpress.annotation.WordPressCheck;
 import web.db.DBAdminChecker;
 import web.http.GetRequest;
+import web.http.Request;
 import web.module.annotation.Cms;
 import web.module.annotation.DBAdmin;
 import web.module.annotation.Get;

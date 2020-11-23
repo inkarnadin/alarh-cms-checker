@@ -3,6 +3,8 @@ package web.cms.wordpress;
 import com.google.inject.Inject;
 import okhttp3.Response;
 import web.http.Host;
+import web.http.Request;
+import web.http.RequestErrorHandler;
 import web.module.annotation.Get;
 import web.struct.*;
 import web.cms.wordpress.annotation.WordPressPlugin;

@@ -6,7 +6,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import web.http.Host;
 import web.module.annotation.Get;
-import web.struct.Request;
+import web.http.Request;
 import web.struct.AbstractProcessor;
 
 import java.io.*;

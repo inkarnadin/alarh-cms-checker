@@ -9,7 +9,7 @@ import web.module.annotation.Get;
 import web.module.provider.JoomlaProvider;
 import web.struct.Connector;
 import web.struct.Processor;
-import web.struct.Request;
+import web.http.Request;
 import web.struct.Source;
 
 public class JoomlaModule extends AbstractModule {

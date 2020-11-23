@@ -6,7 +6,7 @@ import web.http.Host;
 import web.module.annotation.Get;
 import web.struct.AbstractProcessor;
 import web.struct.Destination;
-import web.struct.Request;
+import web.http.Request;
 import web.cms.wordpress.annotation.WordPressCheck;
 
 import java.util.Arrays;

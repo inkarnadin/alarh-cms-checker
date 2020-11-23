@@ -1,4 +1,4 @@
-package web.struct;
+package web.http;
 
 import java.util.Map;
 import java.util.Objects;

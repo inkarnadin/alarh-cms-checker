@@ -1,7 +1,6 @@
-package web.struct;
+package web.http;
 
 import okhttp3.Response;
-import web.http.Host;
 
 public interface Request {
 

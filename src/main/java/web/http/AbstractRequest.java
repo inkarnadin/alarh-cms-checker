@@ -1,10 +1,9 @@
-package web.struct;
+package web.http;
 
 import okhttp3.MediaType;
 import okhttp3.Protocol;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import web.http.Host;
 
 public abstract class AbstractRequest implements Request {
 
