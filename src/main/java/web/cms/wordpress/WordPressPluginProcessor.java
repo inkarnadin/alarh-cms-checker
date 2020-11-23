@@ -2,15 +2,14 @@ package web.cms.wordpress;
 
 import com.google.inject.Inject;
 import okhttp3.Response;
-import web.*;
-import web.AbstractProcessor;
+import web.struct.*;
 import web.cms.wordpress.annotation.WordPressPlugin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class WordPressCheckPluginProcessor extends AbstractProcessor {
+public class WordPressPluginProcessor extends AbstractProcessor {
 
     private final Request request;
     private final Source source;
@@ -18,8 +17,8 @@ public class WordPressCheckPluginProcessor extends AbstractProcessor {
     private final Integer[] codes = { 200, 403 };
 
     @Inject
-    WordPressCheckPluginProcessor(@WordPressPlugin Request request,
-                                  @WordPressPlugin Source source) {
+    WordPressPluginProcessor(@WordPressPlugin Request request,
+                             @WordPressPlugin Source source) {
         this.request = request;
         this.source = source;
     }
@@ -34,7 +33,7 @@ public class WordPressCheckPluginProcessor extends AbstractProcessor {
 
         List<String> result = new ArrayList<>();
         for (String ext : extensions) {
-            try (Response response = request.send(protocol, url, ext)) {
+            try (Response response = request.send(protocol, host, ext)) {
                 remain--;
 
                 Integer code = response.code();

@@ -1,4 +1,4 @@
-package web;
+package web.struct;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,4 +17,5 @@ public class Params {
         if (Objects.nonNull(cmsType))
             this.cmsType = cmsType.toLowerCase();
     }
+
 }

@@ -2,9 +2,10 @@ package web.module.provider;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import web.*;
 import web.cms.joomla.JoomlaConnector;
 import web.cms.joomla.annotation.JoomlaPlugin;
+import web.struct.Connector;
+import web.struct.Processor;
 
 public class JoomlaProvider implements Provider<Connector> {
 

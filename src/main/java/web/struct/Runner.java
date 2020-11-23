@@ -1,4 +1,4 @@
-package web;
+package web.struct;
 
 import com.google.inject.Inject;
 import web.module.annotation.CMS;

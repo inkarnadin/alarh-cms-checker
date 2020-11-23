@@ -2,8 +2,8 @@ package web.module.provider;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import web.Connector;
-import web.Processor;
+import web.struct.Connector;
+import web.struct.Processor;
 import web.db.phpmyadmin.PhpMyAdminConnector;
 import web.db.phpmyadmin.annotation.PhpMyAdminVersion;
 

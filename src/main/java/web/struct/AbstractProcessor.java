@@ -1,4 +1,4 @@
-package web;
+package web.struct;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,15 +9,15 @@ public abstract class AbstractProcessor implements Processor {
     protected final Map<String, Integer> errorMap = new HashMap<>();
 
     protected String protocol;
-    protected String url;
+    protected String host;
 
     @Override
-    public void configure(String protocol, String url) {
+    public void configure(String protocol, String host) {
         Objects.requireNonNull(protocol, "Empty protocol value!");
-        Objects.requireNonNull(url, "Empty url value!");
+        Objects.requireNonNull(host, "Empty url value!");
 
         this.protocol = protocol;
-        this.url = url;
+        this.host = host;
     }
 
     @Override

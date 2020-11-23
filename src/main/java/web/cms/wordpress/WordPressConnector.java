@@ -1,7 +1,7 @@
 package web.cms.wordpress;
 
 import lombok.RequiredArgsConstructor;
-import web.Processor;
+import web.struct.Processor;
 import web.cms.AbstractCMSConnector;
 
 @RequiredArgsConstructor

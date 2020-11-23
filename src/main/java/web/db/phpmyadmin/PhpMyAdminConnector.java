@@ -1,7 +1,7 @@
 package web.db.phpmyadmin;
 
 import lombok.RequiredArgsConstructor;
-import web.Processor;
+import web.struct.Processor;
 import web.db.AbstractDBConnector;
 
 @RequiredArgsConstructor

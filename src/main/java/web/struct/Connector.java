@@ -1,4 +1,4 @@
-package web;
+package web.struct;
 
 public interface Connector {
 

@@ -2,7 +2,7 @@ package web.cms;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import web.Connector;
+import web.struct.Connector;
 import web.module.JoomlaModule;
 import web.module.WordPressModule;
 import web.module.provider.JoomlaProvider;
@@ -10,13 +10,13 @@ import web.module.provider.WordPressProvider;
 
 public class CMSFactory {
 
-    public static Connector getCMSConnector(String cmsType) {
+    public static Connector getCMSConnector(CMSType cmsType) {
         Injector injector = Guice.createInjector(
                 new JoomlaModule(),
                 new WordPressModule()
         );
 
-        switch (CMSType.search(cmsType)) {
+        switch (cmsType) {
             case JOOMLA:
                 return injector.getInstance(JoomlaProvider.class).get();
             case WORDPRESS:

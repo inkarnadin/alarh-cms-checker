@@ -1,7 +1,7 @@
 package web.cms;
 
-import web.Connector;
-import web.Params;
+import web.struct.Connector;
+import web.struct.Params;
 
 public abstract class AbstractCMSConnector implements Connector {
 

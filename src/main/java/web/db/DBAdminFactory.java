@@ -2,7 +2,7 @@ package web.db;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import web.Connector;
+import web.struct.Connector;
 import web.module.PhpMyAdminModule;
 import web.module.provider.PhpMyAdminProvider;
 

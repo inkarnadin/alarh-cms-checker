@@ -1,8 +1,8 @@
 package web.db;
 
-import web.AbstractChecker;
-import web.Connector;
-import web.Params;
+import web.struct.AbstractChecker;
+import web.struct.Connector;
+import web.struct.Params;
 
 public class DBAdminChecker extends AbstractChecker {
 

@@ -1,9 +1,9 @@
 package web.cms.joomla;
 
 import okhttp3.*;
-import web.AbstractRequest;
+import web.struct.AbstractRequest;
 
-public class JoomlaCheckComponentRequest extends AbstractRequest {
+public class JoomlaComponentRequest extends AbstractRequest {
 
     @Override
     public Response send(String... params) {

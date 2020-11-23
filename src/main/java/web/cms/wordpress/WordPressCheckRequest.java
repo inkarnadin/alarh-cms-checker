@@ -1,16 +1,18 @@
 package web.cms.wordpress;
 
-import okhttp3.*;
-import web.AbstractRequest;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import web.struct.AbstractRequest;
 
-public class WordPressCheckPluginRequest extends AbstractRequest {
+public class WordPressCheckRequest extends AbstractRequest {
 
     @Override
     public Response send(String... params) {
         try {
             OkHttpClient client = new OkHttpClient().newBuilder().build();
             Request request = new Request.Builder()
-                    .url(params[0] + "://" + params[1] + "/wp-content/plugins/" + params[2])
+                    .url(params[0] + "://" + params[1] + "/" + params[2])
                     .get()
                     .addHeader(USER_AGENT_HEADER, USER_AGENT_HEADER_VALUE)
                     .build();

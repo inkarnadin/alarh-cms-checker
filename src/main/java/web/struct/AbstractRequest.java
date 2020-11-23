@@ -1,4 +1,4 @@
-package web;
+package web.struct;
 
 import okhttp3.MediaType;
 import okhttp3.Protocol;

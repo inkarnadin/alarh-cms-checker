@@ -1,7 +1,7 @@
 package web.db;
 
-import web.Connector;
-import web.Params;
+import web.struct.Connector;
+import web.struct.Params;
 
 public abstract class AbstractDBConnector implements Connector {
 

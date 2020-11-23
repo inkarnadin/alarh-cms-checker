@@ -1,25 +1,24 @@
 package web.cms.joomla;
 
 import com.google.inject.Inject;
-import web.*;
 import okhttp3.Response;
-import web.AbstractProcessor;
+import web.struct.*;
 import web.cms.joomla.annotation.JoomlaPlugin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class JoomlaCheckComponentProcessor extends AbstractProcessor {
+public class JoomlaComponentProcessor extends AbstractProcessor {
 
     private final Request request;
     private final Source source;
 
-    private final Integer[] codes = { 200 };
+    private final Integer[] codes = { 200, 403 };
 
     @Inject
-    JoomlaCheckComponentProcessor(@JoomlaPlugin Request request,
-                                  @JoomlaPlugin Source source) {
+    JoomlaComponentProcessor(@JoomlaPlugin Request request,
+                             @JoomlaPlugin Source source) {
         this.request = request;
         this.source = source;
     }
@@ -39,7 +38,7 @@ public class JoomlaCheckComponentProcessor extends AbstractProcessor {
 
         List<String> result = new ArrayList<>();
         for (String ext : extensions) {
-            try (Response response = request.send(protocol, url, ext)) {
+            try (Response response = request.send(protocol, host, ext)) {
                 remain--;
 
                 Integer code = response.code();
@@ -59,7 +58,7 @@ public class JoomlaCheckComponentProcessor extends AbstractProcessor {
     }
 
     private boolean chechJoomla() {
-        Response response = request.send(protocol, url, "com_exactly_not_existing");
+        Response response = request.send(protocol, host, "com_exactly_not_existing");
         response.close();
         return response.code() == 200;
     }

@@ -4,8 +4,8 @@ import com.google.inject.Inject;
 import lombok.SneakyThrows;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import web.Request;
-import web.AbstractProcessor;
+import web.struct.Request;
+import web.struct.AbstractProcessor;
 import web.db.phpmyadmin.annotation.PhpMyAdminVersion;
 
 import java.io.*;
@@ -27,7 +27,7 @@ public class PhpMyAdminCheckVersionProcessor extends AbstractProcessor {
     @Override
     @SneakyThrows
     public void process() {
-        try (Response response = request.send(protocol, url)) {
+        try (Response response = request.send(protocol, host)) {
             ResponseBody body = response.body();
             StringBuilder textBuilder = new StringBuilder();
             try (Reader reader = new BufferedReader(new InputStreamReader(

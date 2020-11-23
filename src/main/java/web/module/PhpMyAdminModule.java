@@ -2,9 +2,9 @@ package web.module;
 
 import com.google.inject.AbstractModule;
 import lombok.SneakyThrows;
-import web.Connector;
-import web.Processor;
-import web.Request;
+import web.struct.Connector;
+import web.struct.Processor;
+import web.struct.Request;
 import web.db.phpmyadmin.PhpMyAdminCheckVersionProcessor;
 import web.db.phpmyadmin.PhpMyAdminVersionRequest;
 import web.db.phpmyadmin.annotation.PhpMyAdmin;
