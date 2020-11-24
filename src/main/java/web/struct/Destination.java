@@ -14,7 +14,9 @@ public interface Destination {
     }
 
     default List<String> fetch() {
-        return new ArrayList<>(result.values());
+        ArrayList<String> values = new ArrayList<>(result.values());
+        result.clear();
+        return values;
     }
 
     default Boolean isFull() {
