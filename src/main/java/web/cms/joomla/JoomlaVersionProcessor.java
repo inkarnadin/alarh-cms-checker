@@ -43,8 +43,8 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
     @Override
     public void process() {
         checkVersionViaPublicMetaInfo();
-        checkVersionViaLangConfigXml();
         checkVersionViaConfigXml();
+        checkVersionViaLangConfigXml();
         chechVersionViaJoomlaXml();
     }
 
@@ -62,9 +62,9 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
         destination.insert(0, String.format("  ** Joomla version (check #1) = %s", version));
     }
 
-    private void checkVersionViaLangConfigXml() {
+    private void checkVersionViaConfigXml() {
         String version = "unknown";
-        Host host = new Host(protocol, server, "language/en-GB/en-GB.xml");
+        Host host = new Host(protocol, server, "administrator/components/com_config/config.xml");
         try (Response response = request.send(host)) {
             Integer code = response.code();
             String contentType = response.header(CONTENT_TYPE);
@@ -77,9 +77,9 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
         destination.insert(1, String.format("  ** Joomla version (check #2) = %s", version));
     }
 
-    private void checkVersionViaConfigXml() {
+    private void checkVersionViaLangConfigXml() {
         String version = "unknown";
-        Host host = new Host(protocol, server, "administrator/components/com_config/config.xml");
+        Host host = new Host(protocol, server, "language/en-GB/en-GB.xml");
         try (Response response = request.send(host)) {
             Integer code = response.code();
             String contentType = response.header(CONTENT_TYPE);

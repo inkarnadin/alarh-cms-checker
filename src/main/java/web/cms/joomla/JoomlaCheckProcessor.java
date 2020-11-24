@@ -28,8 +28,6 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
     private final Parser parser;
     private final Destination destination;
 
-    private final Integer[] codes = { 200, 401 };
-
     @Inject
     JoomlaCheckProcessor(@Get Request request,
                          @JoomlaCheck Parser parser,
@@ -47,6 +45,8 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
 
     private boolean checkViaSpecifyPaths() {
         String[] paths = { "administrator/components" };
+        Integer[] codes = { 200, 304, 401 };
+
         for (String path : paths) {
             Host host = new Host(protocol, server, path);
             host.setBegetProtection(true);
@@ -62,6 +62,8 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
     }
 
     private boolean checkViaMainPage() {
+        Integer[] codes = { 200 };
+
         Host host = new Host(protocol, server, null);
         try (Response response = request.send(host)) {
             Integer code = response.code();
