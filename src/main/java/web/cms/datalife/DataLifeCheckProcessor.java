@@ -33,15 +33,32 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        if (checkViaMainPage())
+        if (checkViaMainPage() || checkViaAdminPage())
             destination.insert(0, successMessage);
     }
 
     private boolean checkViaMainPage() {
         Integer[] codes = { 200 };
-        Pattern pattern = Pattern.compile("<meta name=\"generator\" content=\"(DataLife Engine)\\s\\(http://dle-news.ru\\)\">");
+        Pattern pattern = Pattern.compile("<meta name=\"generator\" content=\"(DataLife Engine).*");
 
         Host host = new Host(protocol, server, null);
+        try (Response response = request.send(host)) {
+            Integer code = response.code();
+
+            if (Arrays.asList(codes).contains(code)) {
+                String body = ResponseBodyHandler.readBody(response);
+                parser.configure(pattern, 0);
+                return parser.parse(body);
+            }
+        }
+        return false;
+    }
+
+    private boolean checkViaAdminPage() {
+        Integer[] codes = { 200 };
+        Pattern pattern = Pattern.compile("DataLife Engine");
+
+        Host host = new Host(protocol, server, "admin.php");
         try (Response response = request.send(host)) {
             Integer code = response.code();
 
