@@ -14,3 +14,4 @@ contact-form-plugin
 ml-slider
 wpstorecart
 cherry-plugin
+simple-tags

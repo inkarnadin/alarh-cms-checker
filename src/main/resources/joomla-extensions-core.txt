@@ -1,4 +1,5 @@
 com_admin
+com_akeeba
 com_banners
 com_cache
 com_categories
