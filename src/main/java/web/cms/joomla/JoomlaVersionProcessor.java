@@ -13,7 +13,6 @@ import web.struct.Destination;
 import web.struct.Parser;
 
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.Optional;
 
 import static web.http.ContentType.APPLICATION_XML;
