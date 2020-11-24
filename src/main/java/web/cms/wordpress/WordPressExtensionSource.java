@@ -12,7 +12,7 @@ public class WordPressExtensionSource extends AbstractSource {
 
     @SneakyThrows
     WordPressExtensionSource() {
-        InputStream in = getClass().getResourceAsStream("/wordpress-ext.txt");
+        InputStream in = getClass().getResourceAsStream("/wordpress-extensions-core.txt");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
             Stream<String> lines = reader.lines();
             lines.forEach(sources::add);

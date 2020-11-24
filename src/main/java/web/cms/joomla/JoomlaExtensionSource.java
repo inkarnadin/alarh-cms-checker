@@ -12,7 +12,7 @@ public class JoomlaExtensionSource extends AbstractSource {
 
     @SneakyThrows
     JoomlaExtensionSource() {
-        InputStream in = getClass().getResourceAsStream("/joomla-ext.txt");
+        InputStream in = getClass().getResourceAsStream("/joomla-extensions-core.txt");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
             Stream<String> lines = reader.lines();
             lines.forEach(sources::add);
