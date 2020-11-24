@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 
+import static web.http.ContentType.APPLICATION_XML;
 import static web.http.ContentType.TEXT_XML;
 import static web.http.Headers.CONTENT_TYPE;
 
@@ -27,6 +28,7 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
     private final Destination destination;
 
     private final Integer[] codes = { 200 };
+    private final String[] contentTypes = { TEXT_XML, APPLICATION_XML };
 
     @Inject
     JoomlaVersionProcessor(@Get Request request,
@@ -53,7 +55,7 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
             Integer code = response.code();
             String contentType = response.header(CONTENT_TYPE);
 
-            if (Arrays.asList(codes).contains(code) && Objects.equals(contentType, TEXT_XML)) {
+            if (Arrays.asList(codes).contains(code) && Arrays.asList(contentTypes).contains(contentType)) {
                 String body = ResponseBodyHandler.readBody(response);
                 version = firstParser.parse(body);
             }
@@ -82,7 +84,7 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
             Integer code = response.code();
             String contentType = response.header(CONTENT_TYPE);
 
-            if (Arrays.asList(codes).contains(code) && Objects.equals(contentType, TEXT_XML)) {
+            if (Arrays.asList(codes).contains(code) && Arrays.asList(contentTypes).contains(contentType)) {
                 String body = ResponseBodyHandler.readBody(response);
                 version = firstParser.parse(body);
             }
