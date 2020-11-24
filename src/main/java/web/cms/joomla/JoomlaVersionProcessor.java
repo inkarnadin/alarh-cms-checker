@@ -1,6 +1,7 @@
 package web.cms.joomla;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import okhttp3.Response;
 import web.cms.joomla.annotation.JoomlaVersion;
 import web.http.Host;
@@ -21,7 +22,8 @@ import static web.http.Headers.CONTENT_TYPE;
 public class JoomlaVersionProcessor extends AbstractProcessor {
 
     private final Request request;
-    private final Parser parser;
+    private final Parser firstParser;
+    private final Parser secondParser;
     private final Destination destination;
 
     private final String[] paths = {
@@ -32,15 +34,18 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
 
     @Inject
     JoomlaVersionProcessor(@Get Request request,
-                           @JoomlaVersion Parser parser,
+                           @Named("ViaLangPackage") Parser firstParser,
+                           @Named("ViaPublicMetaInf") Parser secondParser,
                            @JoomlaVersion Destination destination) {
         this.request = request;
-        this.parser = parser;
+        this.firstParser = firstParser;
+        this.secondParser = secondParser;
         this.destination = destination;
     }
 
     @Override
     public void process() {
+        //version via language package
         for (String path : paths) {
             Host host = new Host(protocol, server, path);
             try (Response response = request.send(host)) {
@@ -49,9 +54,19 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
 
                 if (Arrays.asList(codes).contains(code) && Objects.equals(contentType, TEXT_XML)) {
                     String body = ResponseBodyHandler.readBody(response);
-                    destination.insert(0, "  ** Joomla version = " + parser.parse(body));
-                    return;
+                    destination.insert(0, String.format("  ** Joomla version (variant #1) = %s", firstParser.parse(body)));
                 }
+            }
+        }
+
+        //version via public meta information
+        Host host = new Host(protocol, server, null);
+        try (Response response = request.send(host)) {
+            Integer code = response.code();
+
+            if (Arrays.asList(codes).contains(code)) {
+                String body = ResponseBodyHandler.readBody(response);
+                destination.insert(1, String.format("  ** Joomla version (variant #2) = %s", secondParser.parse(body)));
             }
         }
     }

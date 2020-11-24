@@ -3,6 +3,8 @@ package web.http;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Objects;
+
 @RequiredArgsConstructor
 @Getter
 public class Host {
@@ -16,7 +18,7 @@ public class Host {
                 .append("://")
                 .append(server)
                 .append("/")
-                .append(path);
+                .append(Objects.nonNull(path) ? path : "");
         return stringBuilder.toString();
     }
 

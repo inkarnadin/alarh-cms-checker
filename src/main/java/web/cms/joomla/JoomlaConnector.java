@@ -19,7 +19,7 @@ public class JoomlaConnector extends AbstractCMSConnector {
     public void checkVersion() {
         versionProcessor.configure(params.getProtocol(), params.getServer());
         versionProcessor.process();
-        versionProcessor.transmit().ifPresent(x -> System.out.println(x.fetch().get(0)));
+        versionProcessor.transmit().ifPresent(x -> x.fetch().forEach(System.out::println));
     }
 
     @Override

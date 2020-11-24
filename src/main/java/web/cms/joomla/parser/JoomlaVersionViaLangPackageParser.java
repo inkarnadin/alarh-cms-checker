@@ -1,4 +1,4 @@
-package web.cms.joomla;
+package web.cms.joomla.parser;
 
 import lombok.SneakyThrows;
 import org.xml.sax.Attributes;
@@ -10,7 +10,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.ByteArrayInputStream;
 
-public class JoomlaVersionParser implements Parser {
+public class JoomlaVersionViaLangPackageParser implements Parser {
 
     private static String version = "unknown";
 
