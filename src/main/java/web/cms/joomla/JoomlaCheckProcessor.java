@@ -16,6 +16,10 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 
+import static web.http.ContentType.APPLICATION_XML;
+import static web.http.ContentType.TEXT_XML;
+import static web.http.Headers.CONTENT_TYPE;
+
 public class JoomlaCheckProcessor extends AbstractProcessor {
 
     private final static String successMessage = "  * Joomla tags have been found!";
@@ -23,10 +27,6 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
     private final Request request;
     private final Parser parser;
     private final Destination destination;
-
-    private final String[] paths = {
-            "administrator"
-    };
 
     private final Integer[] codes = { 200, 401 };
 
@@ -41,11 +41,12 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        if (checkViaSpecifyPaths() || checkViaMainPage())
+        if (checkViaSpecifyPaths() || checkViaMainPage() || checkViaSpecifyFiles())
             destination.insert(0, successMessage);
     }
 
     private boolean checkViaSpecifyPaths() {
+        String[] paths = { "administrator" };
         for (String path : paths) {
             Host host = new Host(protocol, server, path);
             host.setBegetProtection(true);
@@ -69,6 +70,21 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
                 String body = ResponseBodyHandler.readBody(response);
                 return Objects.nonNull(parser.parse(body));
             }
+        }
+        return false;
+    }
+
+    private boolean checkViaSpecifyFiles() {
+        Integer[] codes = { 304 };
+        String[] contentTypes = { TEXT_XML, APPLICATION_XML };
+
+        Host host = new Host(protocol, server, "administrator/manifests/files/joomla.xml");
+        try (Response response = request.send(host)) {
+            Integer code = response.code();
+            String contentType = response.header(CONTENT_TYPE);
+
+            if (Arrays.asList(codes).contains(code) && Arrays.asList(contentTypes).contains(contentType))
+                return true;
         }
         return false;
     }
