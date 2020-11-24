@@ -20,13 +20,6 @@ public class WordPressCheckProcessor extends AbstractProcessor {
     private final Request request;
     private final Destination destination;
 
-    private final String[] paths = {
-            "wp-content",
-            "wp-admin"
-    };
-
-    private final Integer[] codes = { 200, 403 };
-
     @Inject
     WordPressCheckProcessor(@Get Request request,
                             @WordPressCheck Destination destination) {
@@ -36,6 +29,9 @@ public class WordPressCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
+        String[] paths = { "wp-content", "wp-admin" };
+        Integer[] codes = { 200, 403 };
+
         for (String path : paths) {
             Host host = new Host(protocol, server, path);
             host.setBegetProtection(true);
