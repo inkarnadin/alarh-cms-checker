@@ -7,7 +7,8 @@ import web.cms.AbstractCMSConnector;
 @RequiredArgsConstructor
 public class WordPressConnector extends AbstractCMSConnector {
 
-    private final Processor processor;
+    private final Processor versionProcessor;
+    private final Processor pluginProcessor;
 
     @Override
     public boolean check() {
@@ -15,9 +16,16 @@ public class WordPressConnector extends AbstractCMSConnector {
     }
 
     @Override
+    public void checkVersion() {
+        versionProcessor.configure(params.getProtocol(), params.getServer());
+        versionProcessor.process();
+        versionProcessor.transmit().ifPresent(x -> x.fetch().forEach(System.out::println));
+    }
+
+    @Override
     public void checkPlugins() {
-        processor.configure(params.getProtocol(), params.getServer());
-        processor.process();
+        pluginProcessor.configure(params.getProtocol(), params.getServer());
+        pluginProcessor.process();
     }
 
 }

@@ -46,7 +46,7 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
     }
 
     private boolean checkViaSpecifyPaths() {
-        String[] paths = { "administrator" };
+        String[] paths = { "administrator/components" };
         for (String path : paths) {
             Host host = new Host(protocol, server, path);
             host.setBegetProtection(true);
