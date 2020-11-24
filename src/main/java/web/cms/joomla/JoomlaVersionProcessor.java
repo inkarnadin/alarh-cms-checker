@@ -47,6 +47,7 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
     }
 
     private void checkVersionViaLangConfig() {
+        String version = "unknown";
         Host host = new Host(protocol, server, "/language/en-GB/en-GB.xml");
         try (Response response = request.send(host)) {
             Integer code = response.code();
@@ -54,24 +55,28 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
 
             if (Arrays.asList(codes).contains(code) && Objects.equals(contentType, TEXT_XML)) {
                 String body = ResponseBodyHandler.readBody(response);
-                destination.insert(0, String.format("  ** Joomla version (check #1) = %s", firstParser.parse(body)));
+                version = firstParser.parse(body);
             }
         }
+        destination.insert(0, String.format("  ** Joomla version (check #1) = %s", version));
     }
 
     private void checkVersionViaPublicMetaInfo() {
+        String version = "unknown";
         Host host = new Host(protocol, server, null);
         try (Response response = request.send(host)) {
             Integer code = response.code();
 
             if (Arrays.asList(codes).contains(code)) {
                 String body = ResponseBodyHandler.readBody(response);
-                destination.insert(1, String.format("  ** Joomla version (check #2) = %s", secondParser.parse(body)));
+                version = secondParser.parse(body);
             }
         }
+        destination.insert(1, String.format("  ** Joomla version (check #1) = %s", version));
     }
 
     private void checkVersionViaConfigXml() {
+        String version = "unknown";
         Host host = new Host(protocol, server, "administrator/components/com_config/config.xml");
         try (Response response = request.send(host)) {
             Integer code = response.code();
@@ -79,9 +84,10 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
 
             if (Arrays.asList(codes).contains(code) && Objects.equals(contentType, TEXT_XML)) {
                 String body = ResponseBodyHandler.readBody(response);
-                destination.insert(2, String.format("  ** Joomla version (check #3) = %s", firstParser.parse(body)));
+                version = firstParser.parse(body);
             }
         }
+        destination.insert(2, String.format("  ** Joomla version (check #3) = %s", version));
     }
 
     @Override
