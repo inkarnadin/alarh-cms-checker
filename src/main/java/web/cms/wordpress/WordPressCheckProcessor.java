@@ -24,7 +24,7 @@ public class WordPressCheckProcessor extends AbstractProcessor {
             "wp-admin"
     };
 
-    private final Integer[] codes = { 200 };
+    private final Integer[] codes = { 200, 403 };
 
     @Inject
     WordPressCheckProcessor(@Get Request request,
@@ -39,7 +39,7 @@ public class WordPressCheckProcessor extends AbstractProcessor {
             Host host = new Host(protocol, server, path);
             try (Response response = request.send(host)) {
                 Integer code = response.code();
-                if (Arrays.asList(codes).contains(code)) {
+                if (Arrays.asList(codes).contains(code) && !request.isRedirect(response)) {
                     destination.insert(0, successMessage);
                     return;
                 }
