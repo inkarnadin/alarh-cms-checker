@@ -5,7 +5,7 @@ import web.struct.Parser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class JoomlaVersionViaPublicMetaInfParser implements Parser {
+public class JoomlaVersionPublicMetaInfoParser implements Parser {
 
     @Override
     public String parse(String text) {

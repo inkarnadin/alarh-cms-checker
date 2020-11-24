@@ -37,7 +37,7 @@ public class CMSChecker extends AbstractChecker {
             connector.configure(params);
 
             connector.checkVersion();
-            connector.checkPlugins();
+            //connector.checkPlugins();
         }
     }
 

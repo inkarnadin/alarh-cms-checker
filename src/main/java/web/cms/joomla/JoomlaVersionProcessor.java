@@ -26,10 +26,6 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
     private final Parser secondParser;
     private final Destination destination;
 
-    private final String[] paths = {
-            "/language/en-GB/en-GB.xml"
-    };
-
     private final Integer[] codes = { 200 };
 
     @Inject
@@ -45,28 +41,45 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        //version via language package
-        for (String path : paths) {
-            Host host = new Host(protocol, server, path);
-            try (Response response = request.send(host)) {
-                Integer code = response.code();
-                String contentType = response.header(CONTENT_TYPE);
+        checkVersionViaLangConfig();
+        checkVersionViaPublicMetaInfo();
+        checkVersionViaConfigXml();
+    }
 
-                if (Arrays.asList(codes).contains(code) && Objects.equals(contentType, TEXT_XML)) {
-                    String body = ResponseBodyHandler.readBody(response);
-                    destination.insert(0, String.format("  ** Joomla version (variant #1) = %s", firstParser.parse(body)));
-                }
+    private void checkVersionViaLangConfig() {
+        Host host = new Host(protocol, server, "/language/en-GB/en-GB.xml");
+        try (Response response = request.send(host)) {
+            Integer code = response.code();
+            String contentType = response.header(CONTENT_TYPE);
+
+            if (Arrays.asList(codes).contains(code) && Objects.equals(contentType, TEXT_XML)) {
+                String body = ResponseBodyHandler.readBody(response);
+                destination.insert(0, String.format("  ** Joomla version (check #1) = %s", firstParser.parse(body)));
             }
         }
+    }
 
-        //version via public meta information
+    private void checkVersionViaPublicMetaInfo() {
         Host host = new Host(protocol, server, null);
         try (Response response = request.send(host)) {
             Integer code = response.code();
 
             if (Arrays.asList(codes).contains(code)) {
                 String body = ResponseBodyHandler.readBody(response);
-                destination.insert(1, String.format("  ** Joomla version (variant #2) = %s", secondParser.parse(body)));
+                destination.insert(1, String.format("  ** Joomla version (check #2) = %s", secondParser.parse(body)));
+            }
+        }
+    }
+
+    private void checkVersionViaConfigXml() {
+        Host host = new Host(protocol, server, "administrator/components/com_config/config.xml");
+        try (Response response = request.send(host)) {
+            Integer code = response.code();
+            String contentType = response.header(CONTENT_TYPE);
+
+            if (Arrays.asList(codes).contains(code) && Objects.equals(contentType, TEXT_XML)) {
+                String body = ResponseBodyHandler.readBody(response);
+                destination.insert(2, String.format("  ** Joomla version (check #3) = %s", firstParser.parse(body)));
             }
         }
     }
