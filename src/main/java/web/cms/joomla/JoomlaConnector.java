@@ -7,7 +7,8 @@ import web.cms.AbstractCMSConnector;
 @RequiredArgsConstructor
 public class JoomlaConnector extends AbstractCMSConnector {
 
-    private final Processor processor;
+    private final Processor versionProcessor;
+    private final Processor pluginProcessor;
 
     @Override
     public boolean check() {
@@ -15,9 +16,16 @@ public class JoomlaConnector extends AbstractCMSConnector {
     }
 
     @Override
+    public void checkVersion() {
+        versionProcessor.configure(params.getProtocol(), params.getServer());
+        versionProcessor.process();
+        versionProcessor.transmit().ifPresent(x -> System.out.println(x.fetch().get(0)));
+    }
+
+    @Override
     public void checkPlugins() {
-        processor.configure(params.getProtocol(), params.getHost());
-        processor.process();
+        pluginProcessor.configure(params.getProtocol(), params.getServer());
+        pluginProcessor.process();
     }
 
 }

@@ -10,7 +10,7 @@ import java.util.Objects;
 public class Params {
 
     private String protocol;
-    private String host;
+    private String server;
     private String cmsType;
 
     public void setCmsType(String cmsType) {

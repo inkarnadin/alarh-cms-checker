@@ -35,6 +35,8 @@ public class CMSChecker extends AbstractChecker {
         for (CMSType type : types) {
             Connector connector = CMSFactory.getCMSConnector(type);
             connector.configure(params);
+
+            connector.checkVersion();
             connector.checkPlugins();
         }
     }

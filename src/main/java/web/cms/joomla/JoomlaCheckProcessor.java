@@ -23,7 +23,7 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
             "administrator"
     };
 
-    private final Integer[] codes = { 200 };
+    private final Integer[] codes = { 200, 401 };
 
     @Inject
     JoomlaCheckProcessor(@Get Request request,

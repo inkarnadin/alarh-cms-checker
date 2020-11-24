@@ -30,7 +30,7 @@ public class Runner {
                 params.setProtocol(scanner.nextLine());
 
                 System.out.print("Set target host [example.com]: ");
-                params.setHost(scanner.nextLine());
+                params.setServer(scanner.nextLine());
 
                 System.out.print("Activate PHPMyAdmin module? (y/n): ");
                 if (isAnswer(scanner.nextLine())) {

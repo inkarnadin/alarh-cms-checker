@@ -28,7 +28,7 @@ public class CMSDeterminant implements Determinant<CMSType> {
     public List<CMSType> define(Params params) {
         List<CMSType> result = new ArrayList<>();
 
-        wpCheckProcessor.configure(params.getProtocol(), params.getHost());
+        wpCheckProcessor.configure(params.getProtocol(), params.getServer());
         wpCheckProcessor.process();
         Optional<Destination> transmit = wpCheckProcessor.transmit();
         transmit.ifPresent(destination -> {
@@ -36,7 +36,7 @@ public class CMSDeterminant implements Determinant<CMSType> {
             System.out.println(destination.fetch().get(0));
         });
 
-        jmCheckProcessor.configure(params.getProtocol(), params.getHost());
+        jmCheckProcessor.configure(params.getProtocol(), params.getServer());
         jmCheckProcessor.process();
         Optional<Destination> transmit_ = jmCheckProcessor.transmit();
         transmit_.ifPresent(destination -> {
