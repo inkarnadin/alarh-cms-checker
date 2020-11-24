@@ -17,7 +17,7 @@ import java.util.Optional;
 
 public class YiiCheckProcessor extends AbstractProcessor {
 
-    private final static String successMessage = "  * Yii tags have been found!";
+    private final static String successMessage = "  * Yii Framework tags have been found!";
 
     private final Request request;
     private final Parser parser;
