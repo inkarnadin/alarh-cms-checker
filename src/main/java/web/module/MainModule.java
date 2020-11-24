@@ -5,6 +5,9 @@ import lombok.SneakyThrows;
 import web.cms.CMSChecker;
 import web.cms.CMSDeterminant;
 import web.cms.CMSTypeDestination;
+import web.cms.datalife.DataLifeCheckProcessor;
+import web.cms.datalife.annotation.DataLifeCheck;
+import web.cms.datalife.parser.DataLifeCheckMainPageParser;
 import web.cms.joomla.JoomlaCheckProcessor;
 import web.cms.joomla.annotation.JoomlaCheck;
 import web.cms.joomla.parser.JoomlaCheckMainPageParser;
@@ -27,18 +30,21 @@ public class MainModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(Request.class).annotatedWith(Get.class).to(GetRequest.class);
+
         bind(Parser.class).annotatedWith(JoomlaCheck.class).to(JoomlaCheckMainPageParser.class);
         bind(Destination.class).annotatedWith(JoomlaCheck.class).to(CMSTypeDestination.class);
         bind(Processor.class).annotatedWith(JoomlaCheck.class).to(JoomlaCheckProcessor.class);
 
-        bind(Request.class).annotatedWith(Get.class).to(GetRequest.class);
         bind(Destination.class).annotatedWith(WordPressCheck.class).to(CMSTypeDestination.class);
         bind(Processor.class).annotatedWith(WordPressCheck.class).to(WordPressCheckProcessor.class);
 
-        bind(Request.class).annotatedWith(Get.class).to(GetRequest.class);
         bind(Parser.class).annotatedWith(YiiCheck.class).to(YiiCheckMainPageParser.class);
         bind(Destination.class).annotatedWith(YiiCheck.class).to(CMSTypeDestination.class);
         bind(Processor.class).annotatedWith(YiiCheck.class).to(YiiCheckProcessor.class);
+
+        bind(Parser.class).annotatedWith(DataLifeCheck.class).to(DataLifeCheckMainPageParser.class);
+        bind(Destination.class).annotatedWith(DataLifeCheck.class).to(CMSTypeDestination.class);
+        bind(Processor.class).annotatedWith(DataLifeCheck.class).to(DataLifeCheckProcessor.class);
 
         bind(Determinant.class).annotatedWith(Cms.class).to(CMSDeterminant.class);
         bind(Checker.class).annotatedWith(Cms.class).to(CMSChecker.class);

@@ -2,6 +2,7 @@ package web.cms;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import web.module.provider.DataLifeProvider;
 import web.module.provider.YiiProvider;
 import web.struct.Connector;
 import web.module.JoomlaModule;
@@ -24,6 +25,8 @@ public class CMSFactory {
                 return injector.getInstance(WordPressProvider.class).get();
             case YII:
                 return injector.getInstance(YiiProvider.class).get();
+            case DATALIFE_ENGINE:
+                return injector.getInstance(DataLifeProvider.class).get();
             default:
                 throw new IllegalArgumentException("Unsupported CMS type");
         }

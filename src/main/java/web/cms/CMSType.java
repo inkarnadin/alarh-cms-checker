@@ -8,6 +8,7 @@ public enum CMSType {
     WORDPRESS(0, "wp"),
     JOOMLA(1, "joomla"),
     YII(2, "yii"),
+    DATALIFE_ENGINE(3, "datalife engine"),
     UNKNOWN(-1, "unknown");
 
     private final int id;

@@ -1,6 +1,7 @@
 package web.cms;
 
 import com.google.inject.Inject;
+import web.cms.datalife.annotation.DataLifeCheck;
 import web.cms.yii.annotation.YiiCheck;
 import web.struct.Destination;
 import web.struct.Determinant;
@@ -18,14 +19,17 @@ public class CMSDeterminant implements Determinant<CMSType> {
     private final Processor wpCheckProcessor;
     private final Processor jmCheckProcessor;
     private final Processor yiiCheckProcessor;
+    private final Processor dleCheckProcessor;
 
     @Inject
     CMSDeterminant(@WordPressCheck Processor wpCheckProcessor,
                    @JoomlaCheck Processor jmCheckProcessor,
-                   @YiiCheck Processor yiiCheckProcessor) {
+                   @YiiCheck Processor yiiCheckProcessor,
+                   @DataLifeCheck Processor dleCheckProcessor) {
         this.wpCheckProcessor = wpCheckProcessor;
         this.jmCheckProcessor = jmCheckProcessor;
         this.yiiCheckProcessor = yiiCheckProcessor;
+        this.dleCheckProcessor = dleCheckProcessor;
     }
 
     @Override
@@ -52,6 +56,14 @@ public class CMSDeterminant implements Determinant<CMSType> {
         yiiCheckProcessor.process();
         Optional<Destination> yiiTransmit = yiiCheckProcessor.transmit();
         yiiTransmit.ifPresent(destination -> {
+            result.add(CMSType.YII);
+            System.out.println(destination.fetch().get(0));
+        });
+
+        dleCheckProcessor.configure(params.getProtocol(), params.getServer());
+        dleCheckProcessor.process();
+        Optional<Destination> dleTransmit = dleCheckProcessor.transmit();
+        dleTransmit.ifPresent(destination -> {
             result.add(CMSType.YII);
             System.out.println(destination.fetch().get(0));
         });
