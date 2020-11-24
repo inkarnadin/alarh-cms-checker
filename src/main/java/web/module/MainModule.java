@@ -7,6 +7,7 @@ import web.cms.CMSDeterminant;
 import web.cms.CMSTypeDestination;
 import web.cms.joomla.JoomlaCheckProcessor;
 import web.cms.joomla.annotation.JoomlaCheck;
+import web.cms.joomla.parser.JoomlaCheckMainPageParser;
 import web.cms.wordpress.WordPressCheckProcessor;
 import web.cms.wordpress.annotation.WordPressCheck;
 import web.db.DBAdminChecker;
@@ -23,6 +24,7 @@ public class MainModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(Request.class).annotatedWith(Get.class).to(GetRequest.class);
+        bind(Parser.class).annotatedWith(JoomlaCheck.class).to(JoomlaCheckMainPageParser.class);
         bind(Destination.class).annotatedWith(JoomlaCheck.class).to(CMSTypeDestination.class);
         bind(Processor.class).annotatedWith(JoomlaCheck.class).to(JoomlaCheckProcessor.class);
 

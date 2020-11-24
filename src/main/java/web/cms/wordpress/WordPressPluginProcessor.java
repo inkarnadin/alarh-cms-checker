@@ -44,7 +44,7 @@ public class WordPressPluginProcessor extends AbstractProcessor {
                 remain--;
 
                 Integer code = response.code();
-                if (Arrays.asList(codes).contains(code)) {
+                if (Arrays.asList(codes).contains(code) && !request.isRedirect(response)) {
                     result.add(ext);
                     success++;
                 } else {

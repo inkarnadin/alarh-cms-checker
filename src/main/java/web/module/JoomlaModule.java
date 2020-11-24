@@ -22,7 +22,7 @@ public class JoomlaModule extends AbstractModule {
         bind(Request.class).annotatedWith(Get.class).to(GetRequest.class);
 
         bind(Source.class).annotatedWith(JoomlaPlugin.class).to(JoomlaExtensionSource.class);
-        bind(Processor.class).annotatedWith(JoomlaPlugin.class).to(JoomlaComponentProcessor.class);
+        bind(Processor.class).annotatedWith(JoomlaPlugin.class).to(JoomlaPluginsProcessor.class);
 
         bind(Parser.class).annotatedWith(Names.named("ViaLangPackage")).to(JoomlaVersionXMLParser.class);
         bind(Parser.class).annotatedWith(Names.named("ViaPublicMetaInf")).to(JoomlaVersionPublicMetaInfoParser.class);

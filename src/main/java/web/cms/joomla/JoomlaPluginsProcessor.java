@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class JoomlaComponentProcessor extends AbstractProcessor {
+public class JoomlaPluginsProcessor extends AbstractProcessor {
 
     private final String path = "/administrator/components/";
 
@@ -23,8 +23,8 @@ public class JoomlaComponentProcessor extends AbstractProcessor {
     private final Integer[] codes = { 200, 403 };
 
     @Inject
-    JoomlaComponentProcessor(@Get Request request,
-                             @JoomlaPlugin Source source) {
+    JoomlaPluginsProcessor(@Get Request request,
+                           @JoomlaPlugin Source source) {
         this.request = request;
         this.source = source;
     }
@@ -44,7 +44,7 @@ public class JoomlaComponentProcessor extends AbstractProcessor {
                 remain--;
 
                 Integer code = response.code();
-                if (Arrays.asList(codes).contains(code)) {
+                if (Arrays.asList(codes).contains(code) && !request.isRedirect(response)) {
                     result.add(ext);
                     success++;
                 } else {
