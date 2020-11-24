@@ -48,7 +48,7 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
 
     private void checkVersionViaLangConfig() {
         String version = "unknown";
-        Host host = new Host(protocol, server, "/language/en-GB/en-GB.xml");
+        Host host = new Host(protocol, server, "language/en-GB/en-GB.xml");
         try (Response response = request.send(host)) {
             Integer code = response.code();
             String contentType = response.header(CONTENT_TYPE);
