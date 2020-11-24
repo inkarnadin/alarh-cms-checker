@@ -1,22 +1,23 @@
-package web.cms.joomla.parser;
+package web.parser;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
-import web.struct.Parser;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.ByteArrayInputStream;
 
-public class JoomlaVersionXMLParser implements Parser {
+public class VersionXMLParser implements XMLParser<String> {
+
+    private String version = "unknown";
 
     @Override
     @SneakyThrows
-    public String parse(String text) {
-        InputSource inputSource = new InputSource(new ByteArrayInputStream(text.getBytes()));
+    public String parse(String txt) {
+        InputSource inputSource = new InputSource(new ByteArrayInputStream(txt.getBytes()));
 
         SAXParserFactory factory = SAXParserFactory.newInstance();
         factory.setValidating(true);
@@ -24,26 +25,20 @@ public class JoomlaVersionXMLParser implements Parser {
         JoomlaXMLConfigHandler handler = new JoomlaXMLConfigHandler();
         saxParser.parse(inputSource, handler);
 
-        return handler.getVersion();
+        return version;
     }
 
-    static class JoomlaXMLConfigHandler extends DefaultHandler {
-
-        @Getter
-        private String version = "unknown";
+    class JoomlaXMLConfigHandler extends DefaultHandler {
 
         private boolean isVersion = false;
 
-        @SneakyThrows
         public void startElement(String uri, String localName, String qName, Attributes attributes) {
             if (qName.equalsIgnoreCase("version"))
                 isVersion = true;
         }
 
-        @SneakyThrows
         public void endElement(String uri, String localName, String qName) {}
 
-        @SneakyThrows
         public void characters(char[] ch, int start, int length) {
             if (isVersion) {
                 version = new String(ch, start, length);

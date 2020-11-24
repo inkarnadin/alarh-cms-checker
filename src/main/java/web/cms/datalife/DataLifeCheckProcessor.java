@@ -2,32 +2,30 @@ package web.cms.datalife;
 
 import com.google.inject.Inject;
 import okhttp3.Response;
-import web.cms.datalife.annotation.DataLifeCheck;
-import web.cms.yii.annotation.YiiCheck;
 import web.http.Host;
 import web.http.Request;
 import web.http.ResponseBodyHandler;
 import web.module.annotation.Get;
 import web.struct.AbstractProcessor;
 import web.struct.Destination;
-import web.struct.Parser;
+import web.parser.TextParser;
 
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 public class DataLifeCheckProcessor extends AbstractProcessor {
 
     private final static String successMessage = "  * DataLife Engine tags have been found!";
 
     private final Request request;
-    private final Parser parser;
+    private final TextParser<Boolean> parser;
     private final Destination destination;
 
     @Inject
     DataLifeCheckProcessor(@Get Request request,
-                           @DataLifeCheck Parser parser,
-                           @DataLifeCheck Destination destination) {
+                           TextParser<Boolean> parser,
+                           Destination destination) {
         this.request = request;
         this.parser = parser;
         this.destination = destination;
@@ -41,6 +39,7 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
 
     private boolean checkViaMainPage() {
         Integer[] codes = { 200 };
+        Pattern pattern = Pattern.compile("<meta name=\"generator\" content=\"(DataLife Engine)\\s\\(http://dle-news.ru\\)\">");
 
         Host host = new Host(protocol, server, null);
         try (Response response = request.send(host)) {
@@ -48,7 +47,8 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
 
             if (Arrays.asList(codes).contains(code)) {
                 String body = ResponseBodyHandler.readBody(response);
-                return Objects.nonNull(parser.parse(body));
+                parser.configure(pattern, 0);
+                return parser.parse(body);
             }
         }
         return false;

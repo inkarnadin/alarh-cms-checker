@@ -2,33 +2,30 @@ package web.cms.yii;
 
 import com.google.inject.Inject;
 import okhttp3.Response;
-import web.cms.yii.annotation.YiiCheck;
 import web.http.Host;
 import web.http.Request;
 import web.http.ResponseBodyHandler;
 import web.module.annotation.Get;
+import web.parser.TextParser;
 import web.struct.AbstractProcessor;
 import web.struct.Destination;
-import web.struct.Parser;
 
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 public class YiiCheckProcessor extends AbstractProcessor {
 
     private final static String successMessage = "  * Yii Framework tags have been found!";
 
     private final Request request;
-    private final Parser parser;
+    private final TextParser<Boolean> parser;
     private final Destination destination;
-
-    private final Integer[] codes = { 200 };
 
     @Inject
     YiiCheckProcessor(@Get Request request,
-                      @YiiCheck Parser parser,
-                      @YiiCheck Destination destination) {
+                      TextParser<Boolean> parser,
+                      Destination destination) {
         this.request = request;
         this.parser = parser;
         this.destination = destination;
@@ -36,16 +33,25 @@ public class YiiCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
+        if (checkViaMainPage())
+            destination.insert(0, successMessage);
+    }
+
+    private boolean checkViaMainPage() {
+        Integer[] codes = { 200 };
+        Pattern pattern = Pattern.compile("<script src=\".*(yii.js).*\"></script>");
+
         Host host = new Host(protocol, server, null);
         try (Response response = request.send(host)) {
             Integer code = response.code();
 
             if (Arrays.asList(codes).contains(code)) {
                 String body = ResponseBodyHandler.readBody(response);
-                if (Objects.nonNull(parser.parse(body)))
-                    destination.insert(0, successMessage);
+                parser.configure(pattern, 0);
+                return parser.parse(body);
             }
         }
+        return false;
     }
 
     @Override

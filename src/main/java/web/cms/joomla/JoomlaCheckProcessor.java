@@ -6,15 +6,15 @@ import web.http.Host;
 import web.http.HttpValidator;
 import web.http.ResponseBodyHandler;
 import web.module.annotation.Get;
+import web.parser.TextParser;
 import web.struct.AbstractProcessor;
 import web.struct.Destination;
 import web.http.Request;
-import web.cms.joomla.annotation.JoomlaCheck;
-import web.struct.Parser;
 
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import static web.http.ContentType.APPLICATION_XML;
 import static web.http.ContentType.TEXT_XML;
@@ -25,13 +25,13 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
     private final static String successMessage = "  * Joomla tags have been found!";
 
     private final Request request;
-    private final Parser parser;
+    private final TextParser<Boolean> parser;
     private final Destination destination;
 
     @Inject
     JoomlaCheckProcessor(@Get Request request,
-                         @JoomlaCheck Parser parser,
-                         @JoomlaCheck Destination destination) {
+                         TextParser<Boolean> parser,
+                         Destination destination) {
         this.request = request;
         this.parser = parser;
         this.destination = destination;
@@ -63,6 +63,7 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
 
     private boolean checkViaMainPage() {
         Integer[] codes = { 200 };
+        Pattern pattern = Pattern.compile("<meta name=\"generator\" content=\"(Joomla!).*/>");
 
         Host host = new Host(protocol, server, null);
         try (Response response = request.send(host)) {
@@ -70,7 +71,8 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
 
             if (Arrays.asList(codes).contains(code)) {
                 String body = ResponseBodyHandler.readBody(response);
-                return Objects.nonNull(parser.parse(body));
+                parser.configure(pattern, 0);
+                return parser.parse(body);
             }
         }
         return false;

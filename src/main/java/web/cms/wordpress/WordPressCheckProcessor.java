@@ -8,7 +8,6 @@ import web.module.annotation.Get;
 import web.struct.AbstractProcessor;
 import web.struct.Destination;
 import web.http.Request;
-import web.cms.wordpress.annotation.WordPressCheck;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -22,7 +21,7 @@ public class WordPressCheckProcessor extends AbstractProcessor {
 
     @Inject
     WordPressCheckProcessor(@Get Request request,
-                            @WordPressCheck Destination destination) {
+                            Destination destination) {
         this.request = request;
         this.destination = destination;
     }

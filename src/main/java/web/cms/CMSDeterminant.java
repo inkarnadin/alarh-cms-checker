@@ -1,14 +1,14 @@
 package web.cms;
 
 import com.google.inject.Inject;
-import web.cms.datalife.annotation.DataLifeCheck;
-import web.cms.yii.annotation.YiiCheck;
+import web.cms.datalife.annotation.DataLife;
+import web.cms.joomla.annotation.Joomla;
+import web.cms.wordpress.annotation.WordPress;
+import web.cms.yii.annotation.Yii;
 import web.struct.Destination;
 import web.struct.Determinant;
 import web.struct.Params;
 import web.struct.Processor;
-import web.cms.joomla.annotation.JoomlaCheck;
-import web.cms.wordpress.annotation.WordPressCheck;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +22,10 @@ public class CMSDeterminant implements Determinant<CMSType> {
     private final Processor dleCheckProcessor;
 
     @Inject
-    CMSDeterminant(@WordPressCheck Processor wpCheckProcessor,
-                   @JoomlaCheck Processor jmCheckProcessor,
-                   @YiiCheck Processor yiiCheckProcessor,
-                   @DataLifeCheck Processor dleCheckProcessor) {
+    CMSDeterminant(@WordPress Processor wpCheckProcessor,
+                   @Joomla Processor jmCheckProcessor,
+                   @Yii Processor yiiCheckProcessor,
+                   @DataLife Processor dleCheckProcessor) {
         this.wpCheckProcessor = wpCheckProcessor;
         this.jmCheckProcessor = jmCheckProcessor;
         this.yiiCheckProcessor = yiiCheckProcessor;

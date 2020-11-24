@@ -8,12 +8,15 @@ import web.http.Host;
 import web.http.Request;
 import web.http.ResponseBodyHandler;
 import web.module.annotation.Get;
+import web.parser.TextParser;
+import web.parser.XMLParser;
 import web.struct.AbstractProcessor;
 import web.struct.Destination;
 import web.struct.Parser;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import static web.http.ContentType.APPLICATION_XML;
 import static web.http.ContentType.TEXT_XML;
@@ -22,8 +25,8 @@ import static web.http.Headers.CONTENT_TYPE;
 public class JoomlaVersionProcessor extends AbstractProcessor {
 
     private final Request request;
-    private final Parser firstParser;
-    private final Parser secondParser;
+    private final XMLParser<String> xmlParser;
+    private final TextParser<String> textParser;
     private final Destination destination;
 
     private final Integer[] codes = { 200 };
@@ -31,12 +34,12 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
 
     @Inject
     JoomlaVersionProcessor(@Get Request request,
-                           @Named("ViaLangPackage") Parser firstParser,
-                           @Named("ViaPublicMetaInf") Parser secondParser,
-                           @JoomlaVersion Destination destination) {
+                           XMLParser<String> xmlParser,
+                           TextParser<String> textParser,
+                           Destination destination) {
         this.request = request;
-        this.firstParser = firstParser;
-        this.secondParser = secondParser;
+        this.xmlParser = xmlParser;
+        this.textParser = textParser;
         this.destination = destination;
     }
 
@@ -51,12 +54,15 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
     private void checkVersionViaPublicMetaInfo() {
         String version = "unknown";
         Host host = new Host(protocol, server, null);
+        Pattern pattern = Pattern.compile("<meta name=\"generator\".*Version\\s(.*)\" />");
+
         try (Response response = request.send(host)) {
             Integer code = response.code();
 
             if (Arrays.asList(codes).contains(code)) {
                 String body = ResponseBodyHandler.readBody(response);
-                version = secondParser.parse(body);
+                textParser.configure(pattern, 1);
+                version = textParser.parse(body);
             }
         }
         destination.insert(0, String.format("  ** Joomla version (check #1) = %s", version));
@@ -71,7 +77,7 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
 
             if (Arrays.asList(codes).contains(code) && Arrays.asList(contentTypes).contains(contentType)) {
                 String body = ResponseBodyHandler.readBody(response);
-                version = firstParser.parse(body);
+                version = xmlParser.parse(body);
             }
         }
         destination.insert(1, String.format("  ** Joomla version (check #2) = %s", version));
@@ -86,7 +92,7 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
 
             if (Arrays.asList(codes).contains(code) && Arrays.asList(contentTypes).contains(contentType)) {
                 String body = ResponseBodyHandler.readBody(response);
-                version = firstParser.parse(body);
+                version = xmlParser.parse(body);
             }
         }
         destination.insert(2, String.format("  ** Joomla version (check #3) = %s", version));
@@ -101,7 +107,7 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
 
             if (Arrays.asList(codes).contains(code) && Arrays.asList(contentTypes).contains(contentType)) {
                 String body = ResponseBodyHandler.readBody(response);
-                version = firstParser.parse(body);
+                version = xmlParser.parse(body);
             }
         }
         destination.insert(3, String.format("  ** Joomla version (check #4) = %s", version));

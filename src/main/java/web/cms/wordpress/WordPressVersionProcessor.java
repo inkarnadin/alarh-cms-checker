@@ -9,23 +9,25 @@ import web.http.Host;
 import web.http.Request;
 import web.http.ResponseBodyHandler;
 import web.module.annotation.Get;
+import web.parser.TextParser;
 import web.struct.AbstractProcessor;
 import web.struct.Destination;
 import web.struct.Parser;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 public class WordPressVersionProcessor extends AbstractProcessor {
 
     private final Request request;
-    private final Parser parser;
+    private final TextParser<String> parser;
     private final Destination destination;
 
     @Inject
     WordPressVersionProcessor(@Get Request request,
-                              @WordPressVersion Parser parser,
-                              @WordPressVersion Destination destination) {
+                              TextParser<String> parser,
+                              Destination destination) {
         this.request = request;
         this.parser = parser;
         this.destination = destination;
@@ -38,6 +40,7 @@ public class WordPressVersionProcessor extends AbstractProcessor {
 
     private void checkVersionViaPublicMetaInfo() {
         Integer[] codes = { 200 };
+        Pattern pattern = Pattern.compile("<meta name=\"generator\".*WordPress\\s(.*?)\" />");
 
         String version = "unknown";
         Host host = new Host(protocol, server, null);
@@ -46,6 +49,7 @@ public class WordPressVersionProcessor extends AbstractProcessor {
 
             if (Arrays.asList(codes).contains(code)) {
                 String body = ResponseBodyHandler.readBody(response);
+                parser.configure(pattern, 1);
                 version = parser.parse(body);
             }
         }
