@@ -7,6 +7,7 @@ public enum CMSType {
 
     WORDPRESS(0, "wp"),
     JOOMLA(1, "joomla"),
+    YII(2, "yii"),
     UNKNOWN(-1, "unknown");
 
     private final int id;

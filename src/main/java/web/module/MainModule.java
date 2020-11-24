@@ -10,6 +10,9 @@ import web.cms.joomla.annotation.JoomlaCheck;
 import web.cms.joomla.parser.JoomlaCheckMainPageParser;
 import web.cms.wordpress.WordPressCheckProcessor;
 import web.cms.wordpress.annotation.WordPressCheck;
+import web.cms.yii.YiiCheckProcessor;
+import web.cms.yii.annotation.YiiCheck;
+import web.cms.yii.parser.YiiCheckMainPageParser;
 import web.db.DBAdminChecker;
 import web.http.GetRequest;
 import web.http.Request;
@@ -31,6 +34,11 @@ public class MainModule extends AbstractModule {
         bind(Request.class).annotatedWith(Get.class).to(GetRequest.class);
         bind(Destination.class).annotatedWith(WordPressCheck.class).to(CMSTypeDestination.class);
         bind(Processor.class).annotatedWith(WordPressCheck.class).to(WordPressCheckProcessor.class);
+
+        bind(Request.class).annotatedWith(Get.class).to(GetRequest.class);
+        bind(Parser.class).annotatedWith(YiiCheck.class).to(YiiCheckMainPageParser.class);
+        bind(Destination.class).annotatedWith(YiiCheck.class).to(CMSTypeDestination.class);
+        bind(Processor.class).annotatedWith(YiiCheck.class).to(YiiCheckProcessor.class);
 
         bind(Determinant.class).annotatedWith(Cms.class).to(CMSDeterminant.class);
         bind(Checker.class).annotatedWith(Cms.class).to(CMSChecker.class);

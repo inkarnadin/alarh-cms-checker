@@ -11,4 +11,5 @@ public interface Connector {
     default void checkVersion() {}
 
     default void checkPlugins() {}
+
 }
