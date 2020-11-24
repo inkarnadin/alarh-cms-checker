@@ -45,6 +45,7 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
         checkVersionViaLangConfig();
         checkVersionViaPublicMetaInfo();
         checkVersionViaConfigXml();
+        chechVersionViaJoomlaXml();
     }
 
     private void checkVersionViaLangConfig() {
@@ -73,7 +74,7 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
                 version = secondParser.parse(body);
             }
         }
-        destination.insert(1, String.format("  ** Joomla version (check #1) = %s", version));
+        destination.insert(1, String.format("  ** Joomla version (check #2) = %s", version));
     }
 
     private void checkVersionViaConfigXml() {
@@ -89,6 +90,21 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
             }
         }
         destination.insert(2, String.format("  ** Joomla version (check #3) = %s", version));
+    }
+
+    private void chechVersionViaJoomlaXml() {
+        String version = "unknown";
+        Host host = new Host(protocol, server, "administrator/manifests/files/joomla.xml");
+        try (Response response = request.send(host)) {
+            Integer code = response.code();
+            String contentType = response.header(CONTENT_TYPE);
+
+            if (Arrays.asList(codes).contains(code) && Arrays.asList(contentTypes).contains(contentType)) {
+                String body = ResponseBodyHandler.readBody(response);
+                version = firstParser.parse(body);
+            }
+        }
+        destination.insert(3, String.format("  ** Joomla version (check #4) = %s", version));
     }
 
     @Override
