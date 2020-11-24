@@ -11,11 +11,5 @@ public class Params {
 
     private String protocol;
     private String server;
-    private String cmsType;
-
-    public void setCmsType(String cmsType) {
-        if (Objects.nonNull(cmsType))
-            this.cmsType = cmsType.toLowerCase();
-    }
 
 }

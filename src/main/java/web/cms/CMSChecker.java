@@ -26,11 +26,7 @@ public class CMSChecker extends AbstractChecker {
 
     @Override
     public void check(Params params) {
-        types.addAll(
-                Objects.isNull(params.getCmsType()) || "".equals(params.getCmsType())
-                    ? determinant.define(params)
-                    : Collections.singletonList(CMSType.search(params.getCmsType()))
-        );
+        types.addAll(determinant.define(params));
 
         for (CMSType type : types) {
             Connector connector = CMSFactory.getCMSConnector(type);

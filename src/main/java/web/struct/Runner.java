@@ -17,20 +17,26 @@ public class Runner {
 
     public void run() {
         System.out.println("===========================================================");
-        System.out.println("Welcome! This is application for check installed plugins for CMS");
-        System.out.println("In current time it is support only Joomla CMS and WordPress");
+        System.out.println("Welcome! This is application for check info about different CMS");
+        System.out.println("In current time it is support next systems:");
+        System.out.println(" * Joomla!");
+        System.out.println(" * WordPress");
+        System.out.println(" * Yii Framework");
         System.out.println("===========================================================");
-        System.out.println("\n");
 
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
                 Params params = new Params();
+
+                printSplit();
 
                 System.out.print("Set protocol [http|https]: ");
                 params.setProtocol(scanner.nextLine());
 
                 System.out.print("Set target host [example.com]: ");
                 params.setServer(scanner.nextLine());
+
+                printSplit();
 
                 System.out.print("Activate PHPMyAdmin module? (y/n): ");
                 if (isAnswer(scanner.nextLine())) {
@@ -40,19 +46,17 @@ public class Runner {
                     System.out.println("Skipped...");
                 }
 
+                printSplit();
+
                 System.out.print("Activate CMS module? (y/n): ");
                 if (isAnswer(scanner.nextLine())) {
-                    System.out.print("Choose CMS type [Joomla|WP]: ");
-                    params.setCmsType(scanner.nextLine());
-
                     cmsChecker.check(params);
                     System.out.println("Done!");
                 } else {
                     System.out.println("Skipped...");
                 }
 
-                System.out.println("===========================================================");
-                System.out.println("\n");
+                printSplit();
                 System.out.print("Try again? (y/n): ");
 
                 if (!isAnswer(scanner.nextLine()))
@@ -61,7 +65,7 @@ public class Runner {
         }
     }
 
-    public static boolean isAnswer(final String answer) {
+    private static boolean isAnswer(final String answer) {
         if (Objects.isNull(answer))
             return false;
 
@@ -74,6 +78,11 @@ public class Runner {
             default:
                 return false;
         }
+    }
+
+    private static void printSplit() {
+        System.out.println("===========================================================");
+        System.out.println("\n");
     }
 
 }
