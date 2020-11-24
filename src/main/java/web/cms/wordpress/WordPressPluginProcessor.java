@@ -3,6 +3,7 @@ package web.cms.wordpress;
 import com.google.inject.Inject;
 import okhttp3.Response;
 import web.http.Host;
+import web.http.HttpValidator;
 import web.http.Request;
 import web.http.RequestErrorHandler;
 import web.module.annotation.Get;
@@ -44,7 +45,7 @@ public class WordPressPluginProcessor extends AbstractProcessor {
                 remain--;
 
                 Integer code = response.code();
-                if (Arrays.asList(codes).contains(code) && !request.isRedirect(response)) {
+                if (Arrays.asList(codes).contains(code) && !HttpValidator.isRedirect(response)) {
                     result.add(ext);
                     success++;
                 } else {

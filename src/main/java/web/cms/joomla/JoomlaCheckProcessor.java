@@ -3,6 +3,7 @@ package web.cms.joomla;
 import com.google.inject.Inject;
 import okhttp3.Response;
 import web.http.Host;
+import web.http.HttpValidator;
 import web.http.ResponseBodyHandler;
 import web.module.annotation.Get;
 import web.struct.AbstractProcessor;
@@ -47,9 +48,11 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
     private boolean checkViaSpecifyPaths() {
         for (String path : paths) {
             Host host = new Host(protocol, server, path);
+            host.setBegetProtection(true);
+
             try (Response response = request.send(host)) {
                 Integer code = response.code();
-                if (Arrays.asList(codes).contains(code) && !request.isRedirect(response)) {
+                if (Arrays.asList(codes).contains(code) && !HttpValidator.isRedirect(response)) {
                     return true;
                 }
             }

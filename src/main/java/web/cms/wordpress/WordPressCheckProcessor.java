@@ -3,6 +3,7 @@ package web.cms.wordpress;
 import com.google.inject.Inject;
 import okhttp3.Response;
 import web.http.Host;
+import web.http.HttpValidator;
 import web.module.annotation.Get;
 import web.struct.AbstractProcessor;
 import web.struct.Destination;
@@ -37,9 +38,11 @@ public class WordPressCheckProcessor extends AbstractProcessor {
     public void process() {
         for (String path : paths) {
             Host host = new Host(protocol, server, path);
+            host.setBegetProtection(true);
+
             try (Response response = request.send(host)) {
                 Integer code = response.code();
-                if (Arrays.asList(codes).contains(code) && !request.isRedirect(response)) {
+                if (Arrays.asList(codes).contains(code) && !HttpValidator.isRedirect(response)) {
                     destination.insert(0, successMessage);
                     return;
                 }
