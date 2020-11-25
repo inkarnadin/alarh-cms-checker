@@ -127,7 +127,7 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
     private void checkViaError404Message() {
         Integer[] codes = { 404 };
         String[] messages = {
-                "По данному адресу публикаций на сайте не найдено, либо у Вас нет доступа для просмотра информации по данному адресу"
+                "[пП]о данному адресу публикаций на сайте не найдено, либо у [вВ]ас нет доступа для просмотра информации по данному адресу"
         };
 
         attempt.incrementAndGet();
@@ -139,7 +139,7 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
             if (Arrays.asList(codes).contains(code)) {
                 String body = ResponseBodyHandler.readBody(response);
                 for (String message : messages) {
-                    Pattern pattern = Pattern.compile(message, Pattern.CASE_INSENSITIVE);
+                    Pattern pattern = Pattern.compile(message);
                     parser.configure(pattern, 0);
                     if (parser.parse(body)) {
                         successAttempt.incrementAndGet();
