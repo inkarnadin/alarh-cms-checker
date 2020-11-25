@@ -60,7 +60,12 @@ public class WordPressCheckProcessor extends AbstractProcessor {
     }
 
     private void checkViaSpecifyPaths() {
-        String[] paths = { "wp-content", "wp-admin", "wp-login.php" };
+        String[] paths = {
+                "wp-content",
+                "wp-admin",
+                "wp-includes",
+                "wp-login.php"
+        };
         Integer[] codes = { 200, 403 };
 
         attempt.incrementAndGet();
