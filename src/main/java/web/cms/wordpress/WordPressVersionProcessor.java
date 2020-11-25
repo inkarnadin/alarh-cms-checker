@@ -1,10 +1,7 @@
 package web.cms.wordpress;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
 import okhttp3.Response;
-import web.cms.joomla.annotation.JoomlaVersion;
-import web.cms.wordpress.annotation.WordPressVersion;
 import web.http.Host;
 import web.http.Request;
 import web.http.ResponseBodyHandler;
@@ -12,7 +9,6 @@ import web.module.annotation.Get;
 import web.parser.TextParser;
 import web.struct.AbstractProcessor;
 import web.struct.Destination;
-import web.struct.Parser;
 
 import java.util.Arrays;
 import java.util.Optional;
