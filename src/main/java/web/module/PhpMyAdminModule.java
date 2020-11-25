@@ -1,9 +1,12 @@
 package web.module;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.TypeLiteral;
 import lombok.SneakyThrows;
 import web.http.GetRequest;
 import web.module.annotation.Get;
+import web.parser.StringReturnTextParser;
+import web.parser.TextParser;
 import web.struct.Parser;
 import web.db.phpmyadmin.PhpMyAdminVersionParser;
 import web.struct.Connector;
@@ -20,7 +23,8 @@ public class PhpMyAdminModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(Request.class).annotatedWith(Get.class).to(GetRequest.class);
-        bind(Parser.class).annotatedWith(PhpMyAdminVersion.class).to(PhpMyAdminVersionParser.class);
+        bind(new TypeLiteral<TextParser<String>>(){}).to(StringReturnTextParser.class);
+
         bind(Processor.class).annotatedWith(PhpMyAdminVersion.class).to(PhpMyAdminVersionProcessor.class);
 
         bind(Connector.class).annotatedWith(PhpMyAdmin.class).toProvider(PhpMyAdminProvider.class);
