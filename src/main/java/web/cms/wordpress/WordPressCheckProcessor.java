@@ -64,7 +64,7 @@ public class WordPressCheckProcessor extends AbstractProcessor {
                 "wp-content",
                 "wp-admin",
                 "wp-includes",
-                "wp-login.php"
+                "wp-login"
         };
         Integer[] codes = { 200, 403 };
 
