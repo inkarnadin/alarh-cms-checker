@@ -89,7 +89,7 @@ public class DataLifeVersionProcessor extends AbstractProcessor {
                 }
             }
         }
-        destination.insert(1, String.format("  ** DataLifeEngine version (check #1) = %s", version));
+        destination.insert(1, String.format("  ** DataLifeEngine version (check #2) = %s", version));
     }
 
     @Override
