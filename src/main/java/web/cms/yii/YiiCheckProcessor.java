@@ -2,6 +2,7 @@ package web.cms.yii;
 
 import com.google.inject.Inject;
 import okhttp3.Response;
+import web.cms.CMSType;
 import web.http.Host;
 import web.http.Request;
 import web.http.ResponseBodyHandler;
@@ -34,7 +35,7 @@ public class YiiCheckProcessor extends AbstractProcessor {
         checkViaSpecifyScriptName();
 
         if (successAttempt.get() > 0)
-            destination.insert(0, successMessage);
+            destination.insert(0, String.format(successMessage, CMSType.YII.getName(), successAttempt, attempt));
     }
 
     private void checkViaSpecifyScriptName() {
