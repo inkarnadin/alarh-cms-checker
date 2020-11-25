@@ -35,7 +35,8 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        checkViaMainPage();
+        checkViaMainPageGenerator();
+        checkViaMainSpecifyKeywords();
         checkViaAdminPage();
         checkViaSpecifyScriptName();
         checkViaLogoPath();
@@ -45,7 +46,7 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
             destination.insert(0, String.format(successMessage, CMSType.DATALIFE_ENGINE.getName(), successAttempt, attempt));
     }
 
-    private void checkViaMainPage() {
+    private void checkViaMainPageGenerator() {
         Integer[] codes = { 200 };
         Pattern pattern = Pattern.compile("<meta name=\"generator\" content=\"(DataLife Engine).*");
 
@@ -60,6 +61,35 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
                 parser.configure(pattern, 0);
                 if (parser.parse(body))
                     successAttempt.incrementAndGet();
+            }
+        }
+    }
+
+    private void checkViaMainSpecifyKeywords() {
+        Integer[] codes = { 200 };
+        String[] messages = {
+                "dle_root",
+                "dle_admin",
+                "engine/classes",
+                "/templates/Default"
+        };
+
+        attempt.incrementAndGet();
+
+        Host host = new Host(protocol, server, null);
+        try (Response response = request.send(host)) {
+            Integer code = response.code();
+
+            if (Arrays.asList(codes).contains(code)) {
+                String body = ResponseBodyHandler.readBody(response);
+                for (String message : messages) {
+                    Pattern pattern = Pattern.compile(message);
+                    parser.configure(pattern, 0);
+                    if (parser.parse(body)) {
+                        successAttempt.incrementAndGet();
+                        return;
+                    }
+                }
             }
         }
     }
@@ -88,7 +118,8 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
         String[] contentTypes = { IMAGE_JPG, IMAGE_PNG };
         String[] paths = {
                 "engine/skins/images/logos.jpg",
-                "engine/skins/images/logo.png" };
+                "engine/skins/images/logo.png"
+        };
 
         attempt.incrementAndGet();
 
