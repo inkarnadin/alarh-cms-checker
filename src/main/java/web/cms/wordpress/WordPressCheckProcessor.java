@@ -60,7 +60,7 @@ public class WordPressCheckProcessor extends AbstractProcessor {
     }
 
     private void checkViaSpecifyPaths() {
-        String[] paths = { "wp-content", "wp-admin" };
+        String[] paths = { "wp-content", "wp-admin", "wp-login.php" };
         Integer[] codes = { 200, 403 };
 
         attempt.incrementAndGet();
@@ -71,8 +71,10 @@ public class WordPressCheckProcessor extends AbstractProcessor {
 
             try (Response response = request.send(host)) {
                 Integer code = response.code();
-                if (Arrays.asList(codes).contains(code) && !HttpValidator.isRedirect(response))
+                if (Arrays.asList(codes).contains(code) && !HttpValidator.isRedirect(response)) {
                     successAttempt.incrementAndGet();
+                    return;
+                }
             }
         }
     }
