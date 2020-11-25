@@ -119,6 +119,7 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
         String[] paths = {
                 "engine/skins/images/logos.jpg",
                 "engine/skins/images/logo.png",
+                "templates/Default/images/logotype.png",
                 "templates/Default/images/logo.png"
         };
 
