@@ -85,15 +85,22 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
     private void checkViaLogoPath() {
         Integer[] codes = { 200, 304 };
         String[] contentTypes = { IMAGE_JPG, IMAGE_PNG };
+        String[] paths = {
+                "engine/skins/images/logos.jpg",
+                "engine/skins/images/logo.png" };
 
         attempt.incrementAndGet();
 
-        Host host = new Host(protocol, server, "engine/skins/images/logos.jpg");
-        try (Response response = request.send(host)) {
-            Integer code = response.code();
-            String contentType = response.header(CONTENT_TYPE);
-            if (Arrays.asList(codes).contains(code) && Arrays.asList(contentTypes).contains(contentType))
-                successAttempt.incrementAndGet();
+        for (String path : paths) {
+            Host host = new Host(protocol, server, path);
+            try (Response response = request.send(host)) {
+                Integer code = response.code();
+                String contentType = response.header(CONTENT_TYPE);
+                if (Arrays.asList(codes).contains(code) && Arrays.asList(contentTypes).contains(contentType)) {
+                    successAttempt.incrementAndGet();
+                    return;
+                }
+            }
         }
     }
 
