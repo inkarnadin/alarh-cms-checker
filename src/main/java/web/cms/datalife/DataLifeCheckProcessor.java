@@ -39,6 +39,7 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
         checkViaAdminPage();
         checkViaSpecifyScriptName();
         checkViaLogoPath();
+        checkViaError404Message();
 
         if (successAttempt.get() > 0)
             destination.insert(0, String.format(successMessage, CMSType.DATALIFE_ENGINE.getName(), successAttempt, attempt));
@@ -119,6 +120,32 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
                 parser.configure(pattern, 0);
                 if (parser.parse(body))
                     successAttempt.incrementAndGet();
+            }
+        }
+    }
+
+    private void checkViaError404Message() {
+        Integer[] codes = { 404 };
+        String[] messages = {
+                "По данному адресу публикаций на сайте не найдено, либо у Вас нет доступа для просмотра информации по данному адресу"
+        };
+
+        attempt.incrementAndGet();
+
+        Host host = new Host(protocol, server, "administrator");
+        try (Response response = request.send(host)) {
+            Integer code = response.code();
+
+            if (Arrays.asList(codes).contains(code)) {
+                String body = ResponseBodyHandler.readBody(response);
+                for (String message : messages) {
+                    Pattern pattern = Pattern.compile(message, Pattern.CASE_INSENSITIVE);
+                    parser.configure(pattern, 0);
+                    if (parser.parse(body)) {
+                        successAttempt.incrementAndGet();
+                        return;
+                    }
+                }
             }
         }
     }
