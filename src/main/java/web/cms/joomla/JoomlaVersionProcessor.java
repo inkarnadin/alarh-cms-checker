@@ -53,9 +53,10 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
 
     private void checkVersionViaPublicMetaInfo() {
         String version = "unknown";
-        Host host = new Host(protocol, server, null);
+
         Pattern pattern = Pattern.compile("<meta name=\"generator\".*Version\\s(.*)\" />");
 
+        Host host = new Host(protocol, server, null);
         try (Response response = request.send(host)) {
             Integer code = response.code();
 
@@ -70,6 +71,7 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
 
     private void checkVersionViaConfigXml() {
         String version = "unknown";
+
         Host host = new Host(protocol, server, "administrator/components/com_config/config.xml");
         try (Response response = request.send(host)) {
             Integer code = response.code();
@@ -85,6 +87,7 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
 
     private void checkVersionViaLangConfigXml() {
         String version = "unknown";
+
         Host host = new Host(protocol, server, "language/en-GB/en-GB.xml");
         try (Response response = request.send(host)) {
             Integer code = response.code();
@@ -100,6 +103,7 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
 
     private void chechVersionViaJoomlaXml() {
         String version = "unknown";
+
         Host host = new Host(protocol, server, "administrator/manifests/files/joomla.xml");
         try (Response response = request.send(host)) {
             Integer code = response.code();
