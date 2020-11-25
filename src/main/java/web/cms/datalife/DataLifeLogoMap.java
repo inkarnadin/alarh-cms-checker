@@ -20,6 +20,7 @@ public class DataLifeLogoMap {
         put(classLoader.getResource("datalife/8.2.jpg"), "8.2");
         put(classLoader.getResource("datalife/9.1.jpg"), "9.1");
         put(classLoader.getResource("datalife/10+.png"), "10 or higher");
+        put(classLoader.getResource("datalife/13.png"), "13 or higher");
     }
 
     @SneakyThrows

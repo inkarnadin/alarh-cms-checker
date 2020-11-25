@@ -118,7 +118,8 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
         String[] contentTypes = { IMAGE_JPG, IMAGE_PNG };
         String[] paths = {
                 "engine/skins/images/logos.jpg",
-                "engine/skins/images/logo.png"
+                "engine/skins/images/logo.png",
+                "templates/Default/images/logo.png"
         };
 
         attempt.incrementAndGet();
