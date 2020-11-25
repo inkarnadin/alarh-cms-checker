@@ -36,7 +36,7 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
     @Override
     public void process() {
         checkViaMainPageGenerator();
-        checkViaMainSpecifyKeywords();
+        checkViaMainPageSpecifyKeywords();
         checkViaAdminPage();
         checkViaSpecifyScriptName();
         checkViaLogoPath();
@@ -65,7 +65,7 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
         }
     }
 
-    private void checkViaMainSpecifyKeywords() {
+    private void checkViaMainPageSpecifyKeywords() {
         Integer[] codes = { 200 };
         String[] messages = {
                 "dle_root",
