@@ -11,6 +11,7 @@ public enum CMSType {
     JOOMLA(1, "Joomla!"),
     YII(2, "Yii Framework"),
     DATALIFE_ENGINE(3, "DataLife Engine"),
+    MAXSITE_CMS(4, "MaxSite CMS"),
     UNKNOWN(-1, "Unknown");
 
     private final int id;

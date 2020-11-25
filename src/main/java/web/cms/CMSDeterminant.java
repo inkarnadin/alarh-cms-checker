@@ -3,6 +3,7 @@ package web.cms;
 import com.google.inject.Inject;
 import web.cms.datalife.annotation.DataLife;
 import web.cms.joomla.annotation.Joomla;
+import web.cms.maxsite.annotation.MaxSite;
 import web.cms.wordpress.annotation.WordPress;
 import web.cms.yii.annotation.Yii;
 import web.struct.Destination;
@@ -18,16 +19,19 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
     private final Processor jmCheckProcessor;
     private final Processor yiiCheckProcessor;
     private final Processor dleCheckProcessor;
+    private final Processor mxsCheckProcessor;
 
     @Inject
     CMSDeterminant(@WordPress Processor wpCheckProcessor,
                    @Joomla Processor jmCheckProcessor,
                    @Yii Processor yiiCheckProcessor,
-                   @DataLife Processor dleCheckProcessor) {
+                   @DataLife Processor dleCheckProcessor,
+                   @MaxSite Processor mxsCheckProcessor) {
         this.wpCheckProcessor = wpCheckProcessor;
         this.jmCheckProcessor = jmCheckProcessor;
         this.yiiCheckProcessor = yiiCheckProcessor;
         this.dleCheckProcessor = dleCheckProcessor;
+        this.mxsCheckProcessor = mxsCheckProcessor;
     }
 
     @Override
@@ -53,6 +57,11 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
         dleCheckProcessor.process();
         Optional<Destination> dleTransmit = dleCheckProcessor.transmit();
         dleTransmit.ifPresent(destination -> result.put(CMSType.DATALIFE_ENGINE, destination));
+
+        mxsCheckProcessor.configure(params.getProtocol(), params.getServer());
+        mxsCheckProcessor.process();
+        Optional<Destination> mxsTransmit = mxsCheckProcessor.transmit();
+        mxsTransmit.ifPresent(destination -> result.put(CMSType.MAXSITE_CMS, destination));
 
         return result;
     }

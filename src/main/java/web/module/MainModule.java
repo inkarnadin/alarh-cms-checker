@@ -11,6 +11,8 @@ import web.cms.datalife.DataLifeCheckProcessor;
 import web.cms.datalife.annotation.DataLife;
 import web.cms.joomla.JoomlaCheckProcessor;
 import web.cms.joomla.annotation.Joomla;
+import web.cms.maxsite.MaxSiteCheckProcessor;
+import web.cms.maxsite.annotation.MaxSite;
 import web.cms.wordpress.WordPressCheckProcessor;
 import web.cms.wordpress.annotation.WordPress;
 import web.cms.yii.YiiCheckProcessor;
@@ -39,6 +41,7 @@ public class MainModule extends AbstractModule {
         bind(Processor.class).annotatedWith(WordPress.class).to(WordPressCheckProcessor.class);
         bind(Processor.class).annotatedWith(Yii.class).to(YiiCheckProcessor.class);
         bind(Processor.class).annotatedWith(DataLife.class).to(DataLifeCheckProcessor.class);
+        bind(Processor.class).annotatedWith(MaxSite.class).to(MaxSiteCheckProcessor.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
 
