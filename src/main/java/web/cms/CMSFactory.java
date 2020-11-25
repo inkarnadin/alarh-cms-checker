@@ -2,6 +2,8 @@ package web.cms;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import web.module.DataLifeModule;
+import web.module.YiiModule;
 import web.module.provider.DataLifeProvider;
 import web.module.provider.YiiProvider;
 import web.struct.Connector;
@@ -15,7 +17,9 @@ public class CMSFactory {
     public static Connector getCMSConnector(CMSType cmsType) {
         Injector injector = Guice.createInjector(
                 new JoomlaModule(),
-                new WordPressModule()
+                new WordPressModule(),
+                new YiiModule(),
+                new DataLifeModule()
         );
 
         switch (cmsType) {
