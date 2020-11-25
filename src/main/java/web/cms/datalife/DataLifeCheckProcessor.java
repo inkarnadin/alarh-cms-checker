@@ -71,7 +71,7 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
                 "dle_root",
                 "dle_admin",
                 "engine/classes",
-                "/templates/Default"
+                "templates/Default"
         };
 
         attempt.incrementAndGet();
