@@ -9,7 +9,7 @@ import java.util.Objects;
 @EqualsAndHashCode
 public class Params {
 
-    private String protocol;
+    private String protocol = "http";
     private String server;
 
 }

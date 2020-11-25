@@ -30,9 +30,6 @@ public class Runner {
 
                 printSplit();
 
-                System.out.print("Set protocol [http|https]: ");
-                params.setProtocol(scanner.nextLine());
-
                 System.out.print("Set target host [example.com]: ");
                 params.setServer(scanner.nextLine());
 
