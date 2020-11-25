@@ -33,6 +33,7 @@ public class MaxSiteCheckProcessor extends AbstractProcessor {
     @Override
     public void process() {
         checkViaMainPageGenerator();
+        checkViaMainPageSpecifyKeywords();
 
         if (successAttempt.get() > 0)
             destination.insert(0, String.format(successMessage, CMSType.MAXSITE_CMS.getName(), successAttempt, attempt));
@@ -53,6 +54,35 @@ public class MaxSiteCheckProcessor extends AbstractProcessor {
                 parser.configure(pattern, 0);
                 if (parser.parse(body))
                     successAttempt.incrementAndGet();
+            }
+        }
+    }
+
+    private void checkViaMainPageSpecifyKeywords() {
+        Integer[] codes = { 200 };
+        String[] messages = {
+                "application/maxsite",
+                "maxsite/plugins",
+                "maxsite/templates",
+                "maxsite/common"
+        };
+
+        attempt.incrementAndGet();
+
+        Host host = new Host(protocol, server, null);
+        try (Response response = request.send(host)) {
+            Integer code = response.code();
+
+            if (Arrays.asList(codes).contains(code)) {
+                String body = ResponseBodyHandler.readBody(response);
+                for (String message : messages) {
+                    Pattern pattern = Pattern.compile(message);
+                    parser.configure(pattern, 0);
+                    if (parser.parse(body)) {
+                        successAttempt.incrementAndGet();
+                        return;
+                    }
+                }
             }
         }
     }
