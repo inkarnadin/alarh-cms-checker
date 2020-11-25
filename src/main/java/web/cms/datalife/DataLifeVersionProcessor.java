@@ -50,7 +50,7 @@ public class DataLifeVersionProcessor extends AbstractProcessor {
 
         Pattern pattern = Pattern.compile("Актуальная версия скрипта: (.*)");
 
-        Host host = new Host(protocol, server, null);
+        Host host = new Host(protocol, server, "/engine/ajax/updates.php");
         try (Response response = request.send(host)) {
             Integer code = response.code();
 
@@ -89,7 +89,7 @@ public class DataLifeVersionProcessor extends AbstractProcessor {
                 }
             }
         }
-        destination.insert(0, String.format("  ** DataLifeEngine version (check #1) = %s", version));
+        destination.insert(1, String.format("  ** DataLifeEngine version (check #1) = %s", version));
     }
 
     @Override
