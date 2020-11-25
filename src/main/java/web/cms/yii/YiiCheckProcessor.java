@@ -31,13 +31,13 @@ public class YiiCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        checkViaMainPage();
+        checkViaSpecifyScriptName();
 
         if (successAttempt.get() > 0)
             destination.insert(0, successMessage);
     }
 
-    private void checkViaMainPage() {
+    private void checkViaSpecifyScriptName() {
         Integer[] codes = { 200 };
         Pattern pattern = Pattern.compile("<script src=\".*(yii.js).*\"></script>");
 
