@@ -2,6 +2,7 @@ package web.cms.wordpress;
 
 import com.google.inject.Inject;
 import okhttp3.Response;
+import web.cms.CMSType;
 import web.http.Host;
 import web.http.HttpValidator;
 import web.http.ResponseBodyHandler;
@@ -16,8 +17,6 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class WordPressCheckProcessor extends AbstractProcessor {
-
-    private final static String successMessage = "  * WordPress tags have been found!";
 
     private final Request request;
     private final TextParser<Boolean> parser;
@@ -34,13 +33,18 @@ public class WordPressCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        if (checkViaMainPage() || checkViaSpecifyPaths())
-        destination.insert(0, successMessage);
+        checkViaMainPage();
+        checkViaSpecifyPaths();
+
+        if (successAttempt.get() > 0)
+            destination.insert(0, String.format(successMessage, CMSType.WORDPRESS.getName(), successAttempt, attempt));
     }
 
-    private boolean checkViaMainPage() {
+    private void checkViaMainPage() {
         Integer[] codes = { 200 };
         Pattern pattern = Pattern.compile("<meta name=\"generator\" content=\"(WordPress).*/>");
+
+        attempt.incrementAndGet();
 
         Host host = new Host(protocol, server, null);
         try (Response response = request.send(host)) {
@@ -49,15 +53,17 @@ public class WordPressCheckProcessor extends AbstractProcessor {
             if (Arrays.asList(codes).contains(code)) {
                 String body = ResponseBodyHandler.readBody(response);
                 parser.configure(pattern, 0);
-                return parser.parse(body);
+                if (parser.parse(body))
+                    successAttempt.incrementAndGet();;
             }
         }
-        return false;
     }
 
-    private boolean checkViaSpecifyPaths() {
+    private void checkViaSpecifyPaths() {
         String[] paths = { "wp-content", "wp-admin" };
         Integer[] codes = { 200, 403 };
+
+        attempt.incrementAndGet();
 
         for (String path : paths) {
             Host host = new Host(protocol, server, path);
@@ -65,12 +71,10 @@ public class WordPressCheckProcessor extends AbstractProcessor {
 
             try (Response response = request.send(host)) {
                 Integer code = response.code();
-                if (Arrays.asList(codes).contains(code) && !HttpValidator.isRedirect(response)) {
-                    return true;
-                }
+                if (Arrays.asList(codes).contains(code) && !HttpValidator.isRedirect(response))
+                    successAttempt.incrementAndGet();
             }
         }
-        return false;
     }
 
     @Override

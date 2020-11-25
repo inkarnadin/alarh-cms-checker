@@ -2,6 +2,7 @@ package web.cms.joomla;
 
 import com.google.inject.Inject;
 import okhttp3.Response;
+import web.cms.CMSType;
 import web.http.Host;
 import web.http.HttpValidator;
 import web.http.ResponseBodyHandler;
@@ -12,7 +13,6 @@ import web.struct.Destination;
 import web.http.Request;
 
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -21,8 +21,6 @@ import static web.http.ContentType.TEXT_XML;
 import static web.http.Headers.CONTENT_TYPE;
 
 public class JoomlaCheckProcessor extends AbstractProcessor {
-
-    private final static String successMessage = "  * Joomla tags have been found!";
 
     private final Request request;
     private final TextParser<Boolean> parser;
@@ -39,13 +37,20 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        if (checkViaSpecifyPaths() || checkViaMainPage() || checkViaSpecifyFiles())
-            destination.insert(0, successMessage);
+        checkViaSpecifyPaths();
+        checkViaMainPage();
+        checkViaSpecifyFiles();
+        checkViaAdminPage();
+
+        if (successAttempt.get() > 0)
+            destination.insert(0, String.format(successMessage, CMSType.JOOMLA.getName(), successAttempt, attempt));
     }
 
-    private boolean checkViaSpecifyPaths() {
+    private void checkViaSpecifyPaths() {
         String[] paths = { "administrator/components" };
-        Integer[] codes = { 200, 304, 401 };
+        Integer[] codes = { 200, 304, 401, 403 };
+
+        attempt.incrementAndGet();
 
         for (String path : paths) {
             Host host = new Host(protocol, server, path);
@@ -54,16 +59,17 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
             try (Response response = request.send(host)) {
                 Integer code = response.code();
                 if (Arrays.asList(codes).contains(code) && !HttpValidator.isRedirect(response)) {
-                    return true;
+                    successAttempt.incrementAndGet();
                 }
             }
         }
-        return false;
     }
 
-    private boolean checkViaMainPage() {
+    private void checkViaMainPage() {
         Integer[] codes = { 200 };
         Pattern pattern = Pattern.compile("<meta name=\"generator\" content=\"(Joomla!).*/>");
+
+        attempt.incrementAndGet();
 
         Host host = new Host(protocol, server, null);
         try (Response response = request.send(host)) {
@@ -72,15 +78,17 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
             if (Arrays.asList(codes).contains(code)) {
                 String body = ResponseBodyHandler.readBody(response);
                 parser.configure(pattern, 0);
-                return parser.parse(body);
+                if (parser.parse(body))
+                    successAttempt.incrementAndGet();
             }
         }
-        return false;
     }
 
-    private boolean checkViaSpecifyFiles() {
-        Integer[] codes = { 304 };
+    private void checkViaSpecifyFiles() {
+        Integer[] codes = { 200, 304 };
         String[] contentTypes = { TEXT_XML, APPLICATION_XML };
+
+        attempt.incrementAndGet();
 
         Host host = new Host(protocol, server, "administrator/manifests/files/joomla.xml");
         try (Response response = request.send(host)) {
@@ -88,11 +96,30 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
             String contentType = response.header(CONTENT_TYPE);
 
             if (Arrays.asList(codes).contains(code) && Arrays.asList(contentTypes).contains(contentType))
-                return true;
+                successAttempt.incrementAndGet();
         }
-        return false;
     }
 
+    private void checkViaAdminPage() {
+        Pattern pattern = Pattern.compile("login-joomla");
+        String path = "administrator";
+        Integer[] codes = { 200 };
+
+        attempt.incrementAndGet();
+
+        Host host = new Host(protocol, server, path);
+        host.setBegetProtection(true);
+
+        try (Response response = request.send(host)) {
+            Integer code = response.code();
+            if (Arrays.asList(codes).contains(code) && !HttpValidator.isRedirect(response)) {
+                String body = ResponseBodyHandler.readBody(response);
+                parser.configure(pattern, 0);
+                if (parser.parse(body))
+                    successAttempt.incrementAndGet();
+            }
+        }
+    }
 
     @Override
     public Optional<Destination> transmit() {

@@ -1,25 +1,19 @@
 package web.cms;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+@Getter
 @RequiredArgsConstructor
 public enum CMSType {
 
-    WORDPRESS(0, "wp"),
-    JOOMLA(1, "joomla"),
-    YII(2, "yii"),
-    DATALIFE_ENGINE(3, "datalife engine"),
-    UNKNOWN(-1, "unknown");
+    WORDPRESS(0, "WordPress"),
+    JOOMLA(1, "Joomla!"),
+    YII(2, "Yii Framework"),
+    DATALIFE_ENGINE(3, "DataLife Engine"),
+    UNKNOWN(-1, "Unknown");
 
     private final int id;
     private final String name;
-
-    public static CMSType search(String name) {
-        for (CMSType cmsType : CMSType.values()) {
-            if (name.equalsIgnoreCase(cmsType.name))
-                return cmsType;
-        }
-        return UNKNOWN;
-    }
 
 }

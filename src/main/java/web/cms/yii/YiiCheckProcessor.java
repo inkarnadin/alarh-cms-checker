@@ -16,8 +16,6 @@ import java.util.regex.Pattern;
 
 public class YiiCheckProcessor extends AbstractProcessor {
 
-    private final static String successMessage = "  * Yii Framework tags have been found!";
-
     private final Request request;
     private final TextParser<Boolean> parser;
     private final Destination destination;
@@ -33,13 +31,17 @@ public class YiiCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        if (checkViaMainPage())
+        checkViaMainPage();
+
+        if (successAttempt.get() > 0)
             destination.insert(0, successMessage);
     }
 
-    private boolean checkViaMainPage() {
+    private void checkViaMainPage() {
         Integer[] codes = { 200 };
         Pattern pattern = Pattern.compile("<script src=\".*(yii.js).*\"></script>");
+
+        attempt.incrementAndGet();
 
         Host host = new Host(protocol, server, null);
         try (Response response = request.send(host)) {
@@ -48,10 +50,10 @@ public class YiiCheckProcessor extends AbstractProcessor {
             if (Arrays.asList(codes).contains(code)) {
                 String body = ResponseBodyHandler.readBody(response);
                 parser.configure(pattern, 0);
-                return parser.parse(body);
+                if (parser.parse(body))
+                    successAttempt.incrementAndGet();
             }
         }
-        return false;
     }
 
     @Override

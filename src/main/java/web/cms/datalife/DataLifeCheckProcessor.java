@@ -2,6 +2,7 @@ package web.cms.datalife;
 
 import com.google.inject.Inject;
 import okhttp3.Response;
+import web.cms.CMSType;
 import web.http.Host;
 import web.http.Request;
 import web.http.ResponseBodyHandler;
@@ -15,8 +16,6 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class DataLifeCheckProcessor extends AbstractProcessor {
-
-    private final static String successMessage = "  * DataLife Engine tags have been found!";
 
     private final Request request;
     private final TextParser<Boolean> parser;
@@ -33,13 +32,18 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        if (checkViaMainPage() || checkViaAdminPage())
-            destination.insert(0, successMessage);
+        checkViaMainPage();
+        checkViaAdminPage();
+
+        if (successAttempt.get() > 0)
+            destination.insert(0, String.format(successMessage, CMSType.DATALIFE_ENGINE.getName(), successAttempt, attempt));
     }
 
-    private boolean checkViaMainPage() {
+    private void checkViaMainPage() {
         Integer[] codes = { 200 };
         Pattern pattern = Pattern.compile("<meta name=\"generator\" content=\"(DataLife Engine).*");
+
+        attempt.incrementAndGet();
 
         Host host = new Host(protocol, server, null);
         try (Response response = request.send(host)) {
@@ -48,15 +52,17 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
             if (Arrays.asList(codes).contains(code)) {
                 String body = ResponseBodyHandler.readBody(response);
                 parser.configure(pattern, 0);
-                return parser.parse(body);
+                if (parser.parse(body))
+                    successAttempt.incrementAndGet();
             }
         }
-        return false;
     }
 
-    private boolean checkViaAdminPage() {
+    private void checkViaAdminPage() {
         Integer[] codes = { 200 };
         Pattern pattern = Pattern.compile("DataLife Engine");
+
+        attempt.incrementAndGet();
 
         Host host = new Host(protocol, server, "admin.php");
         try (Response response = request.send(host)) {
@@ -65,10 +71,10 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
             if (Arrays.asList(codes).contains(code)) {
                 String body = ResponseBodyHandler.readBody(response);
                 parser.configure(pattern, 0);
-                return parser.parse(body);
+                if (parser.parse(body))
+                    successAttempt.incrementAndGet();
             }
         }
-        return false;
     }
 
     @Override
