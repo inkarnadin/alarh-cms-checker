@@ -78,8 +78,7 @@ public class Runner {
     }
 
     private static void printSplit() {
-        System.out.println("===========================================================");
-        System.out.println("\n");
+        System.out.println("===========================================================\n");
     }
 
 }
