@@ -1,3 +1,3 @@
 package web.struct;
 
-public class SimpleDestination implements Destination {}
+public class SimpleDestination extends AbstractDestination {}

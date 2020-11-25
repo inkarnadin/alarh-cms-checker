@@ -1,10 +1,12 @@
 package web.module;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
 import lombok.SneakyThrows;
 import web.cms.CMSChecker;
 import web.cms.CMSDeterminant;
+import web.cms.CMSType;
 import web.cms.datalife.DataLifeCheckProcessor;
 import web.cms.datalife.annotation.DataLife;
 import web.cms.joomla.JoomlaCheckProcessor;
@@ -31,14 +33,15 @@ public class MainModule extends AbstractModule {
         bind(Request.class).annotatedWith(Get.class).to(GetRequest.class);
 
         bind(new TypeLiteral<TextParser<Boolean>>(){}).to(BooleanReturnTextParser.class);
-        bind(Destination.class).to(SimpleDestination.class);
+        bind(Destination.class).to(SimpleDestination.class).in(Scopes.NO_SCOPE);
 
         bind(Processor.class).annotatedWith(Joomla.class).to(JoomlaCheckProcessor.class);
         bind(Processor.class).annotatedWith(WordPress.class).to(WordPressCheckProcessor.class);
         bind(Processor.class).annotatedWith(Yii.class).to(YiiCheckProcessor.class);
         bind(Processor.class).annotatedWith(DataLife.class).to(DataLifeCheckProcessor.class);
 
-        bind(Determinant.class).annotatedWith(Cms.class).to(CMSDeterminant.class);
+        bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
+
         bind(Checker.class).annotatedWith(Cms.class).to(CMSChecker.class);
 
         bind(Checker.class).annotatedWith(DBAdmin.class).to(DBAdminChecker.class);

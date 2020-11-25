@@ -1,9 +1,9 @@
 package web.struct;
 
-import java.util.List;
+import java.util.Map;
 
-public interface Determinant<T> {
+public interface Determinant<T, E> {
 
-    List<T> define(Params params);
+    Map<T, E> define(Params params);
 
 }

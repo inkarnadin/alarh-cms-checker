@@ -1,40 +1,36 @@
 package web.cms;
 
 import com.google.inject.Inject;
-import web.module.annotation.Cms;
-import web.struct.AbstractChecker;
-import web.struct.Connector;
-import web.struct.Determinant;
-import web.struct.Params;
+import web.struct.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 
-@SuppressWarnings({"unchecked", "rawtypes"})
 public class CMSChecker extends AbstractChecker {
 
-    private final Determinant determinant;
-
-    private final List<CMSType> types = new ArrayList<>();
+    private final Determinant<CMSType, Destination> determinant;
+    private final Map<CMSType, Destination> types = new HashMap<>();
 
     @Inject
-    CMSChecker(@Cms Determinant determinant) {
+    CMSChecker(Determinant<CMSType, Destination> determinant) {
         this.determinant = determinant;
     }
 
     @Override
     public void check(Params params) {
-        types.addAll(determinant.define(params));
+        types.putAll(determinant.define(params));
 
-        for (CMSType type : types) {
-            Connector connector = CMSFactory.getCMSConnector(type);
+        types.forEach((cmsType, destination) -> {
+            System.out.println(destination.fetch().get(0));
+
+            Connector connector = CMSFactory.getCMSConnector(cmsType);
             connector.configure(params);
 
             connector.checkVersion();
             //connector.checkPlugins();
-        }
+
+            System.out.println();
+        });
     }
 
 }
