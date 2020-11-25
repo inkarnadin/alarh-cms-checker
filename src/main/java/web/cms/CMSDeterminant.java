@@ -64,7 +64,7 @@ public class CMSDeterminant implements Determinant<CMSType> {
         dleCheckProcessor.process();
         Optional<Destination> dleTransmit = dleCheckProcessor.transmit();
         dleTransmit.ifPresent(destination -> {
-            result.add(CMSType.YII);
+            result.add(CMSType.DATALIFE_ENGINE);
             System.out.println(destination.fetch().get(0));
         });
 
