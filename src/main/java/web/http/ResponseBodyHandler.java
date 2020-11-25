@@ -19,9 +19,6 @@ public class ResponseBodyHandler {
 
     @SneakyThrows
     public static String readBody(Response response) {
-        if (Objects.isNull(response))
-            throw new IllegalArgumentException("Empty response!");
-
         String charset = defineCharset(response.header(CONTENT_TYPE));
 
         ResponseBody body = response.body();
