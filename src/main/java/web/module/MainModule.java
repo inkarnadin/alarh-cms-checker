@@ -9,6 +9,8 @@ import web.cms.CMSDeterminant;
 import web.cms.CMSType;
 import web.cms.datalife.DataLifeCheckProcessor;
 import web.cms.datalife.annotation.DataLife;
+import web.cms.drupal.DrupalCheckProcessor;
+import web.cms.drupal.annotation.Drupal;
 import web.cms.joomla.JoomlaCheckProcessor;
 import web.cms.joomla.annotation.Joomla;
 import web.cms.maxsite.MaxSiteCheckProcessor;
@@ -42,6 +44,7 @@ public class MainModule extends AbstractModule {
         bind(Processor.class).annotatedWith(Yii.class).to(YiiCheckProcessor.class);
         bind(Processor.class).annotatedWith(DataLife.class).to(DataLifeCheckProcessor.class);
         bind(Processor.class).annotatedWith(MaxSite.class).to(MaxSiteCheckProcessor.class);
+        bind(Processor.class).annotatedWith(Drupal.class).to(DrupalCheckProcessor.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
 

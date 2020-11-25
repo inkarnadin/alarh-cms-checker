@@ -14,7 +14,8 @@ public class CMSFactory {
                 new WordPressModule(),
                 new YiiModule(),
                 new DataLifeModule(),
-                new MaxSiteModule()
+                new MaxSiteModule(),
+                new DrupalModule()
         );
 
         switch (cmsType) {
@@ -28,6 +29,8 @@ public class CMSFactory {
                 return injector.getInstance(DataLifeProvider.class).get();
             case MAXSITE_CMS:
                 return injector.getInstance(MaxSiteProvider.class).get();
+            case DRUPAL:
+                return injector.getInstance(DrupalProvider.class).get();
             default:
                 throw new IllegalArgumentException("Unsupported CMS type");
         }

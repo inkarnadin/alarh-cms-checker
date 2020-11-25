@@ -2,6 +2,7 @@ package web.cms;
 
 import com.google.inject.Inject;
 import web.cms.datalife.annotation.DataLife;
+import web.cms.drupal.annotation.Drupal;
 import web.cms.joomla.annotation.Joomla;
 import web.cms.maxsite.annotation.MaxSite;
 import web.cms.wordpress.annotation.WordPress;
@@ -20,18 +21,21 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
     private final Processor yiiCheckProcessor;
     private final Processor dleCheckProcessor;
     private final Processor mxsCheckProcessor;
+    private final Processor drpCheckProcessor;
 
     @Inject
     CMSDeterminant(@WordPress Processor wpCheckProcessor,
                    @Joomla Processor jmCheckProcessor,
                    @Yii Processor yiiCheckProcessor,
                    @DataLife Processor dleCheckProcessor,
-                   @MaxSite Processor mxsCheckProcessor) {
+                   @MaxSite Processor mxsCheckProcessor,
+                   @Drupal Processor drpCheckProcessor) {
         this.wpCheckProcessor = wpCheckProcessor;
         this.jmCheckProcessor = jmCheckProcessor;
         this.yiiCheckProcessor = yiiCheckProcessor;
         this.dleCheckProcessor = dleCheckProcessor;
         this.mxsCheckProcessor = mxsCheckProcessor;
+        this.drpCheckProcessor = drpCheckProcessor;
     }
 
     @Override
@@ -62,6 +66,11 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
         mxsCheckProcessor.process();
         Optional<Destination> mxsTransmit = mxsCheckProcessor.transmit();
         mxsTransmit.ifPresent(destination -> result.put(CMSType.MAXSITE_CMS, destination));
+
+        drpCheckProcessor.configure(params.getProtocol(), params.getServer());
+        drpCheckProcessor.process();
+        Optional<Destination> drpTransmit = drpCheckProcessor.transmit();
+        drpTransmit.ifPresent(destination -> result.put(CMSType.DRUPAL, destination));
 
         return result;
     }

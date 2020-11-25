@@ -12,6 +12,7 @@ public enum CMSType {
     YII(2, "Yii Framework"),
     DATALIFE_ENGINE(3, "DataLife Engine"),
     MAXSITE_CMS(4, "MaxSite CMS"),
+    DRUPAL(5, "Drupal"),
     UNKNOWN(-1, "Unknown");
 
     private final int id;
