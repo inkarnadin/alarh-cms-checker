@@ -3,6 +3,7 @@ package web.cms;
 import com.google.inject.Inject;
 
 import kotlin.Pair;
+
 import lombok.SneakyThrows;
 import web.cms.datalife.annotation.DataLife;
 import web.cms.drupal.annotation.Drupal;
@@ -20,27 +21,18 @@ import java.util.concurrent.*;
 
 public class CMSDeterminant implements Determinant<CMSType, Destination> {
 
-    private final Processor wpCheckProcessor;
-    private final Processor jmCheckProcessor;
-    private final Processor yiiCheckProcessor;
-    private final Processor dleCheckProcessor;
-    private final Processor mxsCheckProcessor;
-    private final Processor drpCheckProcessor;
-
-    @Inject
-    CMSDeterminant(@WordPress Processor wpCheckProcessor,
-                   @Joomla Processor jmCheckProcessor,
-                   @Yii Processor yiiCheckProcessor,
-                   @DataLife Processor dleCheckProcessor,
-                   @MaxSite Processor mxsCheckProcessor,
-                   @Drupal Processor drpCheckProcessor) {
-        this.wpCheckProcessor = wpCheckProcessor;
-        this.jmCheckProcessor = jmCheckProcessor;
-        this.yiiCheckProcessor = yiiCheckProcessor;
-        this.dleCheckProcessor = dleCheckProcessor;
-        this.mxsCheckProcessor = mxsCheckProcessor;
-        this.drpCheckProcessor = drpCheckProcessor;
-    }
+    @Inject @WordPress
+    private Processor wpCheckProcessor;
+    @Inject @Joomla
+    private Processor jmCheckProcessor;
+    @Inject @Yii
+    private Processor yiiCheckProcessor;
+    @Inject @DataLife
+    private Processor dleCheckProcessor;
+    @Inject @MaxSite
+    private Processor mxsCheckProcessor;
+    @Inject @Drupal
+    private Processor drpCheckProcessor;
 
     @Override
     @SneakyThrows
