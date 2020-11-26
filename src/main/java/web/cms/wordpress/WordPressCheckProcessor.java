@@ -3,6 +3,7 @@ package web.cms.wordpress;
 import com.google.inject.Inject;
 import web.cms.CMSType;
 import web.cms.analyzer.cms.MainPageAnalyzer;
+import web.cms.analyzer.cms.PageAnalyzer;
 import web.cms.analyzer.cms.PathAnalyzer;
 import web.module.annotation.Get;
 import web.parser.TextParser;
@@ -32,16 +33,24 @@ public class WordPressCheckProcessor extends AbstractProcessor {
         List<Boolean> result = new ArrayList<>();
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
-        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-
         mainPageAnalyzer.checkViaMainPageGenerator(new String[]{
                 "WordPress"
         });
+
+        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
         pathAnalyzer.checkViaPaths(new Integer[] { 200, 403 }, new String[] {
                 "wp-content",
                 "wp-admin",
                 "wp-includes",
                 "wp-login.php"
+        });
+
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result, "wp-login.php");
+        pageAnalyzer.checkViaPageKeywords(new String[] {
+                "Powered by WordPress",
+                "wp-pwd",
+                "wp-submit",
+                "wp-core-ui"
         });
 
         long count = result.stream().filter(b -> b).count();
