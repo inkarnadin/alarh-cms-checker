@@ -1,17 +1,16 @@
 package web.cms.yii;
 
 import com.google.inject.Inject;
-import okhttp3.Response;
 import web.cms.CMSType;
-import web.http.Host;
+import web.cms.analyzer.cms.MainPageAnalyzer;
 import web.http.Request;
-import web.http.ResponseBodyHandler;
 import web.module.annotation.Get;
 import web.parser.TextParser;
 import web.struct.AbstractProcessor;
 import web.struct.Destination;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -32,29 +31,21 @@ public class YiiCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        checkViaSpecifyScriptName();
+        List<Boolean> result = new ArrayList<>();
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
 
-        if (successAttempt.get() > 0)
-            destination.insert(0, String.format(successMessage, CMSType.YII.getName(), successAttempt, attempt));
-    }
+        mainPageAnalyzer.checkViaMainPageScriptName(new Pattern[] {
+                Pattern.compile("<script src=\".*(yii.js).*\"></script>")
+        });
 
-    private void checkViaSpecifyScriptName() {
-        Integer[] codes = { 200 };
-        Pattern pattern = Pattern.compile("<script src=\".*(yii.js).*\"></script>");
-
-        attempt.incrementAndGet();
-
-        Host host = new Host(protocol, server, null);
-        try (Response response = request.send(host)) {
-            Integer code = response.code();
-
-            if (Arrays.asList(codes).contains(code)) {
-                String body = ResponseBodyHandler.readBody(response);
-                parser.configure(pattern, 0);
-                if (parser.parse(body))
-                    successAttempt.incrementAndGet();
-            }
-        }
+        long count = result.stream().filter(b -> b).count();
+        if (count > 0)
+            destination.insert(0, String.format(
+                    successMessage,
+                    CMSType.YII.getName(),
+                    count,
+                    result.size())
+            );
     }
 
     @Override

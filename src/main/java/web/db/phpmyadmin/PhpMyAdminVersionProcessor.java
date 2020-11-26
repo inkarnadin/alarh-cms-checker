@@ -28,6 +28,8 @@ public class PhpMyAdminVersionProcessor extends AbstractProcessor {
     @Override
     @SneakyThrows
     public void process() {
+        String version = "unknown";
+
         Integer[] codes = { 200 };
         String[] paths = {
                 "phpmyadmin/doc/html/index.html",
@@ -43,14 +45,13 @@ public class PhpMyAdminVersionProcessor extends AbstractProcessor {
                 if (Arrays.asList(codes).contains(code)) {
                     String body = ResponseBodyHandler.readBody(response);
                     parser.configure(pattern, 1);
-                    String version = parser.parse(body);
-
-                    System.out.println("PhpMyAdmin version = " + version);
-                    return;
+                    version = parser.parse(body);
+                    break;
                 }
 
             }
         }
+        System.out.println("PhpMyAdmin version = " + version);
     }
 
 }

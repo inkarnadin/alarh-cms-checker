@@ -1,24 +1,22 @@
 package web.cms.joomla;
 
 import com.google.inject.Inject;
-import okhttp3.Response;
 import web.cms.CMSType;
-import web.http.Host;
-import web.http.HttpValidator;
-import web.http.ResponseBodyHandler;
+import web.cms.analyzer.cms.MainPageAnalyzer;
+import web.cms.analyzer.cms.PageAnalyzer;
+import web.cms.analyzer.cms.PathAnalyzer;
 import web.module.annotation.Get;
 import web.parser.TextParser;
 import web.struct.AbstractProcessor;
 import web.struct.Destination;
 import web.http.Request;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 import static web.http.ContentType.APPLICATION_XML;
 import static web.http.ContentType.TEXT_XML;
-import static web.http.Headers.CONTENT_TYPE;
 
 public class JoomlaCheckProcessor extends AbstractProcessor {
 
@@ -37,88 +35,33 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        checkViaSpecifyPaths();
-        checkViaMainPage();
-        checkViaSpecifyFiles();
-        checkViaAdminPage();
+        List<Boolean> result = new ArrayList<>();
 
-        if (successAttempt.get() > 0)
-            destination.insert(0, String.format(successMessage, CMSType.JOOMLA.getName(), successAttempt, attempt));
-    }
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        mainPageAnalyzer.checkViaMainPageGenerator(new String[] { "Joomla" });
 
-    private void checkViaSpecifyPaths() {
-        String[] paths = { "administrator/components" };
-        Integer[] codes = { 200, 304, 401, 403 };
+        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
+        pathAnalyzer.checkViaPaths(new Integer[] { 200, 304, 401, 403 }, new String[] {
+                "administrator/components"
+        });
+        pathAnalyzer.checkViaFiles(new Integer[] { 200, 304 }, new String[] { TEXT_XML, APPLICATION_XML }, new String[] {
+                "administrator/manifests/files/joomla.xml",
+                "administrator/components/com_config/config.xml"
+        });
 
-        attempt.incrementAndGet();
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result, "administrator");
+        pageAnalyzer.checkViaPageKeywords(new String[] {
+                "login-joomla"
+        });
 
-        for (String path : paths) {
-            Host host = new Host(protocol, server, path);
-            host.setBegetProtection(true);
-
-            try (Response response = request.send(host)) {
-                Integer code = response.code();
-                if (Arrays.asList(codes).contains(code) && !HttpValidator.isRedirect(response)) {
-                    successAttempt.incrementAndGet();
-                }
-            }
-        }
-    }
-
-    private void checkViaMainPage() {
-        Integer[] codes = { 200 };
-        Pattern pattern = Pattern.compile("<meta name=\"generator\" content=\"(Joomla!).*/>");
-
-        attempt.incrementAndGet();
-
-        Host host = new Host(protocol, server, null);
-        try (Response response = request.send(host)) {
-            Integer code = response.code();
-
-            if (Arrays.asList(codes).contains(code)) {
-                String body = ResponseBodyHandler.readBody(response);
-                parser.configure(pattern, 0);
-                if (parser.parse(body))
-                    successAttempt.incrementAndGet();
-            }
-        }
-    }
-
-    private void checkViaSpecifyFiles() {
-        Integer[] codes = { 200, 304 };
-        String[] contentTypes = { TEXT_XML, APPLICATION_XML };
-
-        attempt.incrementAndGet();
-
-        Host host = new Host(protocol, server, "administrator/manifests/files/joomla.xml");
-        try (Response response = request.send(host)) {
-            Integer code = response.code();
-            String contentType = response.header(CONTENT_TYPE);
-
-            if (Arrays.asList(codes).contains(code) && Arrays.asList(contentTypes).contains(contentType))
-                successAttempt.incrementAndGet();
-        }
-    }
-
-    private void checkViaAdminPage() {
-        Pattern pattern = Pattern.compile("login-joomla");
-        String path = "administrator";
-        Integer[] codes = { 200 };
-
-        attempt.incrementAndGet();
-
-        Host host = new Host(protocol, server, path);
-        host.setBegetProtection(true);
-
-        try (Response response = request.send(host)) {
-            Integer code = response.code();
-            if (Arrays.asList(codes).contains(code) && !HttpValidator.isRedirect(response)) {
-                String body = ResponseBodyHandler.readBody(response);
-                parser.configure(pattern, 0);
-                if (parser.parse(body))
-                    successAttempt.incrementAndGet();
-            }
-        }
+        long count = result.stream().filter(b -> b).count();
+        if (count > 0)
+            destination.insert(0, String.format(
+                    successMessage,
+                    CMSType.JOOMLA.getName(),
+                    count,
+                    result.size())
+            );
     }
 
     @Override

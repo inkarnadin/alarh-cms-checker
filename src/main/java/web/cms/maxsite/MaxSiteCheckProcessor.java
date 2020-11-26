@@ -1,19 +1,17 @@
 package web.cms.maxsite;
 
 import com.google.inject.Inject;
-import okhttp3.Response;
 import web.cms.CMSType;
-import web.http.Host;
+import web.cms.analyzer.cms.MainPageAnalyzer;
 import web.http.Request;
-import web.http.ResponseBodyHandler;
 import web.module.annotation.Get;
 import web.parser.TextParser;
 import web.struct.AbstractProcessor;
 import web.struct.Destination;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 public class MaxSiteCheckProcessor extends AbstractProcessor {
 
@@ -32,59 +30,26 @@ public class MaxSiteCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        checkViaMainPageGenerator();
-        checkViaMainPageSpecifyKeywords();
+        List<Boolean> result = new ArrayList<>();
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
 
-        if (successAttempt.get() > 0)
-            destination.insert(0, String.format(successMessage, CMSType.MAXSITE_CMS.getName(), successAttempt, attempt));
-    }
-
-    private void checkViaMainPageGenerator() {
-        Integer[] codes = { 200 };
-        Pattern pattern = Pattern.compile(".*<meta name=\"generator\" content=\"(.*?)\">");
-
-        attempt.incrementAndGet();
-
-        Host host = new Host(protocol, server, null);
-        try (Response response = request.send(host)) {
-            Integer code = response.code();
-
-            if (Arrays.asList(codes).contains(code)) {
-                String body = ResponseBodyHandler.readBody(response);
-                parser.configure(pattern, 0);
-                if (parser.parse(body))
-                    successAttempt.incrementAndGet();
-            }
-        }
-    }
-
-    private void checkViaMainPageSpecifyKeywords() {
-        Integer[] codes = { 200 };
-        String[] messages = {
+        mainPageAnalyzer.checkViaMainPageGenerator(new String[] { "MaxSite CMS" });
+        mainPageAnalyzer.checkViaMainPageKeywords(new String[] {
                 "application/maxsite",
                 "maxsite/plugins",
                 "maxsite/templates",
                 "maxsite/common"
-        };
 
-        attempt.incrementAndGet();
+        });
 
-        Host host = new Host(protocol, server, null);
-        try (Response response = request.send(host)) {
-            Integer code = response.code();
-
-            if (Arrays.asList(codes).contains(code)) {
-                String body = ResponseBodyHandler.readBody(response);
-                for (String message : messages) {
-                    Pattern pattern = Pattern.compile(message);
-                    parser.configure(pattern, 0);
-                    if (parser.parse(body)) {
-                        successAttempt.incrementAndGet();
-                        return;
-                    }
-                }
-            }
-        }
+        long count = result.stream().filter(b -> b).count();
+        if (count > 0)
+            destination.insert(0, String.format(
+                    successMessage,
+                    CMSType.MAXSITE_CMS.getName(),
+                    count,
+                    result.size())
+            );
     }
 
     @Override
