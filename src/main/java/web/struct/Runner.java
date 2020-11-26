@@ -1,19 +1,17 @@
 package web.struct;
 
 import com.google.inject.Inject;
-import web.module.annotation.Cms;
-import web.module.annotation.DBAdmin;
+import com.google.inject.Injector;
+import web.cms.CMSChecker;
+import web.db.DBAdminChecker;
 
 import java.util.Objects;
 import java.util.Scanner;
 
 public class Runner {
 
-    @Inject @Cms
-    Checker cmsChecker;
-
-    @Inject @DBAdmin
-    Checker dbAdminChecker;
+    @Inject
+    Injector injector;
 
     public void run() {
         System.out.println("===========================================================");
@@ -37,7 +35,7 @@ public class Runner {
 
                 System.out.print("Activate PHPMyAdmin module? (y/n): ");
                 if (isAnswer(scanner.nextLine())) {
-                    dbAdminChecker.check(params);
+                    injector.getInstance(DBAdminChecker.class).check(params);
                     System.out.println("Done!");
                 } else {
                     System.out.println("Skipped...");
@@ -47,7 +45,7 @@ public class Runner {
 
                 System.out.print("Activate CMS module? (y/n): ");
                 if (isAnswer(scanner.nextLine())) {
-                    cmsChecker.check(params);
+                    injector.getInstance(CMSChecker.class).check(params);
                     System.out.println("Done!");
                 } else {
                     System.out.println("Skipped...");
