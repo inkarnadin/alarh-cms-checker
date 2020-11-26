@@ -20,6 +20,9 @@ public class Runner {
         System.out.println(" * Joomla!");
         System.out.println(" * WordPress");
         System.out.println(" * Yii Framework");
+        System.out.println(" * DataLife Engine");
+        System.out.println(" * MaxSite CMS");
+        System.out.println(" * Drupal");
         System.out.println("===========================================================");
 
         try (Scanner scanner = new Scanner(System.in)) {
