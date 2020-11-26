@@ -1,6 +1,9 @@
 package web.cms;
 
 import com.google.inject.Inject;
+
+import kotlin.Pair;
+import lombok.SneakyThrows;
 import web.cms.datalife.annotation.DataLife;
 import web.cms.drupal.annotation.Drupal;
 import web.cms.joomla.annotation.Joomla;
@@ -13,6 +16,7 @@ import web.struct.Params;
 import web.struct.Processor;
 
 import java.util.*;
+import java.util.concurrent.*;
 
 public class CMSDeterminant implements Determinant<CMSType, Destination> {
 
@@ -39,40 +43,45 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
     }
 
     @Override
+    @SneakyThrows
     public Map<CMSType, Destination> define(Params params) {
         Map<CMSType, Destination> result = new HashMap<>();
 
-        wpCheckProcessor.configure(params.getProtocol(), params.getServer());
-        wpCheckProcessor.process();
-        Optional<Destination> wpTransmit = wpCheckProcessor.transmit();
-        wpTransmit.ifPresent(destination -> result.put(CMSType.WORDPRESS, destination));
+        ExecutorService executorService = Executors.newFixedThreadPool(6);
+        HashSet<Determinative> callables = new HashSet<>();
 
-        jmCheckProcessor.configure(params.getProtocol(), params.getServer());
-        jmCheckProcessor.process();
-        Optional<Destination> jmTransmit = jmCheckProcessor.transmit();
-        jmTransmit.ifPresent(destination -> result.put(CMSType.JOOMLA, destination));
+        callables.add(new Determinative(wpCheckProcessor, params, CMSType.WORDPRESS));
+        callables.add(new Determinative(jmCheckProcessor, params, CMSType.JOOMLA));
+        callables.add(new Determinative(yiiCheckProcessor, params, CMSType.YII));
+        callables.add(new Determinative(dleCheckProcessor, params, CMSType.DATALIFE_ENGINE));
+        callables.add(new Determinative(mxsCheckProcessor, params, CMSType.MAXSITE_CMS));
+        callables.add(new Determinative(drpCheckProcessor, params, CMSType.DRUPAL));
 
-        yiiCheckProcessor.configure(params.getProtocol(), params.getServer());
-        yiiCheckProcessor.process();
-        Optional<Destination> yiiTransmit = yiiCheckProcessor.transmit();
-        yiiTransmit.ifPresent(destination -> result.put(CMSType.YII, destination));
-
-        dleCheckProcessor.configure(params.getProtocol(), params.getServer());
-        dleCheckProcessor.process();
-        Optional<Destination> dleTransmit = dleCheckProcessor.transmit();
-        dleTransmit.ifPresent(destination -> result.put(CMSType.DATALIFE_ENGINE, destination));
-
-        mxsCheckProcessor.configure(params.getProtocol(), params.getServer());
-        mxsCheckProcessor.process();
-        Optional<Destination> mxsTransmit = mxsCheckProcessor.transmit();
-        mxsTransmit.ifPresent(destination -> result.put(CMSType.MAXSITE_CMS, destination));
-
-        drpCheckProcessor.configure(params.getProtocol(), params.getServer());
-        drpCheckProcessor.process();
-        Optional<Destination> drpTransmit = drpCheckProcessor.transmit();
-        drpTransmit.ifPresent(destination -> result.put(CMSType.DRUPAL, destination));
-
+        List<Future<Pair<CMSType, Optional<Destination>>>> futures = executorService.invokeAll(callables);
+        for (Future<Pair<CMSType, Optional<Destination>>> future : futures) {
+            Pair<CMSType, Optional<Destination>> pair = future.get();
+            pair.getSecond().ifPresent(x -> result.put(pair.getFirst(), x));
+        }
         return result;
+    }
+
+    static class Determinative implements Callable<Pair<CMSType, Optional<Destination>>> {
+
+        private final Processor processor;
+        private final CMSType cmsType;
+
+        Determinative(Processor processor, Params params, CMSType cmsType) {
+            this.cmsType = cmsType;
+            this.processor = processor;
+            this.processor.configure(params.getProtocol(), params.getServer());
+        }
+
+        @Override
+        public Pair<CMSType, Optional<Destination>> call() {
+            processor.process();
+            Optional<Destination> transmit = processor.transmit();
+            return new Pair<>(cmsType, transmit);
+        }
     }
 
 }
