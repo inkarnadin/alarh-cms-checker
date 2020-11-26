@@ -41,7 +41,7 @@ public class WordPressCheckProcessor extends AbstractProcessor {
                 "wp-content",
                 "wp-admin",
                 "wp-includes",
-                "wp-login"
+                "wp-login.php"
         });
 
         long count = result.stream().filter(b -> b).count();
