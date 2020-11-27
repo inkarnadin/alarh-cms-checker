@@ -1,26 +1,20 @@
 package web.cms.joomla;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
-import okhttp3.Response;
-import web.cms.joomla.annotation.JoomlaVersion;
-import web.http.Host;
+import web.cms.CMSType;
+import web.cms.analyzer.version.VersionAnalyzer;
 import web.http.Request;
-import web.http.ResponseBodyHandler;
 import web.module.annotation.Get;
 import web.parser.TextParser;
 import web.parser.XMLParser;
 import web.struct.AbstractProcessor;
 import web.struct.Destination;
-import web.struct.Parser;
 
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static web.http.ContentType.APPLICATION_XML;
 import static web.http.ContentType.TEXT_XML;
-import static web.http.Headers.CONTENT_TYPE;
 
 public class JoomlaVersionProcessor extends AbstractProcessor {
 
@@ -28,9 +22,6 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
     private final XMLParser<String> xmlParser;
     private final TextParser<String> textParser;
     private final Destination destination;
-
-    private final Integer[] codes = { 200 };
-    private final String[] contentTypes = { TEXT_XML, APPLICATION_XML };
 
     @Inject
     JoomlaVersionProcessor(@Get Request request,
@@ -45,76 +36,14 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        checkVersionViaPublicMetaInfo();
-        checkVersionViaConfigXml();
-        checkVersionViaLangConfigXml();
-        chechVersionViaJoomlaXml();
-    }
-
-    private void checkVersionViaPublicMetaInfo() {
-        String version = "unknown";
-
-        Pattern pattern = Pattern.compile("<meta name=\"generator\".*Version\\s(.*)\" />");
-
-        Host host = new Host(protocol, server, null);
-        try (Response response = request.send(host)) {
-            Integer code = response.code();
-
-            if (Arrays.asList(codes).contains(code)) {
-                String body = ResponseBodyHandler.readBody(response);
-                textParser.configure(pattern, 1);
-                version = textParser.parse(body);
-            }
-        }
-        destination.insert(0, String.format("  ** Joomla version (check #1) = %s", version));
-    }
-
-    private void checkVersionViaConfigXml() {
-        String version = "unknown";
-
-        Host host = new Host(protocol, server, "administrator/components/com_config/config.xml");
-        try (Response response = request.send(host)) {
-            Integer code = response.code();
-            String contentType = response.header(CONTENT_TYPE);
-
-            if (Arrays.asList(codes).contains(code) && Arrays.asList(contentTypes).contains(contentType)) {
-                String body = ResponseBodyHandler.readBody(response);
-                version = xmlParser.parse(body);
-            }
-        }
-        destination.insert(1, String.format("  ** Joomla version (check #2) = %s", version));
-    }
-
-    private void checkVersionViaLangConfigXml() {
-        String version = "unknown";
-
-        Host host = new Host(protocol, server, "language/en-GB/en-GB.xml");
-        try (Response response = request.send(host)) {
-            Integer code = response.code();
-            String contentType = response.header(CONTENT_TYPE);
-
-            if (Arrays.asList(codes).contains(code) && Arrays.asList(contentTypes).contains(contentType)) {
-                String body = ResponseBodyHandler.readBody(response);
-                version = xmlParser.parse(body);
-            }
-        }
-        destination.insert(2, String.format("  ** Joomla version (check #3) = %s", version));
-    }
-
-    private void chechVersionViaJoomlaXml() {
-        String version = "unknown";
-
-        Host host = new Host(protocol, server, "administrator/manifests/files/joomla.xml");
-        try (Response response = request.send(host)) {
-            Integer code = response.code();
-            String contentType = response.header(CONTENT_TYPE);
-
-            if (Arrays.asList(codes).contains(code) && Arrays.asList(contentTypes).contains(contentType)) {
-                String body = ResponseBodyHandler.readBody(response);
-                version = xmlParser.parse(body);
-            }
-        }
-        destination.insert(3, String.format("  ** Joomla version (check #4) = %s", version));
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, xmlParser, destination);
+        versionAnalyzer.prepare(protocol, server, CMSType.JOOMLA);
+        versionAnalyzer.checkViaMainPageGenerator(new Pattern[] {
+                Pattern.compile("<meta name=\"generator\".*Version\\s(.*)\" />")
+        });
+        versionAnalyzer.checkViaXMlFiles(new String[] { TEXT_XML, APPLICATION_XML }, "administrator/manifests/files/joomla.xml");
+        versionAnalyzer.checkViaXMlFiles(new String[] { TEXT_XML, APPLICATION_XML }, "language/en-GB/en-GB.xml");
+        versionAnalyzer.checkViaXMlFiles(new String[] { TEXT_XML, APPLICATION_XML }, "administrator/components/com_config/config.xml");
     }
 
     @Override

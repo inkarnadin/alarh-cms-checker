@@ -18,7 +18,7 @@ import static web.http.Headers.CONTENT_TYPE;
 public class ResponseBodyHandler {
 
     @SneakyThrows
-    public static String readBody(Response response) {
+    synchronized public static String readBody(Response response) {
         String charset = defineCharset(response.header(CONTENT_TYPE));
 
         ResponseBody body = response.body();
@@ -32,7 +32,7 @@ public class ResponseBodyHandler {
         return textBuilder.toString();
     }
 
-    public static String defineCharset(String contentType) {
+    synchronized public static String defineCharset(String contentType) {
         Pattern pattern = Pattern.compile(".*charset=(.*)", Pattern.CASE_INSENSITIVE);
         Matcher mather = pattern.matcher(contentType);
 

@@ -1,6 +1,7 @@
 package web.cms.datalife;
 
 import lombok.SneakyThrows;
+import web.struct.LogoMap;
 
 import java.io.File;
 import java.net.URL;
@@ -9,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class DataLifeLogoMap {
+public class DataLifeLogoMap implements LogoMap {
 
     Map<Long, String> versionMap = new HashMap<>();
 
