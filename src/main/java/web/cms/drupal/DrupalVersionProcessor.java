@@ -1,4 +1,4 @@
-package web.cms.wordpress;
+package web.cms.drupal;
 
 import com.google.inject.Inject;
 import web.cms.CMSType;
@@ -12,16 +12,16 @@ import web.struct.Destination;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-public class WordPressVersionProcessor extends AbstractProcessor {
+public class DrupalVersionProcessor extends AbstractProcessor {
 
     private final Request request;
     private final TextParser<String> parser;
     private final Destination destination;
 
     @Inject
-    WordPressVersionProcessor(@Get Request request,
-                              TextParser<String> parser,
-                              Destination destination) {
+    DrupalVersionProcessor(@Get Request request,
+                           TextParser<String> parser,
+                           Destination destination) {
         this.request = request;
         this.parser = parser;
         this.destination = destination;
@@ -30,9 +30,9 @@ public class WordPressVersionProcessor extends AbstractProcessor {
     @Override
     public void process() {
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination);
-        versionAnalyzer.prepare(protocol, server, CMSType.WORDPRESS);
+        versionAnalyzer.prepare(protocol, server, CMSType.DRUPAL);
         versionAnalyzer.checkViaMainPageGenerator(new Pattern[] {
-                Pattern.compile("<meta name=\"[gG]enerator\" content=\"WordPress\\s(.*?)\" />")
+                Pattern.compile("<meta name=\"[gG]enerator\" content=\"Drupal\\s(.+?)\\s")
         });
     }
 
