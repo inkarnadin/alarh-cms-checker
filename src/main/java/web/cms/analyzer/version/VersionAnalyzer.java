@@ -14,6 +14,8 @@ import web.struct.Destination;
 import web.cms.analyzer.LogoMap;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
@@ -28,10 +30,10 @@ public class VersionAnalyzer {
     private final XMLParser<String> xmlParser;
     private final Destination destination;
 
+    private final Map<String, String> mainPageHeaders = new HashMap<>();
+
     private Host host;
     private String mainPageResponseBody = "";
-    private Headers mainPageHeaders;
-
     private String entityType;
 
     private final AtomicInteger attemptCounter = new AtomicInteger(0);
@@ -46,7 +48,7 @@ public class VersionAnalyzer {
         this.host = new Host(protocol, server);
         try (Response response = request.send(host)) {
             mainPageResponseBody = ResponseBodyHandler.readBody(response);
-            mainPageHeaders = response.headers();
+            response.headers().forEach(k -> mainPageHeaders.put(k.getFirst().toLowerCase(), k.getSecond().toLowerCase()));
         }
         return this;
     }
@@ -117,7 +119,7 @@ public class VersionAnalyzer {
         String value = mainPageHeaders.get(header);
         if (Objects.nonNull(value)) {
             textParser.configure(pattern, 1);
-            version = textParser.parse(value.toLowerCase());
+            version = textParser.parse(value);
         }
         destination.insert(attemptCounter.get(),
                 String.format("  ** %s version (check #%s) = %s", entityType, attemptCounter.incrementAndGet(), version));

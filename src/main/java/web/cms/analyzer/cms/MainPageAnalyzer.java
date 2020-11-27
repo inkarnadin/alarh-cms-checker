@@ -8,7 +8,9 @@ import web.http.Request;
 import web.http.ResponseBodyHandler;
 import web.parser.TextParser;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -18,9 +20,10 @@ public class MainPageAnalyzer {
     private final Request request;
     private final TextParser<Boolean> parser;
 
+    private final Map<String, String> headers = new HashMap<>();
+
     private List<Boolean> result;
     private String responseBody = "";
-    private Headers headers;
 
     public MainPageAnalyzer prepare(String protocol, String server, List<Boolean> result) {
        this.result = result;
@@ -28,7 +31,7 @@ public class MainPageAnalyzer {
        Host host = new Host(protocol, server);
        try (Response response = request.send(host)) {
            responseBody = ResponseBodyHandler.readBody(response);
-           headers = response.headers();
+           response.headers().forEach(k -> headers.put(k.getFirst().toLowerCase(), k.getSecond().toLowerCase()));
        }
        return this;
     }
@@ -81,7 +84,7 @@ public class MainPageAnalyzer {
         String header = headers.get("x-generator");
         if (Objects.nonNull(header)) {
             parser.configure(pattern, 0);
-            if (parser.parse(header.toLowerCase())) {
+            if (parser.parse(header)) {
                 result.add(true);
                 return;
             }
