@@ -1,6 +1,7 @@
 package web.cms.analyzer.version;
 
 import lombok.RequiredArgsConstructor;
+import okhttp3.Headers;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import web.cms.CMSType;
@@ -29,6 +30,8 @@ public class VersionAnalyzer {
 
     private Host host;
     private String mainPageResponseBody = "";
+    private Headers mainPageHeaders;
+
     private String entityType;
 
     private final AtomicInteger attemptCounter = new AtomicInteger(0);
@@ -43,6 +46,7 @@ public class VersionAnalyzer {
         this.host = new Host(protocol, server);
         try (Response response = request.send(host)) {
             mainPageResponseBody = ResponseBodyHandler.readBody(response);
+            mainPageHeaders = response.headers();
         }
         return this;
     }
@@ -102,6 +106,18 @@ public class VersionAnalyzer {
                     version = logoMap.getVersion(contentLength);
                 }
             }
+        }
+        destination.insert(attemptCounter.get(),
+                String.format("  ** %s version (check #%s) = %s", entityType, attemptCounter.incrementAndGet(), version));
+    }
+
+    public void checkViaHeaders(Pattern pattern, String header) {
+        String version = "unknown";
+
+        String value = mainPageHeaders.get(header);
+        if (Objects.nonNull(value)) {
+            textParser.configure(pattern, 1);
+            version = textParser.parse(value.toLowerCase());
         }
         destination.insert(attemptCounter.get(),
                 String.format("  ** %s version (check #%s) = %s", entityType, attemptCounter.incrementAndGet(), version));

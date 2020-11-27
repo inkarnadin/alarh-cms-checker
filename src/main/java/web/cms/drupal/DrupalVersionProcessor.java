@@ -34,6 +34,7 @@ public class DrupalVersionProcessor extends AbstractProcessor {
         versionAnalyzer.checkViaMainPageGenerator(new Pattern[] {
                 Pattern.compile("<meta name=\"[gG]enerator\" content=\"Drupal\\s(.+?)\\s")
         });
+        versionAnalyzer.checkViaHeaders(Pattern.compile("drupal\\s(.*)\\s"), "x-generator");
     }
 
     @Override
