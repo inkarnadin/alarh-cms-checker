@@ -34,7 +34,7 @@ public class DrupalCheckProcessor extends AbstractProcessor {
         List<Boolean> result = new ArrayList<>();
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
-
+        mainPageAnalyzer.checkViaMainPageGenerator(new String[] { "Drupal" });
         mainPageAnalyzer.checkViaMainPageScriptName(new Pattern[] {
                 Pattern.compile("misc/drupal\\.js")
         });
