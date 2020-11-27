@@ -42,6 +42,11 @@ public class DrupalCheckProcessor extends AbstractProcessor {
                 Pattern.compile("data-drupal-link-system-path"),
                 Pattern.compile("Drupal\\.settings")
         });
+        mainPageAnalyzer.checkViaMainPageHeaders(new String[] {
+                "x-drupal-cache",
+                "x-drupal-dynamic-cache"
+        });
+        mainPageAnalyzer.checkViaMainPageXGeneratorHeader("Drupal");
 
         long count = result.stream().filter(b -> b).count();
         if (count > 0)
