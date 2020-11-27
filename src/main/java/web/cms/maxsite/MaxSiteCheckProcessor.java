@@ -12,6 +12,7 @@ import web.struct.Destination;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 public class MaxSiteCheckProcessor extends AbstractProcessor {
 
@@ -34,12 +35,11 @@ public class MaxSiteCheckProcessor extends AbstractProcessor {
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
 
         mainPageAnalyzer.checkViaMainPageGenerator(new String[] { "MaxSite CMS" });
-        mainPageAnalyzer.checkViaMainPageKeywords(new String[] {
-                "application/maxsite",
-                "maxsite/plugins",
-                "maxsite/templates",
-                "maxsite/common"
-
+        mainPageAnalyzer.checkViaMainPageKeywords(new Pattern[] {
+                Pattern.compile("application/maxsite"),
+                Pattern.compile("maxsite/plugins"),
+                Pattern.compile("maxsite/templates"),
+                Pattern.compile("maxsite/common")
         });
 
         long count = result.stream().filter(b -> b).count();

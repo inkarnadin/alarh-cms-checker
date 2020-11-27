@@ -12,6 +12,7 @@ import web.struct.Destination;
 import web.http.Request;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class WordPressCheckProcessor extends AbstractProcessor {
 
@@ -45,11 +46,11 @@ public class WordPressCheckProcessor extends AbstractProcessor {
         });
 
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result, "wp-login.php");
-        pageAnalyzer.checkViaPageKeywords(new String[] {
-                "Powered by WordPress",
-                "wp-pwd",
-                "wp-submit",
-                "wp-core-ui"
+        pageAnalyzer.checkViaPageKeywords(new Pattern[] {
+                Pattern.compile("Powered by .*WordPress"),
+                Pattern.compile("wp-pwd"),
+                Pattern.compile("wp-submit"),
+                Pattern.compile("wp-core-ui")
         });
 
         long count = result.stream().filter(b -> b).count();

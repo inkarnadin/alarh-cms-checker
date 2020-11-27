@@ -40,11 +40,11 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
 
         mainPageAnalyzer.checkViaMainPageGenerator(new String[] { "DataLife Engine" });
-        mainPageAnalyzer.checkViaMainPageKeywords(new String[] {
-                "dle_root",
-                "dle_admin",
-                "engine/classes",
-                "engine/templates/Default"
+        mainPageAnalyzer.checkViaMainPageKeywords(new Pattern[] {
+                Pattern.compile("dle_root"),
+                Pattern.compile("dle_admin"),
+                Pattern.compile("engine/classes"),
+                Pattern.compile("engine/templates/Default")
         });
         mainPageAnalyzer.checkViaMainPageScriptName(new Pattern[] {
                 Pattern.compile("engine/classes/js/dle_js\\.js")
@@ -59,8 +59,8 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
         });
 
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result, "admin.php");
-        pageAnalyzer.checkViaPageKeywords(new String[] {
-                "DataLife Engine"
+        pageAnalyzer.checkViaPageKeywords(new Pattern[] {
+                Pattern.compile("DataLife Engine")
         });
 
         SpecificAnalyzer specificAnalyzer = new SpecificAnalyzer(request, parser).prepare(protocol, server, result);

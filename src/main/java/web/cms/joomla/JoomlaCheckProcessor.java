@@ -14,6 +14,7 @@ import web.http.Request;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import static web.http.ContentType.APPLICATION_XML;
 import static web.http.ContentType.TEXT_XML;
@@ -51,8 +52,8 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
         });
 
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result, "administrator");
-        pageAnalyzer.checkViaPageKeywords(new String[] {
-                "login-joomla"
+        pageAnalyzer.checkViaPageKeywords(new Pattern[] {
+                Pattern.compile("login-joomla")
         });
 
         long count = result.stream().filter(b -> b).count();

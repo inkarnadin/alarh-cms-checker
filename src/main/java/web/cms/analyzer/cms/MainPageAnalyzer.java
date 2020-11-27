@@ -41,9 +41,8 @@ public class MainPageAnalyzer {
         result.add(false);
     }
 
-    public void checkViaMainPageKeywords(String[] keywords) {
-        for (String keyword : keywords) {
-            Pattern pattern = Pattern.compile(keyword);
+    public void checkViaMainPageKeywords(Pattern[] patterns) {
+        for (Pattern pattern : patterns) {
             parser.configure(pattern, 0);
             if (parser.parse(responseBody)) {
                 result.add(true);

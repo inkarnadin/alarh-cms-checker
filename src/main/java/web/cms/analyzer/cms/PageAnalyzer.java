@@ -31,9 +31,8 @@ public class PageAnalyzer {
         return this;
     }
 
-    public void checkViaPageKeywords(String[] keywords) {
-        for (String keyword : keywords) {
-            Pattern pattern = Pattern.compile(keyword);
+    public void checkViaPageKeywords(Pattern[] patterns) {
+        for (Pattern pattern : patterns) {
             parser.configure(pattern, 0);
             if (parser.parse(responseBody)) {
                 result.add(true);
