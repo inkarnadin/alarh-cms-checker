@@ -1,4 +1,4 @@
-package web.struct;
+package web.cms.analyzer;
 
 public interface LogoMap {
 

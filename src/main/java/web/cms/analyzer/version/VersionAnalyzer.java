@@ -10,7 +10,7 @@ import web.http.ResponseBodyHandler;
 import web.parser.TextParser;
 import web.parser.XMLParser;
 import web.struct.Destination;
-import web.struct.LogoMap;
+import web.cms.analyzer.LogoMap;
 
 import java.util.Arrays;
 import java.util.Objects;
