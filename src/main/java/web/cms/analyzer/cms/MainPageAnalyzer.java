@@ -73,15 +73,18 @@ public class MainPageAnalyzer {
                 result.add(true);
                 return;
             }
-            result.add(false);
         }
+        result.add(false);
     }
 
-    public void checkViaMainPageXGeneratorHeader(String value) {
+    public void checkViaMainPageXGeneratorHeader(Pattern pattern) {
         String header = headers.get("x-generator");
         if (Objects.nonNull(header)) {
-            result.add(header.toLowerCase().matches(value.toLowerCase()));
-            return;
+            parser.configure(pattern, 0);
+            if (parser.parse(header.toLowerCase())) {
+                result.add(true);
+                return;
+            }
         }
         result.add(false);
     }

@@ -46,7 +46,7 @@ public class DrupalCheckProcessor extends AbstractProcessor {
                 "x-drupal-cache",
                 "x-drupal-dynamic-cache"
         });
-        mainPageAnalyzer.checkViaMainPageXGeneratorHeader("Drupal");
+        mainPageAnalyzer.checkViaMainPageXGeneratorHeader(Pattern.compile("drupal"));
 
         long count = result.stream().filter(b -> b).count();
         if (count > 0)
