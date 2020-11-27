@@ -2,15 +2,13 @@ package web.db.phpmyadmin;
 
 import com.google.inject.Inject;
 import lombok.SneakyThrows;
-import okhttp3.Response;
-import web.http.Host;
-import web.http.ResponseBodyHandler;
+import web.cms.analyzer.version.VersionAnalyzer;
 import web.module.annotation.Get;
 import web.http.Request;
 import web.parser.TextParser;
 import web.struct.AbstractProcessor;
+import web.struct.SimpleDestination;
 
-import java.util.Arrays;
 import java.util.regex.Pattern;
 
 public class PhpMyAdminVersionProcessor extends AbstractProcessor {
@@ -28,30 +26,16 @@ public class PhpMyAdminVersionProcessor extends AbstractProcessor {
     @Override
     @SneakyThrows
     public void process() {
-        String version = "unknown";
-
-        Integer[] codes = { 200 };
-        String[] paths = {
-                "phpmyadmin/doc/html/index.html",
-                "phpmyadmin/Documentation.html"
-        };
-        Pattern pattern = Pattern.compile("<title>.*phpMyAdmin\\s(.*?)\\s");
-
-        for (String path : paths) {
-            Host host = new Host(protocol, server, path);
-            try (Response response = request.send(host)) {
-                Integer code = response.code();
-
-                if (Arrays.asList(codes).contains(code)) {
-                    String body = ResponseBodyHandler.readBody(response);
-                    parser.configure(pattern, 1);
-                    version = parser.parse(body);
-                    break;
-                }
-
-            }
-        }
-        System.out.println("PhpMyAdmin version = " + version);
+        SimpleDestination destination = new SimpleDestination();
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination).prepare(protocol, server, "PhpMyAdmin");
+        versionAnalyzer.checkViaPageKeywords("phpmyadmin/doc/html/index.html", new Pattern[] {
+                Pattern.compile("<title>.*phpMyAdmin\\s(.*?)\\s")
+        });
+        versionAnalyzer.checkViaPageKeywords("phpmyadmin/Documentation.html", new Pattern[] {
+                Pattern.compile("<title>.*phpMyAdmin\\s(.*?)\\s")
+        });
+        System.out.println(destination.fetch().get(0));
+        System.out.println(destination.fetch().get(1));
     }
 
 }

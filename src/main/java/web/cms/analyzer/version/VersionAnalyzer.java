@@ -29,12 +29,16 @@ public class VersionAnalyzer {
 
     private Host host;
     private String mainPageResponseBody = "";
-    private CMSType cmsType;
+    private String entityType;
 
     private final AtomicInteger attemptCounter = new AtomicInteger(0);
 
     public VersionAnalyzer prepare(String protocol, String server, CMSType cmsType) {
-        this.cmsType = cmsType;
+        return prepare(protocol, server, cmsType.getName());
+    }
+
+    public VersionAnalyzer prepare(String protocol, String server, String entityType) {
+        this.entityType = entityType;
 
         this.host = new Host(protocol, server);
         try (Response response = request.send(host)) {
@@ -43,6 +47,7 @@ public class VersionAnalyzer {
         return this;
     }
 
+
     public void checkViaMainPageGenerator(Pattern[] patterns) {
         String version = "unknown";
         for (Pattern pattern : patterns) {
@@ -50,7 +55,7 @@ public class VersionAnalyzer {
             version = textParser.parse(mainPageResponseBody);
         }
         destination.insert(attemptCounter.get(),
-                String.format("  ** %s version (check #%s) = %s", cmsType.getName(), attemptCounter.incrementAndGet(), version));
+                String.format("  ** %s version (check #%s) = %s", entityType, attemptCounter.incrementAndGet(), version));
     }
 
     public void checkViaXMlFiles(String[] contentTypes, String path) {
@@ -65,7 +70,7 @@ public class VersionAnalyzer {
             }
         }
         destination.insert(attemptCounter.get(),
-                String.format("  ** %s version (check #%s) = %s", cmsType.getName(), attemptCounter.incrementAndGet(), version));
+                String.format("  ** %s version (check #%s) = %s", entityType, attemptCounter.incrementAndGet(), version));
     }
 
     public void checkViaPageKeywords(String path, Pattern[] patterns) {
@@ -81,7 +86,7 @@ public class VersionAnalyzer {
             }
         }
         destination.insert(attemptCounter.get(),
-                String.format("  ** %s version (check #%s) = %s", cmsType.getName(), attemptCounter.incrementAndGet(), version));
+                String.format("  ** %s version (check #%s) = %s", entityType, attemptCounter.incrementAndGet(), version));
     }
 
     public void checkViaLogoFiles(LogoMap logoMap, String[] contentTypes, String[] paths) {
@@ -99,7 +104,7 @@ public class VersionAnalyzer {
             }
         }
         destination.insert(attemptCounter.get(),
-                String.format("  ** %s version (check #%s) = %s", cmsType.getName(), attemptCounter.incrementAndGet(), version));
+                String.format("  ** %s version (check #%s) = %s", entityType, attemptCounter.incrementAndGet(), version));
     }
 
 }

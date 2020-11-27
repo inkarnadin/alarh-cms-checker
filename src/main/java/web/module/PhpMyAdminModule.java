@@ -7,8 +7,6 @@ import web.http.GetRequest;
 import web.module.annotation.Get;
 import web.parser.StringReturnTextParser;
 import web.parser.TextParser;
-import web.struct.Parser;
-import web.db.phpmyadmin.PhpMyAdminVersionParser;
 import web.struct.Connector;
 import web.struct.Processor;
 import web.http.Request;

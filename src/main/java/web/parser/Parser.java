@@ -1,4 +1,4 @@
-package web.struct;
+package web.parser;
 
 public interface Parser {
 
