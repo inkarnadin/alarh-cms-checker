@@ -41,8 +41,7 @@ public class WordPressCheckProcessor extends AbstractProcessor {
         pathAnalyzer.checkViaPaths(new Integer[] { 200, 403 }, new String[] {
                 "wp-content",
                 "wp-admin",
-                "wp-includes",
-                "wp-login.php"
+                "wp-includes"
         });
 
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result, "wp-login.php");
