@@ -45,8 +45,9 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
                 "administrator/components"
         });
         pathAnalyzer.checkViaFiles(new Integer[] { 200, 304 }, new String[] { TEXT_XML, APPLICATION_XML }, new String[] {
+                "language/en-GB/en-GB.xml",
                 "administrator/manifests/files/joomla.xml",
-                "administrator/components/com_config/config.xml"
+                "administrator/components/com_config/config.xml",
         });
 
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result, "administrator");
