@@ -38,6 +38,10 @@ public class DrupalCheckProcessor extends AbstractProcessor {
         mainPageAnalyzer.checkViaMainPageScriptName(new Pattern[] {
                 Pattern.compile("misc/drupal\\.js")
         });
+        mainPageAnalyzer.checkViaMainPageKeywords(new String[] {
+                "data-drupal-link-system-path",
+                "Drupal\\.settings"
+        });
 
         long count = result.stream().filter(b -> b).count();
         if (count > 0)
