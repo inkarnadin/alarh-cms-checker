@@ -1,7 +1,7 @@
 package web.cms.datalife;
 
 import lombok.SneakyThrows;
-import web.cms.analyzer.LogoMap;
+import web.analyzer.LogoMap;
 
 import java.io.File;
 import java.net.URL;

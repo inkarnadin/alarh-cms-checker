@@ -1,4 +1,4 @@
-package web.cms.analyzer.version;
+package web.analyzer.version;
 
 import lombok.RequiredArgsConstructor;
 import okhttp3.Headers;
@@ -11,7 +11,7 @@ import web.http.ResponseBodyHandler;
 import web.parser.TextParser;
 import web.parser.XMLParser;
 import web.struct.Destination;
-import web.cms.analyzer.LogoMap;
+import web.analyzer.LogoMap;
 
 import java.util.Arrays;
 import java.util.Objects;

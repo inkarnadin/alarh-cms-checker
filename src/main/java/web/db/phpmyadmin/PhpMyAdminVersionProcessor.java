@@ -2,7 +2,7 @@ package web.db.phpmyadmin;
 
 import com.google.inject.Inject;
 import lombok.SneakyThrows;
-import web.cms.analyzer.version.VersionAnalyzer;
+import web.analyzer.version.VersionAnalyzer;
 import web.module.annotation.Get;
 import web.http.Request;
 import web.parser.TextParser;

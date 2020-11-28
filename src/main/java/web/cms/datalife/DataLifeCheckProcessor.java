@@ -2,10 +2,10 @@ package web.cms.datalife;
 
 import com.google.inject.Inject;
 import web.cms.CMSType;
-import web.cms.analyzer.cms.MainPageAnalyzer;
-import web.cms.analyzer.cms.PageAnalyzer;
-import web.cms.analyzer.cms.PathAnalyzer;
-import web.cms.analyzer.cms.SpecificAnalyzer;
+import web.analyzer.cms.MainPageAnalyzer;
+import web.analyzer.cms.PageAnalyzer;
+import web.analyzer.cms.PathAnalyzer;
+import web.analyzer.cms.SpecificAnalyzer;
 import web.http.Request;
 import web.module.annotation.Get;
 import web.struct.AbstractProcessor;

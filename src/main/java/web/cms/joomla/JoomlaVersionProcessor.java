@@ -2,7 +2,7 @@ package web.cms.joomla;
 
 import com.google.inject.Inject;
 import web.cms.CMSType;
-import web.cms.analyzer.version.VersionAnalyzer;
+import web.analyzer.version.VersionAnalyzer;
 import web.http.Request;
 import web.module.annotation.Get;
 import web.parser.TextParser;

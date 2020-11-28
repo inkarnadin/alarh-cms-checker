@@ -1,4 +1,4 @@
-package web.cms.analyzer.cms;
+package web.analyzer.cms;
 
 import lombok.RequiredArgsConstructor;
 import okhttp3.Response;

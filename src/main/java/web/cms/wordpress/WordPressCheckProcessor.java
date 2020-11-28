@@ -2,9 +2,9 @@ package web.cms.wordpress;
 
 import com.google.inject.Inject;
 import web.cms.CMSType;
-import web.cms.analyzer.cms.MainPageAnalyzer;
-import web.cms.analyzer.cms.PageAnalyzer;
-import web.cms.analyzer.cms.PathAnalyzer;
+import web.analyzer.cms.MainPageAnalyzer;
+import web.analyzer.cms.PageAnalyzer;
+import web.analyzer.cms.PathAnalyzer;
 import web.module.annotation.Get;
 import web.parser.TextParser;
 import web.struct.AbstractProcessor;
