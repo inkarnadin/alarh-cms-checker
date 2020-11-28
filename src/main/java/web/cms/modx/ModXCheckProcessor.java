@@ -38,7 +38,7 @@ public class ModXCheckProcessor extends AbstractProcessor {
         mainPageAnalyzer.checkViaMainPageKeywords(new Pattern[] {
                 Pattern.compile("assets/templates"),
                 Pattern.compile("assets/images"),
-                Pattern.compile("assets/cache_image"),
+                Pattern.compile("assets/cache"),
                 Pattern.compile("assets/js")
         });
 
@@ -46,6 +46,7 @@ public class ModXCheckProcessor extends AbstractProcessor {
         pathAnalyzer.checkViaPaths(new Integer[] { 200, 403 }, new String[] {
                 "assets/templates",
                 "assets/images",
+                "assets/cache",
                 "assets/js",
                 "manager"
         });
