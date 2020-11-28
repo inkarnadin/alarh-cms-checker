@@ -53,7 +53,8 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
 
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result, "administrator");
         pageAnalyzer.checkViaPageKeywords(new Pattern[] {
-                Pattern.compile("login-joomla")
+                Pattern.compile("login-joomla"),
+                Pattern.compile("joomla-script-options")
         });
 
         long count = result.stream().filter(b -> b).count();
