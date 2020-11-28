@@ -15,7 +15,8 @@ public class CMSFactory {
                 new YiiModule(),
                 new DataLifeModule(),
                 new MaxSiteModule(),
-                new DrupalModule()
+                new DrupalModule(),
+                new BitrixModule()
         );
 
         switch (cmsType) {
@@ -31,6 +32,8 @@ public class CMSFactory {
                 return injector.getInstance(MaxSiteProvider.class).get();
             case DRUPAL:
                 return injector.getInstance(DrupalProvider.class).get();
+            case BITRIX:
+                return injector.getInstance(BitrixProvider.class).get();
             default:
                 throw new IllegalArgumentException("Unsupported CMS type");
         }

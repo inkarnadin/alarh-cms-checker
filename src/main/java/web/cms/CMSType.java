@@ -13,6 +13,7 @@ public enum CMSType {
     DATALIFE_ENGINE(3, "DataLife Engine"),
     MAXSITE_CMS(4, "MaxSite CMS"),
     DRUPAL(5, "Drupal"),
+    BITRIX(6, "Bitrix"),
     UNKNOWN(-1, "Unknown");
 
     private final int id;

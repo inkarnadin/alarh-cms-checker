@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 
 import lombok.SneakyThrows;
+import web.cms.bitrix.annotation.Bitrix;
 import web.cms.datalife.annotation.DataLife;
 import web.cms.drupal.annotation.Drupal;
 import web.cms.joomla.annotation.Joomla;
@@ -33,6 +34,8 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
     private Processor mxsCheckProcessor;
     @Inject @Drupal
     private Processor drpCheckProcessor;
+    @Inject @Bitrix
+    private Processor btxCheckProcessor;
 
     @Override
     @SneakyThrows
@@ -48,6 +51,7 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
         callables.add(new Determinative(dleCheckProcessor, params, CMSType.DATALIFE_ENGINE));
         callables.add(new Determinative(mxsCheckProcessor, params, CMSType.MAXSITE_CMS));
         callables.add(new Determinative(drpCheckProcessor, params, CMSType.DRUPAL));
+        callables.add(new Determinative(btxCheckProcessor, params, CMSType.BITRIX));
 
         List<Future<Pair<CMSType, Optional<Destination>>>> futures = executorService.invokeAll(callables);
         for (Future<Pair<CMSType, Optional<Destination>>> future : futures) {

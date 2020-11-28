@@ -7,6 +7,8 @@ import lombok.SneakyThrows;
 import web.cms.CMSChecker;
 import web.cms.CMSDeterminant;
 import web.cms.CMSType;
+import web.cms.bitrix.BitrixCheckProcessor;
+import web.cms.bitrix.annotation.Bitrix;
 import web.cms.datalife.DataLifeCheckProcessor;
 import web.cms.datalife.annotation.DataLife;
 import web.cms.drupal.DrupalCheckProcessor;
@@ -45,6 +47,7 @@ public class MainModule extends AbstractModule {
         bind(Processor.class).annotatedWith(DataLife.class).to(DataLifeCheckProcessor.class);
         bind(Processor.class).annotatedWith(MaxSite.class).to(MaxSiteCheckProcessor.class);
         bind(Processor.class).annotatedWith(Drupal.class).to(DrupalCheckProcessor.class);
+        bind(Processor.class).annotatedWith(Bitrix.class).to(BitrixCheckProcessor.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
 
