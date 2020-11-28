@@ -18,7 +18,7 @@ import static web.http.Headers.CONTENT_TYPE;
 public class ResponseBodyHandler {
 
     @SneakyThrows
-    synchronized public static String readBody(Response response) {
+    public static String readBody(Response response) {
         String charset = defineCharset(response.header(CONTENT_TYPE));
 
         ResponseBody body = response.body();
@@ -32,12 +32,14 @@ public class ResponseBodyHandler {
         return textBuilder.toString();
     }
 
-    synchronized public static String defineCharset(String contentType) {
-        Pattern pattern = Pattern.compile(".*charset=(.*)", Pattern.CASE_INSENSITIVE);
-        Matcher mather = pattern.matcher(contentType);
+    public static String defineCharset(String contentType) {
+        if (Objects.nonNull(contentType)) {
+            Pattern pattern = Pattern.compile(".*charset=(.*)", Pattern.CASE_INSENSITIVE);
+            Matcher mather = pattern.matcher(contentType);
 
-        if (mather.find() && Objects.equals(mather.group(1), WIN1251))
-            return WIN1251;
+            if (mather.find() && Objects.equals(mather.group(1), WIN1251))
+                return WIN1251;
+        }
 
         return UTF8;
     }
