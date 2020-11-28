@@ -14,6 +14,7 @@ public enum CMSType {
     MAXSITE_CMS(4, "MaxSite CMS"),
     DRUPAL(5, "Drupal"),
     BITRIX(6, "1C-Bitrix"),
+    MODX(7, "MODx"),
     UNKNOWN(-1, "Unknown");
 
     private final int id;

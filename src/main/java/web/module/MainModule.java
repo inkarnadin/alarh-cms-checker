@@ -17,6 +17,8 @@ import web.cms.joomla.JoomlaCheckProcessor;
 import web.cms.joomla.annotation.Joomla;
 import web.cms.maxsite.MaxSiteCheckProcessor;
 import web.cms.maxsite.annotation.MaxSite;
+import web.cms.modx.ModXCheckProcessor;
+import web.cms.modx.annotation.ModX;
 import web.cms.wordpress.WordPressCheckProcessor;
 import web.cms.wordpress.annotation.WordPress;
 import web.cms.yii.YiiCheckProcessor;
@@ -48,6 +50,7 @@ public class MainModule extends AbstractModule {
         bind(Processor.class).annotatedWith(MaxSite.class).to(MaxSiteCheckProcessor.class);
         bind(Processor.class).annotatedWith(Drupal.class).to(DrupalCheckProcessor.class);
         bind(Processor.class).annotatedWith(Bitrix.class).to(BitrixCheckProcessor.class);
+        bind(Processor.class).annotatedWith(ModX.class).to(ModXCheckProcessor.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
 

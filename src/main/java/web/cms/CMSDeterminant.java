@@ -10,6 +10,7 @@ import web.cms.datalife.annotation.DataLife;
 import web.cms.drupal.annotation.Drupal;
 import web.cms.joomla.annotation.Joomla;
 import web.cms.maxsite.annotation.MaxSite;
+import web.cms.modx.annotation.ModX;
 import web.cms.wordpress.annotation.WordPress;
 import web.cms.yii.annotation.Yii;
 import web.struct.Destination;
@@ -36,6 +37,8 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
     private Processor drpCheckProcessor;
     @Inject @Bitrix
     private Processor btxCheckProcessor;
+    @Inject @ModX
+    private Processor mdxCheckProcessor;
 
     @Override
     @SneakyThrows
@@ -52,6 +55,7 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
         callables.add(new Determinative(mxsCheckProcessor, params, CMSType.MAXSITE_CMS));
         callables.add(new Determinative(drpCheckProcessor, params, CMSType.DRUPAL));
         callables.add(new Determinative(btxCheckProcessor, params, CMSType.BITRIX));
+        callables.add(new Determinative(mdxCheckProcessor, params, CMSType.MODX));
 
         List<Future<Pair<CMSType, Optional<Destination>>>> futures = executorService.invokeAll(callables);
         for (Future<Pair<CMSType, Optional<Destination>>> future : futures) {
