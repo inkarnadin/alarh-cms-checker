@@ -43,7 +43,7 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
 
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
         pathAnalyzer.checkViaPaths(new Integer[] { 200, 304, 401, 403 }, new String[] {
-                "administrator/components"
+                "administrator/components/com_config"
         });
         pathAnalyzer.checkViaFiles(new Integer[] { 200, 304 }, new String[] { TEXT_XML, APPLICATION_XML }, new String[] {
                 "language/en-GB/en-GB.xml",
