@@ -52,6 +52,7 @@ public class WordPressCheckProcessor extends AbstractProcessor {
                 Pattern.compile("wp-submit"),
                 Pattern.compile("wp-core-ui")
         });
+        pageAnalyzer.checkViaPageCookies(Pattern.compile("wordpress_test_cookie"));
 
         long count = result.stream().filter(b -> b).count();
         if (count > 0)

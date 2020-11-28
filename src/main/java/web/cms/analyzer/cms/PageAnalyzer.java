@@ -1,6 +1,7 @@
 package web.cms.analyzer.cms;
 
 import lombok.RequiredArgsConstructor;
+import okhttp3.Headers;
 import okhttp3.Response;
 import web.http.Host;
 import web.http.Request;
@@ -18,6 +19,7 @@ public class PageAnalyzer {
 
     private List<Boolean> result;
     private String responseBody = "";
+    private Headers headers;
 
     public PageAnalyzer prepare(String protocol, String server, List<Boolean> result, String path) {
         this.result = result;
@@ -27,6 +29,7 @@ public class PageAnalyzer {
 
         try (Response response = request.send(host)) {
             responseBody = ResponseBodyHandler.readBody(response);
+            headers = response.headers();
         }
         return this;
     }
@@ -35,6 +38,18 @@ public class PageAnalyzer {
         for (Pattern pattern : patterns) {
             parser.configure(pattern, 0);
             if (parser.parse(responseBody)) {
+                result.add(true);
+                return;
+            }
+        }
+        result.add(false);
+    }
+
+    public void checkViaPageCookies(Pattern pattern) {
+        List<String> cookies = headers.values("set-cookie");
+        parser.configure(pattern, 0);
+        for (String cookie : cookies) {
+            if (parser.parse(cookie)) {
                 result.add(true);
                 return;
             }
