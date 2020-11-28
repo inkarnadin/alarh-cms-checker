@@ -2,7 +2,7 @@ package web.cms.drupal;
 
 import com.google.inject.Inject;
 import web.cms.CMSType;
-import web.analyzer.cms.MainPageAnalyzer;
+import web.analyzer.check.MainPageAnalyzer;
 import web.http.Request;
 import web.module.annotation.Get;
 import web.parser.TextParser;

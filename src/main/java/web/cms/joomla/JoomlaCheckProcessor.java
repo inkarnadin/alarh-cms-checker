@@ -2,9 +2,9 @@ package web.cms.joomla;
 
 import com.google.inject.Inject;
 import web.cms.CMSType;
-import web.analyzer.cms.MainPageAnalyzer;
-import web.analyzer.cms.PageAnalyzer;
-import web.analyzer.cms.PathAnalyzer;
+import web.analyzer.check.MainPageAnalyzer;
+import web.analyzer.check.PageAnalyzer;
+import web.analyzer.check.PathAnalyzer;
 import web.module.annotation.Get;
 import web.parser.TextParser;
 import web.struct.AbstractProcessor;
