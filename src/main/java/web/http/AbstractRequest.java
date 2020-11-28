@@ -5,6 +5,8 @@ import okhttp3.Protocol;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+import java.util.Objects;
+
 import static web.http.ContentType.TEXT_PLAIN;
 
 public abstract class AbstractRequest implements Request {
@@ -24,7 +26,7 @@ public abstract class AbstractRequest implements Request {
                         .build())
                 .protocol(Protocol.HTTP_2)
                 .code(400)
-                .body(ResponseBody.create(msg, MediaType.parse(TEXT_PLAIN)))
+                .body(ResponseBody.create(Objects.nonNull(msg) ? msg : "", MediaType.parse(TEXT_PLAIN)))
                 .message(msg)
                 .build();
     }
