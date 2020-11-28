@@ -2,6 +2,7 @@ package web.cms.bitrix;
 
 import com.google.inject.Inject;
 import web.analyzer.check.MainPageAnalyzer;
+import web.analyzer.check.PathAnalyzer;
 import web.cms.CMSType;
 import web.http.Request;
 import web.module.annotation.Get;
@@ -35,7 +36,17 @@ public class BitrixCheckProcessor extends AbstractProcessor {
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
         mainPageAnalyzer.checkViaMainPageKeywords(new Pattern[] {
-                Pattern.compile("bitrix/cache")
+                Pattern.compile("bitrix/cache"),
+                Pattern.compile("bitrix/js"),
+                Pattern.compile("bitrix/tools"),
+                Pattern.compile("bitrix/components")
+        });
+        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
+        pathAnalyzer.checkViaPaths(new Integer[] { 200, 401, 403 }, new String[] {
+                "bitrix/cache",
+                "bitrix/js",
+                "bitrix/tools",
+                "bitrix/components"
         });
 
         long count = result.stream().filter(b -> b).count();
