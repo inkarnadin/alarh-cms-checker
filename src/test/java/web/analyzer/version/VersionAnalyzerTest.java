@@ -14,7 +14,7 @@ public class VersionAnalyzerTest {
 
     @Test
     public void compareVersion() {
-        String txt = "@since 4.5.0 \\n{asdasd} @since 1.1.0 ___.*\\n @since 9.0.0 ";
+        String txt = "@since 4.5.0 \\n{} @since 1.1.0 ___.*\\n @since 9.0.0 ";
         Pattern pattern = Pattern.compile("@since\\s(.*?)\\s");
         Matcher matcher = pattern.matcher(txt);
 
