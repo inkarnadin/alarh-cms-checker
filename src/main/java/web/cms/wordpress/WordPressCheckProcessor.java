@@ -37,7 +37,7 @@ public class WordPressCheckProcessor extends AbstractProcessor {
                 "wp-content",
                 "wp-includes"
         });
-        pathAnalyzer.checkViaFiles(new Integer[] { 403, 405 }, new String[] { TEXT_HTML }, new String[] { "xmlrpc.php" });
+        pathAnalyzer.checkViaFiles(new Integer[] { 403, 405 }, new String[] {}, new String[] { "xmlrpc.php" });
 
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
         pageAnalyzer.checkViaPageKeywords(new String[] { "wp-login.php" }, new Pattern[] {

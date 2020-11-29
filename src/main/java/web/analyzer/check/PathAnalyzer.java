@@ -50,7 +50,7 @@ public class PathAnalyzer {
                 Integer code = response.code();
                 String contentType = response.header(CONTENT_TYPE);
 
-                if (Arrays.asList(codes).contains(code) && Arrays.asList(contentTypes).contains(contentType)) {
+                if (Arrays.asList(codes).contains(code) && (Arrays.asList(contentTypes).contains(contentType) || contentTypes.length == 0)) {
                     result.add(true);
                     return;
                 }
