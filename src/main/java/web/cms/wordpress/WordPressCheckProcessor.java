@@ -37,7 +37,6 @@ public class WordPressCheckProcessor extends AbstractProcessor {
                 "wp-content",
                 "wp-includes"
         });
-        pathAnalyzer.checkViaFiles(new Integer[] { 403, 405 }, new String[] {}, new String[] { "xmlrpc.php" });
 
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
         pageAnalyzer.checkViaPageKeywords(new String[] { "wp-login.php" }, new Pattern[] {
@@ -47,6 +46,9 @@ public class WordPressCheckProcessor extends AbstractProcessor {
                 Pattern.compile("wp-core-ui")
         });
         pageAnalyzer.checkViaPageCookies(new String[] { "wp-login.php" }, Pattern.compile("wordpress_test_cookie"));
+        pageAnalyzer.checkViaPageKeywords(new String[] { "xmlrpc.php" }, new Pattern[] {
+                Pattern.compile("XML-RPC server accepts POST requests only")
+        });
 
         long count = result.stream().filter(b -> b).count();
         if (count > 0)
