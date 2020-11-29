@@ -18,7 +18,7 @@ public class ContentType {
     public static final String IMAGE_PNG = "image/png";
 
     public static String defineContentType(String contentType) {
-        Pattern pattern = Pattern.compile("[\\w/]*");
+        Pattern pattern = Pattern.compile("[\\w/-]*");
         Matcher matcher = pattern.matcher(contentType);
         if (matcher.find())
             return matcher.group(0);
