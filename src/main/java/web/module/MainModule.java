@@ -15,6 +15,8 @@ import web.cms.drupal.DrupalCheckProcessor;
 import web.cms.drupal.annotation.Drupal;
 import web.cms.joomla.JoomlaCheckProcessor;
 import web.cms.joomla.annotation.Joomla;
+import web.cms.lavarel.LavarelCheckProcessor;
+import web.cms.lavarel.annotation.Lavarel;
 import web.cms.maxsite.MaxSiteCheckProcessor;
 import web.cms.maxsite.annotation.MaxSite;
 import web.cms.modx.ModXCheckProcessor;
@@ -50,6 +52,7 @@ public class MainModule extends AbstractModule {
         bind(Processor.class).annotatedWith(Drupal.class).to(DrupalCheckProcessor.class);
         bind(Processor.class).annotatedWith(Bitrix.class).to(BitrixCheckProcessor.class);
         bind(Processor.class).annotatedWith(ModX.class).to(ModXCheckProcessor.class);
+        bind(Processor.class).annotatedWith(Lavarel.class).to(LavarelCheckProcessor.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
 
