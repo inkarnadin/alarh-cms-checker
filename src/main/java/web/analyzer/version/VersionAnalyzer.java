@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import okhttp3.Headers;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import org.apache.maven.artifact.versioning.ComparableVersion;
 import web.cms.CMSType;
 import web.http.Host;
 import web.http.Request;
@@ -13,10 +14,12 @@ import web.parser.XMLParser;
 import web.struct.Destination;
 import web.analyzer.LogoMap;
 
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static web.http.Headers.CONTENT_TYPE;
 
@@ -49,7 +52,6 @@ public class VersionAnalyzer {
         }
         return this;
     }
-
 
     public void checkViaMainPageGenerator(Pattern[] patterns) {
         String version = "unknown";
@@ -120,6 +122,25 @@ public class VersionAnalyzer {
         }
         destination.insert(attemptCounter.get(),
                 String.format("  ** %s version (check #%s) = %s", entityType, attemptCounter.incrementAndGet(), version));
+    }
+
+    public void checkViaSinceScript(Pattern pattern, String[] paths) {
+        List<ComparableVersion> versions = new ArrayList<>();
+        versions.add(new ComparableVersion("unknown"));
+
+        for (String path : paths) {
+            host.setPath(path);
+            try (Response response = request.send(host)) {
+                String body = ResponseBodyHandler.readBody(response);
+                Matcher matcher = pattern.matcher(body);
+
+                while (matcher.find()) {
+                    versions.add(new ComparableVersion(matcher.group(1)));
+                }
+            }
+        }
+        destination.insert(attemptCounter.get(),
+                String.format("  ** %s version (check #%s) = %s", entityType, attemptCounter.incrementAndGet(), Collections.max(versions)));
     }
 
 }
