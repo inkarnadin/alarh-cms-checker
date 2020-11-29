@@ -16,6 +16,7 @@ public enum CMSType {
     BITRIX(6, "1C-Bitrix"),
     MODX(7, "MODx"),
     LAVAREL(8, "Lavarel"),
+    TILDA(9, "Tilda"),
     UNKNOWN(-1, "Unknown");
 
     private final int id;

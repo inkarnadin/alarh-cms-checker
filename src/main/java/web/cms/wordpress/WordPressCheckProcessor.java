@@ -33,7 +33,6 @@ public class WordPressCheckProcessor extends AbstractProcessor {
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
         pathAnalyzer.checkViaPaths(new Integer[] { 200, 403 }, new String[] {
                 "wp-content",
-                "wp-admin",
                 "wp-includes"
         });
 

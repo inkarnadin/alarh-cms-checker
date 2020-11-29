@@ -3,6 +3,7 @@ package web.analyzer.check;
 import lombok.RequiredArgsConstructor;
 import okhttp3.Response;
 import web.http.Host;
+import web.http.HttpValidator;
 import web.http.Request;
 
 import java.util.Arrays;
@@ -31,7 +32,7 @@ public class PathAnalyzer {
 
             try (Response response = request.send(host)) {
                 Integer code = response.code();
-                if (Arrays.asList(codes).contains(code)) {
+                if (Arrays.asList(codes).contains(code) && !HttpValidator.isRedirect(response)) {
                     result.add(true);
                     return;
                 }

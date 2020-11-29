@@ -18,7 +18,8 @@ public class CMSFactory {
                 new DrupalModule(),
                 new BitrixModule(),
                 new ModXModule(),
-                new LavarelModule()
+                new LavarelModule(),
+                new TildaModule()
         );
 
         switch (cmsType) {
@@ -40,6 +41,8 @@ public class CMSFactory {
                 return injector.getInstance(ModXProvider.class).get();
             case LAVAREL:
                 return injector.getInstance(LavarelProvider.class).get();
+            case TILDA:
+                return injector.getInstance(TildaProvider.class).get();
             default:
                 throw new IllegalArgumentException("Unsupported CMS type");
         }
