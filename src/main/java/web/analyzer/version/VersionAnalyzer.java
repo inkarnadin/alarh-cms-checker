@@ -140,7 +140,7 @@ public class VersionAnalyzer {
             }
         }
         destination.insert(attemptCounter.get(),
-                String.format("  ** %s version (check #%s) = %s", entityType, attemptCounter.incrementAndGet(), Collections.max(versions)));
+                String.format("  ** %s version (check #%s) = %s+", entityType, attemptCounter.incrementAndGet(), Collections.max(versions)));
     }
 
 }
