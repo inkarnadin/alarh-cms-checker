@@ -14,6 +14,8 @@ import web.http.Request;
 import java.util.*;
 import java.util.regex.Pattern;
 
+import static web.http.ContentType.TEXT_HTML;
+
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class WordPressCheckProcessor extends AbstractProcessor {
 
@@ -26,7 +28,7 @@ public class WordPressCheckProcessor extends AbstractProcessor {
         List<Boolean> result = new ArrayList<>();
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
-        mainPageAnalyzer.checkViaMainPageGenerator(new String[]{
+        mainPageAnalyzer.checkViaMainPageGenerator(new String[] {
                 "WordPress"
         });
 
@@ -35,6 +37,7 @@ public class WordPressCheckProcessor extends AbstractProcessor {
                 "wp-content",
                 "wp-includes"
         });
+        pathAnalyzer.checkViaFiles(new Integer[] { 403, 405 }, new String[] { TEXT_HTML }, new String[] { "xmlrpc.php" });
 
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
         pageAnalyzer.checkViaPageKeywords(new String[] { "wp-login.php" }, new Pattern[] {
