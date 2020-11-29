@@ -44,14 +44,14 @@ public class WordPressCheckProcessor extends AbstractProcessor {
                 "wp-includes"
         });
 
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result, "wp-login.php");
-        pageAnalyzer.checkViaPageKeywords(new Pattern[] {
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        pageAnalyzer.checkViaPageKeywords(new String[] { "wp-login.php" }, new Pattern[] {
                 Pattern.compile("Powered by .*WordPress"),
                 Pattern.compile("wp-pwd"),
                 Pattern.compile("wp-submit"),
                 Pattern.compile("wp-core-ui")
         });
-        pageAnalyzer.checkViaPageCookies(Pattern.compile("wordpress_test_cookie"));
+        pageAnalyzer.checkViaPageCookies(new String[] { "wp-login.php" }, Pattern.compile("wordpress_test_cookie"));
 
         long count = result.stream().filter(b -> b).count();
         if (count > 0)

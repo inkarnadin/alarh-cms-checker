@@ -50,8 +50,8 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
                 "administrator/components/com_config/config.xml",
         });
 
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result, "administrator");
-        pageAnalyzer.checkViaPageKeywords(new Pattern[] {
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        pageAnalyzer.checkViaPageKeywords(new String[] { "administrator" }, new Pattern[] {
                 Pattern.compile("login-joomla"),
                 Pattern.compile("joomla-script-options")
         });

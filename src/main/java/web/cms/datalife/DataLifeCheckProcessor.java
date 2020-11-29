@@ -57,8 +57,8 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
                 "templates/Default/images/logo.png"
         });
 
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result, "admin.php");
-        pageAnalyzer.checkViaPageKeywords(new Pattern[] {
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        pageAnalyzer.checkViaPageKeywords(new String[] { "admin.php" }, new Pattern[] {
                 Pattern.compile("DataLife Engine")
         });
 

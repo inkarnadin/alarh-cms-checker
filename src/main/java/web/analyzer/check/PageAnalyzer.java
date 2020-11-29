@@ -18,40 +18,46 @@ public class PageAnalyzer {
     private final TextParser<Boolean> parser;
 
     private List<Boolean> result;
-    private String responseBody = "";
-    private Headers headers;
+    private Host host;
 
-    public PageAnalyzer prepare(String protocol, String server, List<Boolean> result, String path) {
+    public PageAnalyzer prepare(String protocol, String server, List<Boolean> result) {
         this.result = result;
-
-        Host host = new Host(protocol, server, path);
-        host.setBegetProtection(true);
-
-        try (Response response = request.send(host)) {
-            responseBody = ResponseBodyHandler.readBody(response);
-            headers = response.headers();
-        }
+        this.host = new Host(protocol, server);
         return this;
     }
 
-    public void checkViaPageKeywords(Pattern[] patterns) {
-        for (Pattern pattern : patterns) {
-            parser.configure(pattern, 0);
-            if (parser.parse(responseBody)) {
-                result.add(true);
-                return;
+    public void checkViaPageKeywords(String[] paths, Pattern[] patterns) {
+        for (String path : paths) {
+            host.setPath(path);
+            host.setBegetProtection(true);
+            try (Response response = request.send(host)) {
+                String responseBody = ResponseBodyHandler.readBody(response);
+                for (Pattern pattern : patterns) {
+                    parser.configure(pattern, 0);
+                    if (parser.parse(responseBody)) {
+                        result.add(true);
+                        return;
+                    }
+                }
             }
         }
         result.add(false);
     }
 
-    public void checkViaPageCookies(Pattern pattern) {
-        List<String> cookies = headers.values("set-cookie");
-        parser.configure(pattern, 0);
-        for (String cookie : cookies) {
-            if (parser.parse(cookie)) {
-                result.add(true);
-                return;
+    public void checkViaPageCookies(String[] paths, Pattern pattern) {
+        for (String path : paths) {
+            host.setPath(path);
+            host.setBegetProtection(true);
+            try (Response response = request.send(host)) {
+                Headers headers = response.headers();
+                List<String> cookies = headers.values("set-cookie");
+                parser.configure(pattern, 0);
+                for (String cookie : cookies) {
+                    if (parser.parse(cookie)) {
+                        result.add(true);
+                        return;
+                    }
+                }
             }
         }
         result.add(false);
