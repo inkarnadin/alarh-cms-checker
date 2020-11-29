@@ -38,7 +38,7 @@ public class WordPressCheckProcessor extends AbstractProcessor {
                 "wp-includes"
         });
         pathAnalyzer.checkViaFiles(new Integer[] { 200 }, new String[] { APPLICATION_JSON }, new String [] { "wp-json" });
-        pathAnalyzer.checkViaFiles(new Integer[] { 200 }, new String[] { APPLICATION_X_JAVASCRIPT }, new String[] {
+        pathAnalyzer.checkViaFiles(new Integer[] { 200 }, new String[] { APPLICATION_JAVASCRIPT, APPLICATION_X_JAVASCRIPT }, new String[] {
                 "wp-includes/js/heartbeat.js",
                 "wp-includes/js/json2.js",
                 "wp-includes/js/wp-api.js",
