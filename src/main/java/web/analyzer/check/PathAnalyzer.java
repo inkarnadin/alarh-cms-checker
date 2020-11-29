@@ -3,7 +3,6 @@ package web.analyzer.check;
 import lombok.RequiredArgsConstructor;
 import okhttp3.Response;
 import web.http.Host;
-import web.http.HttpValidator;
 import web.http.Request;
 
 import java.util.Arrays;
