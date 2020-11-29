@@ -14,6 +14,7 @@ import web.http.Request;
 import java.util.*;
 import java.util.regex.Pattern;
 
+import static web.http.ContentType.APPLICATION_JSON;
 import static web.http.ContentType.TEXT_HTML;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
@@ -37,6 +38,7 @@ public class WordPressCheckProcessor extends AbstractProcessor {
                 "wp-content",
                 "wp-includes"
         });
+        pathAnalyzer.checkViaFiles(new Integer[] { 200 }, new String[] { APPLICATION_JSON }, new String [] { "wp-json" });
 
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
         pageAnalyzer.checkViaPageKeywords(new String[] { "wp-login.php" }, new Pattern[] {
