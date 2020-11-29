@@ -32,7 +32,7 @@ public class PathAnalyzer {
 
             try (Response response = request.send(host)) {
                 Integer code = response.code();
-                if (Arrays.asList(codes).contains(code) && !HttpValidator.isRedirect(response)) {
+                if (Arrays.asList(codes).contains(code)) {
                     result.add(true);
                     return;
                 }
