@@ -46,7 +46,8 @@ public class YiiCheckProcessor extends AbstractProcessor {
                 Pattern.compile("field-loginform-username"),
                 Pattern.compile("loginform-rememberme"),
                 Pattern.compile("loginform-password"),
-                Pattern.compile("loginform-username")
+                Pattern.compile("loginform-username"),
+                Pattern.compile("yii\\.validation")
         });
 
         long count = result.stream().filter(b -> b).count();
