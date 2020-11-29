@@ -1,6 +1,7 @@
 package web.cms.datalife;
 
 import com.google.inject.Inject;
+import lombok.RequiredArgsConstructor;
 import web.cms.CMSType;
 import web.analyzer.version.VersionAnalyzer;
 import web.http.Request;
@@ -14,6 +15,7 @@ import java.util.regex.Pattern;
 import static web.http.ContentType.IMAGE_JPG;
 import static web.http.ContentType.IMAGE_PNG;
 
+@RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class DataLifeVersionProcessor extends AbstractProcessor {
 
     private final Request request;
@@ -21,15 +23,6 @@ public class DataLifeVersionProcessor extends AbstractProcessor {
     private final Destination destination;
 
     private final DataLifeLogoMap logoMap = new DataLifeLogoMap();
-
-    @Inject
-    DataLifeVersionProcessor(Request request,
-                             TextParser<String> textParser,
-                             Destination destination) {
-        this.request = request;
-        this.textParser = textParser;
-        this.destination = destination;
-    }
 
     @Override
     public void process() {

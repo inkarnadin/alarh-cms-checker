@@ -1,6 +1,7 @@
 package web.cms.maxsite;
 
 import com.google.inject.Inject;
+import lombok.RequiredArgsConstructor;
 import web.cms.CMSType;
 import web.analyzer.check.MainPageAnalyzer;
 import web.http.Request;
@@ -13,20 +14,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+@RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class MaxSiteCheckProcessor extends AbstractProcessor {
 
     private final Request request;
     private final TextParser<Boolean> parser;
     private final Destination destination;
-
-    @Inject
-    MaxSiteCheckProcessor(Request request,
-                          TextParser<Boolean> parser,
-                          Destination destination) {
-        this.request = request;
-        this.parser = parser;
-        this.destination = destination;
-    }
 
     @Override
     public void process() {

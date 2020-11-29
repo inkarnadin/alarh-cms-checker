@@ -1,6 +1,7 @@
 package web.cms.datalife;
 
 import com.google.inject.Inject;
+import lombok.RequiredArgsConstructor;
 import web.cms.CMSType;
 import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
@@ -18,20 +19,12 @@ import java.util.regex.Pattern;
 
 import static web.http.ContentType.*;
 
+@RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class DataLifeCheckProcessor extends AbstractProcessor {
 
     private final Request request;
     private final TextParser<Boolean> parser;
     private final Destination destination;
-
-    @Inject
-    DataLifeCheckProcessor(Request request,
-                           TextParser<Boolean> parser,
-                           Destination destination) {
-        this.request = request;
-        this.parser = parser;
-        this.destination = destination;
-    }
 
     @Override
     public void process() {

@@ -1,6 +1,7 @@
 package web.cms.lavarel;
 
 import com.google.inject.Inject;
+import lombok.RequiredArgsConstructor;
 import web.analyzer.check.PageAnalyzer;
 import web.cms.CMSType;
 import web.http.Request;
@@ -13,20 +14,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+@RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class LavarelCheckProcessor extends AbstractProcessor {
 
     private final Request request;
     private final TextParser<Boolean> parser;
     private final Destination destination;
-
-    @Inject
-    LavarelCheckProcessor(Request request,
-                          TextParser<Boolean> parser,
-                          Destination destination) {
-        this.request = request;
-        this.parser = parser;
-        this.destination = destination;
-    }
 
     @Override
     public void process() {

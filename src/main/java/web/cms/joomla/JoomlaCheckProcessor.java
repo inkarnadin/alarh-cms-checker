@@ -1,6 +1,7 @@
 package web.cms.joomla;
 
 import com.google.inject.Inject;
+import lombok.RequiredArgsConstructor;
 import web.cms.CMSType;
 import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
@@ -18,20 +19,12 @@ import java.util.regex.Pattern;
 import static web.http.ContentType.APPLICATION_XML;
 import static web.http.ContentType.TEXT_XML;
 
+@RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class JoomlaCheckProcessor extends AbstractProcessor {
 
     private final Request request;
     private final TextParser<Boolean> parser;
     private final Destination destination;
-
-    @Inject
-    JoomlaCheckProcessor(Request request,
-                         TextParser<Boolean> parser,
-                         Destination destination) {
-        this.request = request;
-        this.parser = parser;
-        this.destination = destination;
-    }
 
     @Override
     public void process() {

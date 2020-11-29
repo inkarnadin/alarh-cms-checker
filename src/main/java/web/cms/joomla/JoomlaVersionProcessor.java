@@ -1,6 +1,7 @@
 package web.cms.joomla;
 
 import com.google.inject.Inject;
+import lombok.RequiredArgsConstructor;
 import web.cms.CMSType;
 import web.analyzer.version.VersionAnalyzer;
 import web.http.Request;
@@ -15,23 +16,13 @@ import java.util.regex.Pattern;
 import static web.http.ContentType.APPLICATION_XML;
 import static web.http.ContentType.TEXT_XML;
 
+@RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class JoomlaVersionProcessor extends AbstractProcessor {
 
     private final Request request;
     private final XMLParser<String> xmlParser;
     private final TextParser<String> textParser;
     private final Destination destination;
-
-    @Inject
-    JoomlaVersionProcessor(Request request,
-                           XMLParser<String> xmlParser,
-                           TextParser<String> textParser,
-                           Destination destination) {
-        this.request = request;
-        this.xmlParser = xmlParser;
-        this.textParser = textParser;
-        this.destination = destination;
-    }
 
     @Override
     public void process() {

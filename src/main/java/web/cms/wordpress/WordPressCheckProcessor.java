@@ -1,6 +1,7 @@
 package web.cms.wordpress;
 
 import com.google.inject.Inject;
+import lombok.RequiredArgsConstructor;
 import web.cms.CMSType;
 import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
@@ -13,20 +14,12 @@ import web.http.Request;
 import java.util.*;
 import java.util.regex.Pattern;
 
+@RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class WordPressCheckProcessor extends AbstractProcessor {
 
     private final Request request;
     private final TextParser<Boolean> parser;
     private final Destination destination;
-
-    @Inject
-    WordPressCheckProcessor(Request request,
-                            TextParser<Boolean> parser,
-                            Destination destination) {
-        this.request = request;
-        this.parser = parser;
-        this.destination = destination;
-    }
 
     @Override
     public void process() {

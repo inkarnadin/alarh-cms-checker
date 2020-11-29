@@ -1,6 +1,7 @@
 package web.cms.wordpress;
 
 import com.google.inject.Inject;
+import lombok.RequiredArgsConstructor;
 import web.cms.CMSType;
 import web.analyzer.version.VersionAnalyzer;
 import web.http.Request;
@@ -11,20 +12,12 @@ import web.struct.Destination;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+@RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class WordPressVersionProcessor extends AbstractProcessor {
 
     private final Request request;
     private final TextParser<String> parser;
     private final Destination destination;
-
-    @Inject
-    WordPressVersionProcessor(Request request,
-                              TextParser<String> parser,
-                              Destination destination) {
-        this.request = request;
-        this.parser = parser;
-        this.destination = destination;
-    }
 
     @Override
     public void process() {
