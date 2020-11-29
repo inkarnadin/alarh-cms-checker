@@ -17,7 +17,8 @@ public class CMSFactory {
                 new MaxSiteModule(),
                 new DrupalModule(),
                 new BitrixModule(),
-                new ModXModule()
+                new ModXModule(),
+                new LavarelModule()
         );
 
         switch (cmsType) {
@@ -37,6 +38,8 @@ public class CMSFactory {
                 return injector.getInstance(BitrixProvider.class).get();
             case MODX:
                 return injector.getInstance(ModXProvider.class).get();
+            case LAVAREL:
+                return injector.getInstance(LavarelProvider.class).get();
             default:
                 throw new IllegalArgumentException("Unsupported CMS type");
         }

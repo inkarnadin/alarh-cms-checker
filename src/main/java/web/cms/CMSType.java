@@ -15,6 +15,7 @@ public enum CMSType {
     DRUPAL(5, "Drupal"),
     BITRIX(6, "1C-Bitrix"),
     MODX(7, "MODx"),
+    LAVAREL(8, "Lavarel"),
     UNKNOWN(-1, "Unknown");
 
     private final int id;
