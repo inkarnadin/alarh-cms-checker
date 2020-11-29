@@ -33,7 +33,7 @@ public class ModXCheckProcessor extends AbstractProcessor {
         });
 
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pathAnalyzer.checkViaPaths(new Integer[] { 200, 403 }, new String[] {
+        pathAnalyzer.checkViaPaths(new Integer[] { 200, 304, 403 }, new String[] {
                 "assets/templates",
                 "assets/images",
                 "assets/cache",
