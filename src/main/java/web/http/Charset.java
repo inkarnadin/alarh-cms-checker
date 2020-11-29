@@ -13,12 +13,13 @@ public class Charset {
     public static String defineCharset(String contentType) {
         if (Objects.nonNull(contentType)) {
             Pattern pattern = Pattern.compile(".*charset=(.*)", Pattern.CASE_INSENSITIVE);
-            Matcher mather = pattern.matcher(contentType);
-            if (mather.find())
-                if (Objects.equals(mather.group(1), WIN1251))
+            Matcher matcher = pattern.matcher(contentType);
+            if (matcher.find()) {
+                if (Objects.equals(matcher.group(1), WIN1251))
                     return WIN1251;
-                if (Objects.equals(mather.group(1), WIN1251))
+                if (Objects.equals(matcher.group(1), ISO_8859_1))
                     return ISO_8859_1;
+            }
         }
         return UTF8;
     }
