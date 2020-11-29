@@ -6,7 +6,6 @@ import web.http.Host;
 import web.http.HttpValidator;
 import web.http.Request;
 import web.http.RequestErrorHandler;
-import web.module.annotation.Get;
 import web.struct.*;
 import web.cms.wordpress.annotation.WordPressPlugin;
 
@@ -24,7 +23,7 @@ public class WordPressPluginProcessor extends AbstractProcessor {
     private final Integer[] codes = { 200, 403 };
 
     @Inject
-    WordPressPluginProcessor(@Get Request request,
+    WordPressPluginProcessor(Request request,
                              @WordPressPlugin Source source) {
         this.request = request;
         this.source = source;

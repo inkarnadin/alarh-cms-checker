@@ -3,7 +3,6 @@ package web.db.phpmyadmin;
 import com.google.inject.Inject;
 import lombok.SneakyThrows;
 import web.analyzer.version.VersionAnalyzer;
-import web.module.annotation.Get;
 import web.http.Request;
 import web.parser.TextParser;
 import web.struct.AbstractProcessor;
@@ -17,7 +16,7 @@ public class PhpMyAdminVersionProcessor extends AbstractProcessor {
     private final TextParser<String> parser;
 
     @Inject
-    PhpMyAdminVersionProcessor(@Get Request request,
+    PhpMyAdminVersionProcessor(Request request,
                                TextParser<String> parser) {
         this.request = request;
         this.parser = parser;

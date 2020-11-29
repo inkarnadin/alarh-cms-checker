@@ -5,7 +5,6 @@ import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.CMSType;
 import web.http.Request;
-import web.module.annotation.Get;
 import web.parser.TextParser;
 import web.struct.AbstractProcessor;
 import web.struct.Destination;
@@ -22,7 +21,7 @@ public class ModXCheckProcessor extends AbstractProcessor {
     private final Destination destination;
 
     @Inject
-    ModXCheckProcessor(@Get Request request,
+    ModXCheckProcessor(Request request,
                        TextParser<Boolean> parser,
                        Destination destination) {
         this.request = request;

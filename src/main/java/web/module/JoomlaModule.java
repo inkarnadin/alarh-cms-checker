@@ -6,7 +6,6 @@ import lombok.SneakyThrows;
 import web.cms.joomla.*;
 import web.cms.joomla.annotation.*;
 import web.http.GetRequest;
-import web.module.annotation.Get;
 import web.module.provider.JoomlaProvider;
 import web.parser.*;
 import web.struct.*;
@@ -17,7 +16,7 @@ public class JoomlaModule extends AbstractModule {
     @SneakyThrows
     @Override
     protected void configure() {
-        bind(Request.class).annotatedWith(Get.class).to(GetRequest.class);
+        bind(Request.class).to(GetRequest.class);
 
         bind(Destination.class).to(SimpleDestination.class);
 

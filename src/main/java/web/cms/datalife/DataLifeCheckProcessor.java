@@ -7,7 +7,6 @@ import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.analyzer.check.SpecificAnalyzer;
 import web.http.Request;
-import web.module.annotation.Get;
 import web.struct.AbstractProcessor;
 import web.struct.Destination;
 import web.parser.TextParser;
@@ -26,7 +25,7 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
     private final Destination destination;
 
     @Inject
-    DataLifeCheckProcessor(@Get Request request,
+    DataLifeCheckProcessor(Request request,
                            TextParser<Boolean> parser,
                            Destination destination) {
         this.request = request;

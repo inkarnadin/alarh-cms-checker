@@ -8,7 +8,6 @@ import web.cms.drupal.annotation.Drupal;
 import web.cms.drupal.annotation.DrupalVersion;
 import web.http.GetRequest;
 import web.http.Request;
-import web.module.annotation.Get;
 import web.module.provider.DrupalProvider;
 import web.parser.StringReturnTextParser;
 import web.parser.TextParser;
@@ -22,7 +21,7 @@ public class DrupalModule extends AbstractModule {
     @SneakyThrows
     @Override
     protected void configure() {
-        bind(Request.class).annotatedWith(Get.class).to(GetRequest.class);
+        bind(Request.class).to(GetRequest.class);
         bind(Destination.class).to(SimpleDestination.class);
         bind(new TypeLiteral<TextParser<String>>(){}).to(StringReturnTextParser.class);
         bind(Processor.class).annotatedWith(DrupalVersion.class).to(DrupalVersionProcessor.class);

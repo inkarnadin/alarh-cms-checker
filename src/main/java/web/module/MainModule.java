@@ -28,7 +28,6 @@ import web.http.GetRequest;
 import web.http.Request;
 import web.module.annotation.Cms;
 import web.module.annotation.DBAdmin;
-import web.module.annotation.Get;
 import web.parser.BooleanReturnTextParser;
 import web.parser.TextParser;
 import web.struct.*;
@@ -38,7 +37,7 @@ public class MainModule extends AbstractModule {
     @SneakyThrows
     @Override
     protected void configure() {
-        bind(Request.class).annotatedWith(Get.class).to(GetRequest.class);
+        bind(Request.class).to(GetRequest.class);
 
         bind(new TypeLiteral<TextParser<Boolean>>(){}).to(BooleanReturnTextParser.class);
         bind(Destination.class).to(SimpleDestination.class).in(Scopes.NO_SCOPE);

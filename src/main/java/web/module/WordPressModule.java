@@ -10,7 +10,6 @@ import web.cms.wordpress.annotation.WordPress;
 import web.cms.wordpress.annotation.WordPressPlugin;
 import web.cms.wordpress.annotation.WordPressVersion;
 import web.http.GetRequest;
-import web.module.annotation.Get;
 import web.module.provider.WordPressProvider;
 import web.parser.StringReturnTextParser;
 import web.parser.TextParser;
@@ -22,7 +21,7 @@ public class WordPressModule extends AbstractModule {
     @SneakyThrows
     @Override
     protected void configure() {
-        bind(Request.class).annotatedWith(Get.class).to(GetRequest.class);
+        bind(Request.class).to(GetRequest.class);
 
         bind(Destination.class).to(SimpleDestination.class);
 

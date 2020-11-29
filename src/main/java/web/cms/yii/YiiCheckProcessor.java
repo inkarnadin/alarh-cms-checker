@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import web.cms.CMSType;
 import web.analyzer.check.MainPageAnalyzer;
 import web.http.Request;
-import web.module.annotation.Get;
 import web.parser.TextParser;
 import web.struct.AbstractProcessor;
 import web.struct.Destination;
@@ -21,7 +20,7 @@ public class YiiCheckProcessor extends AbstractProcessor {
     private final Destination destination;
 
     @Inject
-    YiiCheckProcessor(@Get Request request,
+    YiiCheckProcessor(Request request,
                       TextParser<Boolean> parser,
                       Destination destination) {
         this.request = request;

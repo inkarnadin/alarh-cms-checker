@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import web.cms.CMSType;
 import web.analyzer.version.VersionAnalyzer;
 import web.http.Request;
-import web.module.annotation.Get;
 import web.parser.TextParser;
 import web.struct.AbstractProcessor;
 import web.struct.Destination;
@@ -19,7 +18,7 @@ public class DrupalVersionProcessor extends AbstractProcessor {
     private final Destination destination;
 
     @Inject
-    DrupalVersionProcessor(@Get Request request,
+    DrupalVersionProcessor(Request request,
                            TextParser<String> parser,
                            Destination destination) {
         this.request = request;

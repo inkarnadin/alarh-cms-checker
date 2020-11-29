@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import web.cms.CMSType;
 import web.analyzer.version.VersionAnalyzer;
 import web.http.Request;
-import web.module.annotation.Get;
 import web.parser.TextParser;
 import web.struct.AbstractProcessor;
 import web.struct.Destination;
@@ -24,7 +23,7 @@ public class DataLifeVersionProcessor extends AbstractProcessor {
     private final DataLifeLogoMap logoMap = new DataLifeLogoMap();
 
     @Inject
-    DataLifeVersionProcessor(@Get Request request,
+    DataLifeVersionProcessor(Request request,
                              TextParser<String> textParser,
                              Destination destination) {
         this.request = request;

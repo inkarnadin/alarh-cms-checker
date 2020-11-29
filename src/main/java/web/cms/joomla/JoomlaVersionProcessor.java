@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import web.cms.CMSType;
 import web.analyzer.version.VersionAnalyzer;
 import web.http.Request;
-import web.module.annotation.Get;
 import web.parser.TextParser;
 import web.parser.XMLParser;
 import web.struct.AbstractProcessor;
@@ -24,7 +23,7 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
     private final Destination destination;
 
     @Inject
-    JoomlaVersionProcessor(@Get Request request,
+    JoomlaVersionProcessor(Request request,
                            XMLParser<String> xmlParser,
                            TextParser<String> textParser,
                            Destination destination) {
