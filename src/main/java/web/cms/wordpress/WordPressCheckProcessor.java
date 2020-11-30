@@ -31,6 +31,14 @@ public class WordPressCheckProcessor extends AbstractProcessor {
         mainPageAnalyzer.checkViaMainPageGenerator(new String[] {
                 "WordPress"
         });
+        mainPageAnalyzer.checkViaMainPageKeywords(new Pattern[] {
+                Pattern.compile("wp-featherligh-css"),
+                Pattern.compile("contact-form-7-css"),
+                Pattern.compile("wp-postratings-css"),
+                Pattern.compile("wpfront-scroll-top-css"),
+                Pattern.compile("core-front-css")
+
+        });
 
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
         pathAnalyzer.checkViaPaths(new Integer[] { 200, 403 }, new String[] {
@@ -44,7 +52,9 @@ public class WordPressCheckProcessor extends AbstractProcessor {
                 "wp-includes/js/wp-api.js",
                 "wp-includes/js/wp-util.js",
                 "wp-includes/js/wpdialog.js",
-                "wp-includes/js/autosave.js"
+                "wp-includes/js/autosave.js",
+
+                "/wp-includes/js/wp-embed.min.js"
         });
 
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
