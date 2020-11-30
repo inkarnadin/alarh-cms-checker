@@ -32,7 +32,7 @@ public class YiiCheckProcessor extends AbstractProcessor {
         });
 
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
-        pageAnalyzer.checkViaPageKeywords(new String[] { "login", "admin/login" }, new Pattern[] {
+        pageAnalyzer.checkViaPageKeywords(new String[] { "login", "admin/login", "admin/site/login" }, new Pattern[] {
                 Pattern.compile("Powered by.*Yii Framework"),
                 Pattern.compile("field-loginform-username"),
                 Pattern.compile("field-loginform-password"),
