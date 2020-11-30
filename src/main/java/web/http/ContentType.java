@@ -1,5 +1,6 @@
 package web.http;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,6 +20,9 @@ public class ContentType {
     public static final String IMAGE_PNG = "image/png";
 
     public static String defineContentType(String contentType) {
+        if (Objects.isNull(contentType))
+            return TEXT_PLAIN;
+
         Pattern pattern = Pattern.compile("[\\w/-]*");
         Matcher matcher = pattern.matcher(contentType);
         if (matcher.find())
