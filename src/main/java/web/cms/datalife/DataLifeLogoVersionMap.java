@@ -1,7 +1,7 @@
 package web.cms.datalife;
 
 import lombok.SneakyThrows;
-import web.analyzer.LogoMap;
+import web.analyzer.VersionMap;
 
 import java.io.File;
 import java.net.URL;
@@ -10,11 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class DataLifeLogoMap implements LogoMap {
+public class DataLifeLogoVersionMap implements VersionMap {
 
     Map<Long, String> versionMap = new HashMap<>();
 
-    public DataLifeLogoMap() {
+    public DataLifeLogoVersionMap() {
         ClassLoader classLoader = this.getClass().getClassLoader();
 
         put(classLoader.getResource("datalife/4.jpg"), "4.0, 4.3, 4.5, 5.0, 5.1, 5.2, 5.3, 5.5, 5.7, 6.0, 6.2, 6.5, 6.7, 7.0, 7.2, 7.3, 7.5");
@@ -35,6 +35,7 @@ public class DataLifeLogoMap implements LogoMap {
         }
     }
 
+    @Override
     public String getVersion(long key) {
         return versionMap.getOrDefault(key, "unknown");
     }

@@ -6,20 +6,19 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 import web.cms.CMSType;
+import web.http.ContentType;
 import web.http.Host;
 import web.http.Request;
 import web.http.ResponseBodyHandler;
 import web.parser.TextParser;
 import web.parser.XMLParser;
 import web.struct.Destination;
-import web.analyzer.LogoMap;
+import web.analyzer.VersionMap;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static web.http.Headers.CONTENT_TYPE;
 
@@ -94,13 +93,13 @@ public class VersionAnalyzer {
                 String.format("  ** %s version (check #%s) = %s", entityType, attemptCounter.incrementAndGet(), version));
     }
 
-    public void checkViaLogoFiles(LogoMap logoMap, String[] contentTypes, String[] paths) {
+    public void checkViaLogoFiles(VersionMap logoMap, String[] contentTypes, String[] paths) {
         String version = "unknown";
 
         for (String path : paths) {
             host.setPath(path);
             try (Response response = request.send(host)) {
-                String contentType = response.header(CONTENT_TYPE);
+                String contentType = ContentType.defineContentType(response.header(CONTENT_TYPE));
                 if (Arrays.asList(contentTypes).contains(contentType)) {
                     ResponseBody body = response.body();
                     long contentLength = (Objects.nonNull(body)) ? body.contentLength() : 0;
@@ -111,6 +110,26 @@ public class VersionAnalyzer {
         destination.insert(attemptCounter.get(),
                 String.format("  ** %s version (check #%s) = %s", entityType, attemptCounter.incrementAndGet(), version));
     }
+
+    public void checkViaScriptLength(VersionMap logoMap, String[] contentTypes, String[] paths) {
+        String version = "unknown";
+
+        for (String path : paths) {
+            host.setPath(path);
+            try (Response response = request.send(host)) {
+                String contentType = ContentType.defineContentType(response.header(CONTENT_TYPE));
+                if (Arrays.asList(contentTypes).contains(contentType)) {
+                    String body = ResponseBodyHandler.readBody(response);
+
+                    long contentLength = body.toCharArray().length;
+                    version = logoMap.getVersion(contentLength);
+                }
+            }
+        }
+        destination.insert(attemptCounter.get(),
+                String.format("  ** %s version (check #%s) = %s", entityType, attemptCounter.incrementAndGet(), version));
+    }
+
 
     public void checkViaHeaders(Pattern pattern, String header) {
         String version = "unknown";

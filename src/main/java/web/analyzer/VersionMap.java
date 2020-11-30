@@ -1,6 +1,6 @@
 package web.analyzer;
 
-public interface LogoMap {
+public interface VersionMap {
 
     String getVersion(long key);
 
