@@ -26,7 +26,7 @@ public class WordPressVersionProcessor extends AbstractProcessor {
         versionAnalyzer.checkViaMainPageGenerator(new Pattern[] {
                 Pattern.compile("<meta name=\"[gG]enerator\" content=\"WordPress\\s(.*?)\" />")
         });
-        versionAnalyzer.checkViaSinceScript(Pattern.compile("@since\\s(.*)"), new String[] {
+        versionAnalyzer.checkViaSinceScript(Pattern.compile("@since\\s(.*?)\\s"), new String[] {
                 "wp-includes/js/admin-bar.js",
                 "wp-includes/js/api-request.js",
                 "wp-includes/js/autosave.js",
