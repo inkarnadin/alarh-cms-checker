@@ -14,4 +14,5 @@ public class PhpMyAdminConnector extends AbstractEnvConnector {
         processor.configure(params.getProtocol(), params.getServer());
         processor.process();
     }
+
 }
