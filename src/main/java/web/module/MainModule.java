@@ -29,7 +29,7 @@ import web.cms.wordpress.WordPressCheckProcessor;
 import web.cms.wordpress.annotation.WordPress;
 import web.cms.yii.YiiCheckProcessor;
 import web.cms.yii.annotation.Yii;
-import web.env.EnvAdminChecker;
+import web.env.EnvironmentChecker;
 import web.http.Client;
 import web.http.GetRequest;
 import web.http.HttpClient;
@@ -67,7 +67,7 @@ public class MainModule extends AbstractModule {
 
         bind(Checker.class).annotatedWith(Cms.class).to(CMSChecker.class);
 
-        bind(Checker.class).annotatedWith(Env.class).to(EnvAdminChecker.class);
+        bind(Checker.class).annotatedWith(Env.class).to(EnvironmentChecker.class);
 
         bind(Runner.class);
     }

@@ -3,7 +3,7 @@ package web.struct;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import web.cms.CMSChecker;
-import web.env.EnvAdminChecker;
+import web.env.EnvironmentChecker;
 
 import java.util.Objects;
 import java.util.Scanner;
@@ -38,17 +38,6 @@ public class Runner {
 
                 System.out.print("Set target host [example.com]: ");
                 params.setServer(scanner.nextLine());
-
-                printSplit();
-
-                System.out.print("Activate PHPMyAdmin module? (y/n): ");
-                if (isAnswer(scanner.nextLine())) {
-                    injector.getInstance(EnvAdminChecker.class).check(params);
-                    System.out.println("Done!");
-                } else {
-                    System.out.println("Skipped...");
-                }
-
                 printSplit();
 
                 System.out.print("Activate CMS module? (y/n): ");
@@ -58,8 +47,17 @@ public class Runner {
                 } else {
                     System.out.println("Skipped...");
                 }
-
                 printSplit();
+
+                System.out.print("Activate additional information module? (y/n): ");
+                if (isAnswer(scanner.nextLine())) {
+                    injector.getInstance(EnvironmentChecker.class).check(params);
+                    System.out.println("Done!");
+                } else {
+                    System.out.println("Skipped...");
+                }
+                printSplit();
+
                 System.out.print("Try again? (y/n): ");
 
                 if (!isAnswer(scanner.nextLine()))

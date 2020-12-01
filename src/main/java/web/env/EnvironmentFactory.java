@@ -7,7 +7,7 @@ import web.struct.Connector;
 import web.module.EnvModule;
 import web.module.provider.PhpMyAdminProvider;
 
-public class EnvAdminFactory {
+public class EnvironmentFactory {
 
     public static Connector getDBAdmin(EnvType envType) {
         Injector injector = Guice.createInjector(
