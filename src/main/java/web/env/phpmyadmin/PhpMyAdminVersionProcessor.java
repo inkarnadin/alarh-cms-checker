@@ -1,4 +1,4 @@
-package web.db.phpmyadmin;
+package web.env.phpmyadmin;
 
 import com.google.inject.Inject;
 import lombok.SneakyThrows;

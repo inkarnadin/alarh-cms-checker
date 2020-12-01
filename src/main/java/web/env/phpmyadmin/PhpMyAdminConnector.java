@@ -1,11 +1,11 @@
-package web.db.phpmyadmin;
+package web.env.phpmyadmin;
 
 import lombok.RequiredArgsConstructor;
 import web.struct.Processor;
-import web.db.AbstractDBConnector;
+import web.env.AbstractEnvConnector;
 
 @RequiredArgsConstructor
-public class PhpMyAdminConnector extends AbstractDBConnector {
+public class PhpMyAdminConnector extends AbstractEnvConnector {
 
     private final Processor processor;
 

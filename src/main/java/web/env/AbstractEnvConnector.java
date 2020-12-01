@@ -1,9 +1,9 @@
-package web.db;
+package web.env;
 
 import web.struct.Connector;
 import web.struct.Params;
 
-public abstract class AbstractDBConnector implements Connector {
+public abstract class AbstractEnvConnector implements Connector {
 
     protected Params params;
 

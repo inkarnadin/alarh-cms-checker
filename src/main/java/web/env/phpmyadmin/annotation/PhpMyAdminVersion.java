@@ -1,4 +1,4 @@
-package web.db.phpmyadmin.annotation;
+package web.env.phpmyadmin.annotation;
 
 import com.google.inject.BindingAnnotation;
 
@@ -11,4 +11,4 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @BindingAnnotation
 @Target({FIELD, PARAMETER, METHOD})
 @Retention(RUNTIME)
-public @interface PhpMyAdmin {}
+public @interface PhpMyAdminVersion {}

@@ -1,4 +1,4 @@
-package web.db;
+package web.env;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -6,7 +6,7 @@ import web.struct.Connector;
 import web.module.PhpMyAdminModule;
 import web.module.provider.PhpMyAdminProvider;
 
-public class DBAdminFactory {
+public class EnvAdminFactory {
 
     public static Connector getDBAdmin() {
         Injector injector = Guice.createInjector(
