@@ -45,7 +45,7 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
                 Pattern.compile("engine/classes/js/dle_js\\.js")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pathAnalyzer.checkViaFiles(MEDIUM, new Integer[] { 200, 304 }, new String[] { IMAGE_JPG, IMAGE_PNG }, new String[] {
+        pathAnalyzer.checkViaFiles(LOW, new Integer[] { 200, 304 }, new String[] { IMAGE_JPG, IMAGE_PNG }, new String[] {
                 "engine/skins/images/logos.jpg",
                 "engine/skins/images/logo.png",
                 "templates/Default/images/logotype.png",
