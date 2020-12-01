@@ -30,7 +30,9 @@ import web.cms.wordpress.annotation.WordPress;
 import web.cms.yii.YiiCheckProcessor;
 import web.cms.yii.annotation.Yii;
 import web.db.DBAdminChecker;
+import web.http.Client;
 import web.http.GetRequest;
+import web.http.HttpClient;
 import web.http.Request;
 import web.module.annotation.Cms;
 import web.module.annotation.DBAdmin;
@@ -43,6 +45,7 @@ public class MainModule extends AbstractModule {
     @SneakyThrows
     @Override
     protected void configure() {
+        bind(Client.class).to(HttpClient.class);
         bind(Request.class).to(GetRequest.class);
 
         bind(new TypeLiteral<TextParser<Boolean>>(){}).to(BooleanReturnTextParser.class);

@@ -1,20 +1,20 @@
 package web.http;
 
-import okhttp3.OkHttpClient;
+import com.google.inject.Inject;
+import okhttp3.*;
 import okhttp3.Request;
-import okhttp3.Response;
 
 import static web.http.Headers.COOKIE;
 import static web.http.Headers.USER_AGENT_HEADER;
 
 public class GetRequest extends AbstractRequest {
 
+    @Inject
+    Client client;
+
     @Override
     public Response send(Host host) {
         try {
-            OkHttpClient client = new OkHttpClient().newBuilder()
-                    .followSslRedirects(true)
-                    .build();
             Request.Builder builder = new Request.Builder()
                     .url(host.createUrl())
                     .get()
@@ -23,7 +23,7 @@ public class GetRequest extends AbstractRequest {
             if (host.isBegetProtection())
                 builder.addHeader(COOKIE, BEGET_PROTECTION_COOKIE);
 
-            return client.newCall(builder.build()).execute();
+            return client.execute(builder.build());
         } catch (Exception xep) {
             return error(xep.getLocalizedMessage());
         }

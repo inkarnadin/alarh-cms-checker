@@ -5,7 +5,9 @@ import com.google.inject.TypeLiteral;
 import lombok.SneakyThrows;
 import web.cms.joomla.*;
 import web.cms.joomla.annotation.*;
+import web.http.Client;
 import web.http.GetRequest;
+import web.http.HttpClient;
 import web.module.provider.JoomlaProvider;
 import web.parser.*;
 import web.struct.*;
@@ -16,6 +18,7 @@ public class JoomlaModule extends AbstractModule {
     @SneakyThrows
     @Override
     protected void configure() {
+        bind(Client.class).to(HttpClient.class);
         bind(Request.class).to(GetRequest.class);
 
         bind(Destination.class).to(SimpleDestination.class);

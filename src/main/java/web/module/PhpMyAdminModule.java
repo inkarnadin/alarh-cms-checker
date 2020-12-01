@@ -3,7 +3,9 @@ package web.module;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import lombok.SneakyThrows;
+import web.http.Client;
 import web.http.GetRequest;
+import web.http.HttpClient;
 import web.parser.StringReturnTextParser;
 import web.parser.TextParser;
 import web.struct.Connector;
@@ -19,6 +21,7 @@ public class PhpMyAdminModule extends AbstractModule {
     @SneakyThrows
     @Override
     protected void configure() {
+        bind(Client.class).to(HttpClient.class);
         bind(Request.class).to(GetRequest.class);
         bind(new TypeLiteral<TextParser<String>>(){}).to(StringReturnTextParser.class);
 
