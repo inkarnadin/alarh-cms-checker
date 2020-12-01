@@ -30,7 +30,7 @@ public class LavarelCheckProcessor extends AbstractProcessor {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
-        pageAnalyzer.checkViaPageCookies(HIGH, new String[] { "admin" }, Pattern.compile("laravel_session"));
+        pageAnalyzer.checkViaPageCookies(HIGH, new String[] { "", "admin" }, Pattern.compile("laravel_session"));
 
         assign(destination, result, CMSType.LAVAREL);
     }
