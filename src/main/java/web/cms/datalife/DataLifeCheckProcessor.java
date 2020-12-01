@@ -44,20 +44,17 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
         mainPageAnalyzer.checkViaMainPageScriptName(HIGH, new Pattern[] {
                 Pattern.compile("engine/classes/js/dle_js\\.js")
         });
-
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pathAnalyzer.checkViaFiles(HIGH, new Integer[] { 200, 304 }, new String[] { IMAGE_JPG, IMAGE_PNG }, new String[] {
+        pathAnalyzer.checkViaFiles(MEDIUM, new Integer[] { 200, 304 }, new String[] { IMAGE_JPG, IMAGE_PNG }, new String[] {
                 "engine/skins/images/logos.jpg",
                 "engine/skins/images/logo.png",
                 "templates/Default/images/logotype.png",
                 "templates/Default/images/logo.png"
         });
-
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
         pageAnalyzer.checkViaPageKeywords(MEDIUM, new String[] { "admin.php" }, new Pattern[] {
                 Pattern.compile("DataLife Engine")
         });
-
         SpecificAnalyzer specificAnalyzer = new SpecificAnalyzer(request, parser).prepare(protocol, server, result);
         specificAnalyzer.checkViaError404Message(LOW, "administrator", new String[] {
                 "[пП]о данному адресу публикаций на сайте не найдено, либо у [вВ]ас нет доступа для просмотра информации по данному адресу"
