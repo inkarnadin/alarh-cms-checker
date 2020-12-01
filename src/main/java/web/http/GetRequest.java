@@ -12,7 +12,9 @@ public class GetRequest extends AbstractRequest {
     @Override
     public Response send(Host host) {
         try {
-            OkHttpClient client = new OkHttpClient().newBuilder().build();
+            OkHttpClient client = new OkHttpClient().newBuilder()
+                    .followSslRedirects(true)
+                    .build();
             Request.Builder builder = new Request.Builder()
                     .url(host.createUrl())
                     .get()
