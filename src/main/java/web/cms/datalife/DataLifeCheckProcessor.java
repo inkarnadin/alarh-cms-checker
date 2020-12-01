@@ -1,7 +1,9 @@
 package web.cms.datalife;
 
 import com.google.inject.Inject;
+import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
+import web.analyzer.Importance;
 import web.cms.CMSType;
 import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
@@ -17,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.Importance.*;
 import static web.http.ContentType.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
@@ -28,22 +31,22 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        List<Boolean> result = new ArrayList<>();
+        List<Pair<Boolean, Importance>> result = new ArrayList<>();
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
 
-        mainPageAnalyzer.checkViaMainPageGenerator(new String[] { "DataLife Engine" });
-        mainPageAnalyzer.checkViaMainPageKeywords(new Pattern[] {
+        mainPageAnalyzer.checkViaMainPageGenerator(HIGH, new String[] { "DataLife Engine" });
+        mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
                 Pattern.compile("dle_root"),
                 Pattern.compile("dle_admin"),
                 Pattern.compile("engine/classes"),
                 Pattern.compile("engine/templates/Default")
         });
-        mainPageAnalyzer.checkViaMainPageScriptName(new Pattern[] {
+        mainPageAnalyzer.checkViaMainPageScriptName(HIGH, new Pattern[] {
                 Pattern.compile("engine/classes/js/dle_js\\.js")
         });
 
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pathAnalyzer.checkViaFiles(new Integer[] { 200, 304 }, new String[] { IMAGE_JPG, IMAGE_PNG }, new String[] {
+        pathAnalyzer.checkViaFiles(HIGH, new Integer[] { 200, 304 }, new String[] { IMAGE_JPG, IMAGE_PNG }, new String[] {
                 "engine/skins/images/logos.jpg",
                 "engine/skins/images/logo.png",
                 "templates/Default/images/logotype.png",
@@ -51,23 +54,16 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
         });
 
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
-        pageAnalyzer.checkViaPageKeywords(new String[] { "admin.php" }, new Pattern[] {
+        pageAnalyzer.checkViaPageKeywords(MEDIUM, new String[] { "admin.php" }, new Pattern[] {
                 Pattern.compile("DataLife Engine")
         });
 
         SpecificAnalyzer specificAnalyzer = new SpecificAnalyzer(request, parser).prepare(protocol, server, result);
-        specificAnalyzer.checkViaError404Message("administrator", new String[] {
+        specificAnalyzer.checkViaError404Message(LOW, "administrator", new String[] {
                 "[пП]о данному адресу публикаций на сайте не найдено, либо у [вВ]ас нет доступа для просмотра информации по данному адресу"
         });
 
-        long count = result.stream().filter(b -> b).count();
-        if (count > 0)
-            destination.insert(0, String.format(
-                    successMessage,
-                    CMSType.DATALIFE_ENGINE.getName(),
-                    count,
-                    result.size())
-            );
+        assign(destination, result, CMSType.DATALIFE_ENGINE);
     }
 
     @Override

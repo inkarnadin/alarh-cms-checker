@@ -1,7 +1,9 @@
 package web.cms.yii;
 
 import com.google.inject.Inject;
+import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
+import web.analyzer.Importance;
 import web.analyzer.check.PageAnalyzer;
 import web.cms.CMSType;
 import web.analyzer.check.MainPageAnalyzer;
@@ -15,6 +17,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.Importance.HIGH;
+
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class YiiCheckProcessor extends AbstractProcessor {
 
@@ -24,15 +28,14 @@ public class YiiCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        List<Boolean> result = new ArrayList<>();
-        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        mainPageAnalyzer.checkViaMainPageScriptName(new Pattern[] {
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        mainPageAnalyzer.checkViaMainPageScriptName(HIGH, new Pattern[] {
                 Pattern.compile("<script src=\".*(yii.js).*\"></script>")
         });
-
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
-        pageAnalyzer.checkViaPageKeywords(new String[] { "login", "admin/login", "admin/site/login" }, new Pattern[] {
+        pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "login", "admin/login", "admin/site/login" }, new Pattern[] {
                 Pattern.compile("Powered by.*Yii Framework"),
                 Pattern.compile("field-loginform-username"),
                 Pattern.compile("field-loginform-password"),
@@ -43,14 +46,7 @@ public class YiiCheckProcessor extends AbstractProcessor {
                 Pattern.compile("yii\\.validation")
         });
 
-        long count = result.stream().filter(b -> b).count();
-        if (count > 0)
-            destination.insert(0, String.format(
-                    successMessage,
-                    CMSType.YII.getName(),
-                    count,
-                    result.size())
-            );
+        assign(destination, result, CMSType.YII);
     }
 
     @Override

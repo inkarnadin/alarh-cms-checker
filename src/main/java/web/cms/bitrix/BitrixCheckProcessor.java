@@ -1,7 +1,9 @@
 package web.cms.bitrix;
 
 import com.google.inject.Inject;
+import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
+import web.analyzer.Importance;
 import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.CMSType;
@@ -15,6 +17,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.Importance.*;
+
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class BitrixCheckProcessor extends AbstractProcessor {
 
@@ -24,31 +28,24 @@ public class BitrixCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        List<Boolean> result = new ArrayList<>();
+        List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
-        mainPageAnalyzer.checkViaMainPageKeywords(new Pattern[] {
+        mainPageAnalyzer.checkViaMainPageKeywords(MEDIUM, new Pattern[] {
                 Pattern.compile("bitrix/cache"),
                 Pattern.compile("bitrix/js"),
                 Pattern.compile("bitrix/tools"),
                 Pattern.compile("bitrix/components")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pathAnalyzer.checkViaPaths(new Integer[] { 200, 401, 403 }, new String[] {
+        pathAnalyzer.checkViaPaths(LOW, new Integer[] { 200, 401, 403 }, new String[] {
                 "bitrix/cache",
                 "bitrix/js",
                 "bitrix/tools",
                 "bitrix/components"
         });
 
-        long count = result.stream().filter(b -> b).count();
-        if (count > 0)
-            destination.insert(0, String.format(
-                    successMessage,
-                    CMSType.BITRIX.getName(),
-                    count,
-                    result.size())
-            );
+        assign(destination, result, CMSType.BITRIX);
     }
 
     @Override

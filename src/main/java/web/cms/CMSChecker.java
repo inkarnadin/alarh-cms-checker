@@ -15,7 +15,7 @@ public class CMSChecker extends AbstractChecker {
     @Override
     public void check(Params params) {
         determinant.define(params).forEach((cmsType, destination) -> {
-            System.out.println(destination.fetch().get(0));
+            System.out.println(destination.fetch().get(0) + " => " + destination.getImportance());
 
             Connector connector = CMSFactory.getCMSConnector(cmsType);
             connector.configure(params);

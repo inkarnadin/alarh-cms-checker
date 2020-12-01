@@ -1,7 +1,9 @@
 package web.cms.tilda;
 
 import com.google.inject.Inject;
+import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
+import web.analyzer.Importance;
 import web.analyzer.check.MainPageAnalyzer;
 import web.cms.CMSType;
 import web.http.Request;
@@ -14,6 +16,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.Importance.HIGH;
+
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class TildaCheckProcessor extends AbstractProcessor {
 
@@ -23,23 +27,16 @@ public class TildaCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        List<Boolean> result = new ArrayList<>();
+        List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
-        mainPageAnalyzer.checkViaMainPageKeywords(new Pattern[] {
+        mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
                 Pattern.compile("data-tilda-project-id"),
                 Pattern.compile("data-tilda-page-id"),
                 Pattern.compile("data-tilda-formskey")
         });
 
-        long count = result.stream().filter(b -> b).count();
-        if (count > 0)
-            destination.insert(0, String.format(
-                    successMessage,
-                    CMSType.TILDA.getName(),
-                    count,
-                    result.size())
-            );
+        assign(destination, result, CMSType.TILDA);
     }
 
     @Override

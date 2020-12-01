@@ -1,8 +1,10 @@
 package web.analyzer.check;
 
+import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import okhttp3.Headers;
 import okhttp3.Response;
+import web.analyzer.Importance;
 import web.http.Host;
 import web.http.Request;
 import web.http.ResponseBodyHandler;
@@ -17,16 +19,16 @@ public class PageAnalyzer {
     private final Request request;
     private final TextParser<Boolean> parser;
 
-    private List<Boolean> result;
+    private List<Pair<Boolean, Importance>> result;
     private Host host;
 
-    public PageAnalyzer prepare(String protocol, String server, List<Boolean> result) {
+    public PageAnalyzer prepare(String protocol, String server, List<Pair<Boolean, Importance>> result) {
         this.result = result;
         this.host = new Host(protocol, server);
         return this;
     }
 
-    public void checkViaPageKeywords(String[] paths, Pattern[] patterns) {
+    public void checkViaPageKeywords(Importance importance, String[] paths, Pattern[] patterns) {
         for (String path : paths) {
             host.setPath(path);
             host.setBegetProtection(true);
@@ -35,16 +37,16 @@ public class PageAnalyzer {
                 for (Pattern pattern : patterns) {
                     parser.configure(pattern, 0);
                     if (parser.parse(responseBody)) {
-                        result.add(true);
+                        setResultValue(true, importance);
                         return;
                     }
                 }
             }
         }
-        result.add(false);
+        setResultValue(false, importance);
     }
 
-    public void checkViaPageCookies(String[] paths, Pattern pattern) {
+    public void checkViaPageCookies(Importance importance, String[] paths, Pattern pattern) {
         for (String path : paths) {
             host.setPath(path);
             host.setBegetProtection(true);
@@ -54,13 +56,17 @@ public class PageAnalyzer {
                 parser.configure(pattern, 0);
                 for (String cookie : cookies) {
                     if (parser.parse(cookie)) {
-                        result.add(true);
+                        setResultValue(true, importance);
                         return;
                     }
                 }
             }
         }
-        result.add(false);
+        setResultValue(false, importance);
+    }
+
+    private void setResultValue(boolean resultValue, Importance importance) {
+        result.add(new Pair<>(resultValue, importance));
     }
     
 }

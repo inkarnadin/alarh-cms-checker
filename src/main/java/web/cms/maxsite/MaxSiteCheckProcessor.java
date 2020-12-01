@@ -1,7 +1,9 @@
 package web.cms.maxsite;
 
 import com.google.inject.Inject;
+import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
+import web.analyzer.Importance;
 import web.cms.CMSType;
 import web.analyzer.check.MainPageAnalyzer;
 import web.http.Request;
@@ -14,6 +16,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.Importance.HIGH;
+
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class MaxSiteCheckProcessor extends AbstractProcessor {
 
@@ -23,25 +27,18 @@ public class MaxSiteCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        List<Boolean> result = new ArrayList<>();
-        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        mainPageAnalyzer.checkViaMainPageGenerator(new String[] { "MaxSite CMS" });
-        mainPageAnalyzer.checkViaMainPageKeywords(new Pattern[] {
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        mainPageAnalyzer.checkViaMainPageGenerator(HIGH, new String[] { "MaxSite CMS" });
+        mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
                 Pattern.compile("application/maxsite"),
                 Pattern.compile("maxsite/plugins"),
                 Pattern.compile("maxsite/templates"),
                 Pattern.compile("maxsite/common")
         });
 
-        long count = result.stream().filter(b -> b).count();
-        if (count > 0)
-            destination.insert(0, String.format(
-                    successMessage,
-                    CMSType.MAXSITE_CMS.getName(),
-                    count,
-                    result.size())
-            );
+        assign(destination, result, CMSType.MAXSITE_CMS);
     }
 
     @Override

@@ -1,10 +1,11 @@
 package web.analyzer.check;
 
+import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import okhttp3.Response;
+import web.analyzer.Importance;
 import web.http.ContentType;
 import web.http.Host;
-import web.http.HttpValidator;
 import web.http.Request;
 
 import java.util.Arrays;
@@ -17,16 +18,16 @@ public class PathAnalyzer {
 
     private final Request request;
 
-    private List<Boolean> result;
+    private List<Pair<Boolean, Importance>> result;
     private Host host;
 
-    public PathAnalyzer prepare(String protocol, String server, List<Boolean> result) {
+    public PathAnalyzer prepare(String protocol, String server, List<Pair<Boolean, Importance>> result) {
         this.result = result;
         this.host = new Host(protocol, server);
         return this;
     }
 
-    public void checkViaPaths(Integer[] codes, String[] paths) {
+    public void checkViaPaths(Importance importance, Integer[] codes, String[] paths) {
         for (String path : paths) {
             host.setPath(path);
             host.setBegetProtection(true);
@@ -34,15 +35,15 @@ public class PathAnalyzer {
             try (Response response = request.send(host)) {
                 Integer code = response.code();
                 if (Arrays.asList(codes).contains(code)) {
-                    result.add(true);
+                    setResultValue(true, importance);
                     return;
                 }
             }
         }
-        result.add(false);
+        setResultValue(false, importance);
     }
 
-    public void checkViaFiles(Integer[] codes, String[] contentTypes, String[] paths) {
+    public void checkViaFiles(Importance importance, Integer[] codes, String[] contentTypes, String[] paths) {
         for (String path : paths) {
             host.setPath(path);
             host.setBegetProtection(true);
@@ -52,12 +53,16 @@ public class PathAnalyzer {
                 String contentType = ContentType.defineContentType(response.header(CONTENT_TYPE));
 
                 if (Arrays.asList(codes).contains(code) && (Arrays.asList(contentTypes).contains(contentType) || contentTypes.length == 0)) {
-                    result.add(true);
+                    setResultValue(true, importance);
                     return;
                 }
             }
         }
-        result.add(false);
+        setResultValue(false, importance);
+    }
+
+    private void setResultValue(boolean resultValue, Importance importance) {
+        result.add(new Pair<>(resultValue, importance));
     }
 
 }

@@ -1,7 +1,9 @@
 package web.cms.modx;
 
 import com.google.inject.Inject;
+import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
+import web.analyzer.Importance;
 import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.CMSType;
@@ -15,6 +17,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.Importance.LOW;
+
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class ModXCheckProcessor extends AbstractProcessor {
 
@@ -24,16 +28,15 @@ public class ModXCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        List<Boolean> result = new ArrayList<>();
+        List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
-        mainPageAnalyzer.checkViaMainPageKeywords(new Pattern[] {
+        mainPageAnalyzer.checkViaMainPageKeywords(LOW, new Pattern[] {
                 Pattern.compile("assets/templates"),
                 Pattern.compile("assets/cache")
         });
-
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pathAnalyzer.checkViaPaths(new Integer[] { 200, 304, 403 }, new String[] {
+        pathAnalyzer.checkViaPaths(LOW, new Integer[] { 200, 304, 403 }, new String[] {
                 "assets/templates",
                 "assets/images",
                 "assets/cache",
@@ -41,14 +44,7 @@ public class ModXCheckProcessor extends AbstractProcessor {
                 "manager"
         });
 
-        long count = result.stream().filter(b -> b).count();
-        if (count > 0)
-            destination.insert(0, String.format(
-                    successMessage,
-                    CMSType.MODX.getName(),
-                    count,
-                    result.size())
-            );
+        assign(destination, result, CMSType.MODX);
     }
 
     @Override

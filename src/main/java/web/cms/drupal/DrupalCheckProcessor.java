@@ -1,7 +1,9 @@
 package web.cms.drupal;
 
 import com.google.inject.Inject;
+import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
+import web.analyzer.Importance;
 import web.cms.CMSType;
 import web.analyzer.check.MainPageAnalyzer;
 import web.http.Request;
@@ -14,6 +16,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.Importance.HIGH;
+import static web.analyzer.Importance.MEDIUM;
+
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class DrupalCheckProcessor extends AbstractProcessor {
 
@@ -23,31 +28,24 @@ public class DrupalCheckProcessor extends AbstractProcessor {
 
     @Override
     public void process() {
-        List<Boolean> result = new ArrayList<>();
+        List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
-        mainPageAnalyzer.checkViaMainPageGenerator(new String[] { "Drupal" });
-        mainPageAnalyzer.checkViaMainPageScriptName(new Pattern[] {
+        mainPageAnalyzer.checkViaMainPageGenerator(HIGH, new String[] { "Drupal" });
+        mainPageAnalyzer.checkViaMainPageScriptName(MEDIUM, new Pattern[] {
                 Pattern.compile("misc/drupal\\.js")
         });
-        mainPageAnalyzer.checkViaMainPageKeywords(new Pattern[] {
+        mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
                 Pattern.compile("data-drupal-link-system-path"),
                 Pattern.compile("Drupal\\.settings")
         });
-        mainPageAnalyzer.checkViaMainPageHeaders(new String[] {
+        mainPageAnalyzer.checkViaMainPageHeaders(HIGH, new String[] {
                 "x-drupal-cache",
                 "x-drupal-dynamic-cache"
         });
-        mainPageAnalyzer.checkViaMainPageXGeneratorHeader(Pattern.compile("drupal"));
+        mainPageAnalyzer.checkViaMainPageXGeneratorHeader(HIGH, Pattern.compile("drupal"));
 
-        long count = result.stream().filter(b -> b).count();
-        if (count > 0)
-            destination.insert(0, String.format(
-                    successMessage,
-                    CMSType.DRUPAL.getName(),
-                    count,
-                    result.size())
-            );
+        assign(destination, result, CMSType.DRUPAL);
     }
 
     @Override

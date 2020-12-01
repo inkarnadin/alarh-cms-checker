@@ -1,7 +1,9 @@
 package web.analyzer.check;
 
+import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import okhttp3.Response;
+import web.analyzer.Importance;
 import web.http.Host;
 import web.http.Request;
 import web.http.ResponseBodyHandler;
@@ -16,16 +18,16 @@ public class SpecificAnalyzer {
     private final Request request;
     private final TextParser<Boolean> parser;
 
-    private List<Boolean> result;
+    private List<Pair<Boolean, Importance>> result;
     private Host host;
 
-    public SpecificAnalyzer prepare(String protocol, String server, List<Boolean> result) {
+    public SpecificAnalyzer prepare(String protocol, String server, List<Pair<Boolean, Importance>>  result) {
         this.result = result;
         this.host = new Host(protocol, server);
         return this;
     }
 
-    public void checkViaError404Message(String path, String[] messages) {
+    public void checkViaError404Message(Importance importance, String path, String[] messages) {
         host.setPath(path);
         try (Response response = request.send(host)) {
             if (response.code() == 404) {
@@ -34,13 +36,17 @@ public class SpecificAnalyzer {
                     Pattern pattern = Pattern.compile(message);
                     parser.configure(pattern, 0);
                     if (parser.parse(body)) {
-                        result.add(true);
+                        setResultValue(true, importance);
                         return;
                     }
                 }
             }
         }
-        result.add(false);
+        setResultValue(false, importance);
+    }
+
+    private void setResultValue(boolean resultValue, Importance importance) {
+        result.add(new Pair<>(resultValue, importance));
     }
 
 }

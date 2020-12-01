@@ -1,9 +1,16 @@
 package web.struct;
 
+import kotlin.Pair;
+import web.analyzer.Importance;
+import web.cms.CMSType;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static web.analyzer.Importance.UNDEFINED;
 
 public abstract class AbstractProcessor implements Processor {
 
@@ -28,5 +35,23 @@ public abstract class AbstractProcessor implements Processor {
 
     @Override
     public void process() {}
+
+    protected void assign(Destination destination, List<Pair<Boolean, Importance>> result, CMSType cmsType) {
+        long count = result.stream().filter(Pair::getFirst).count();
+        Importance max = result.stream()
+                .filter(Pair::getFirst)
+                .map(Pair::getSecond)
+                .max(Importance::compareTo).orElse(UNDEFINED);
+
+        if (count > 0) {
+            destination.setImportance(max);
+            destination.insert(0, String.format(
+                    successMessage,
+                    cmsType.getName(),
+                    count,
+                    result.size())
+            );
+        }
+    }
 
 }
