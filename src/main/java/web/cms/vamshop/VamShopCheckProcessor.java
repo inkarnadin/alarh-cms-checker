@@ -35,7 +35,6 @@ public class VamShopCheckProcessor extends AbstractProcessor {
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "login.php" }, new Pattern[] {
                 Pattern.compile("Powered by .*VamShop")
         });
-
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
         pathAnalyzer.checkViaPaths(LOW, new Integer[] { 200 }, new String[] { "password_double_opt.php" });
 
