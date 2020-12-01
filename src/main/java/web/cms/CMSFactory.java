@@ -43,6 +43,8 @@ public class CMSFactory {
                 return injector.getInstance(LavarelProvider.class).get();
             case TILDA:
                 return injector.getInstance(TildaProvider.class).get();
+            case VAM_SHOP:
+                return injector.getInstance(VamShopProvider.class).get();
             default:
                 throw new IllegalArgumentException("Unsupported CMS type");
         }

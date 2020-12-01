@@ -27,6 +27,7 @@ public class Runner {
         System.out.println(" * 1C-Bitrix");
         System.out.println(" * Tilda");
         System.out.println(" * Lavarel");
+        System.out.println(" * VamShop");
         System.out.println("===========================================================");
 
         try (Scanner scanner = new Scanner(System.in)) {

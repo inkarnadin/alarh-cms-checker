@@ -13,6 +13,7 @@ import web.cms.lavarel.annotation.Lavarel;
 import web.cms.maxsite.annotation.MaxSite;
 import web.cms.modx.annotation.ModX;
 import web.cms.tilda.annotation.Tilda;
+import web.cms.vamshop.annotation.VamShop;
 import web.cms.wordpress.annotation.WordPress;
 import web.cms.yii.annotation.Yii;
 import web.struct.Destination;
@@ -45,6 +46,8 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
     private Processor lvrCheckProcessor;
     @Inject @Tilda
     private Processor tldCheckProcessor;
+    @Inject @VamShop
+    private Processor vmsCheckProcessor;
 
     @Override
     @SneakyThrows
@@ -64,6 +67,7 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
         callables.add(new Determinative(mdxCheckProcessor, params, CMSType.MODX));
         callables.add(new Determinative(lvrCheckProcessor, params, CMSType.LAVAREL));
         callables.add(new Determinative(tldCheckProcessor, params, CMSType.TILDA));
+        callables.add(new Determinative(vmsCheckProcessor, params, CMSType.VAM_SHOP));
 
         List<Future<Pair<CMSType, Optional<Destination>>>> futures = executorService.invokeAll(callables);
         for (Future<Pair<CMSType, Optional<Destination>>> future : futures) {

@@ -23,6 +23,8 @@ import web.cms.modx.ModXCheckProcessor;
 import web.cms.modx.annotation.ModX;
 import web.cms.tilda.TildaCheckProcessor;
 import web.cms.tilda.annotation.Tilda;
+import web.cms.vamshop.VamShopCheckProcessor;
+import web.cms.vamshop.annotation.VamShop;
 import web.cms.wordpress.WordPressCheckProcessor;
 import web.cms.wordpress.annotation.WordPress;
 import web.cms.yii.YiiCheckProcessor;
@@ -56,6 +58,7 @@ public class MainModule extends AbstractModule {
         bind(Processor.class).annotatedWith(ModX.class).to(ModXCheckProcessor.class);
         bind(Processor.class).annotatedWith(Lavarel.class).to(LavarelCheckProcessor.class);
         bind(Processor.class).annotatedWith(Tilda.class).to(TildaCheckProcessor.class);
+        bind(Processor.class).annotatedWith(VamShop.class).to(VamShopCheckProcessor.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
 
