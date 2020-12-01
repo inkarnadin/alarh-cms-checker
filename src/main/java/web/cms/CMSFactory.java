@@ -10,16 +10,7 @@ public class CMSFactory {
 
     public static Connector getCMSConnector(CMSType cmsType) {
         Injector injector = Guice.createInjector(
-                new JoomlaModule(),
-                new WordPressModule(),
-                new YiiModule(),
-                new DataLifeModule(),
-                new MaxSiteModule(),
-                new DrupalModule(),
-                new BitrixModule(),
-                new ModXModule(),
-                new LavarelModule(),
-                new TildaModule()
+                new CMSModule()
         );
 
         switch (cmsType) {
