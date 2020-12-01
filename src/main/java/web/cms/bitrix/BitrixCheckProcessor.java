@@ -5,6 +5,7 @@ import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
 import web.analyzer.check.MainPageAnalyzer;
+import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.CMSType;
 import web.http.Request;
@@ -35,7 +36,8 @@ public class BitrixCheckProcessor extends AbstractProcessor {
                 Pattern.compile("bitrix/cache"),
                 Pattern.compile("bitrix/js"),
                 Pattern.compile("bitrix/tools"),
-                Pattern.compile("bitrix/components")
+                Pattern.compile("bitrix/components"),
+                Pattern.compile("bitrix/panel")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
         pathAnalyzer.checkViaPaths(LOW, new Integer[] { 200, 401, 403 }, new String[] {
@@ -43,6 +45,17 @@ public class BitrixCheckProcessor extends AbstractProcessor {
                 "bitrix/js",
                 "bitrix/tools",
                 "bitrix/components"
+        });
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "bitrix/admin" }, new Pattern[] {
+                Pattern.compile("bx-admin-prefix"),
+                Pattern.compile("BX\\.message"),
+                Pattern.compile("BX\\.addClass"),
+                Pattern.compile("BX\\.removeClass"),
+                Pattern.compile("BX\\.ready"),
+                Pattern.compile("BX\\.adminLogin"),
+                Pattern.compile("AUTH_NEW_PASSWORD_CONFIRM_WRONG")
+
         });
 
         assign(destination, result, CMSType.BITRIX);
