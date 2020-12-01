@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
+import web.analyzer.check.PageAnalyzer;
 import web.cms.CMSType;
 import web.analyzer.check.MainPageAnalyzer;
 import web.http.Request;
@@ -16,8 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static web.analyzer.Importance.HIGH;
-import static web.analyzer.Importance.MEDIUM;
+import static web.analyzer.Importance.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class DrupalCheckProcessor extends AbstractProcessor {
@@ -44,6 +44,10 @@ public class DrupalCheckProcessor extends AbstractProcessor {
                 "x-drupal-dynamic-cache"
         });
         mainPageAnalyzer.checkViaMainPageXGeneratorHeader(HIGH, Pattern.compile("drupal"));
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        pageAnalyzer.checkViaPageKeywords(LOW, new String[] { "xmlrpc.php" }, new Pattern[] {
+                Pattern.compile("XML-RPC server accepts POST requests only")
+        });
 
         assign(destination, result, CMSType.DRUPAL);
     }
