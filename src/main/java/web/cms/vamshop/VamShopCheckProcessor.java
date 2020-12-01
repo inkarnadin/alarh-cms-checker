@@ -4,8 +4,8 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
-import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
+import web.analyzer.check.PathAnalyzer;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
@@ -18,6 +18,7 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static web.analyzer.Importance.HIGH;
+import static web.analyzer.Importance.LOW;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class VamShopCheckProcessor extends AbstractProcessor {
@@ -34,6 +35,9 @@ public class VamShopCheckProcessor extends AbstractProcessor {
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "login.php" }, new Pattern[] {
                 Pattern.compile("Powered by .*VamShop")
         });
+
+        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
+        pathAnalyzer.checkViaPaths(LOW, new Integer[] { 200 }, new String[] { "password_double_opt.php" });
 
         assign(destination, result, CMSType.VAM_SHOP);
     }
