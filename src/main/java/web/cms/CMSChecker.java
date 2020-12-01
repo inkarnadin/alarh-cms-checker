@@ -17,14 +17,7 @@ public class CMSChecker extends AbstractChecker {
 
     @Override
     public void check(Params params) {
-        Map<CMSType, Destination> determinate = sortByValue(determinant.define(params));
-
-        if (determinate.size() > 1) {
-            determinate = determinate.entrySet().stream()
-                    .filter(x -> x.getValue().getImportance().ordinal() > 1)
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        }
-
+        Map<CMSType, Destination> determinate = filterLowImportance(sortByValue(determinant.define(params)));
         determinate.forEach((cmsType, destination) -> {
             System.out.println(destination.fetch().get(0) + " => " + destination.getImportance());
 
@@ -38,8 +31,8 @@ public class CMSChecker extends AbstractChecker {
         });
     }
 
-    public static Map<CMSType, Destination> sortByValue(Map<CMSType, Destination> map) {
-        List<Map.Entry<CMSType, Destination>> list = new ArrayList<>(map.entrySet());
+    private static Map<CMSType, Destination> sortByValue(Map<CMSType, Destination> determinate) {
+        List<Map.Entry<CMSType, Destination>> list = new ArrayList<>(determinate.entrySet());
         list.sort(new Comparator<Map.Entry<CMSType, Destination>>() {
             @Override
             public int compare(Map.Entry<CMSType, Destination> o1, Map.Entry<CMSType, Destination> o2) {
@@ -50,6 +43,15 @@ public class CMSChecker extends AbstractChecker {
         });
 
         return list.stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    private static Map<CMSType, Destination> filterLowImportance(Map<CMSType, Destination> determinate) {
+        if (determinate.size() > 1) {
+            return determinate.entrySet().stream()
+                    .filter(x -> x.getValue().getImportance().ordinal() > 1)
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        }
+        return determinate;
     }
 
 }
