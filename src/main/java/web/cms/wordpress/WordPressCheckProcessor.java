@@ -66,7 +66,7 @@ public class WordPressCheckProcessor extends AbstractProcessor {
                 Pattern.compile("wp-core-ui")
         });
         pageAnalyzer.checkViaPageCookies(HIGH, new String[] { "wp-login.php" }, Pattern.compile("wordpress_test_cookie"));
-        pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "xmlrpc.php" }, new Pattern[] {
+        pageAnalyzer.checkViaPageKeywords(LOW, new String[] { "xmlrpc.php" }, new Pattern[] {
                 Pattern.compile("XML-RPC server accepts POST requests only")
         });
 
