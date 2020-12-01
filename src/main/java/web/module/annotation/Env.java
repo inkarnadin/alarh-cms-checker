@@ -11,4 +11,4 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @BindingAnnotation
 @Target({FIELD, PARAMETER, METHOD})
 @Retention(RUNTIME)
-public @interface DBAdmin {}
+public @interface Env {}

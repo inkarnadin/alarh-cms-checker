@@ -11,12 +11,12 @@ import web.parser.TextParser;
 import web.struct.Connector;
 import web.struct.Processor;
 import web.http.Request;
-import web.db.phpmyadmin.PhpMyAdminVersionProcessor;
-import web.db.phpmyadmin.annotation.PhpMyAdmin;
-import web.db.phpmyadmin.annotation.PhpMyAdminVersion;
+import web.env.phpmyadmin.PhpMyAdminVersionProcessor;
+import web.env.phpmyadmin.annotation.PhpMyAdmin;
+import web.env.phpmyadmin.annotation.PhpMyAdminVersion;
 import web.module.provider.PhpMyAdminProvider;
 
-public class PhpMyAdminModule extends AbstractModule {
+public class EnvModule extends AbstractModule {
 
     @SneakyThrows
     @Override
@@ -26,7 +26,6 @@ public class PhpMyAdminModule extends AbstractModule {
         bind(new TypeLiteral<TextParser<String>>(){}).to(StringReturnTextParser.class);
 
         bind(Processor.class).annotatedWith(PhpMyAdminVersion.class).to(PhpMyAdminVersionProcessor.class);
-
         bind(Connector.class).annotatedWith(PhpMyAdmin.class).toProvider(PhpMyAdminProvider.class);
     }
 

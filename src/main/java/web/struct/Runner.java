@@ -3,7 +3,7 @@ package web.struct;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import web.cms.CMSChecker;
-import web.db.DBAdminChecker;
+import web.env.EnvAdminChecker;
 
 import java.util.Objects;
 import java.util.Scanner;
@@ -43,7 +43,7 @@ public class Runner {
 
                 System.out.print("Activate PHPMyAdmin module? (y/n): ");
                 if (isAnswer(scanner.nextLine())) {
-                    injector.getInstance(DBAdminChecker.class).check(params);
+                    injector.getInstance(EnvAdminChecker.class).check(params);
                     System.out.println("Done!");
                 } else {
                     System.out.println("Skipped...");

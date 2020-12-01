@@ -6,6 +6,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 import web.cms.CMSType;
+import web.env.EnvType;
 import web.http.ContentType;
 import web.http.Host;
 import web.http.Request;
@@ -37,11 +38,31 @@ public class VersionAnalyzer {
 
     private final AtomicInteger attemptCounter = new AtomicInteger(0);
 
+    /**
+     * Preparation for request shipment (for env object)
+     *
+     * @param protocol web protocol
+     * @param server   web server
+     * @param envType  type of environment object
+     * @return         the instance
+     */
+    public VersionAnalyzer prepare(String protocol, String server, EnvType envType) {
+        return prepare(protocol, server, envType.getName());
+    }
+
+    /**
+     * Preparation for request shipment (for env cms)
+     *
+     * @param protocol web protocol
+     * @param server   web server
+     * @param cmsType  type of CMS
+     * @return         the instance
+     */
     public VersionAnalyzer prepare(String protocol, String server, CMSType cmsType) {
         return prepare(protocol, server, cmsType.getName());
     }
 
-    public VersionAnalyzer prepare(String protocol, String server, String entityType) {
+    private VersionAnalyzer prepare(String protocol, String server, String entityType) {
         this.entityType = entityType;
 
         this.host = new Host(protocol, server);

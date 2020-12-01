@@ -29,13 +29,13 @@ import web.cms.wordpress.WordPressCheckProcessor;
 import web.cms.wordpress.annotation.WordPress;
 import web.cms.yii.YiiCheckProcessor;
 import web.cms.yii.annotation.Yii;
-import web.db.DBAdminChecker;
+import web.env.EnvAdminChecker;
 import web.http.Client;
 import web.http.GetRequest;
 import web.http.HttpClient;
 import web.http.Request;
 import web.module.annotation.Cms;
-import web.module.annotation.DBAdmin;
+import web.module.annotation.Env;
 import web.parser.BooleanReturnTextParser;
 import web.parser.TextParser;
 import web.struct.*;
@@ -67,7 +67,7 @@ public class MainModule extends AbstractModule {
 
         bind(Checker.class).annotatedWith(Cms.class).to(CMSChecker.class);
 
-        bind(Checker.class).annotatedWith(DBAdmin.class).to(DBAdminChecker.class);
+        bind(Checker.class).annotatedWith(Env.class).to(EnvAdminChecker.class);
 
         bind(Runner.class);
     }

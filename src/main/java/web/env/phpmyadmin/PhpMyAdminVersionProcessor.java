@@ -3,6 +3,7 @@ package web.env.phpmyadmin;
 import com.google.inject.Inject;
 import lombok.SneakyThrows;
 import web.analyzer.version.VersionAnalyzer;
+import web.env.EnvType;
 import web.http.Request;
 import web.parser.TextParser;
 import web.struct.AbstractProcessor;
@@ -26,7 +27,7 @@ public class PhpMyAdminVersionProcessor extends AbstractProcessor {
     @SneakyThrows
     public void process() {
         SimpleDestination destination = new SimpleDestination();
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination).prepare(protocol, server, "PhpMyAdmin");
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination).prepare(protocol, server, EnvType.PHP_MY_ADMIN);
         versionAnalyzer.checkViaPageKeywords("phpmyadmin/doc/html/index.html", new Pattern[] {
                 Pattern.compile("<title>.*phpMyAdmin\\s(.*?)\\s")
         });
