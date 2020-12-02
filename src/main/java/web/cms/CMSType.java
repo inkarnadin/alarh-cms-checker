@@ -18,6 +18,7 @@ public enum CMSType {
     LAVAREL(8, "Lavarel"),
     TILDA(9, "Tilda"),
     VAM_SHOP(10, "VamShop"),
+    NUXT_JS(11, "Nuxt.js"),
     UNKNOWN(-1, "Unknown");
 
     private final int id;

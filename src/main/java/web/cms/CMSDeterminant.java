@@ -12,6 +12,7 @@ import web.cms.joomla.annotation.Joomla;
 import web.cms.lavarel.annotation.Lavarel;
 import web.cms.maxsite.annotation.MaxSite;
 import web.cms.modx.annotation.ModX;
+import web.cms.nuxt.annotation.Nuxt;
 import web.cms.tilda.annotation.Tilda;
 import web.cms.vamshop.annotation.VamShop;
 import web.cms.wordpress.annotation.WordPress;
@@ -48,6 +49,8 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
     private Processor tldCheckProcessor;
     @Inject @VamShop
     private Processor vmsCheckProcessor;
+    @Inject @Nuxt
+    private Processor nxtCheckProcessor;
 
     @Override
     @SneakyThrows
@@ -68,6 +71,7 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
         callables.add(new Determinative(lvrCheckProcessor, params, CMSType.LAVAREL));
         callables.add(new Determinative(tldCheckProcessor, params, CMSType.TILDA));
         callables.add(new Determinative(vmsCheckProcessor, params, CMSType.VAM_SHOP));
+        callables.add(new Determinative(nxtCheckProcessor, params, CMSType.NUXT_JS));
 
         List<Future<Pair<CMSType, Optional<Destination>>>> futures = executorService.invokeAll(callables);
         for (Future<Pair<CMSType, Optional<Destination>>> future : futures) {

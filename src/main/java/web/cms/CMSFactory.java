@@ -36,6 +36,8 @@ public class CMSFactory {
                 return injector.getInstance(TildaProvider.class).get();
             case VAM_SHOP:
                 return injector.getInstance(VamShopProvider.class).get();
+            case NUXT_JS:
+                return injector.getInstance(NuxtProvider.class).get();
             default:
                 throw new IllegalArgumentException("Unsupported CMS type");
         }

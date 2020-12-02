@@ -21,6 +21,8 @@ import web.cms.maxsite.MaxSiteCheckProcessor;
 import web.cms.maxsite.annotation.MaxSite;
 import web.cms.modx.ModXCheckProcessor;
 import web.cms.modx.annotation.ModX;
+import web.cms.nuxt.NuxtCheckProcessor;
+import web.cms.nuxt.annotation.Nuxt;
 import web.cms.tilda.TildaCheckProcessor;
 import web.cms.tilda.annotation.Tilda;
 import web.cms.vamshop.VamShopCheckProcessor;
@@ -62,6 +64,7 @@ public class MainModule extends AbstractModule {
         bind(Processor.class).annotatedWith(Lavarel.class).to(LavarelCheckProcessor.class);
         bind(Processor.class).annotatedWith(Tilda.class).to(TildaCheckProcessor.class);
         bind(Processor.class).annotatedWith(VamShop.class).to(VamShopCheckProcessor.class);
+        bind(Processor.class).annotatedWith(Nuxt.class).to(NuxtCheckProcessor.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
 

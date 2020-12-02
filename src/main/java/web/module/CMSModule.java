@@ -18,6 +18,7 @@ import web.cms.joomla.annotation.JoomlaVersion;
 import web.cms.lavarel.annotation.Lavarel;
 import web.cms.maxsite.annotation.MaxSite;
 import web.cms.modx.annotation.ModX;
+import web.cms.nuxt.annotation.Nuxt;
 import web.cms.tilda.annotation.Tilda;
 import web.cms.vamshop.annotation.VamShop;
 import web.cms.wordpress.WordPressExtensionSource;
@@ -62,6 +63,8 @@ public class CMSModule extends AbstractModule {
         bind(Connector.class).annotatedWith(Tilda.class).toProvider(TildaProvider.class);
 
         bind(Connector.class).annotatedWith(VamShop.class).toProvider(VamShopProvider.class);
+
+        bind(Connector.class).annotatedWith(Nuxt.class).toProvider(NuxtProvider.class);
 
         bind(Processor.class).annotatedWith(DataLifeVersion.class).to(DataLifeVersionProcessor.class);
         bind(Connector.class).annotatedWith(DataLife.class).toProvider(DataLifeProvider.class);
