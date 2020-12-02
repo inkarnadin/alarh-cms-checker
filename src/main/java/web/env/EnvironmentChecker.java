@@ -8,9 +8,15 @@ public class EnvironmentChecker extends AbstractChecker {
 
     @Override
     public void check(Params params) {
-        Connector connector = EnvironmentFactory.getDBAdmin(EnvType.PHP_MY_ADMIN);
-        connector.configure(params);
-        connector.checkVersion();
+        Connector phpMyAdminConnector = EnvironmentFactory.getEnvironmentConnector(EnvType.PHP_MY_ADMIN);
+        phpMyAdminConnector.configure(params);
+        phpMyAdminConnector.checkVersion();
+
+        System.out.println();
+
+        Connector phpConnector = EnvironmentFactory.getEnvironmentConnector(EnvType.PHP);
+        phpConnector.configure(params);
+        phpConnector.checkVersion();
     }
 
 }

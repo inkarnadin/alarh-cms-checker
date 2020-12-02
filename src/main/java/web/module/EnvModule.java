@@ -3,9 +3,13 @@ package web.module;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import lombok.SneakyThrows;
+import web.env.php.PhpVersionProcessor;
+import web.env.php.annotation.Php;
+import web.env.php.annotation.PhpVersion;
 import web.http.Client;
 import web.http.GetRequest;
 import web.http.HttpClient;
+import web.module.provider.PhpProvider;
 import web.parser.StringReturnTextParser;
 import web.parser.TextParser;
 import web.struct.Connector;
@@ -27,6 +31,9 @@ public class EnvModule extends AbstractModule {
 
         bind(Processor.class).annotatedWith(PhpMyAdminVersion.class).to(PhpMyAdminVersionProcessor.class);
         bind(Connector.class).annotatedWith(PhpMyAdmin.class).toProvider(PhpMyAdminProvider.class);
+
+        bind(Processor.class).annotatedWith(PhpVersion.class).to(PhpVersionProcessor.class);
+        bind(Connector.class).annotatedWith(Php.class).toProvider(PhpProvider.class);
     }
 
 }

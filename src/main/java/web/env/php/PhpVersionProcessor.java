@@ -28,7 +28,8 @@ public class PhpVersionProcessor extends AbstractProcessor {
     public void process() {
         SimpleDestination destination = new SimpleDestination();
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination).prepare(protocol, server, EnvType.PHP);
-        System.out.println("PHP version");
+        versionAnalyzer.checkViaHeaders(Pattern.compile("php/(.*)"), "x-powered-by");
+        System.out.println(destination.fetch().get(0));
     }
 
 }
