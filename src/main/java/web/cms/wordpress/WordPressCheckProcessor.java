@@ -56,7 +56,7 @@ public class WordPressCheckProcessor extends AbstractProcessor {
                 "wp-includes/js/wpdialog.js",
                 "wp-includes/js/autosave.js",
 
-                "/wp-includes/js/wp-embed.min.js"
+                "wp-includes/js/wp-embed.min.js"
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "wp-login.php" }, new Pattern[] {
