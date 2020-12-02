@@ -28,7 +28,8 @@ public class DataLifeScriptVersionMap implements VersionMap {
         versionMap.put(30256L, "11.3");
         versionMap.put(30087L, "12.0");
         versionMap.put(30866L, "12.1");
-        versionMap.put(32754L, "13.0");
+        versionMap.put(32711L, "13.0"); //  для CL
+        versionMap.put(32754L, "13.0"); //  для CRLF
         versionMap.put(33248L, "13.1");
         versionMap.put(34024L, "13.2");
         versionMap.put(34562L, "13.3");
