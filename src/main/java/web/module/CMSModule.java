@@ -16,6 +16,7 @@ import web.cms.joomla.annotation.Joomla;
 import web.cms.joomla.annotation.JoomlaPlugin;
 import web.cms.joomla.annotation.JoomlaVersion;
 import web.cms.lavarel.annotation.Lavarel;
+import web.cms.magento.annotation.Magento;
 import web.cms.maxsite.annotation.MaxSite;
 import web.cms.modx.annotation.ModX;
 import web.cms.nuxt.annotation.Nuxt;
@@ -65,6 +66,8 @@ public class CMSModule extends AbstractModule {
         bind(Connector.class).annotatedWith(VamShop.class).toProvider(VamShopProvider.class);
 
         bind(Connector.class).annotatedWith(Nuxt.class).toProvider(NuxtProvider.class);
+
+        bind(Connector.class).annotatedWith(Magento.class).toProvider(MagentoProvider.class);
 
         bind(Processor.class).annotatedWith(DataLifeVersion.class).to(DataLifeVersionProcessor.class);
         bind(Connector.class).annotatedWith(DataLife.class).toProvider(DataLifeProvider.class);

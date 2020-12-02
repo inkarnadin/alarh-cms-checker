@@ -15,6 +15,7 @@ public class ContentType {
 
     public static final String APPLICATION_JAVASCRIPT = "application/javascript";
     public static final String APPLICATION_X_JAVASCRIPT = "application/x-javascript";
+    public static final String TEXT_JAVASCRIPT = "text/javascript";
 
     public static final String IMAGE_JPG = "image/jpeg";
     public static final String IMAGE_PNG = "image/png";

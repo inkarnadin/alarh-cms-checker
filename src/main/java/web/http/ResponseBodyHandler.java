@@ -15,7 +15,7 @@ import static web.http.Headers.CONTENT_TYPE;
 public class ResponseBodyHandler {
 
     @SneakyThrows
-    public static String readBody(Response response) {
+    synchronized public static String readBody(Response response) {
         String charset = defineCharset(response.header(CONTENT_TYPE));
 
         ResponseBody body = response.body();

@@ -19,6 +19,7 @@ public enum CMSType {
     TILDA(9, "Tilda"),
     VAM_SHOP(10, "VamShop"),
     NUXT_JS(11, "Nuxt.js"),
+    MAGENTO(12, "Magento"),
     UNKNOWN(-1, "Unknown");
 
     private final int id;

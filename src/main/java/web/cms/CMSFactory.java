@@ -38,6 +38,8 @@ public class CMSFactory {
                 return injector.getInstance(VamShopProvider.class).get();
             case NUXT_JS:
                 return injector.getInstance(NuxtProvider.class).get();
+            case MAGENTO:
+                return injector.getInstance(MagentoProvider.class).get();
             default:
                 throw new IllegalArgumentException("Unsupported CMS type");
         }

@@ -17,6 +17,8 @@ import web.cms.joomla.JoomlaCheckProcessor;
 import web.cms.joomla.annotation.Joomla;
 import web.cms.lavarel.LavarelCheckProcessor;
 import web.cms.lavarel.annotation.Lavarel;
+import web.cms.magento.MagentoCheckProcessor;
+import web.cms.magento.annotation.Magento;
 import web.cms.maxsite.MaxSiteCheckProcessor;
 import web.cms.maxsite.annotation.MaxSite;
 import web.cms.modx.ModXCheckProcessor;
@@ -65,6 +67,7 @@ public class MainModule extends AbstractModule {
         bind(Processor.class).annotatedWith(Tilda.class).to(TildaCheckProcessor.class);
         bind(Processor.class).annotatedWith(VamShop.class).to(VamShopCheckProcessor.class);
         bind(Processor.class).annotatedWith(Nuxt.class).to(NuxtCheckProcessor.class);
+        bind(Processor.class).annotatedWith(Magento.class).to(MagentoCheckProcessor.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
 

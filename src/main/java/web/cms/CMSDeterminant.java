@@ -10,6 +10,7 @@ import web.cms.datalife.annotation.DataLife;
 import web.cms.drupal.annotation.Drupal;
 import web.cms.joomla.annotation.Joomla;
 import web.cms.lavarel.annotation.Lavarel;
+import web.cms.magento.annotation.Magento;
 import web.cms.maxsite.annotation.MaxSite;
 import web.cms.modx.annotation.ModX;
 import web.cms.nuxt.annotation.Nuxt;
@@ -51,6 +52,8 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
     private Processor vmsCheckProcessor;
     @Inject @Nuxt
     private Processor nxtCheckProcessor;
+    @Inject @Magento
+    private Processor mgnCheckProcessor;
 
     @Override
     @SneakyThrows
@@ -72,6 +75,7 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
         callables.add(new Determinative(tldCheckProcessor, params, CMSType.TILDA));
         callables.add(new Determinative(vmsCheckProcessor, params, CMSType.VAM_SHOP));
         callables.add(new Determinative(nxtCheckProcessor, params, CMSType.NUXT_JS));
+        callables.add(new Determinative(mgnCheckProcessor, params, CMSType.MAGENTO));
 
         List<Future<Pair<CMSType, Optional<Destination>>>> futures = executorService.invokeAll(callables);
         for (Future<Pair<CMSType, Optional<Destination>>> future : futures) {
