@@ -69,6 +69,11 @@ public class WordPressCheckProcessor extends AbstractProcessor {
         pageAnalyzer.checkViaPageKeywords(LOW, new String[] { "xmlrpc.php" }, new Pattern[] {
                 Pattern.compile("XML-RPC server accepts POST requests only")
         });
+        pageAnalyzer.checkViaPageHeaderValues(HIGH, "wp-json", new String[] { "access-control-expose-headers", "access-control-allow-headers" }, new Pattern[] {
+                Pattern.compile("X-WP-Total"),
+                Pattern.compile("X-WP-Nonce"),
+                Pattern.compile("X-WP-TotalPages")
+        });
 
         assign(destination, result, CMSType.WORDPRESS);
     }

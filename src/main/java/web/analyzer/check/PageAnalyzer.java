@@ -10,8 +10,11 @@ import web.http.Request;
 import web.http.ResponseBodyHandler;
 import web.parser.TextParser;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class PageAnalyzer {
@@ -60,6 +63,28 @@ public class PageAnalyzer {
                         return;
                     }
                 }
+            }
+        }
+        setResultValue(false, importance);
+    }
+
+    public void checkViaPageHeaderValues(Importance importance, String path, String[] names, Pattern[] patterns) {
+        host.setPath(path);
+        try (Response response = request.send(host)) {
+            Headers headers = response.headers();
+
+            List<String> choiceHeaders = Arrays.stream(names)
+                    .map(headers::values)
+                    .flatMap(Collection::stream)
+                    .collect(Collectors.toList());
+
+            for (Pattern pattern : patterns) {
+                parser.configure(pattern, 0);
+                for (String hdr : choiceHeaders)
+                    if (parser.parse(hdr)) {
+                        setResultValue(true, importance);
+                        return;
+                    }
             }
         }
         setResultValue(false, importance);
