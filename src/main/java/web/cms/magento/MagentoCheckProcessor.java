@@ -18,8 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static web.analyzer.Importance.HIGH;
-import static web.analyzer.Importance.MEDIUM;
+import static web.analyzer.Importance.*;
 import static web.http.ContentType.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
@@ -42,7 +41,7 @@ public class MagentoCheckProcessor extends AbstractProcessor {
                 Pattern.compile("Magento is a trademark of Magento")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pathAnalyzer.checkViaFiles(MEDIUM, new Integer[] { 200, 304 }, new String[] { APPLICATION_JAVASCRIPT, TEXT_JAVASCRIPT }, new String[] {
+        pathAnalyzer.checkViaFiles(LOW, new Integer[] { 200, 304 }, new String[] { APPLICATION_JAVASCRIPT, TEXT_JAVASCRIPT }, new String[] {
                 "js/mage/captcha.js",
                 "js/mage/adminhtml/form.js",
                 "js/mage/cookies.js",
