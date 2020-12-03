@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
+import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.CMSType;
@@ -18,8 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static web.analyzer.Importance.HIGH;
-import static web.analyzer.Importance.LOW;
+import static web.analyzer.Importance.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class OpenCardCheckProcessor extends AbstractProcessor {
@@ -32,13 +32,26 @@ public class OpenCardCheckProcessor extends AbstractProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        mainPageAnalyzer.checkViaMainPageKeywords(MEDIUM,new Pattern[] {
+                Pattern.compile("cart-panel"),
+                Pattern.compile("cart-block"),
+                Pattern.compile("cart-url"),
+                Pattern.compile("cart-alert"),
+                Pattern.compile("cart-product"),
+                Pattern.compile("cart-no"),
+                Pattern.compile("cart-wishlist"),
+                Pattern.compile("cart-quantity")
+        });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "admin" }, new Pattern[] {
                 Pattern.compile("ocStore")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
         pathAnalyzer.checkViaFiles(LOW, new Integer[] { 200, 304 }, new String[] { ContentType.APPLICATION_JAVASCRIPT }, new String[] {
-                "admin/view/javascript/common.js"
+                "admin/view/javascript/common.js",
+                "catalog/view/theme/madeshop/script/common.js",
+                "catalog/view/theme/madeshop/script/inputmask.min.js"
         });
 
         assign(destination, result, CMSType.VAM_SHOP);
