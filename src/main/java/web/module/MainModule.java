@@ -25,6 +25,8 @@ import web.cms.modx.ModXCheckProcessor;
 import web.cms.modx.annotation.ModX;
 import web.cms.nuxt.NuxtCheckProcessor;
 import web.cms.nuxt.annotation.Nuxt;
+import web.cms.opencart.OpenCardCheckProcessor;
+import web.cms.opencart.annotation.OpenCart;
 import web.cms.tilda.TildaCheckProcessor;
 import web.cms.tilda.annotation.Tilda;
 import web.cms.vamshop.VamShopCheckProcessor;
@@ -68,6 +70,7 @@ public class MainModule extends AbstractModule {
         bind(Processor.class).annotatedWith(VamShop.class).to(VamShopCheckProcessor.class);
         bind(Processor.class).annotatedWith(Nuxt.class).to(NuxtCheckProcessor.class);
         bind(Processor.class).annotatedWith(Magento.class).to(MagentoCheckProcessor.class);
+        bind(Processor.class).annotatedWith(OpenCart.class).to(OpenCardCheckProcessor.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
 

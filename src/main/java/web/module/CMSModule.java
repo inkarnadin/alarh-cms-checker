@@ -20,6 +20,7 @@ import web.cms.magento.annotation.Magento;
 import web.cms.maxsite.annotation.MaxSite;
 import web.cms.modx.annotation.ModX;
 import web.cms.nuxt.annotation.Nuxt;
+import web.cms.opencart.annotation.OpenCart;
 import web.cms.tilda.annotation.Tilda;
 import web.cms.vamshop.annotation.VamShop;
 import web.cms.wordpress.WordPressExtensionSource;
@@ -52,22 +53,15 @@ public class CMSModule extends AbstractModule {
         bind(new TypeLiteral<XMLParser<String>>(){}).to(VersionXMLParser.class);
 
         bind(Connector.class).annotatedWith(Bitrix.class).toProvider(BitrixProvider.class);
-
         bind(Connector.class).annotatedWith(Lavarel.class).toProvider(LavarelProvider.class);
-
         bind(Connector.class).annotatedWith(Yii.class).toProvider(YiiProvider.class);
-
         bind(Connector.class).annotatedWith(MaxSite.class).toProvider(MaxSiteProvider.class);
-
         bind(Connector.class).annotatedWith(ModX.class).toProvider(ModXProvider.class);
-
         bind(Connector.class).annotatedWith(Tilda.class).toProvider(TildaProvider.class);
-
         bind(Connector.class).annotatedWith(VamShop.class).toProvider(VamShopProvider.class);
-
         bind(Connector.class).annotatedWith(Nuxt.class).toProvider(NuxtProvider.class);
-
         bind(Connector.class).annotatedWith(Magento.class).toProvider(MagentoProvider.class);
+        bind(Connector.class).annotatedWith(OpenCart.class).toProvider(OpenCartProvider.class);
 
         bind(Processor.class).annotatedWith(DataLifeVersion.class).to(DataLifeVersionProcessor.class);
         bind(Connector.class).annotatedWith(DataLife.class).toProvider(DataLifeProvider.class);

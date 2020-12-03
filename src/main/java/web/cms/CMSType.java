@@ -20,6 +20,7 @@ public enum CMSType {
     VAM_SHOP(10, "VamShop"),
     NUXT_JS(11, "Nuxt.js"),
     MAGENTO(12, "Magento"),
+    OPENCART(13, "OpenCart"),
     UNKNOWN(-1, "Unknown");
 
     private final int id;
