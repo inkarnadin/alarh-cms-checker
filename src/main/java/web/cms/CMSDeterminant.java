@@ -18,6 +18,7 @@ import web.cms.nuxt.annotation.Nuxt;
 import web.cms.opencart.annotation.OpenCart;
 import web.cms.tilda.annotation.Tilda;
 import web.cms.vamshop.annotation.VamShop;
+import web.cms.vigbo.annotation.Vigbo;
 import web.cms.wordpress.annotation.WordPress;
 import web.cms.yii.annotation.Yii;
 import web.struct.Destination;
@@ -60,6 +61,8 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
     private Processor ocsCheckProcessor;
     @Inject @InSales
     private Processor insCheckProcessor;
+    @Inject @Vigbo
+    private Processor vgbCheckProcessor;
 
     @Override
     @SneakyThrows
@@ -84,6 +87,7 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
         callables.add(new Determinative(mgnCheckProcessor, params, CMSType.MAGENTO));
         callables.add(new Determinative(ocsCheckProcessor, params, CMSType.OPENCART));
         callables.add(new Determinative(insCheckProcessor, params, CMSType.INSALES));
+        callables.add(new Determinative(vgbCheckProcessor, params, CMSType.VIGBO));
 
         List<Future<Pair<CMSType, Optional<Destination>>>> futures = executorService.invokeAll(callables);
         for (Future<Pair<CMSType, Optional<Destination>>> future : futures) {

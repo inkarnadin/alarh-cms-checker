@@ -44,6 +44,8 @@ public class CMSFactory {
                 return injector.getInstance(OpenCartProvider.class).get();
             case INSALES:
                 return injector.getInstance(InSalesProvider.class).get();
+            case VIGBO:
+                return injector.getInstance(VigboProvider.class).get();
             default:
                 throw new IllegalArgumentException("Unsupported CMS type");
         }

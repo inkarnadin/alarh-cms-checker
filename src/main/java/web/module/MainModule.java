@@ -33,6 +33,8 @@ import web.cms.tilda.TildaCheckProcessor;
 import web.cms.tilda.annotation.Tilda;
 import web.cms.vamshop.VamShopCheckProcessor;
 import web.cms.vamshop.annotation.VamShop;
+import web.cms.vigbo.annotation.Vigbo;
+import web.cms.vigbo.annotation.VigboCheckProcessor;
 import web.cms.wordpress.WordPressCheckProcessor;
 import web.cms.wordpress.annotation.WordPress;
 import web.cms.yii.YiiCheckProcessor;
@@ -74,6 +76,7 @@ public class MainModule extends AbstractModule {
         bind(Processor.class).annotatedWith(Magento.class).to(MagentoCheckProcessor.class);
         bind(Processor.class).annotatedWith(OpenCart.class).to(OpenCardCheckProcessor.class);
         bind(Processor.class).annotatedWith(InSales.class).to(InSalesCheckProcessor.class);
+        bind(Processor.class).annotatedWith(Vigbo.class).to(VigboCheckProcessor.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
 

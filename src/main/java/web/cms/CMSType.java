@@ -22,6 +22,7 @@ public enum CMSType {
     MAGENTO(12, "Magento"),
     OPENCART(13, "OpenCart"),
     INSALES(14, "InSales"),
+    VIGBO(15, "Vigbo CMS"),
     UNKNOWN(-1, "Unknown");
 
     private final int id;
