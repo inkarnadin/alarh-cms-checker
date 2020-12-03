@@ -44,13 +44,13 @@ public class OpenCardCheckProcessor extends AbstractProcessor {
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "admin" }, new Pattern[] {
-                Pattern.compile("ocStore")
+                Pattern.compile("ocStore"),
+                Pattern.compile("route=common/forgotten")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pathAnalyzer.checkViaFiles(LOW, new Integer[] { 200, 304 }, new String[] { ContentType.APPLICATION_JAVASCRIPT }, new String[] {
+        pathAnalyzer.checkViaFiles(LOW, new Integer[] { 200, 304 }, new String[] { ContentType.APPLICATION_JAVASCRIPT, ContentType.APPLICATION_X_JAVASCRIPT }, new String[] {
                 "admin/view/javascript/common.js",
-                "catalog/view/theme/madeshop/script/common.js",
-                "catalog/view/theme/madeshop/script/inputmask.min.js"
+                "catalog/view/javascript/common.js"
         });
 
         assign(destination, result, CMSType.OPENCART);
