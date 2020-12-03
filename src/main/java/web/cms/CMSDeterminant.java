@@ -8,6 +8,7 @@ import lombok.SneakyThrows;
 import web.cms.bitrix.annotation.Bitrix;
 import web.cms.datalife.annotation.DataLife;
 import web.cms.drupal.annotation.Drupal;
+import web.cms.insales.annotation.InSales;
 import web.cms.joomla.annotation.Joomla;
 import web.cms.lavarel.annotation.Lavarel;
 import web.cms.magento.annotation.Magento;
@@ -57,6 +58,8 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
     private Processor mgnCheckProcessor;
     @Inject @OpenCart
     private Processor ocsCheckProcessor;
+    @Inject @InSales
+    private Processor insCheckProcessor;
 
     @Override
     @SneakyThrows
@@ -80,6 +83,7 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
         callables.add(new Determinative(nxtCheckProcessor, params, CMSType.NUXT_JS));
         callables.add(new Determinative(mgnCheckProcessor, params, CMSType.MAGENTO));
         callables.add(new Determinative(ocsCheckProcessor, params, CMSType.OPENCART));
+        callables.add(new Determinative(insCheckProcessor, params, CMSType.INSALES));
 
         List<Future<Pair<CMSType, Optional<Destination>>>> futures = executorService.invokeAll(callables);
         for (Future<Pair<CMSType, Optional<Destination>>> future : futures) {

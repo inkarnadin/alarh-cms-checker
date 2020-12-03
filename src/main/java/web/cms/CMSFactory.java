@@ -42,6 +42,8 @@ public class CMSFactory {
                 return injector.getInstance(MagentoProvider.class).get();
             case OPENCART:
                 return injector.getInstance(OpenCartProvider.class).get();
+            case INSALES:
+                return injector.getInstance(InSalesProvider.class).get();
             default:
                 throw new IllegalArgumentException("Unsupported CMS type");
         }

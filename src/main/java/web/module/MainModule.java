@@ -13,6 +13,8 @@ import web.cms.datalife.DataLifeCheckProcessor;
 import web.cms.datalife.annotation.DataLife;
 import web.cms.drupal.DrupalCheckProcessor;
 import web.cms.drupal.annotation.Drupal;
+import web.cms.insales.InSalesCheckProcessor;
+import web.cms.insales.annotation.InSales;
 import web.cms.joomla.JoomlaCheckProcessor;
 import web.cms.joomla.annotation.Joomla;
 import web.cms.lavarel.LavarelCheckProcessor;
@@ -71,6 +73,7 @@ public class MainModule extends AbstractModule {
         bind(Processor.class).annotatedWith(Nuxt.class).to(NuxtCheckProcessor.class);
         bind(Processor.class).annotatedWith(Magento.class).to(MagentoCheckProcessor.class);
         bind(Processor.class).annotatedWith(OpenCart.class).to(OpenCardCheckProcessor.class);
+        bind(Processor.class).annotatedWith(InSales.class).to(InSalesCheckProcessor.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
 

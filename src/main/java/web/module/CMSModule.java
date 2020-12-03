@@ -9,6 +9,7 @@ import web.cms.datalife.annotation.DataLifeVersion;
 import web.cms.drupal.DrupalVersionProcessor;
 import web.cms.drupal.annotation.Drupal;
 import web.cms.drupal.annotation.DrupalVersion;
+import web.cms.insales.annotation.InSales;
 import web.cms.joomla.JoomlaExtensionSource;
 import web.cms.joomla.JoomlaPluginsProcessor;
 import web.cms.joomla.JoomlaVersionProcessor;
@@ -62,6 +63,7 @@ public class CMSModule extends AbstractModule {
         bind(Connector.class).annotatedWith(Nuxt.class).toProvider(NuxtProvider.class);
         bind(Connector.class).annotatedWith(Magento.class).toProvider(MagentoProvider.class);
         bind(Connector.class).annotatedWith(OpenCart.class).toProvider(OpenCartProvider.class);
+        bind(Connector.class).annotatedWith(InSales.class).toProvider(InSalesProvider.class);
 
         bind(Processor.class).annotatedWith(DataLifeVersion.class).to(DataLifeVersionProcessor.class);
         bind(Connector.class).annotatedWith(DataLife.class).toProvider(DataLifeProvider.class);

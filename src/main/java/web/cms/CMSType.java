@@ -21,6 +21,7 @@ public enum CMSType {
     NUXT_JS(11, "Nuxt.js"),
     MAGENTO(12, "Magento"),
     OPENCART(13, "OpenCart"),
+    INSALES(14, "InSales"),
     UNKNOWN(-1, "Unknown");
 
     private final int id;
