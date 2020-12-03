@@ -35,7 +35,6 @@ public class OpenCardCheckProcessor extends AbstractProcessor {
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
         mainPageAnalyzer.checkViaMainPageKeywords(MEDIUM,new Pattern[] {
                 Pattern.compile("cart-panel"),
-                Pattern.compile("cart-block"),
                 Pattern.compile("cart-url"),
                 Pattern.compile("cart-alert"),
                 Pattern.compile("cart-product"),
@@ -54,7 +53,7 @@ public class OpenCardCheckProcessor extends AbstractProcessor {
                 "catalog/view/theme/madeshop/script/inputmask.min.js"
         });
 
-        assign(destination, result, CMSType.VAM_SHOP);
+        assign(destination, result, CMSType.OPENCART);
     }
 
     @Override
