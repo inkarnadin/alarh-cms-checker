@@ -33,11 +33,10 @@ public class OpenCardCheckProcessor extends AbstractProcessor {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
-        mainPageAnalyzer.checkViaMainPageKeywords(MEDIUM,new Pattern[] {
+        mainPageAnalyzer.checkViaMainPageKeywords(LOW, new Pattern[] {
                 Pattern.compile("cart-panel"),
                 Pattern.compile("cart-url"),
                 Pattern.compile("cart-alert"),
-                Pattern.compile("cart-product"),
                 Pattern.compile("cart-no"),
                 Pattern.compile("cart-wishlist"),
                 Pattern.compile("cart-quantity")
