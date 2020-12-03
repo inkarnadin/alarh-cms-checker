@@ -30,6 +30,9 @@ public class Runner {
         System.out.println(" * VamShop");
         System.out.println(" * Nuxt.js");
         System.out.println(" * Magento");
+        System.out.println(" * OpenCart CMS");
+        System.out.println(" * InSales");
+        System.out.println(" * Vigbo CMS");
         System.out.println("===========================================================");
 
         try (Scanner scanner = new Scanner(System.in)) {
