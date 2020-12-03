@@ -55,8 +55,11 @@ public class BitrixCheckProcessor extends AbstractProcessor {
                 Pattern.compile("BX\\.ready"),
                 Pattern.compile("BX\\.adminLogin"),
                 Pattern.compile("AUTH_NEW_PASSWORD_CONFIRM_WRONG")
-
         });
+        pageAnalyzer.checkViaPageHeaderValues(HIGH, "bitrix/admin" , new String[] { "x-devsrv-cms", "x-powered-cms" }, new Pattern[] {
+                Pattern.compile("Bitrix")
+        });
+        pageAnalyzer.checkViaPageCookies(HIGH, new String[] { "" }, Pattern.compile("BITRIX_SM_GUEST_ID"));
 
         assign(destination, result, CMSType.BITRIX);
     }
