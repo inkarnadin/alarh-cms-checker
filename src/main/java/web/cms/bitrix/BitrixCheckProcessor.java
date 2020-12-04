@@ -49,7 +49,7 @@ public class BitrixCheckProcessor extends AbstractProcessor {
                 "bitrix/tools",
                 "bitrix/components"
         });
-        pathAnalyzer.checkViaFiles(HIGH,new Integer[] { 200, 304 }, new String[] { TEXT_XML, APPLICATION_XML }, new String[] {
+        pathAnalyzer.checkViaFiles(HIGH, new Integer[] { 200, 304 }, new String[] { TEXT_XML, APPLICATION_XML }, new String[] {
                 "bitrix/p3p.xml"
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
