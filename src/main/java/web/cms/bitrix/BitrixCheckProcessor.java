@@ -43,6 +43,7 @@ public class BitrixCheckProcessor extends AbstractProcessor {
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
         pathAnalyzer.checkViaPaths(LOW, new Integer[] { 200, 401, 403 }, new String[] {
+                "bitrix/admin",
                 "bitrix/cache",
                 "bitrix/js",
                 "bitrix/tools",
