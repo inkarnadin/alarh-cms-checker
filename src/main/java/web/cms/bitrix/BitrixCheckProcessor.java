@@ -65,7 +65,8 @@ public class BitrixCheckProcessor extends AbstractProcessor {
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
         headerAnalyzer.checkViaCookies(HIGH,new String[] { "" }, new Pattern[] {
                 Pattern.compile("BITRIX_SM_GUEST_ID"),
-                Pattern.compile("BITRIX_SM_LAST_VISIT")
+                Pattern.compile("BITRIX_SM_LAST_VISIT"),
+                Pattern.compile("BITRIX_SM_ABTEST")
         });
         headerAnalyzer.checkViaHeaderValues(HIGH, new String[] { "bitrix/admin" }, new Pattern[] {
                 Pattern.compile("Bitrix")
