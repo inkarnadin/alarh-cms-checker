@@ -29,7 +29,12 @@ public class PhpVersionProcessor extends AbstractProcessor {
         SimpleDestination destination = new SimpleDestination();
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination).prepare(protocol, server, EnvType.PHP);
         versionAnalyzer.checkViaHeaders(Pattern.compile("php/(.*)"), "x-powered-by");
+        versionAnalyzer.checkViaPageKeywords("phpinfo.php", new Pattern[] {
+                Pattern.compile(">PHP Version (.*?)<")
+        });
+
         System.out.println(destination.fetch().get(0));
+        System.out.println(destination.fetch().get(1));
     }
 
 }
