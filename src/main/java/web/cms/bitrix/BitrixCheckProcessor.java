@@ -19,6 +19,7 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static web.analyzer.Importance.*;
+import static web.http.ContentType.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class BitrixCheckProcessor extends AbstractProcessor {
@@ -45,6 +46,9 @@ public class BitrixCheckProcessor extends AbstractProcessor {
                 "bitrix/js",
                 "bitrix/tools",
                 "bitrix/components"
+        });
+        pathAnalyzer.checkViaFiles(HIGH,new Integer[] { 200, 304 }, new String[] { TEXT_XML, APPLICATION_XML }, new String[] {
+                "bitrix/p3p.xml"
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "bitrix/admin" }, new Pattern[] {
