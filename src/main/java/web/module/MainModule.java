@@ -29,6 +29,8 @@ import web.cms.nuxt.NuxtCheckProcessor;
 import web.cms.nuxt.annotation.Nuxt;
 import web.cms.opencart.OpenCardCheckProcessor;
 import web.cms.opencart.annotation.OpenCart;
+import web.cms.rails.RubyOnRailsCheckProcessor;
+import web.cms.rails.annotation.RubyOnRails;
 import web.cms.tilda.TildaCheckProcessor;
 import web.cms.tilda.annotation.Tilda;
 import web.cms.vamshop.VamShopCheckProcessor;
@@ -77,6 +79,7 @@ public class MainModule extends AbstractModule {
         bind(Processor.class).annotatedWith(OpenCart.class).to(OpenCardCheckProcessor.class);
         bind(Processor.class).annotatedWith(InSales.class).to(InSalesCheckProcessor.class);
         bind(Processor.class).annotatedWith(Vigbo.class).to(VigboCheckProcessor.class);
+        bind(Processor.class).annotatedWith(RubyOnRails.class).to(RubyOnRailsCheckProcessor.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
 

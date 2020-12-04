@@ -46,6 +46,8 @@ public class CMSFactory {
                 return injector.getInstance(InSalesProvider.class).get();
             case VIGBO:
                 return injector.getInstance(VigboProvider.class).get();
+            case RUBY_ON_RAILS:
+                return injector.getInstance(RubyOnRailsProvider.class).get();
             default:
                 throw new IllegalArgumentException("Unsupported CMS type");
         }

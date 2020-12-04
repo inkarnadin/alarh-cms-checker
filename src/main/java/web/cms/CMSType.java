@@ -23,6 +23,7 @@ public enum CMSType {
     OPENCART(13, "OpenCart"),
     INSALES(14, "InSales"),
     VIGBO(15, "Vigbo CMS"),
+    RUBY_ON_RAILS(16, "Ruby on Rails"),
     UNKNOWN(-1, "Unknown");
 
     private final int id;

@@ -16,6 +16,7 @@ import web.cms.maxsite.annotation.MaxSite;
 import web.cms.modx.annotation.ModX;
 import web.cms.nuxt.annotation.Nuxt;
 import web.cms.opencart.annotation.OpenCart;
+import web.cms.rails.annotation.RubyOnRails;
 import web.cms.tilda.annotation.Tilda;
 import web.cms.vamshop.annotation.VamShop;
 import web.cms.vigbo.annotation.Vigbo;
@@ -63,6 +64,8 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
     private Processor insCheckProcessor;
     @Inject @Vigbo
     private Processor vgbCheckProcessor;
+    @Inject @RubyOnRails
+    private Processor rorCheckProcessor;
 
     @Override
     @SneakyThrows
@@ -88,6 +91,7 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
         callables.add(new Determinative(ocsCheckProcessor, params, CMSType.OPENCART));
         callables.add(new Determinative(insCheckProcessor, params, CMSType.INSALES));
         callables.add(new Determinative(vgbCheckProcessor, params, CMSType.VIGBO));
+        callables.add(new Determinative(rorCheckProcessor, params, CMSType.RUBY_ON_RAILS));
 
         List<Future<Pair<CMSType, Optional<Destination>>>> futures = executorService.invokeAll(callables);
         for (Future<Pair<CMSType, Optional<Destination>>> future : futures) {
