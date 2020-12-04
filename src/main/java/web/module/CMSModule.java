@@ -2,7 +2,9 @@ package web.module;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
+import web.cms.bitrix.BitrixVersionProcessor;
 import web.cms.bitrix.annotation.Bitrix;
+import web.cms.bitrix.annotation.BitrixVersion;
 import web.cms.datalife.DataLifeVersionProcessor;
 import web.cms.datalife.annotation.DataLife;
 import web.cms.datalife.annotation.DataLifeVersion;
@@ -54,7 +56,6 @@ public class CMSModule extends AbstractModule {
         bind(new TypeLiteral<TextParser<String>>(){}).to(StringReturnTextParser.class);
         bind(new TypeLiteral<XMLParser<String>>(){}).to(VersionXMLParser.class);
 
-        bind(Connector.class).annotatedWith(Bitrix.class).toProvider(BitrixProvider.class);
         bind(Connector.class).annotatedWith(Lavarel.class).toProvider(LavarelProvider.class);
         bind(Connector.class).annotatedWith(Yii.class).toProvider(YiiProvider.class);
         bind(Connector.class).annotatedWith(MaxSite.class).toProvider(MaxSiteProvider.class);
@@ -66,6 +67,9 @@ public class CMSModule extends AbstractModule {
         bind(Connector.class).annotatedWith(OpenCart.class).toProvider(OpenCartProvider.class);
         bind(Connector.class).annotatedWith(InSales.class).toProvider(InSalesProvider.class);
         bind(Connector.class).annotatedWith(Vigbo.class).toProvider(VigboProvider.class);
+
+        bind(Processor.class).annotatedWith(BitrixVersion.class).to(BitrixVersionProcessor.class);
+        bind(Connector.class).annotatedWith(Bitrix.class).toProvider(BitrixProvider.class);
 
         bind(Processor.class).annotatedWith(DataLifeVersion.class).to(DataLifeVersionProcessor.class);
         bind(Connector.class).annotatedWith(DataLife.class).toProvider(DataLifeProvider.class);

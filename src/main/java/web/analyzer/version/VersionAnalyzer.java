@@ -151,6 +151,27 @@ public class VersionAnalyzer {
                 String.format("  ** %s version (check #%s) = %s", entityType, attemptCounter.incrementAndGet(), version));
     }
 
+    public void checkViaYear(VersionMap yearMap, String[] paths, Pattern pattern) {
+        String version = "unknown";
+
+        for (String path : paths) {
+            host.setPath(path);
+            try (Response response = request.send(host)) {
+                String body = ResponseBodyHandler.readBody(response);
+                textParser.configure(pattern, 1);
+
+                long year = 0;
+                try {
+                    year = Long.parseLong(textParser.parse(body));
+                } catch (NumberFormatException ignored) {}
+
+                version = yearMap.getVersion(year);
+            }
+        }
+        destination.insert(attemptCounter.get(),
+                String.format("  ** %s version (check #%s) = %s", entityType, attemptCounter.incrementAndGet(), version));
+    }
+
 
     public void checkViaHeaders(Pattern pattern, String header) {
         String version = "unknown";
