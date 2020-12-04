@@ -11,7 +11,6 @@ import web.http.ResponseBodyHandler;
 import web.parser.TextParser;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
@@ -22,7 +21,6 @@ public class MainPageAnalyzer {
 
     private List<Pair<Boolean, Importance>> result;
     private String responseBody = "";
-    private Headers headers;
 
     public MainPageAnalyzer prepare(String protocol, String server, List<Pair<Boolean, Importance>> result) {
        this.result = result;
@@ -30,7 +28,6 @@ public class MainPageAnalyzer {
        Host host = new Host(protocol, server);
        try (Response response = request.send(host)) {
            responseBody = ResponseBodyHandler.readBody(response);
-           headers = response.headers();
        }
        return this;
     }

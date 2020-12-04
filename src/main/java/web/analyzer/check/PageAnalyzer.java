@@ -2,7 +2,6 @@ package web.analyzer.check;
 
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
-import okhttp3.Headers;
 import okhttp3.Response;
 import web.analyzer.Importance;
 import web.http.Host;
@@ -10,11 +9,8 @@ import web.http.Request;
 import web.http.ResponseBodyHandler;
 import web.parser.TextParser;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class PageAnalyzer {
