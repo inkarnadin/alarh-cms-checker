@@ -9,21 +9,24 @@ public enum CMSType {
 
     WORDPRESS(0, "WordPress"),
     JOOMLA(1, "Joomla!"),
-    YII(2, "Yii Framework"),
-    DATALIFE_ENGINE(3, "DataLife Engine"),
-    MAXSITE_CMS(4, "MaxSite CMS"),
-    DRUPAL(5, "Drupal"),
-    BITRIX(6, "1C-Bitrix"),
-    MODX(7, "MODx"),
-    LAVAREL(8, "Lavarel"),
-    TILDA(9, "Tilda"),
-    VAM_SHOP(10, "VamShop"),
-    NUXT_JS(11, "Nuxt.js"),
-    MAGENTO(12, "Magento"),
-    OPENCART(13, "OpenCart"),
-    INSALES(14, "InSales"),
+    DATALIFE_ENGINE(2, "DataLife Engine"),
+    MAXSITE_CMS(3, "MaxSite CMS"),
+    DRUPAL(4, "Drupal"),
+    BITRIX(5, "1C-Bitrix"),
+    MODX(6, "MODx"),
+    VAM_SHOP(7, "VamShop"),
+    MAGENTO(8, "Magento"),
+    OPENCART(9, "OpenCart"),
+
+    LAVAREL(10, "Lavarel"),
+    YII(11, "Yii Framework"),
+    NUXT_JS(12, "Nuxt.js"),
+    RUBY_ON_RAILS(13, "Ruby on Rails"),
+
+    TILDA(14, "Tilda"),
     VIGBO(15, "Vigbo CMS"),
-    RUBY_ON_RAILS(16, "Ruby on Rails"),
+    INSALES(16, "InSales"),
+
     UNKNOWN(-1, "Unknown");
 
     private final int id;
