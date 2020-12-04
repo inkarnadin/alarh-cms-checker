@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
+import web.analyzer.check.HeaderAnalyzer;
 import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
@@ -60,10 +61,14 @@ public class BitrixCheckProcessor extends AbstractProcessor {
                 Pattern.compile("BX\\.adminLogin"),
                 Pattern.compile("AUTH_NEW_PASSWORD_CONFIRM_WRONG")
         });
-        pageAnalyzer.checkViaPageHeaderValues(HIGH, "bitrix/admin" , new String[] { "x-devsrv-cms", "x-powered-cms" }, new Pattern[] {
+        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
+        headerAnalyzer.checkViaCookies(HIGH,new String[] { "" }, new Pattern[] {
+                Pattern.compile("BITRIX_SM_GUEST_ID"),
+                Pattern.compile("BITRIX_SM_LAST_VISIT")
+        });
+        headerAnalyzer.checkViaHeaderValues(HIGH, new String[] { "bitrix/admin" }, new Pattern[] {
                 Pattern.compile("Bitrix")
         });
-        pageAnalyzer.checkViaPageCookies(HIGH, new String[] { "" }, Pattern.compile("BITRIX_SM_GUEST_ID"));
 
         assign(destination, result, CMSType.BITRIX);
     }

@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
+import web.analyzer.check.HeaderAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.cms.CMSType;
 import web.analyzer.check.MainPageAnalyzer;
@@ -39,14 +40,15 @@ public class DrupalCheckProcessor extends AbstractProcessor {
                 Pattern.compile("data-drupal-link-system-path"),
                 Pattern.compile("Drupal\\.settings")
         });
-        mainPageAnalyzer.checkViaMainPageHeaders(HIGH, new String[] {
-                "x-drupal-cache",
-                "x-drupal-dynamic-cache"
-        });
-        mainPageAnalyzer.checkViaMainPageXGeneratorHeader(HIGH, Pattern.compile("drupal"));
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
         pageAnalyzer.checkViaPageKeywords(LOW, new String[] { "xmlrpc.php" }, new Pattern[] {
                 Pattern.compile("XML-RPC server accepts POST requests only")
+        });
+        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
+        headerAnalyzer.checkViaXGenerator(HIGH,new String[] { "" }, Pattern.compile("drupal"));
+        headerAnalyzer.checkViaHeaders(HIGH,new String[] { "" }, new String[] {
+                "x-drupal-cache",
+                "x-drupal-dynamic-cache"
         });
 
         assign(destination, result, CMSType.DRUPAL);

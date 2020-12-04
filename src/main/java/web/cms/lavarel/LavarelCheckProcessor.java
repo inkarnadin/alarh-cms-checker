@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
+import web.analyzer.check.HeaderAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.cms.CMSType;
 import web.http.Request;
@@ -29,8 +30,10 @@ public class LavarelCheckProcessor extends AbstractProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
-        pageAnalyzer.checkViaPageCookies(HIGH, new String[] { "", "admin" }, Pattern.compile("laravel_session"));
+        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
+        headerAnalyzer.checkViaCookies(HIGH,new String[] { "", "admin" }, new Pattern[] {
+                Pattern.compile("laravel_session")
+        });
 
         assign(destination, result, CMSType.LAVAREL);
     }

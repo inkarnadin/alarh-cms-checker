@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
+import web.analyzer.check.HeaderAnalyzer;
 import web.cms.CMSType;
 import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
@@ -65,11 +66,14 @@ public class WordPressCheckProcessor extends AbstractProcessor {
                 Pattern.compile("wp-submit"),
                 Pattern.compile("wp-core-ui")
         });
-        pageAnalyzer.checkViaPageCookies(HIGH, new String[] { "wp-login.php" }, Pattern.compile("wordpress_test_cookie"));
         pageAnalyzer.checkViaPageKeywords(LOW, new String[] { "xmlrpc.php" }, new Pattern[] {
                 Pattern.compile("XML-RPC server accepts POST requests only")
         });
-        pageAnalyzer.checkViaPageHeaderValues(HIGH, "wp-json", new String[] { "access-control-expose-headers", "access-control-allow-headers" }, new Pattern[] {
+        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
+        headerAnalyzer.checkViaCookies(HIGH, new String[] { "wp-login.php" }, new Pattern[] {
+                Pattern.compile("wordpress_test_cookie")
+        });
+        headerAnalyzer.checkViaHeaderValues(HIGH,new String[] { "wp-json" }, new Pattern[] {
                 Pattern.compile("X-WP-Total"),
                 Pattern.compile("X-WP-Nonce"),
                 Pattern.compile("X-WP-TotalPages")

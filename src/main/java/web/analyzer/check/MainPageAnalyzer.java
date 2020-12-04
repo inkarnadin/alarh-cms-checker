@@ -69,28 +69,6 @@ public class MainPageAnalyzer {
         setResultValue(false, importance);
     }
 
-    public void checkViaMainPageHeaders(Importance importance, String[] names) {
-        for (String name : names) {
-            if (Objects.nonNull(headers.get(name))) {
-                setResultValue(true, importance);
-                return;
-            }
-        }
-        setResultValue(false, importance);
-    }
-
-    public void checkViaMainPageXGeneratorHeader(Importance importance, Pattern pattern) {
-        String header = headers.get("x-generator");
-        if (Objects.nonNull(header)) {
-            parser.configure(pattern, 0);
-            if (parser.parse(header.toLowerCase())) {
-                setResultValue(true, importance);
-                return;
-            }
-        }
-        setResultValue(false, importance);
-    }
-
     private void setResultValue(boolean resultValue, Importance importance) {
         result.add(new Pair<>(resultValue, importance));
     }

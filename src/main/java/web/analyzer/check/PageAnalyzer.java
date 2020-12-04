@@ -49,47 +49,6 @@ public class PageAnalyzer {
         setResultValue(false, importance);
     }
 
-    public void checkViaPageCookies(Importance importance, String[] paths, Pattern pattern) {
-        for (String path : paths) {
-            host.setPath(path);
-            host.setBegetProtection(true);
-            try (Response response = request.send(host)) {
-                Headers headers = response.headers();
-                List<String> cookies = headers.values("set-cookie");
-                parser.configure(pattern, 0);
-                for (String cookie : cookies) {
-                    if (parser.parse(cookie)) {
-                        setResultValue(true, importance);
-                        return;
-                    }
-                }
-            }
-        }
-        setResultValue(false, importance);
-    }
-
-    public void checkViaPageHeaderValues(Importance importance, String path, String[] names, Pattern[] patterns) {
-        host.setPath(path);
-        try (Response response = request.send(host)) {
-            Headers headers = response.headers();
-
-            List<String> choiceHeaders = Arrays.stream(names)
-                    .map(headers::values)
-                    .flatMap(Collection::stream)
-                    .collect(Collectors.toList());
-
-            for (Pattern pattern : patterns) {
-                parser.configure(pattern, 0);
-                for (String hdr : choiceHeaders)
-                    if (parser.parse(hdr)) {
-                        setResultValue(true, importance);
-                        return;
-                    }
-            }
-        }
-        setResultValue(false, importance);
-    }
-
     private void setResultValue(boolean resultValue, Importance importance) {
         result.add(new Pair<>(resultValue, importance));
     }
