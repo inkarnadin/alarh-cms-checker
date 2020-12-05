@@ -27,6 +27,7 @@ import web.cms.opencart.annotation.OpenCart;
 import web.cms.tilda.annotation.Tilda;
 import web.cms.vamshop.annotation.VamShop;
 import web.cms.vigbo.annotation.Vigbo;
+import web.cms.vue.annotation.Vue;
 import web.cms.wordpress.WordPressExtensionSource;
 import web.cms.wordpress.WordPressPluginProcessor;
 import web.cms.wordpress.WordPressVersionProcessor;
@@ -67,6 +68,7 @@ public class CMSModule extends AbstractModule {
         bind(Connector.class).annotatedWith(OpenCart.class).toProvider(OpenCartProvider.class);
         bind(Connector.class).annotatedWith(InSales.class).toProvider(InSalesProvider.class);
         bind(Connector.class).annotatedWith(Vigbo.class).toProvider(VigboProvider.class);
+        bind(Connector.class).annotatedWith(Vue.class).toProvider(VueProvider.class);
 
         bind(Processor.class).annotatedWith(BitrixVersion.class).to(BitrixVersionProcessor.class);
         bind(Connector.class).annotatedWith(Bitrix.class).toProvider(BitrixProvider.class);

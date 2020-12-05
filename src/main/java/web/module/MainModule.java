@@ -37,6 +37,8 @@ import web.cms.vamshop.VamShopCheckProcessor;
 import web.cms.vamshop.annotation.VamShop;
 import web.cms.vigbo.annotation.Vigbo;
 import web.cms.vigbo.annotation.VigboCheckProcessor;
+import web.cms.vue.VueCheckProcessor;
+import web.cms.vue.annotation.Vue;
 import web.cms.wordpress.WordPressCheckProcessor;
 import web.cms.wordpress.annotation.WordPress;
 import web.cms.yii.YiiCheckProcessor;
@@ -80,6 +82,7 @@ public class MainModule extends AbstractModule {
         bind(Processor.class).annotatedWith(InSales.class).to(InSalesCheckProcessor.class);
         bind(Processor.class).annotatedWith(Vigbo.class).to(VigboCheckProcessor.class);
         bind(Processor.class).annotatedWith(RubyOnRails.class).to(RubyOnRailsCheckProcessor.class);
+        bind(Processor.class).annotatedWith(Vue.class).to(VueCheckProcessor.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
 

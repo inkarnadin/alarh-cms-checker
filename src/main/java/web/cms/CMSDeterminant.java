@@ -20,6 +20,7 @@ import web.cms.rails.annotation.RubyOnRails;
 import web.cms.tilda.annotation.Tilda;
 import web.cms.vamshop.annotation.VamShop;
 import web.cms.vigbo.annotation.Vigbo;
+import web.cms.vue.annotation.Vue;
 import web.cms.wordpress.annotation.WordPress;
 import web.cms.yii.annotation.Yii;
 import web.struct.Destination;
@@ -66,6 +67,8 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
     private Processor vgbCheckProcessor;
     @Inject @RubyOnRails
     private Processor rorCheckProcessor;
+    @Inject @Vue
+    private Processor vueCheckProcessor;
 
     @Override
     @SneakyThrows
@@ -92,6 +95,7 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
         callables.add(new Determinative(insCheckProcessor, params, CMSType.INSALES));
         callables.add(new Determinative(vgbCheckProcessor, params, CMSType.VIGBO));
         callables.add(new Determinative(rorCheckProcessor, params, CMSType.RUBY_ON_RAILS));
+        callables.add(new Determinative(vueCheckProcessor, params, CMSType.VUE_JS));
 
         List<Future<Pair<CMSType, Optional<Destination>>>> futures = executorService.invokeAll(callables);
         for (Future<Pair<CMSType, Optional<Destination>>> future : futures) {

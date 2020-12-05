@@ -21,11 +21,12 @@ public enum CMSType {
     LAVAREL(10, "Lavarel"),
     YII(11, "Yii Framework"),
     NUXT_JS(12, "Nuxt.js"),
-    RUBY_ON_RAILS(13, "Ruby on Rails"),
+    VUE_JS(13, "Vue.js"),
+    RUBY_ON_RAILS(14, "Ruby on Rails"),
 
-    TILDA(14, "Tilda"),
-    VIGBO(15, "Vigbo CMS"),
-    INSALES(16, "InSales"),
+    TILDA(15, "Tilda"),
+    VIGBO(16, "Vigbo CMS"),
+    INSALES(17, "InSales"),
 
     UNKNOWN(-1, "Unknown");
 

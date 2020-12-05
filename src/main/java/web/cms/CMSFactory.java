@@ -48,6 +48,8 @@ public class CMSFactory {
                 return injector.getInstance(VigboProvider.class).get();
             case RUBY_ON_RAILS:
                 return injector.getInstance(RubyOnRailsProvider.class).get();
+            case VUE_JS:
+                return injector.getInstance(VueProvider.class).get();
             default:
                 throw new IllegalArgumentException("Unsupported CMS type");
         }
