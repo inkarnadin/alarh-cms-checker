@@ -2,6 +2,7 @@ package web.module;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
+import web.cms.CMSType;
 import web.cms.bitrix.BitrixVersionProcessor;
 import web.cms.bitrix.annotation.Bitrix;
 import web.cms.bitrix.annotation.BitrixVersion;
@@ -70,23 +71,23 @@ public class CMSModule extends AbstractModule {
         bind(Connector.class).annotatedWith(Vigbo.class).toProvider(VigboProvider.class);
         bind(Connector.class).annotatedWith(Vue.class).toProvider(VueProvider.class);
 
-        bind(Processor.class).annotatedWith(BitrixVersion.class).to(BitrixVersionProcessor.class);
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(BitrixVersion.class).to(BitrixVersionProcessor.class);
         bind(Connector.class).annotatedWith(Bitrix.class).toProvider(BitrixProvider.class);
 
-        bind(Processor.class).annotatedWith(DataLifeVersion.class).to(DataLifeVersionProcessor.class);
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(DataLifeVersion.class).to(DataLifeVersionProcessor.class);
         bind(Connector.class).annotatedWith(DataLife.class).toProvider(DataLifeProvider.class);
 
-        bind(Processor.class).annotatedWith(DrupalVersion.class).to(DrupalVersionProcessor.class);
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(DrupalVersion.class).to(DrupalVersionProcessor.class);
         bind(Connector.class).annotatedWith(Drupal.class).toProvider(DrupalProvider.class);
 
         bind(Source.class).annotatedWith(JoomlaPlugin.class).to(JoomlaExtensionSource.class);
-        bind(Processor.class).annotatedWith(JoomlaPlugin.class).to(JoomlaPluginsProcessor.class);
-        bind(Processor.class).annotatedWith(JoomlaVersion.class).to(JoomlaVersionProcessor.class);
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(JoomlaPlugin.class).to(JoomlaPluginsProcessor.class);
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(JoomlaVersion.class).to(JoomlaVersionProcessor.class);
         bind(Connector.class).annotatedWith(Joomla.class).toProvider(JoomlaProvider.class);
 
         bind(Source.class).annotatedWith(WordPressPlugin.class).to(WordPressExtensionSource.class);
-        bind(Processor.class).annotatedWith(WordPressPlugin.class).to(WordPressPluginProcessor.class);
-        bind(Processor.class).annotatedWith(WordPressVersion.class).to(WordPressVersionProcessor.class);
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(WordPressPlugin.class).to(WordPressPluginProcessor.class);
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(WordPressVersion.class).to(WordPressVersionProcessor.class);
         bind(Connector.class).annotatedWith(WordPress.class).toProvider(WordPressProvider.class);
     }
 

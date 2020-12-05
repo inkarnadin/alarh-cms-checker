@@ -1,4 +1,4 @@
-package web.cms.vigbo.annotation;
+package web.cms.vigbo;
 
 import com.google.inject.Inject;
 import kotlin.Pair;
@@ -9,7 +9,7 @@ import web.analyzer.check.PageAnalyzer;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
-import web.struct.AbstractProcessor;
+import web.cms.AbstractCMSProcessor;
 import web.struct.Destination;
 
 import java.util.ArrayList;
@@ -20,7 +20,9 @@ import java.util.regex.Pattern;
 import static web.analyzer.Importance.HIGH;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class VigboCheckProcessor extends AbstractProcessor {
+public class VigboCheckProcessor extends AbstractCMSProcessor {
+
+    private static final CMSType cmsType = CMSType.VIGBO;
 
     private final Request request;
     private final TextParser<Boolean> parser;
@@ -40,12 +42,14 @@ public class VigboCheckProcessor extends AbstractProcessor {
                 Pattern.compile("vigbo__logo")
         });
 
-        assign(destination, result, CMSType.VIGBO);
+        assign(destination, result, cmsType);
     }
 
     @Override
-    public Optional<Destination> transmit() {
-        return destination.isFull() ? Optional.of(destination) : Optional.empty();
+    public Pair<CMSType, Optional<Destination>> transmit() {
+        return destination.isFull()
+                ? new Pair<>(cmsType, Optional.of(destination))
+                : new Pair<>(cmsType, Optional.empty());
     }
 
 }

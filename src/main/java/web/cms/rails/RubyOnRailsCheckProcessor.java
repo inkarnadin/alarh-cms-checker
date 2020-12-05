@@ -9,7 +9,7 @@ import web.analyzer.check.PageAnalyzer;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
-import web.struct.AbstractProcessor;
+import web.cms.AbstractCMSProcessor;
 import web.struct.Destination;
 
 import java.util.ArrayList;
@@ -21,7 +21,9 @@ import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.LOW;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class RubyOnRailsCheckProcessor extends AbstractProcessor {
+public class RubyOnRailsCheckProcessor extends AbstractCMSProcessor {
+
+    private static final CMSType cmsType = CMSType.RUBY_ON_RAILS;
 
     private final Request request;
     private final TextParser<Boolean> parser;
@@ -41,12 +43,14 @@ public class RubyOnRailsCheckProcessor extends AbstractProcessor {
                 "X-Runtime"
         });
 
-        assign(destination, result, CMSType.RUBY_ON_RAILS);
+        assign(destination, result, cmsType);
     }
 
     @Override
-    public Optional<Destination> transmit() {
-        return destination.isFull() ? Optional.of(destination) : Optional.empty();
+    public Pair<CMSType, Optional<Destination>> transmit() {
+        return destination.isFull()
+                ? new Pair<>(cmsType, Optional.of(destination))
+                : new Pair<>(cmsType, Optional.empty());
     }
 
 }

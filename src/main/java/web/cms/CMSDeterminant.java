@@ -28,47 +28,14 @@ import web.struct.Determinant;
 import web.struct.Params;
 import web.struct.Processor;
 
+import java.lang.annotation.Annotation;
 import java.util.*;
 import java.util.concurrent.*;
 
 public class CMSDeterminant implements Determinant<CMSType, Destination> {
 
-    @Inject @WordPress
-    private Processor wpCheckProcessor;
-    @Inject @Joomla
-    private Processor jmCheckProcessor;
-    @Inject @Yii
-    private Processor yiiCheckProcessor;
-    @Inject @DataLife
-    private Processor dleCheckProcessor;
-    @Inject @MaxSite
-    private Processor mxsCheckProcessor;
-    @Inject @Drupal
-    private Processor drpCheckProcessor;
-    @Inject @Bitrix
-    private Processor btxCheckProcessor;
-    @Inject @ModX
-    private Processor mdxCheckProcessor;
-    @Inject @Lavarel
-    private Processor lvrCheckProcessor;
-    @Inject @Tilda
-    private Processor tldCheckProcessor;
-    @Inject @VamShop
-    private Processor vmsCheckProcessor;
-    @Inject @Nuxt
-    private Processor nxtCheckProcessor;
-    @Inject @Magento
-    private Processor mgnCheckProcessor;
-    @Inject @OpenCart
-    private Processor ocsCheckProcessor;
-    @Inject @InSales
-    private Processor insCheckProcessor;
-    @Inject @Vigbo
-    private Processor vgbCheckProcessor;
-    @Inject @RubyOnRails
-    private Processor rorCheckProcessor;
-    @Inject @Vue
-    private Processor vueCheckProcessor;
+    @Inject
+    private Set<Processor<CMSType>> checkProcessors;
 
     @Override
     @SneakyThrows
@@ -78,24 +45,26 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
         ExecutorService executorService = Executors.newFixedThreadPool(6);
         HashSet<Determinative> callables = new HashSet<>();
 
-        callables.add(new Determinative(wpCheckProcessor, params, CMSType.WORDPRESS));
-        callables.add(new Determinative(jmCheckProcessor, params, CMSType.JOOMLA));
-        callables.add(new Determinative(yiiCheckProcessor, params, CMSType.YII));
-        callables.add(new Determinative(dleCheckProcessor, params, CMSType.DATALIFE_ENGINE));
-        callables.add(new Determinative(mxsCheckProcessor, params, CMSType.MAXSITE_CMS));
-        callables.add(new Determinative(drpCheckProcessor, params, CMSType.DRUPAL));
-        callables.add(new Determinative(btxCheckProcessor, params, CMSType.BITRIX));
-        callables.add(new Determinative(mdxCheckProcessor, params, CMSType.MODX));
-        callables.add(new Determinative(lvrCheckProcessor, params, CMSType.LAVAREL));
-        callables.add(new Determinative(tldCheckProcessor, params, CMSType.TILDA));
-        callables.add(new Determinative(vmsCheckProcessor, params, CMSType.VAM_SHOP));
-        callables.add(new Determinative(nxtCheckProcessor, params, CMSType.NUXT_JS));
-        callables.add(new Determinative(mgnCheckProcessor, params, CMSType.MAGENTO));
-        callables.add(new Determinative(ocsCheckProcessor, params, CMSType.OPENCART));
-        callables.add(new Determinative(insCheckProcessor, params, CMSType.INSALES));
-        callables.add(new Determinative(vgbCheckProcessor, params, CMSType.VIGBO));
-        callables.add(new Determinative(rorCheckProcessor, params, CMSType.RUBY_ON_RAILS));
-        callables.add(new Determinative(vueCheckProcessor, params, CMSType.VUE_JS));
+        checkProcessors.forEach(processor -> callables.add(new Determinative(processor, params)));
+
+//        callables.add(new Determinative(wpCheckProcessor, params, CMSType.WORDPRESS));
+//        callables.add(new Determinative(jmCheckProcessor, params, CMSType.JOOMLA));
+//        callables.add(new Determinative(yiiCheckProcessor, params, CMSType.YII));
+//        callables.add(new Determinative(dleCheckProcessor, params, CMSType.DATALIFE_ENGINE));
+//        callables.add(new Determinative(mxsCheckProcessor, params, CMSType.MAXSITE_CMS));
+//        callables.add(new Determinative(drpCheckProcessor, params, CMSType.DRUPAL));
+//        callables.add(new Determinative(btxCheckProcessor, params, CMSType.BITRIX));
+//        callables.add(new Determinative(mdxCheckProcessor, params, CMSType.MODX));
+//        callables.add(new Determinative(lvrCheckProcessor, params, CMSType.LAVAREL));
+//        callables.add(new Determinative(tldCheckProcessor, params, CMSType.TILDA));
+//        callables.add(new Determinative(vmsCheckProcessor, params, CMSType.VAM_SHOP));
+//        callables.add(new Determinative(nxtCheckProcessor, params, CMSType.NUXT_JS));
+//        callables.add(new Determinative(mgnCheckProcessor, params, CMSType.MAGENTO));
+//        callables.add(new Determinative(ocsCheckProcessor, params, CMSType.OPENCART));
+//        callables.add(new Determinative(insCheckProcessor, params, CMSType.INSALES));
+//        callables.add(new Determinative(vgbCheckProcessor, params, CMSType.VIGBO));
+//        callables.add(new Determinative(rorCheckProcessor, params, CMSType.RUBY_ON_RAILS));
+//        callables.add(new Determinative(vueCheckProcessor, params, CMSType.VUE_JS));
 
         List<Future<Pair<CMSType, Optional<Destination>>>> futures = executorService.invokeAll(callables);
         for (Future<Pair<CMSType, Optional<Destination>>> future : futures) {
@@ -107,11 +76,9 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
 
     static class Determinative implements Callable<Pair<CMSType, Optional<Destination>>> {
 
-        private final Processor processor;
-        private final CMSType cmsType;
+        private final Processor<CMSType> processor;
 
-        Determinative(Processor processor, Params params, CMSType cmsType) {
-            this.cmsType = cmsType;
+        Determinative(Processor<CMSType> processor, Params params) {
             this.processor = processor;
             this.processor.configure(params.getProtocol(), params.getServer());
         }
@@ -119,8 +86,7 @@ public class CMSDeterminant implements Determinant<CMSType, Destination> {
         @Override
         public Pair<CMSType, Optional<Destination>> call() {
             processor.process();
-            Optional<Destination> transmit = processor.transmit();
-            return new Pair<>(cmsType, transmit);
+            return processor.transmit();
         }
     }
 

@@ -1,14 +1,15 @@
 package web.cms.wordpress;
 
 import lombok.RequiredArgsConstructor;
+import web.cms.CMSType;
 import web.struct.Processor;
 import web.cms.AbstractCMSConnector;
 
 @RequiredArgsConstructor
 public class WordPressConnector extends AbstractCMSConnector {
 
-    private final Processor versionProcessor;
-    private final Processor pluginProcessor;
+    private final Processor<CMSType> versionProcessor;
+    private final Processor<CMSType> pluginProcessor;
 
     @Override
     public boolean check() {
@@ -19,7 +20,7 @@ public class WordPressConnector extends AbstractCMSConnector {
     public void checkVersion() {
         versionProcessor.configure(params.getProtocol(), params.getServer());
         versionProcessor.process();
-        versionProcessor.transmit().ifPresent(x -> x.fetch().forEach(System.out::println));
+        versionProcessor.transmit().getSecond().ifPresent(x -> x.fetch().forEach(System.out::println));
     }
 
     @Override

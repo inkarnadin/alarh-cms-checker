@@ -11,7 +11,7 @@ import web.analyzer.check.PathAnalyzer;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
-import web.struct.AbstractProcessor;
+import web.cms.AbstractCMSProcessor;
 import web.struct.Destination;
 
 import java.util.ArrayList;
@@ -23,7 +23,9 @@ import static web.analyzer.Importance.*;
 import static web.http.ContentType.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class BitrixCheckProcessor extends AbstractProcessor {
+public class BitrixCheckProcessor extends AbstractCMSProcessor {
+
+    private static final CMSType cmsType = CMSType.BITRIX;
 
     private final Request request;
     private final TextParser<Boolean> parser;
@@ -72,12 +74,14 @@ public class BitrixCheckProcessor extends AbstractProcessor {
                 Pattern.compile("Bitrix")
         });
 
-        assign(destination, result, CMSType.BITRIX);
+        assign(destination, result, cmsType);
     }
 
     @Override
-    public Optional<Destination> transmit() {
-        return destination.isFull() ? Optional.of(destination) : Optional.empty();
+    public Pair<CMSType, Optional<Destination>> transmit() {
+        return destination.isFull()
+                ? new Pair<>(cmsType, Optional.of(destination))
+                : new Pair<>(cmsType, Optional.empty());
     }
 
 }

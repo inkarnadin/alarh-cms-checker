@@ -3,15 +3,16 @@ package web.env.php;
 import com.google.inject.Inject;
 import lombok.SneakyThrows;
 import web.analyzer.version.VersionAnalyzer;
+import web.env.AbstractEnvironmentProcessor;
 import web.env.EnvType;
 import web.http.Request;
 import web.parser.TextParser;
-import web.struct.AbstractProcessor;
+import web.cms.AbstractCMSProcessor;
 import web.struct.SimpleDestination;
 
 import java.util.regex.Pattern;
 
-public class PhpVersionProcessor extends AbstractProcessor {
+public class PhpVersionProcessor extends AbstractEnvironmentProcessor {
 
     private final Request request;
     private final TextParser<String> parser;

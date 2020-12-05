@@ -3,6 +3,7 @@ package web.module;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import lombok.SneakyThrows;
+import web.env.EnvType;
 import web.env.php.PhpVersionProcessor;
 import web.env.php.annotation.Php;
 import web.env.php.annotation.PhpVersion;
@@ -29,10 +30,10 @@ public class EnvModule extends AbstractModule {
         bind(Request.class).to(GetRequest.class);
         bind(new TypeLiteral<TextParser<String>>(){}).to(StringReturnTextParser.class);
 
-        bind(Processor.class).annotatedWith(PhpMyAdminVersion.class).to(PhpMyAdminVersionProcessor.class);
+        bind(new TypeLiteral<Processor<EnvType>>(){}).annotatedWith(PhpMyAdminVersion.class).to(PhpMyAdminVersionProcessor.class);
         bind(Connector.class).annotatedWith(PhpMyAdmin.class).toProvider(PhpMyAdminProvider.class);
 
-        bind(Processor.class).annotatedWith(PhpVersion.class).to(PhpVersionProcessor.class);
+        bind(new TypeLiteral<Processor<EnvType>>(){}).annotatedWith(PhpVersion.class).to(PhpVersionProcessor.class);
         bind(Connector.class).annotatedWith(Php.class).toProvider(PhpProvider.class);
     }
 

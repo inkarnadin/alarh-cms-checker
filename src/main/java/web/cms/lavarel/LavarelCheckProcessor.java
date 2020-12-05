@@ -5,11 +5,10 @@ import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
 import web.analyzer.check.HeaderAnalyzer;
-import web.analyzer.check.PageAnalyzer;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
-import web.struct.AbstractProcessor;
+import web.cms.AbstractCMSProcessor;
 import web.struct.Destination;
 
 import java.util.ArrayList;
@@ -20,7 +19,9 @@ import java.util.regex.Pattern;
 import static web.analyzer.Importance.HIGH;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class LavarelCheckProcessor extends AbstractProcessor {
+public class LavarelCheckProcessor extends AbstractCMSProcessor {
+
+    private static final CMSType cmsType = CMSType.LAVAREL;
 
     private final Request request;
     private final TextParser<Boolean> parser;
@@ -35,12 +36,14 @@ public class LavarelCheckProcessor extends AbstractProcessor {
                 Pattern.compile("laravel_session")
         });
 
-        assign(destination, result, CMSType.LAVAREL);
+        assign(destination, result, cmsType);
     }
 
     @Override
-    public Optional<Destination> transmit() {
-        return destination.isFull() ? Optional.of(destination) : Optional.empty();
+    public Pair<CMSType, Optional<Destination>> transmit() {
+        return destination.isFull()
+                ? new Pair<>(cmsType, Optional.of(destination))
+                : new Pair<>(cmsType, Optional.empty());
     }
 
 }

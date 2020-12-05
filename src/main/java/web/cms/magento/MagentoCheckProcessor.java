@@ -10,7 +10,7 @@ import web.analyzer.check.PathAnalyzer;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
-import web.struct.AbstractProcessor;
+import web.cms.AbstractCMSProcessor;
 import web.struct.Destination;
 
 import java.util.ArrayList;
@@ -22,7 +22,9 @@ import static web.analyzer.Importance.*;
 import static web.http.ContentType.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class MagentoCheckProcessor extends AbstractProcessor {
+public class MagentoCheckProcessor extends AbstractCMSProcessor {
+
+    private static final CMSType cmsType = CMSType.MAGENTO;
 
     private final Request request;
     private final TextParser<Boolean> parser;
@@ -48,12 +50,14 @@ public class MagentoCheckProcessor extends AbstractProcessor {
                 "js/mage/translate.js"
         });
 
-        assign(destination, result, CMSType.MAGENTO);
+        assign(destination, result, cmsType);
     }
 
     @Override
-    public Optional<Destination> transmit() {
-        return destination.isFull() ? Optional.of(destination) : Optional.empty();
+    public Pair<CMSType, Optional<Destination>> transmit() {
+        return destination.isFull()
+                ? new Pair<>(cmsType, Optional.of(destination))
+                : new Pair<>(cmsType, Optional.empty());
     }
 
 }

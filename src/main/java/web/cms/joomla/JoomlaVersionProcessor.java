@@ -1,13 +1,14 @@
 package web.cms.joomla;
 
 import com.google.inject.Inject;
+import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.cms.CMSType;
 import web.analyzer.version.VersionAnalyzer;
 import web.http.Request;
 import web.parser.TextParser;
 import web.parser.XMLParser;
-import web.struct.AbstractProcessor;
+import web.cms.AbstractCMSProcessor;
 import web.struct.Destination;
 
 import java.util.Optional;
@@ -17,7 +18,9 @@ import static web.http.ContentType.APPLICATION_XML;
 import static web.http.ContentType.TEXT_XML;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class JoomlaVersionProcessor extends AbstractProcessor {
+public class JoomlaVersionProcessor extends AbstractCMSProcessor {
+
+    private static final CMSType cmsType = CMSType.JOOMLA;
 
     private final Request request;
     private final XMLParser<String> xmlParser;
@@ -27,7 +30,7 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
     @Override
     public void process() {
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, xmlParser, destination);
-        versionAnalyzer.prepare(protocol, server, CMSType.JOOMLA);
+        versionAnalyzer.prepare(protocol, server, cmsType);
         versionAnalyzer.checkViaMainPageGenerator(new Pattern[] {
                 Pattern.compile("<meta name=\"generator\".*Version\\s(.*)\" />")
         });
@@ -37,8 +40,10 @@ public class JoomlaVersionProcessor extends AbstractProcessor {
     }
 
     @Override
-    public Optional<Destination> transmit() {
-        return destination.isFull() ? Optional.of(destination) : Optional.empty();
+    public Pair<CMSType, Optional<Destination>> transmit() {
+        return destination.isFull()
+                ? new Pair<>(cmsType, Optional.of(destination))
+                : new Pair<>(cmsType, Optional.empty());
     }
 
 }

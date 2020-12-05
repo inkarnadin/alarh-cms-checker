@@ -2,6 +2,7 @@ package web.cms.joomla;
 
 import com.google.inject.Inject;
 import okhttp3.Response;
+import web.cms.AbstractCMSProcessor;
 import web.http.Host;
 import web.http.HttpValidator;
 import web.http.Request;
@@ -13,7 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class JoomlaPluginsProcessor extends AbstractProcessor {
+@Deprecated
+public class JoomlaPluginsProcessor extends AbstractCMSProcessor {
 
     private final String path = "/administrator/components/";
 

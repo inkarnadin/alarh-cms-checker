@@ -1,19 +1,22 @@
 package web.cms.drupal;
 
 import com.google.inject.Inject;
+import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.cms.CMSType;
 import web.analyzer.version.VersionAnalyzer;
 import web.http.Request;
 import web.parser.TextParser;
-import web.struct.AbstractProcessor;
+import web.cms.AbstractCMSProcessor;
 import web.struct.Destination;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class DrupalVersionProcessor extends AbstractProcessor {
+public class DrupalVersionProcessor extends AbstractCMSProcessor {
+
+    private static final CMSType cmsType = CMSType.DRUPAL;
 
     private final Request request;
     private final TextParser<String> parser;
@@ -22,7 +25,7 @@ public class DrupalVersionProcessor extends AbstractProcessor {
     @Override
     public void process() {
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination);
-        versionAnalyzer.prepare(protocol, server, CMSType.DRUPAL);
+        versionAnalyzer.prepare(protocol, server, cmsType);
         versionAnalyzer.checkViaMainPageGenerator(new Pattern[] {
                 Pattern.compile("<meta name=\"[gG]enerator\" content=\"Drupal\\s(.+?)\\s")
         });
@@ -30,8 +33,10 @@ public class DrupalVersionProcessor extends AbstractProcessor {
     }
 
     @Override
-    public Optional<Destination> transmit() {
-        return destination.isFull() ? Optional.of(destination) : Optional.empty();
+    public Pair<CMSType, Optional<Destination>> transmit() {
+        return destination.isFull()
+                ? new Pair<>(cmsType, Optional.of(destination))
+                : new Pair<>(cmsType, Optional.empty());
     }
 
 }

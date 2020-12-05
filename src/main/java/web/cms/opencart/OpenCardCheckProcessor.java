@@ -11,7 +11,7 @@ import web.cms.CMSType;
 import web.http.ContentType;
 import web.http.Request;
 import web.parser.TextParser;
-import web.struct.AbstractProcessor;
+import web.cms.AbstractCMSProcessor;
 import web.struct.Destination;
 
 import java.util.ArrayList;
@@ -22,7 +22,9 @@ import java.util.regex.Pattern;
 import static web.analyzer.Importance.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class OpenCardCheckProcessor extends AbstractProcessor {
+public class OpenCardCheckProcessor extends AbstractCMSProcessor {
+
+    private static final CMSType cmsType = CMSType.OPENCART;
 
     private final Request request;
     private final TextParser<Boolean> parser;
@@ -52,12 +54,14 @@ public class OpenCardCheckProcessor extends AbstractProcessor {
                 "catalog/view/javascript/common.js"
         });
 
-        assign(destination, result, CMSType.OPENCART);
+        assign(destination, result, cmsType);
     }
 
     @Override
-    public Optional<Destination> transmit() {
-        return destination.isFull() ? Optional.of(destination) : Optional.empty();
+    public Pair<CMSType, Optional<Destination>> transmit() {
+        return destination.isFull()
+                ? new Pair<>(cmsType, Optional.of(destination))
+                : new Pair<>(cmsType, Optional.empty());
     }
 
 }

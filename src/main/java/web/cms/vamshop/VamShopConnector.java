@@ -4,12 +4,5 @@ import lombok.RequiredArgsConstructor;
 import web.cms.AbstractCMSConnector;
 
 @RequiredArgsConstructor
-public class VamShopConnector extends AbstractCMSConnector {
-
-    @Override
-    public boolean check() {
-        return false;
-    }
-
-}
+public class VamShopConnector extends AbstractCMSConnector {}
 
