@@ -31,8 +31,10 @@ public class NuxtCheckProcessor extends AbstractProcessor {
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
         mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
-                Pattern.compile("data-n-head"),
-                Pattern.compile("data-hid=")
+                Pattern.compile("data-n-head="),
+                Pattern.compile("data-hid="),
+                Pattern.compile("__nuxt")
+
         });
 
         assign(destination, result, CMSType.NUXT_JS);
