@@ -10,7 +10,7 @@ import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.analyzer.check.SpecificAnalyzer;
 import web.http.Request;
-import web.struct.AbstractProcessor;
+import web.cms.AbstractCMSProcessor;
 import web.struct.Destination;
 import web.parser.TextParser;
 
@@ -23,7 +23,9 @@ import static web.analyzer.Importance.*;
 import static web.http.ContentType.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class DataLifeCheckProcessor extends AbstractProcessor {
+public class DataLifeCheckProcessor extends AbstractCMSProcessor {
+
+    private static final CMSType cmsType = CMSType.DATALIFE_ENGINE;
 
     private final Request request;
     private final TextParser<Boolean> parser;
@@ -60,12 +62,14 @@ public class DataLifeCheckProcessor extends AbstractProcessor {
                 "[пП]о данному адресу публикаций на сайте не найдено, либо у [вВ]ас нет доступа для просмотра информации по данному адресу"
         });
 
-        assign(destination, result, CMSType.DATALIFE_ENGINE);
+        assign(destination, result, cmsType);
     }
 
     @Override
-    public Optional<Destination> transmit() {
-        return destination.isFull() ? Optional.of(destination) : Optional.empty();
+    public Pair<CMSType, Optional<Destination>> transmit() {
+        return destination.isFull()
+                ? new Pair<>(cmsType, Optional.of(destination))
+                : new Pair<>(cmsType, Optional.empty());
     }
 
 }

@@ -2,6 +2,8 @@ package web.cms.wordpress;
 
 import com.google.inject.Inject;
 import okhttp3.Response;
+import web.cms.AbstractCMSProcessor;
+import web.cms.CMSType;
 import web.http.Host;
 import web.http.HttpValidator;
 import web.http.Request;
@@ -13,7 +15,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class WordPressPluginProcessor extends AbstractProcessor {
+@Deprecated
+public class WordPressPluginProcessor extends AbstractCMSProcessor {
+
+    private static final CMSType cmsType = CMSType.WORDPRESS;
 
     private final String path = "/wp-content/plugins/";
 

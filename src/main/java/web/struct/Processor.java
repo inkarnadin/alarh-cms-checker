@@ -1,11 +1,13 @@
 package web.struct;
 
+import kotlin.Pair;
+
 import java.util.Optional;
 
-public interface Processor {
+public interface Processor<T> {
 
     void configure(String protocol, String host);
     void process();
-    default Optional<Destination> transmit() { return Optional.empty(); }
+    Pair<T, Optional<Destination>> transmit();
 
 }

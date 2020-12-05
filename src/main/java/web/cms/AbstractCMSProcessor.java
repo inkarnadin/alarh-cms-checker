@@ -1,26 +1,21 @@
-package web.struct;
+package web.cms;
 
 import kotlin.Pair;
 import web.analyzer.Importance;
 import web.cms.CMSType;
+import web.struct.Destination;
+import web.struct.Processor;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.*;
 
 import static web.analyzer.Importance.UNDEFINED;
 
-public abstract class AbstractProcessor implements Processor {
+public abstract class AbstractCMSProcessor implements Processor<CMSType> {
 
     protected final Map<String, Integer> errorMap = new HashMap<>();
 
     protected String protocol;
     protected String server;
-
-    protected AtomicInteger attempt = new AtomicInteger(0);
-    protected AtomicInteger successAttempt = new AtomicInteger(0);
 
     protected final static String successMessage = "  * %s tags have been found (%s/%s)";
 
@@ -52,6 +47,11 @@ public abstract class AbstractProcessor implements Processor {
                     result.size())
             );
         }
+    }
+
+    @Override
+    public Pair<CMSType, Optional<Destination>> transmit() {
+        return null;
     }
 
 }

@@ -8,7 +8,7 @@ import web.cms.CMSType;
 import web.analyzer.check.MainPageAnalyzer;
 import web.http.Request;
 import web.parser.TextParser;
-import web.struct.AbstractProcessor;
+import web.cms.AbstractCMSProcessor;
 import web.struct.Destination;
 
 import java.util.ArrayList;
@@ -19,7 +19,9 @@ import java.util.regex.Pattern;
 import static web.analyzer.Importance.HIGH;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class MaxSiteCheckProcessor extends AbstractProcessor {
+public class MaxSiteCheckProcessor extends AbstractCMSProcessor {
+
+    private static final CMSType cmsType = CMSType.MAXSITE_CMS;
 
     private final Request request;
     private final TextParser<Boolean> parser;
@@ -38,12 +40,13 @@ public class MaxSiteCheckProcessor extends AbstractProcessor {
                 Pattern.compile("maxsite/common")
         });
 
-        assign(destination, result, CMSType.MAXSITE_CMS);
+        assign(destination, result, cmsType);
     }
 
     @Override
-    public Optional<Destination> transmit() {
-        return destination.isFull() ? Optional.of(destination) : Optional.empty();
+    public Pair<CMSType, Optional<Destination>> transmit() {
+        return destination.isFull()
+                ? new Pair<>(cmsType, Optional.of(destination))
+                : new Pair<>(cmsType, Optional.empty());
     }
-
 }

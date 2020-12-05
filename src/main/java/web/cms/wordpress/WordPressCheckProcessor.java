@@ -10,7 +10,7 @@ import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.parser.TextParser;
-import web.struct.AbstractProcessor;
+import web.cms.AbstractCMSProcessor;
 import web.struct.Destination;
 import web.http.Request;
 
@@ -21,7 +21,9 @@ import static web.analyzer.Importance.*;
 import static web.http.ContentType.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class WordPressCheckProcessor extends AbstractProcessor {
+public class WordPressCheckProcessor extends AbstractCMSProcessor {
+
+    private static final CMSType cmsType = CMSType.WORDPRESS;
 
     private final Request request;
     private final TextParser<Boolean> parser;
@@ -79,12 +81,14 @@ public class WordPressCheckProcessor extends AbstractProcessor {
                 Pattern.compile("X-WP-TotalPages")
         });
 
-        assign(destination, result, CMSType.WORDPRESS);
+        assign(destination, result, cmsType);
     }
 
     @Override
-    public Optional<Destination> transmit() {
-        return destination.isFull() ? Optional.of(destination) : Optional.empty();
+    public Pair<CMSType, Optional<Destination>> transmit() {
+        return destination.isFull()
+                ? new Pair<>(cmsType, Optional.of(destination))
+                : new Pair<>(cmsType, Optional.empty());
     }
 
 }

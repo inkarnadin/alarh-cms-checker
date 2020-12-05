@@ -7,9 +7,6 @@ import web.struct.Connector;
 
 public class LavarelProvider implements Provider<Connector> {
 
-    @Inject
-    LavarelProvider() {}
-
     @Override
     public Connector get() {
         return new LavarelConnector();

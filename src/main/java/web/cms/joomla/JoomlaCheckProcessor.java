@@ -9,7 +9,7 @@ import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.parser.TextParser;
-import web.struct.AbstractProcessor;
+import web.cms.AbstractCMSProcessor;
 import web.struct.Destination;
 import web.http.Request;
 
@@ -24,7 +24,9 @@ import static web.http.ContentType.APPLICATION_XML;
 import static web.http.ContentType.TEXT_XML;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class JoomlaCheckProcessor extends AbstractProcessor {
+public class JoomlaCheckProcessor extends AbstractCMSProcessor {
+
+    private static final CMSType cmsType = CMSType.JOOMLA;
 
     private final Request request;
     private final TextParser<Boolean> parser;
@@ -53,12 +55,14 @@ public class JoomlaCheckProcessor extends AbstractProcessor {
                 Pattern.compile("joomla-script-options")
         });
 
-        assign(destination, result, CMSType.JOOMLA);
+        assign(destination, result, cmsType);
     }
 
     @Override
-    public Optional<Destination> transmit() {
-        return destination.isFull() ? Optional.of(destination) : Optional.empty();
+    public Pair<CMSType, Optional<Destination>> transmit() {
+        return destination.isFull()
+                ? new Pair<>(cmsType, Optional.of(destination))
+                : new Pair<>(cmsType, Optional.empty());
     }
 
 }
