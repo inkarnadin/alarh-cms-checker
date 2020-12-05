@@ -8,10 +8,10 @@ import web.analyzer.check.HeaderAnalyzer;
 import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
+import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
-import web.cms.AbstractCMSProcessor;
 import web.struct.Destination;
 
 import java.util.ArrayList;
@@ -20,7 +20,8 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static web.analyzer.Importance.*;
-import static web.http.ContentType.*;
+import static web.http.ContentType.APPLICATION_XML;
+import static web.http.ContentType.TEXT_XML;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class BitrixCheckProcessor extends AbstractCMSProcessor {

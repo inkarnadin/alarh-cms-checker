@@ -4,15 +4,15 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
-import web.cms.CMSType;
 import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.analyzer.check.SpecificAnalyzer;
-import web.http.Request;
 import web.cms.AbstractCMSProcessor;
-import web.struct.Destination;
+import web.cms.CMSType;
+import web.http.Request;
 import web.parser.TextParser;
+import web.struct.Destination;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,8 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static web.analyzer.Importance.*;
-import static web.http.ContentType.*;
+import static web.http.ContentType.IMAGE_JPG;
+import static web.http.ContentType.IMAGE_PNG;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class DataLifeCheckProcessor extends AbstractCMSProcessor {

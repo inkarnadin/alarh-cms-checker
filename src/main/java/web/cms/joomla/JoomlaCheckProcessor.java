@@ -4,14 +4,14 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
-import web.cms.CMSType;
 import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
-import web.parser.TextParser;
 import web.cms.AbstractCMSProcessor;
-import web.struct.Destination;
+import web.cms.CMSType;
 import web.http.Request;
+import web.parser.TextParser;
+import web.struct.Destination;
 
 import java.util.ArrayList;
 import java.util.List;

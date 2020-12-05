@@ -6,10 +6,10 @@ import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
+import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
-import web.cms.AbstractCMSProcessor;
 import web.struct.Destination;
 
 import java.util.ArrayList;

@@ -1,9 +1,9 @@
 package web.cms.joomla;
 
 import lombok.RequiredArgsConstructor;
+import web.cms.AbstractCMSConnector;
 import web.cms.CMSType;
 import web.struct.Processor;
-import web.cms.AbstractCMSConnector;
 
 @RequiredArgsConstructor
 public class JoomlaConnector extends AbstractCMSConnector {

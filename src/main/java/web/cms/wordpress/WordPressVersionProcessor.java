@@ -3,11 +3,11 @@ package web.cms.wordpress;
 import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
-import web.cms.CMSType;
 import web.analyzer.version.VersionAnalyzer;
+import web.cms.AbstractCMSProcessor;
+import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
-import web.cms.AbstractCMSProcessor;
 import web.struct.Destination;
 
 import java.util.Optional;

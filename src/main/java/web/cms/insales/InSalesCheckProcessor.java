@@ -5,10 +5,10 @@ import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
 import web.analyzer.check.MainPageAnalyzer;
+import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
-import web.cms.AbstractCMSProcessor;
 import web.struct.Destination;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static web.analyzer.Importance.*;
+import static web.analyzer.Importance.HIGH;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class InSalesCheckProcessor extends AbstractCMSProcessor {
