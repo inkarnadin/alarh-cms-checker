@@ -35,7 +35,7 @@ public class NuxtCheckProcessor extends AbstractCMSProcessor {
         mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
                 Pattern.compile("data-n-head="),
                 Pattern.compile("data-hid="),
-                Pattern.compile("__nuxt")
+                Pattern.compile("_nuxt")
 
         });
 
