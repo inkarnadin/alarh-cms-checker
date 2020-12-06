@@ -39,6 +39,14 @@ public class MagentoCheckProcessor extends AbstractCMSProcessor {
         mainPageAnalyzer.checkViaMainPageKeywords(MEDIUM, new Pattern[] {
                 Pattern.compile("Mage\\.Cookies")
         });
+        mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
+                Pattern.compile("text/x-magento-init"),
+                Pattern.compile("mage/cookies"),
+                Pattern.compile("mage-translation-storage"),
+                Pattern.compile("Magento_PageBuilder"),
+                Pattern.compile("Magento_Ui"),
+                Pattern.compile("Magento_Theme"),
+        });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "admin" }, new Pattern[] {
                 Pattern.compile("Magento is a trademark of Magento")
