@@ -10,26 +10,27 @@ import web.struct.Connector;
 @RequiredArgsConstructor
 public enum CMSType {
 
-    WORDPRESS               (0, "WordPress",        WordPressProvider.class),
-    JOOMLA                  (1, "Joomla!",          JoomlaProvider.class),
-    DATALIFE_ENGINE         (2, "DataLife Engine",  DataLifeProvider.class),
-    MAXSITE_CMS             (3, "MaxSite CMS",      MaxSiteProvider.class),
-    DRUPAL                  (4, "Drupal",           DrupalProvider.class),
-    BITRIX                  (5, "1C-Bitrix",        BitrixProvider.class),
-    MODX                    (6, "MODx",             ModXProvider.class),
-    VAM_SHOP                (7, "VamShop",          VamShopProvider.class),
-    MAGENTO                 (8, "Magento",          MagentoProvider.class),
-    OPENCART                (9, "OpenCart",         OpenCartProvider.class),
+    WORDPRESS               (100, "WordPress",        WordPressProvider.class),
+    JOOMLA                  (101, "Joomla!",          JoomlaProvider.class),
+    DATALIFE_ENGINE         (102, "DataLife Engine",  DataLifeProvider.class),
+    MAXSITE_CMS             (103, "MaxSite CMS",      MaxSiteProvider.class),
+    DRUPAL                  (104, "Drupal",           DrupalProvider.class),
+    BITRIX                  (105, "1C-Bitrix",        BitrixProvider.class),
+    MODX                    (106, "MODx",             ModXProvider.class),
+    VAM_SHOP                (107, "VamShop",          VamShopProvider.class),
+    MAGENTO                 (108, "Magento",          MagentoProvider.class),
+    OPENCART                (109, "OpenCart",         OpenCartProvider.class),
+    MOGUTA_CMS              (110, "Moguta.CMS",       MogutaProvider.class),
 
-    LAVAREL                 (10, "Lavarel",         LavarelProvider.class),
-    YII                     (11, "Yii Framework",   YiiProvider.class),
-    NUXT_JS                 (12, "Nuxt.js",         NuxtProvider.class),
-    VUE_JS                  (13, "Vue.js",          VueProvider.class),
-    RUBY_ON_RAILS           (14, "Ruby on Rails",   RubyOnRailsProvider.class),
+    LAVAREL                 (201, "Lavarel",         LavarelProvider.class),
+    YII                     (202, "Yii Framework",   YiiProvider.class),
+    NUXT_JS                 (203, "Nuxt.js",         NuxtProvider.class),
+    VUE_JS                  (204, "Vue.js",          VueProvider.class),
+    RUBY_ON_RAILS           (205, "Ruby on Rails",   RubyOnRailsProvider.class),
 
-    TILDA                   (15, "Tilda",           TildaProvider.class),
-    VIGBO                   (16, "Vigbo CMS",       VigboProvider.class),
-    INSALES                 (17, "InSales",         InSalesProvider.class);
+    TILDA                   (301, "Tilda",           TildaProvider.class),
+    VIGBO                   (302, "Vigbo CMS",       VigboProvider.class),
+    INSALES                 (303, "InSales",         InSalesProvider.class);
 
     private final int id;
     private final String name;

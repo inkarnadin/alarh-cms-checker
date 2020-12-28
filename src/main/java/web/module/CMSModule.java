@@ -23,6 +23,7 @@ import web.cms.lavarel.annotation.Lavarel;
 import web.cms.magento.annotation.Magento;
 import web.cms.maxsite.annotation.MaxSite;
 import web.cms.modx.annotation.ModX;
+import web.cms.moguta.annotation.Moguta;
 import web.cms.nuxt.annotation.Nuxt;
 import web.cms.opencart.annotation.OpenCart;
 import web.cms.tilda.annotation.Tilda;
@@ -70,6 +71,7 @@ public class CMSModule extends AbstractModule {
         bind(Connector.class).annotatedWith(InSales.class).toProvider(InSalesProvider.class);
         bind(Connector.class).annotatedWith(Vigbo.class).toProvider(VigboProvider.class);
         bind(Connector.class).annotatedWith(Vue.class).toProvider(VueProvider.class);
+        bind(Connector.class).annotatedWith(Moguta.class).toProvider(MogutaProvider.class);
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(BitrixVersion.class).to(BitrixVersionProcessor.class);
         bind(Connector.class).annotatedWith(Bitrix.class).toProvider(BitrixProvider.class);

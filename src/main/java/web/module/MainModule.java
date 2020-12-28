@@ -17,6 +17,7 @@ import web.cms.lavarel.LavarelCheckProcessor;
 import web.cms.magento.MagentoCheckProcessor;
 import web.cms.maxsite.MaxSiteCheckProcessor;
 import web.cms.modx.ModXCheckProcessor;
+import web.cms.moguta.MogutaCheckProcessor;
 import web.cms.nuxt.NuxtCheckProcessor;
 import web.cms.opencart.OpenCardCheckProcessor;
 import web.cms.rails.RubyOnRailsCheckProcessor;
@@ -68,25 +69,7 @@ public class MainModule extends AbstractModule {
         processorCheckMultibinder.addBinding().to(RubyOnRailsCheckProcessor.class);
         processorCheckMultibinder.addBinding().to(RubyOnRailsCheckProcessor.class);
         processorCheckMultibinder.addBinding().to(VueCheckProcessor.class);
-
-//        bind(Processor.class).annotatedWith(Joomla.class).to(JoomlaCheckProcessor.class);
-//        bind(Processor.class).annotatedWith(WordPress.class).to(WordPressCheckProcessor.class);
-//        bind(Processor.class).annotatedWith(Yii.class).to(YiiCheckProcessor.class);
-//        bind(Processor.class).annotatedWith(DataLife.class).to(DataLifeCheckProcessor.class);
-//        bind(Processor.class).annotatedWith(MaxSite.class).to(MaxSiteCheckProcessor.class);
-//        bind(Processor.class).annotatedWith(Drupal.class).to(DrupalCheckProcessor.class);
-//        bind(Processor.class).annotatedWith(Bitrix.class).to(BitrixCheckProcessor.class);
-//        bind(Processor.class).annotatedWith(ModX.class).to(ModXCheckProcessor.class);
-//        bind(Processor.class).annotatedWith(Lavarel.class).to(LavarelCheckProcessor.class);
-//        bind(Processor.class).annotatedWith(Tilda.class).to(TildaCheckProcessor.class);
-//        bind(Processor.class).annotatedWith(VamShop.class).to(VamShopCheckProcessor.class);
-//        bind(Processor.class).annotatedWith(Nuxt.class).to(NuxtCheckProcessor.class);
-//        bind(Processor.class).annotatedWith(Magento.class).to(MagentoCheckProcessor.class);
-//        bind(Processor.class).annotatedWith(OpenCart.class).to(OpenCardCheckProcessor.class);
-//        bind(Processor.class).annotatedWith(InSales.class).to(InSalesCheckProcessor.class);
-//        bind(Processor.class).annotatedWith(Vigbo.class).to(VigboCheckProcessor.class);
-//        bind(Processor.class).annotatedWith(RubyOnRails.class).to(RubyOnRailsCheckProcessor.class);
-//        bind(Processor.class).annotatedWith(Vue.class).to(VueCheckProcessor.class);
+        processorCheckMultibinder.addBinding().to(MogutaCheckProcessor.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
 
