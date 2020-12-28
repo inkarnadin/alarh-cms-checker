@@ -5,7 +5,9 @@ import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.DublinCoreExtractor;
 import web.analyzer.Importance;
+import web.analyzer.check.HeaderAnalyzer;
 import web.analyzer.check.MainPageAnalyzer;
+import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
@@ -18,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static web.analyzer.Importance.LOW;
+import static web.analyzer.Importance.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class MogutaCheckProcessor extends AbstractCMSProcessor {
@@ -35,6 +37,37 @@ public class MogutaCheckProcessor extends AbstractCMSProcessor {
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
         mainPageAnalyzer.checkViaMainPageKeywords(LOW, DublinCoreExtractor.getElements());
+        mainPageAnalyzer.checkViaMainPageKeywords(MEDIUM, new Pattern[] {
+                Pattern.compile("<!--Базовые метатеги страницы--> "),
+                Pattern.compile("<!--Кодировка страницы-->"),
+                Pattern.compile("<!--Стили для шаблона-->"),
+                Pattern.compile("<!--Мобильные стили-->"),
+                Pattern.compile("<!--Библиотека для jQuery-->"),
+                Pattern.compile("<!--Скрипты плагинов и модулей движка-->")
+        });
+        mainPageAnalyzer.checkViaMainPageKeywords(MEDIUM, new Pattern[] {
+                Pattern.compile("mg-form-designer"),
+                Pattern.compile("mg-title-form"),
+                Pattern.compile("mg-title-field-form"),
+                Pattern.compile("mg-field"),
+                Pattern.compile("mg-form-popup"),
+                Pattern.compile("mg-form-for-download")
+        });
+        mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
+                Pattern.compile("mg-core"),
+                Pattern.compile("mg-templates"),
+                Pattern.compile("mg-plugins")
+        });
+        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
+        pathAnalyzer.checkViaPaths(LOW, new Integer[] { 200 }, new String[] { "enter" });
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "mg-admin" }, new Pattern[] {
+                Pattern.compile("Moguta\\.CMS")
+        });
+        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
+        headerAnalyzer.checkViaHeaderValues(HIGH, new String[] { "" }, new Pattern[] {
+                Pattern.compile("mg_to_script")
+        });
 
         assign(destination, result, CMSType.MOGUTA_CMS);
     }

@@ -103,8 +103,8 @@ public class VersionAnalyzer {
 
         host.setPath(path);
         try (Response response = request.send(host)) {
+            String body = ResponseBodyHandler.readBody(response);
             for (Pattern pattern : patterns) {
-                String body = ResponseBodyHandler.readBody(response);
                 textParser.configure(pattern, 1);
                 version = textParser.parse(body);
                 break;
