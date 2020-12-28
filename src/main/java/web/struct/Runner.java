@@ -33,6 +33,8 @@ public class Runner {
         System.out.println(" * OpenCart CMS");
         System.out.println(" * InSales");
         System.out.println(" * Vigbo CMS");
+        System.out.println(" * RailsOnRuby");
+        System.out.println(" * Vue.js");
         System.out.println("===========================================================");
 
         try (Scanner scanner = new Scanner(System.in)) {
