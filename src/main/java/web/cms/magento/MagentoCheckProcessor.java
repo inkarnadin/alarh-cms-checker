@@ -46,6 +46,7 @@ public class MagentoCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("Magento_PageBuilder"),
                 Pattern.compile("Magento_Ui"),
                 Pattern.compile("Magento_Theme"),
+                Pattern.compile("Magento_Company")
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "admin" }, new Pattern[] {
