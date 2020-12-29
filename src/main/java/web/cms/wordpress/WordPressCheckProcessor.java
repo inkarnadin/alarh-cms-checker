@@ -52,6 +52,7 @@ public class WordPressCheckProcessor extends AbstractCMSProcessor {
                 "wp-content",
                 "wp-includes"
         });
+        pathAnalyzer.checkViaFiles(HIGH, new Integer[] { 200, 304 }, new String[] { TEXT_XML, APPLICATION_XML }, new String[] { "wp-includes/wlwmanifest.xml" });
         pathAnalyzer.checkViaFiles(MEDIUM, new Integer[] { 200 }, new String[] { APPLICATION_JSON }, new String [] { "wp-json" });
         pathAnalyzer.checkViaFiles(HIGH, new Integer[] { 200 }, new String[] { APPLICATION_JAVASCRIPT, APPLICATION_X_JAVASCRIPT }, new String[] {
                 "wp-includes/js/heartbeat.js",
@@ -77,7 +78,7 @@ public class WordPressCheckProcessor extends AbstractCMSProcessor {
         headerAnalyzer.checkViaCookies(HIGH, new String[] { "wp-login.php" }, new Pattern[] {
                 Pattern.compile("wordpress_test_cookie")
         });
-        headerAnalyzer.checkViaHeaderValues(HIGH,new String[] { "wp-json" }, new Pattern[] {
+        headerAnalyzer.checkViaHeaderValues(HIGH, new String[] { "wp-json" }, new Pattern[] {
                 Pattern.compile("X-WP-Total"),
                 Pattern.compile("X-WP-Nonce"),
                 Pattern.compile("X-WP-TotalPages")
