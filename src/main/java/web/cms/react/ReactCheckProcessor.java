@@ -21,7 +21,7 @@ import static web.analyzer.Importance.HIGH;
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class ReactCheckProcessor extends AbstractCMSProcessor {
 
-    private static final CMSType cmsType = CMSType.REACT;
+    private static final CMSType cmsType = CMSType.REACT_JS;
 
     private final Request request;
     private final TextParser<Boolean> parser;
@@ -37,7 +37,7 @@ public class ReactCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("ReactDOM-prod")
         });
 
-        assign(destination, result, CMSType.REACT);
+        assign(destination, result, CMSType.REACT_JS);
     }
 
     @Override

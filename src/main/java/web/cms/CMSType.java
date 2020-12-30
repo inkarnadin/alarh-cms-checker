@@ -27,7 +27,7 @@ public enum CMSType {
     NUXT_JS                 (203, "Nuxt.js",         NuxtProvider.class),
     VUE_JS                  (204, "Vue.js",          VueProvider.class),
     RUBY_ON_RAILS           (205, "Ruby on Rails",   RubyOnRailsProvider.class),
-    REACT                   (206, "React",           ReactProvider.class),
+    REACT_JS                (206, "ReactJS",         ReactProvider.class),
 
     TILDA                   (301, "Tilda",           TildaProvider.class),
     VIGBO                   (302, "Vigbo CMS",       VigboProvider.class),
