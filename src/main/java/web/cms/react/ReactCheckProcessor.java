@@ -5,7 +5,6 @@ import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
 import web.analyzer.check.MainPageAnalyzer;
-import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
 import web.http.Request;
@@ -18,7 +17,6 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static web.analyzer.Importance.HIGH;
-import static web.analyzer.Importance.LOW;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class ReactCheckProcessor extends AbstractCMSProcessor {
