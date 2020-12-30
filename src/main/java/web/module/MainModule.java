@@ -22,6 +22,7 @@ import web.cms.nuxt.NuxtCheckProcessor;
 import web.cms.opencart.OpenCardCheckProcessor;
 import web.cms.rails.RubyOnRailsCheckProcessor;
 import web.cms.react.ReactCheckProcessor;
+import web.cms.shopify.ShopifyCheckProcessor;
 import web.cms.tilda.TildaCheckProcessor;
 import web.cms.vamshop.VamShopCheckProcessor;
 import web.cms.vigbo.VigboCheckProcessor;
@@ -72,6 +73,7 @@ public class MainModule extends AbstractModule {
         processorCheckMultibinder.addBinding().to(VueCheckProcessor.class);
         processorCheckMultibinder.addBinding().to(MogutaCheckProcessor.class);
         processorCheckMultibinder.addBinding().to(ReactCheckProcessor.class);
+        processorCheckMultibinder.addBinding().to(ShopifyCheckProcessor.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
 

@@ -21,6 +21,7 @@ public enum CMSType {
     MAGENTO                 (108, "Magento",          MagentoProvider.class),
     OPENCART                (109, "OpenCart",         OpenCartProvider.class),
     MOGUTA_CMS              (110, "Moguta.CMS",       MogutaProvider.class),
+    SHOPIFY                 (111, "Shopify",          ShopifyProvider.class),
 
     LAVAREL                 (201, "Lavarel",         LavarelProvider.class),
     YII                     (202, "Yii Framework",   YiiProvider.class),
