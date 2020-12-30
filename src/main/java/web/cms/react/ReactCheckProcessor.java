@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static web.analyzer.Importance.HIGH;
+import static web.analyzer.Importance.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class ReactCheckProcessor extends AbstractCMSProcessor {
@@ -34,7 +34,11 @@ public class ReactCheckProcessor extends AbstractCMSProcessor {
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
         mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
                 Pattern.compile("ReactDOM"),
-                Pattern.compile("ReactDOM-prod")
+                Pattern.compile("ReactDOM-prod"),
+                Pattern.compile("react-root")
+        });
+        mainPageAnalyzer.checkViaMainPageKeywords(MEDIUM, new Pattern[] {
+                Pattern.compile("div id=\"root\"")
         });
 
         assign(destination, result, CMSType.REACT_JS);
