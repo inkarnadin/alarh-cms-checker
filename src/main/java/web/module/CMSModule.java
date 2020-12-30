@@ -28,6 +28,7 @@ import web.cms.moguta.annotation.Moguta;
 import web.cms.moguta.annotation.MogutaVersion;
 import web.cms.nuxt.annotation.Nuxt;
 import web.cms.opencart.annotation.OpenCart;
+import web.cms.react.annotation.React;
 import web.cms.tilda.annotation.Tilda;
 import web.cms.vamshop.annotation.VamShop;
 import web.cms.vigbo.annotation.Vigbo;
@@ -74,6 +75,7 @@ public class CMSModule extends AbstractModule {
         bind(Connector.class).annotatedWith(Vigbo.class).toProvider(VigboProvider.class);
         bind(Connector.class).annotatedWith(Vue.class).toProvider(VueProvider.class);
         bind(Connector.class).annotatedWith(Moguta.class).toProvider(MogutaProvider.class);
+        bind(Connector.class).annotatedWith(React.class).toProvider(ReactProvider.class);
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(MogutaVersion.class).to(MogutaVersionProcessor.class);
         bind(Connector.class).annotatedWith(Moguta.class).toProvider(MogutaProvider.class);
