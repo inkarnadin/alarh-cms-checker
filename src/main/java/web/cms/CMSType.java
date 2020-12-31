@@ -33,7 +33,7 @@ public enum CMSType {
     TILDA                   (301, "Tilda",           TildaProvider.class),
     VIGBO                   (302, "Vigbo CMS",       VigboProvider.class),
     INSALES                 (303, "InSales",         InSalesProvider.class),
-    UKIT                    (304, "Ukit",            UkitProvider.class);
+    UKIT                    (304, "uKit",            UkitProvider.class);
 
     private final int id;
     private final String name;
