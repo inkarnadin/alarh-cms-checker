@@ -24,6 +24,7 @@ import web.cms.rails.RubyOnRailsCheckProcessor;
 import web.cms.react.ReactCheckProcessor;
 import web.cms.shopify.ShopifyCheckProcessor;
 import web.cms.tilda.TildaCheckProcessor;
+import web.cms.ukit.UkitCheckProcessor;
 import web.cms.vamshop.VamShopCheckProcessor;
 import web.cms.vigbo.VigboCheckProcessor;
 import web.cms.vue.VueCheckProcessor;
@@ -74,11 +75,11 @@ public class MainModule extends AbstractModule {
         processorCheckMultibinder.addBinding().to(MogutaCheckProcessor.class);
         processorCheckMultibinder.addBinding().to(ReactCheckProcessor.class);
         processorCheckMultibinder.addBinding().to(ShopifyCheckProcessor.class);
+        processorCheckMultibinder.addBinding().to(UkitCheckProcessor.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
 
         bind(Checker.class).annotatedWith(Cms.class).to(CMSChecker.class);
-
         bind(Checker.class).annotatedWith(Env.class).to(EnvironmentChecker.class);
 
         bind(Runner.class);
