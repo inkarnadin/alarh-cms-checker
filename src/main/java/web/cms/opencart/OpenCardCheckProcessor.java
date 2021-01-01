@@ -9,7 +9,6 @@ import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
-import web.http.ContentType;
 import web.http.Request;
 import web.parser.TextParser;
 import web.struct.Destination;
@@ -21,6 +20,7 @@ import java.util.regex.Pattern;
 
 import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.LOW;
+import static web.http.ContentType.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class OpenCardCheckProcessor extends AbstractCMSProcessor {
@@ -46,11 +46,10 @@ public class OpenCardCheckProcessor extends AbstractCMSProcessor {
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "admin" }, new Pattern[] {
-                Pattern.compile("ocStore"),
                 Pattern.compile("route=common/forgotten")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pathAnalyzer.checkViaFiles(LOW, new Integer[] { 200, 304 }, new String[] { ContentType.APPLICATION_JAVASCRIPT, ContentType.APPLICATION_X_JAVASCRIPT }, new String[] {
+        pathAnalyzer.checkViaFiles(LOW, new Integer[] { 200, 304 }, new String[] { APPLICATION_JAVASCRIPT, APPLICATION_X_JAVASCRIPT }, new String[] {
                 "admin/view/javascript/common.js",
                 "catalog/view/javascript/common.js"
         });
