@@ -5,6 +5,7 @@ import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
 import web.analyzer.check.HeaderAnalyzer;
+import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
 import web.http.Request;
@@ -17,6 +18,7 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static web.analyzer.Importance.HIGH;
+import static web.analyzer.Importance.LOW;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class LavarelCheckProcessor extends AbstractCMSProcessor {
@@ -35,6 +37,8 @@ public class LavarelCheckProcessor extends AbstractCMSProcessor {
         headerAnalyzer.checkViaCookies(HIGH,new String[] { "", "admin" }, new Pattern[] {
                 Pattern.compile("laravel_session")
         });
+        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
+        pathAnalyzer.checkViaPaths(LOW, new Integer[] { 200 }, new String[] { "register" });
 
         assign(destination, result, cmsType);
     }
