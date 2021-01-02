@@ -6,6 +6,7 @@ import okhttp3.Response;
 import web.analyzer.Importance;
 import web.http.ContentType;
 import web.http.Host;
+import web.http.HttpValidator;
 import web.http.Request;
 
 import java.util.Arrays;
@@ -52,7 +53,9 @@ public class PathAnalyzer {
                 Integer code = response.code();
                 String contentType = ContentType.defineContentType(response.header(CONTENT_TYPE));
 
-                if (Arrays.asList(codes).contains(code) && (Arrays.asList(contentTypes).contains(contentType) || contentTypes.length == 0)) {
+                if (Arrays.asList(codes).contains(code)
+                        && (Arrays.asList(contentTypes).contains(contentType) || contentTypes.length == 0)
+                        && HttpValidator.isOriginalSource(response, host.getServer())) {
                     setResultValue(true, importance);
                     return;
                 }

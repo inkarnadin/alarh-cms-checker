@@ -14,4 +14,13 @@ public class HttpValidator {
         return false;
     }
 
+    public static Boolean isOriginalSource(Response response, String originalHost) {
+        Response prior = response.priorResponse();
+        if (Objects.nonNull(prior) && prior.code() / 100 == 3) {
+            String location = String.join("", prior.headers().values("Location"));
+            return location.matches(originalHost);
+        }
+        return true;
+    }
+
 }
