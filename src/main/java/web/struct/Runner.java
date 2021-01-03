@@ -17,14 +17,14 @@ public class Runner {
         System.out.println("===========================================================");
         System.out.println("Welcome! This is application for check info about different CMS");
         System.out.println("In current time it is support next systems:");
-        System.out.println(" * Joomla!");
-        System.out.println(" * WordPress");
+        System.out.println(" * Joomla! (version)");
+        System.out.println(" * WordPress (version)");
         System.out.println(" * Yii Framework");
-        System.out.println(" * DataLife Engine");
+        System.out.println(" * DataLife Engine (version)");
         System.out.println(" * MaxSite CMS");
-        System.out.println(" * Drupal");
+        System.out.println(" * Drupal (version)");
         System.out.println(" * MODx");
-        System.out.println(" * 1C-Bitrix");
+        System.out.println(" * 1C-Bitrix (version)");
         System.out.println(" * Tilda");
         System.out.println(" * Lavarel");
         System.out.println(" * VamShop");
@@ -35,6 +35,9 @@ public class Runner {
         System.out.println(" * Vigbo CMS");
         System.out.println(" * RailsOnRuby");
         System.out.println(" * Vue.js");
+        System.out.println(" * uKit");
+        System.out.println(" * Shopify");
+        System.out.println(" * Moguta.CMS (version)");
         System.out.println("===========================================================");
 
         try (Scanner scanner = new Scanner(System.in)) {
