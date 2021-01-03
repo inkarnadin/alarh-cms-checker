@@ -69,7 +69,8 @@ public class BitrixCheckProcessor extends AbstractCMSProcessor {
         headerAnalyzer.checkViaCookies(HIGH, new String[] { "" }, new Pattern[] {
                 Pattern.compile("BITRIX_SM_GUEST_ID"),
                 Pattern.compile("BITRIX_SM_LAST_VISIT"),
-                Pattern.compile("BITRIX_SM_ABTEST")
+                Pattern.compile("BITRIX_SM_ABTEST"),
+                Pattern.compile("BITRIX_SM_SALE_UID")
         });
         headerAnalyzer.checkViaHeaderValues(HIGH, new String[] { "bitrix/admin" }, new Pattern[] {
                 Pattern.compile("Bitrix")
