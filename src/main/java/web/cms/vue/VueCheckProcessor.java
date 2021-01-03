@@ -34,6 +34,8 @@ public class VueCheckProcessor extends AbstractCMSProcessor {
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
         mainPageAnalyzer.checkViaMainPageScriptName(HIGH,new Pattern[] {
                 Pattern.compile("vue-handle-error\\.js"),
+                Pattern.compile("vue-modal"),
+                Pattern.compile("vue-component"),
                 Pattern.compile("vue\\.js")
         });
 
