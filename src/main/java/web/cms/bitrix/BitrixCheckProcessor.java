@@ -70,7 +70,9 @@ public class BitrixCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("BITRIX_SM_GUEST_ID"),
                 Pattern.compile("BITRIX_SM_LAST_VISIT"),
                 Pattern.compile("BITRIX_SM_ABTEST"),
-                Pattern.compile("BITRIX_SM_SALE_UID")
+                Pattern.compile("BITRIX_SM_SALE_UID"),
+                Pattern.compile("BITRIX_CONVERSION_CONTEXT"),
+                Pattern.compile("BX_USER_ID")
         });
         headerAnalyzer.checkViaHeaderValues(HIGH, new String[] { "bitrix/admin" }, new Pattern[] {
                 Pattern.compile("Bitrix")
