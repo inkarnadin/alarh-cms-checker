@@ -11,6 +11,7 @@ import web.cms.CMSType;
 import web.cms.bitrix.BitrixCheckProcessor;
 import web.cms.datalife.DataLifeCheckProcessor;
 import web.cms.drupal.DrupalCheckProcessor;
+import web.cms.host.HostCmsCheckProcessor;
 import web.cms.insales.InSalesCheckProcessor;
 import web.cms.joomla.JoomlaCheckProcessor;
 import web.cms.lavarel.LavarelCheckProcessor;
@@ -76,6 +77,7 @@ public class MainModule extends AbstractModule {
         processorCheckMultibinder.addBinding().to(ReactCheckProcessor.class);
         processorCheckMultibinder.addBinding().to(ShopifyCheckProcessor.class);
         processorCheckMultibinder.addBinding().to(UkitCheckProcessor.class);
+        processorCheckMultibinder.addBinding().to(HostCmsCheckProcessor.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
 

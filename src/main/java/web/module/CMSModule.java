@@ -12,6 +12,7 @@ import web.cms.datalife.annotation.DataLifeVersion;
 import web.cms.drupal.DrupalVersionProcessor;
 import web.cms.drupal.annotation.Drupal;
 import web.cms.drupal.annotation.DrupalVersion;
+import web.cms.host.annotation.HostCms;
 import web.cms.insales.annotation.InSales;
 import web.cms.joomla.JoomlaExtensionSource;
 import web.cms.joomla.JoomlaPluginsProcessor;
@@ -80,6 +81,7 @@ public class CMSModule extends AbstractModule {
         bind(Connector.class).annotatedWith(React.class).toProvider(ReactProvider.class);
         bind(Connector.class).annotatedWith(Shopify.class).toProvider(ShopifyProvider.class);
         bind(Connector.class).annotatedWith(Ukit.class).toProvider(UkitProvider.class);
+        bind(Connector.class).annotatedWith(HostCms.class).toProvider(HostCmsProvider.class);
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(MogutaVersion.class).to(MogutaVersionProcessor.class);
         bind(Connector.class).annotatedWith(Moguta.class).toProvider(MogutaProvider.class);

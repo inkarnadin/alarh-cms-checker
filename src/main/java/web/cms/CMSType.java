@@ -22,6 +22,7 @@ public enum CMSType {
     OPENCART                (109, "OpenCart",         OpenCartProvider.class),
     MOGUTA_CMS              (110, "Moguta.CMS",       MogutaProvider.class),
     SHOPIFY                 (111, "Shopify",          ShopifyProvider.class),
+    HOST_CMS                (112, "HostCMS",          HostCmsProvider.class),
 
     LAVAREL                 (201, "Lavarel",         LavarelProvider.class),
     YII                     (202, "Yii Framework",   YiiProvider.class),
