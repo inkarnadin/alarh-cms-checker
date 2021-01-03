@@ -45,8 +45,9 @@ public class BitrixCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("bitrix/panel")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pathAnalyzer.checkViaPaths(HIGH, new Integer[] { 200, 403 }, new String[] {
-                "/bitrix/.settings.php"
+        pathAnalyzer.checkViaPaths(HIGH, new Integer[] { 403 }, new String[] {
+                "/bitrix/.settings.php",
+                "/bitrix/php_interface/dbconn.php"
         });
         pathAnalyzer.checkViaPaths(LOW, new Integer[] { 200, 401, 403 }, new String[] {
                 "bitrix/admin",
