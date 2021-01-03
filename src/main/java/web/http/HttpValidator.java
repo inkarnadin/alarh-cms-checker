@@ -3,6 +3,7 @@ package web.http;
 import okhttp3.Response;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class HttpValidator {
 
@@ -18,7 +19,7 @@ public class HttpValidator {
         Response prior = response.priorResponse();
         if (Objects.nonNull(prior) && prior.code() / 100 == 3) {
             String location = String.join("", prior.headers().values("Location"));
-            return location.matches(originalHost);
+            return Pattern.compile(originalHost).matcher(location).find();
         }
         return true;
     }
