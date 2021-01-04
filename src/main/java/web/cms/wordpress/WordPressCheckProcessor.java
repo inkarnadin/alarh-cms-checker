@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.AnalyzeConst.ACCEPT_CODES;
+import static web.analyzer.AnalyzeConst.SUCCESS_CODES;
 import static web.analyzer.Importance.*;
 import static web.http.ContentType.*;
 
@@ -48,13 +50,13 @@ public class WordPressCheckProcessor extends AbstractCMSProcessor {
 
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pathAnalyzer.checkViaPaths(LOW, new Integer[] { 200, 403 }, new String[] {
+        pathAnalyzer.checkViaPaths(LOW, ACCEPT_CODES, new String[] {
                 "wp-content",
                 "wp-includes"
         });
-        pathAnalyzer.checkViaFiles(HIGH, new Integer[] { 200, 304 }, new String[] { TEXT_XML, APPLICATION_XML }, new String[] { "wp-includes/wlwmanifest.xml" });
-        pathAnalyzer.checkViaFiles(MEDIUM, new Integer[] { 200 }, new String[] { APPLICATION_JSON }, new String [] { "wp-json" });
-        pathAnalyzer.checkViaFiles(HIGH, new Integer[] { 200 }, new String[] { APPLICATION_JAVASCRIPT, APPLICATION_X_JAVASCRIPT }, new String[] {
+        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, new String[] { TEXT_XML, APPLICATION_XML }, new String[] { "wp-includes/wlwmanifest.xml" });
+        pathAnalyzer.checkViaFiles(MEDIUM, SUCCESS_CODES, new String[] { APPLICATION_JSON }, new String [] { "wp-json" });
+        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, new String[] { APPLICATION_JAVASCRIPT, APPLICATION_X_JAVASCRIPT }, new String[] {
                 "wp-includes/js/heartbeat.js",
                 "wp-includes/js/json2.js",
                 "wp-includes/js/wp-api.js",

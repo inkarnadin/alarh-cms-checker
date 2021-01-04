@@ -3,13 +3,13 @@ package web.cms.host;
 import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
+import web.analyzer.AnalyzeConst;
 import web.analyzer.Importance;
 import web.analyzer.check.HeaderAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
-import web.http.ContentType;
 import web.http.Request;
 import web.parser.TextParser;
 import web.struct.Destination;
@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.AnalyzeConst.*;
 import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.LOW;
 import static web.http.ContentType.*;
@@ -37,15 +38,15 @@ public class HostCmsCheckProcessor extends AbstractCMSProcessor {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
-        headerAnalyzer.checkViaHeaderValues(HIGH, new String[] { "" }, new Pattern[] {
+        headerAnalyzer.checkViaHeaderValues(HIGH, BASE_PATH, new Pattern[] {
                 Pattern.compile("HostCMS")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pathAnalyzer.checkViaPaths(LOW, new Integer[] { 403 }, new String[] {
+        pathAnalyzer.checkViaPaths(LOW, DENIED_CODES, new String[] {
                 "modules",
                 "hostcmsfiles"
         });
-        pathAnalyzer.checkViaFiles(HIGH, new Integer[] { 200, 304 }, new String[] { APPLICATION_X_JAVASCRIPT }, new String[] {
+        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, new String[] { APPLICATION_X_JAVASCRIPT }, new String[] {
                 "modules/skin/bootstrap/js/hostcms.js"
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);

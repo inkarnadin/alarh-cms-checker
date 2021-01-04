@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.AnalyzeConst.*;
 import static web.analyzer.Importance.*;
 import static web.http.ContentType.APPLICATION_XML;
 import static web.http.ContentType.TEXT_XML;
@@ -45,18 +46,18 @@ public class BitrixCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("bitrix/panel")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pathAnalyzer.checkViaPaths(HIGH, new Integer[] { 403 }, new String[] {
+        pathAnalyzer.checkViaPaths(HIGH, ACCEPT_CODES, new String[] {
                 "/bitrix/.settings.php",
                 "/bitrix/php_interface/dbconn.php"
         });
-        pathAnalyzer.checkViaPaths(LOW, new Integer[] { 200, 401, 403 }, new String[] {
+        pathAnalyzer.checkViaPaths(LOW, ACCEPT_CODES, new String[] {
                 "bitrix/admin",
                 "bitrix/cache",
                 "bitrix/js",
                 "bitrix/tools",
                 "bitrix/components"
         });
-        pathAnalyzer.checkViaFiles(HIGH, new Integer[] { 200, 304 }, new String[] { TEXT_XML, APPLICATION_XML }, new String[] {
+        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, new String[] { TEXT_XML, APPLICATION_XML }, new String[] {
                 "bitrix/p3p.xml"
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
@@ -70,7 +71,7 @@ public class BitrixCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("AUTH_NEW_PASSWORD_CONFIRM_WRONG")
         });
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
-        headerAnalyzer.checkViaCookies(HIGH, new String[] { "" }, new Pattern[] {
+        headerAnalyzer.checkViaCookies(HIGH, BASE_PATH, new Pattern[] {
                 Pattern.compile("BITRIX_SM_GUEST_ID"),
                 Pattern.compile("BITRIX_SM_LAST_VISIT"),
                 Pattern.compile("BITRIX_SM_ABTEST"),

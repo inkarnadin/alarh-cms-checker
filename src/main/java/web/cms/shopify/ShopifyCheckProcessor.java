@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.AnalyzeConst.BASE_PATH;
 import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.MEDIUM;
 
@@ -42,7 +43,7 @@ public class ShopifyCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("shopify-section-footer"),
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
-        pageAnalyzer.checkViaPageKeywords(HIGH,new String[] { "" }, new Pattern[] {
+        pageAnalyzer.checkViaPageKeywords(HIGH, BASE_PATH, new Pattern[] {
                 Pattern.compile("Powered by Shopify")
         });
 

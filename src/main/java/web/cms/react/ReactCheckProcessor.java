@@ -41,7 +41,7 @@ public class ReactCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("div id=\"root\"")
         });
 
-        assign(destination, result, CMSType.REACT_JS);
+        assign(destination, result, cmsType);
     }
 
     @Override

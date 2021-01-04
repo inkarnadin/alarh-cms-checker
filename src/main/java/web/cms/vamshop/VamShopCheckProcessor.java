@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.AnalyzeConst.SUCCESS_CODES;
 import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.LOW;
 
@@ -38,9 +39,9 @@ public class VamShopCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("Powered by .*VamShop")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pathAnalyzer.checkViaPaths(LOW, new Integer[] { 200 }, new String[] { "password_double_opt.php" });
+        pathAnalyzer.checkViaPaths(LOW, SUCCESS_CODES, new String[] { "password_double_opt.php" });
 
-        assign(destination, result, CMSType.VAM_SHOP);
+        assign(destination, result, cmsType);
     }
 
     @Override

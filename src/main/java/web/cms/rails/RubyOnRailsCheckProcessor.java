@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.AnalyzeConst.BASE_PATH;
 import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.LOW;
 
@@ -38,7 +39,7 @@ public class RubyOnRailsCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("authenticity_token")
         });
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
-        headerAnalyzer.checkViaHeaders(HIGH, new String[] { "" }, new String[] {
+        headerAnalyzer.checkViaHeaders(HIGH, BASE_PATH, new String[] {
                 "X-Rack-Cache",
                 "X-Runtime"
         });

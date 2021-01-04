@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.AnalyzeConst.BASE_PATH;
+import static web.analyzer.AnalyzeConst.SUCCESS_CODES;
 import static web.analyzer.Importance.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
@@ -59,17 +61,17 @@ public class MogutaCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("mg-plugins")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pathAnalyzer.checkViaPaths(LOW, new Integer[] { 200 }, new String[] { "enter" });
+        pathAnalyzer.checkViaPaths(LOW, SUCCESS_CODES, new String[] { "enter" });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "mg-admin" }, new Pattern[] {
                 Pattern.compile("Moguta\\.CMS")
         });
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
-        headerAnalyzer.checkViaHeaderValues(HIGH, new String[] { "" }, new Pattern[] {
+        headerAnalyzer.checkViaHeaderValues(HIGH, BASE_PATH, new Pattern[] {
                 Pattern.compile("mg_to_script")
         });
 
-        assign(destination, result, CMSType.MOGUTA_CMS);
+        assign(destination, result, cmsType);
     }
 
     @Override

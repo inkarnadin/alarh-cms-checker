@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.AnalyzeConst.ACCEPT_CODES;
 import static web.analyzer.Importance.LOW;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
@@ -39,7 +40,7 @@ public class ModXCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("assets/cache")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pathAnalyzer.checkViaPaths(LOW, new Integer[] { 200, 304, 403 }, new String[] {
+        pathAnalyzer.checkViaPaths(LOW, ACCEPT_CODES, new String[] {
                 "assets/templates",
                 "assets/images",
                 "assets/cache",
@@ -47,7 +48,7 @@ public class ModXCheckProcessor extends AbstractCMSProcessor {
                 "manager"
         });
 
-        assign(destination, result, CMSType.MODX);
+        assign(destination, result, cmsType);
     }
 
     @Override

@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.AnalyzeConst.SUCCESS_CODES;
 import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.LOW;
 
@@ -34,11 +35,11 @@ public class LavarelCheckProcessor extends AbstractCMSProcessor {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
-        headerAnalyzer.checkViaCookies(HIGH,new String[] { "", "admin" }, new Pattern[] {
+        headerAnalyzer.checkViaCookies(HIGH, new String[] { "", "admin" }, new Pattern[] {
                 Pattern.compile("laravel_session")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pathAnalyzer.checkViaPaths(LOW, new Integer[] { 200 }, new String[] { "register" });
+        pathAnalyzer.checkViaPaths(LOW, SUCCESS_CODES, new String[] { "register" });
 
         assign(destination, result, cmsType);
     }

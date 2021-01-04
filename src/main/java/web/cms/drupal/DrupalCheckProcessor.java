@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.AnalyzeConst.BASE_PATH;
 import static web.analyzer.Importance.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
@@ -47,8 +48,8 @@ public class DrupalCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("XML-RPC server accepts POST requests only")
         });
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
-        headerAnalyzer.checkViaXGenerator(HIGH,new String[] { "" }, Pattern.compile("drupal"));
-        headerAnalyzer.checkViaHeaders(HIGH,new String[] { "" }, new String[] {
+        headerAnalyzer.checkViaXGenerator(HIGH, BASE_PATH, Pattern.compile("drupal"));
+        headerAnalyzer.checkViaHeaders(HIGH, BASE_PATH, new String[] {
                 "x-drupal-cache",
                 "x-drupal-dynamic-cache"
         });

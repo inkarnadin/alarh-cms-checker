@@ -37,7 +37,7 @@ public class InSalesCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("insales-menu--loaded"),
         });
 
-        assign(destination, result, CMSType.INSALES);
+        assign(destination, result, cmsType);
     }
 
     @Override
