@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import web.cms.CMSChecker;
 import web.env.EnvironmentChecker;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -38,6 +39,7 @@ public class Runner {
         System.out.println(" * uKit");
         System.out.println(" * Shopify");
         System.out.println(" * Moguta.CMS (version)");
+        System.out.println(" * HostCMS");
         System.out.println("===========================================================");
 
         try (Scanner scanner = new Scanner(System.in)) {
@@ -47,11 +49,14 @@ public class Runner {
                 printSplit();
 
                 System.out.print("Set target host [example.com]: ");
-                params.setServer(scanner.nextLine());
+                String inputString = scanner.nextLine();
+                String[] args = inputString.split("\\s+");
+
+                params.setServer(args[0]);
                 printSplit();
 
-                System.out.print("Activate CMS module? (y/n): ");
-                if (isAnswer(scanner.nextLine())) {
+                if (isContain(args, "-m")) {
+                    System.out.println("CMS module activated!");
                     injector.getInstance(CMSChecker.class).check(params);
                     System.out.println("Done!");
                 } else {
@@ -59,8 +64,8 @@ public class Runner {
                 }
                 printSplit();
 
-                System.out.print("Activate additional information module? (y/n): ");
-                if (isAnswer(scanner.nextLine())) {
+                if (isContain(args, "-e")) {
+                    System.out.println("Extend info module activated!");
                     injector.getInstance(EnvironmentChecker.class).check(params);
                     System.out.println("Done!");
                 } else {
@@ -74,6 +79,10 @@ public class Runner {
                     System.exit(1);
             }
         }
+    }
+
+    private static boolean isContain(String[] args, String modifier) {
+        return Arrays.asList(args).contains(modifier);
     }
 
     private static boolean isAnswer(final String answer) {
