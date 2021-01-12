@@ -38,16 +38,10 @@ public class ExtendEnvironmentAnalyzer {
     }
 
     public void checkViaHeaders(String header) {
-        Pattern pattern = Pattern.compile(".*");
-        String webServer = "unknown";
-
         String value = mainPageHeaders.get(header);
-        if (Objects.nonNull(value)) {
-            textParser.configure(pattern, 0);
-            webServer = textParser.parse(value);
-        }
-        destination.insert(0,
-                String.format("  ** %s = %s", entityType, webServer));
+        String webServer = Objects.nonNull(value) ? value : "unknown";
+
+        destination.insert(0, String.format("  ** %s = %s", entityType, webServer));
     }
 
 }
