@@ -17,6 +17,12 @@ public class EnvironmentChecker extends AbstractChecker {
         Connector phpConnector = EnvironmentFactory.getEnvironmentConnector(EnvType.PHP);
         phpConnector.configure(params);
         phpConnector.checkVersion();
+
+        System.out.println();
+
+        Connector webServerConnector = EnvironmentFactory.getEnvironmentConnector(EnvType.WEB_SERVER);
+        webServerConnector.configure(params);
+        webServerConnector.check();
     }
 
 }
