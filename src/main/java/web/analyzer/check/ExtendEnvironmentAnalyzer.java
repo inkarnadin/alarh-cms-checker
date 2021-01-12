@@ -38,21 +38,16 @@ public class ExtendEnvironmentAnalyzer {
     }
 
     public void checkViaHeaders(String header) {
-        Pattern pattern = Pattern.compile("(.*)(/|\\s)(.*)");
-
+        Pattern pattern = Pattern.compile(".*");
         String webServer = "unknown";
-        String version = "unknown";
 
         String value = mainPageHeaders.get(header);
         if (Objects.nonNull(value)) {
-            textParser.configure(pattern, 1);
-            webServer = textParser.parse(value.toLowerCase());
-
-            textParser.configure(pattern, 3);
-            version = textParser.parse(value.toLowerCase());
+            textParser.configure(pattern, 0);
+            webServer = textParser.parse(value);
         }
         destination.insert(0,
-                String.format("  ** %s = %s, version = %s", entityType, webServer, version));
+                String.format("  ** %s = %s", entityType, webServer));
     }
 
 }
