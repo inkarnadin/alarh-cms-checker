@@ -42,7 +42,6 @@ public class MagentoCheckProcessor extends AbstractCMSProcessor {
         });
         mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
                 Pattern.compile("text/x-magento-init"),
-                Pattern.compile("mage/cookies"),
                 Pattern.compile("mage-translation-storage"),
                 Pattern.compile("Magento_PageBuilder"),
                 Pattern.compile("Magento_Ui"),
@@ -54,7 +53,7 @@ public class MagentoCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("Magento is a trademark of Magento")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pathAnalyzer.checkViaFiles(LOW, SUCCESS_CODES, new String[] { APPLICATION_JAVASCRIPT, TEXT_JAVASCRIPT }, new String[] {
+        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, new String[] { APPLICATION_JAVASCRIPT, TEXT_JAVASCRIPT }, new String[] {
                 "js/mage/captcha.js",
                 "js/mage/adminhtml/form.js",
                 "js/mage/cookies.js",
