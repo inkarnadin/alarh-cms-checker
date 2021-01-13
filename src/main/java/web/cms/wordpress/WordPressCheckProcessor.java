@@ -46,8 +46,13 @@ public class WordPressCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("contact-form-7-css"),
                 Pattern.compile("wp-postratings-css"),
                 Pattern.compile("wpfront-scroll-top-css"),
-                Pattern.compile("core-front-css")
-
+                Pattern.compile("wp-block-library-css"),
+                Pattern.compile("wp-block-library-theme-css"),
+                Pattern.compile("wp-pagenavi-css"),
+                Pattern.compile("woocommerce"),
+                Pattern.compile("wp-image"),
+                Pattern.compile("wp-block"),
+                Pattern.compile("wp-smiley")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
         pathAnalyzer.checkViaPaths(LOW, ACCEPT_CODES, new String[] {
