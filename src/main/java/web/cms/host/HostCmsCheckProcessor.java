@@ -44,7 +44,8 @@ public class HostCmsCheckProcessor extends AbstractCMSProcessor {
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
         pathAnalyzer.checkViaPaths(LOW, DENIED_CODES, new String[] {
                 "modules",
-                "hostcmsfiles"
+                "hostcmsfiles",
+                "admin"
         });
         pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, new String[] { APPLICATION_X_JAVASCRIPT }, new String[] {
                 "modules/skin/bootstrap/js/hostcms.js"
