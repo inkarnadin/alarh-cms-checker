@@ -20,11 +20,14 @@ public class ResponseBodyHandler {
 
         ResponseBody body = response.body();
         StringBuilder textBuilder = new StringBuilder();
-        try (Reader reader = new BufferedReader(new InputStreamReader(
-                Objects.requireNonNull(body).byteStream(), charset))) {
-            int c = 0;
-            while ((c = reader.read()) != -1)
-                textBuilder.append((char) c);
+        try (Reader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(body).byteStream(), charset))) {
+            try {
+                int c = 0;
+                while ((c = reader.read()) != -1)
+                    textBuilder.append((char) c);
+            } catch (Exception e) {
+                System.out.println(e.getMessage() + ": " + body.toString());
+            }
         }
         return textBuilder.toString();
     }
