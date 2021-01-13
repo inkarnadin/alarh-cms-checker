@@ -35,7 +35,7 @@ public class UmiCheckProcessor extends AbstractCMSProcessor {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
         PathAnalyzer pageAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
-        pageAnalyzer.checkViaPaths(LOW,ACCEPT_CODES, new String[] { "admin" });
+        pageAnalyzer.checkViaPaths(LOW, ACCEPT_CODES, new String[] { "admin" });
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
         headerAnalyzer.checkViaHeaderValues(HIGH, BASE_PATH, new Pattern[] {
                 Pattern.compile("UMI\\.CMS")
