@@ -43,6 +43,7 @@ public class JoomlaCheckProcessor extends AbstractCMSProcessor {
 
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
         pathAnalyzer.checkViaPaths(LOW, ACCEPT_CODES, new String[] {
+                "administrator",
                 "administrator/components/com_config"
         });
         pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, new String[] { TEXT_XML, APPLICATION_XML }, new String[] {
