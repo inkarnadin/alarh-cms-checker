@@ -1,11 +1,11 @@
-package web.http;
+package web.validator;
 
 import okhttp3.Response;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public class HttpValidator {
+public class HttpValidator implements Validator {
 
     public static Boolean isRedirect(Response response) {
         if (Objects.nonNull(response.priorResponse())) {

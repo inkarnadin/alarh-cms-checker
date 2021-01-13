@@ -6,11 +6,11 @@ import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
 import web.cms.wordpress.annotation.WordPressPlugin;
 import web.http.Host;
-import web.http.HttpValidator;
 import web.http.Request;
 import web.http.RequestErrorHandler;
 import web.struct.ResultStorage;
 import web.struct.Source;
+import web.validator.HttpValidator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
