@@ -52,11 +52,13 @@ public class Runner {
                 String inputString = scanner.nextLine();
                 String[] args = inputString.split("\\s+");
 
+                readPreferences(args);
+
                 params.setServer(args[0]);
                 printSplit();
 
-                if (isContain(args, "-m")) {
-                    System.out.println("CMS module activated!");
+                if (Preferences.isActiveMainModule()) {
+                    System.out.println("CMS module activated...");
                     injector.getInstance(CMSChecker.class).check(params);
                     System.out.println("Done!");
                 } else {
@@ -64,8 +66,8 @@ public class Runner {
                 }
                 printSplit();
 
-                if (isContain(args, "-e")) {
-                    System.out.println("Extend info module activated!");
+                if (Preferences.isActiveExtendModule()) {
+                    System.out.println("Extend info module activated...");
                     injector.getInstance(EnvironmentChecker.class).check(params);
                     System.out.println("Done!");
                 } else {
@@ -81,8 +83,10 @@ public class Runner {
         }
     }
 
-    private static boolean isContain(String[] args, String modifier) {
-        return Arrays.asList(args).contains(modifier);
+    private static void readPreferences(String[] args) {
+        Preferences.manageMainModule(!Arrays.asList(args).contains("-mm"));
+        Preferences.manageExtendModule(!Arrays.asList(args).contains("-em"));
+        Preferences.manageLowImportanceFilter(Arrays.asList(args).contains("-li"));
     }
 
     private static boolean isAnswer(final String answer) {
