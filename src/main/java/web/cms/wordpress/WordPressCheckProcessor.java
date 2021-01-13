@@ -60,7 +60,7 @@ public class WordPressCheckProcessor extends AbstractCMSProcessor {
                 "wp-content",
                 "wp-includes"
         });
-        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, new String[] { TEXT_XML, APPLICATION_XML }, new String[] { "wp-includes/wlwmanifest.xml" });
+        pathAnalyzer.checkViaFiles(LOW, SUCCESS_CODES, new String[] { TEXT_XML, APPLICATION_XML }, new String[] { "wp-includes/wlwmanifest.xml" });
         pathAnalyzer.checkViaFiles(MEDIUM, SUCCESS_CODES, new String[] { APPLICATION_JSON }, new String [] { "wp-json" });
         pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, new String[] { APPLICATION_JAVASCRIPT, APPLICATION_X_JAVASCRIPT }, new String[] {
                 "wp-includes/js/heartbeat.js",
