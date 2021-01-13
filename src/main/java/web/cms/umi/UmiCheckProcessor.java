@@ -17,8 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static web.analyzer.AnalyzeConst.BASE_PATH;
-import static web.analyzer.AnalyzeConst.SUCCESS_CODES;
+import static web.analyzer.AnalyzeConst.*;
 import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.LOW;
 
@@ -35,6 +34,8 @@ public class UmiCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
+        PathAnalyzer pageAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
+        pageAnalyzer.checkViaPaths(LOW,ACCEPT_CODES, new String[] { "admin" });
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
         headerAnalyzer.checkViaHeaderValues(HIGH, BASE_PATH, new Pattern[] {
                 Pattern.compile("UMI\\.CMS")
