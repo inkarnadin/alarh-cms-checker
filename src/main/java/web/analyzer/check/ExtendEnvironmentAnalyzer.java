@@ -6,17 +6,14 @@ import okhttp3.Response;
 import web.env.EnvType;
 import web.http.Host;
 import web.http.Request;
-import web.parser.TextParser;
 import web.struct.Destination;
 
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 public class ExtendEnvironmentAnalyzer {
 
     private final Request request;
-    private final TextParser<String> textParser;
     private final Destination destination;
 
     private Host host;
