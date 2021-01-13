@@ -17,5 +17,4 @@ public class MogutaConnector extends AbstractCMSConnector {
         versionProcessor.transmit().getSecond().ifPresent(x -> x.fetch().forEach(System.out::println));
     }
 
-
 }

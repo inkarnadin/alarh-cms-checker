@@ -23,7 +23,9 @@ import web.cms.joomla.annotation.JoomlaVersion;
 import web.cms.lavarel.annotation.Lavarel;
 import web.cms.magento.annotation.Magento;
 import web.cms.maxsite.annotation.MaxSite;
+import web.cms.modx.ModXVersionProcessor;
 import web.cms.modx.annotation.ModX;
+import web.cms.modx.annotation.ModXVersion;
 import web.cms.moguta.MogutaVersionProcessor;
 import web.cms.moguta.annotation.Moguta;
 import web.cms.moguta.annotation.MogutaVersion;
@@ -71,7 +73,6 @@ public class CMSModule extends AbstractModule {
         bind(Connector.class).annotatedWith(Lavarel.class).toProvider(LavarelProvider.class);
         bind(Connector.class).annotatedWith(Yii.class).toProvider(YiiProvider.class);
         bind(Connector.class).annotatedWith(MaxSite.class).toProvider(MaxSiteProvider.class);
-        bind(Connector.class).annotatedWith(ModX.class).toProvider(ModXProvider.class);
         bind(Connector.class).annotatedWith(Tilda.class).toProvider(TildaProvider.class);
         bind(Connector.class).annotatedWith(VamShop.class).toProvider(VamShopProvider.class);
         bind(Connector.class).annotatedWith(Nuxt.class).toProvider(NuxtProvider.class);
@@ -85,6 +86,9 @@ public class CMSModule extends AbstractModule {
         bind(Connector.class).annotatedWith(Shopify.class).toProvider(ShopifyProvider.class);
         bind(Connector.class).annotatedWith(Ukit.class).toProvider(UkitProvider.class);
         bind(Connector.class).annotatedWith(HostCms.class).toProvider(HostCmsProvider.class);
+
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(ModXVersion.class).to(ModXVersionProcessor.class);
+        bind(Connector.class).annotatedWith(ModX.class).toProvider(ModXProvider.class);
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(UmiVersion.class).to(UmiVersionProcessor.class);
         bind(Connector.class).annotatedWith(Umi.class).toProvider(UmiProvider.class);
