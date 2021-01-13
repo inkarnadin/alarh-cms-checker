@@ -5,6 +5,7 @@ import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
 import web.analyzer.check.MainPageAnalyzer;
+import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
@@ -18,6 +19,7 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static web.analyzer.AnalyzeConst.ACCEPT_CODES;
+import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.LOW;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
@@ -46,6 +48,14 @@ public class ModXCheckProcessor extends AbstractCMSProcessor {
                 "assets/cache",
                 "assets/js",
                 "manager"
+        });
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "manager" }, new Pattern[] {
+                Pattern.compile("modx-form"),
+                Pattern.compile("modx-fl-link"),
+                Pattern.compile("modx-login-password"),
+                Pattern.compile("modx-fl-btn"),
+                Pattern.compile("modx-login-language-select"),
         });
 
         assign(destination, result, cmsType);
