@@ -41,13 +41,16 @@ public class ModXCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("assets/components"),
                 Pattern.compile("assets/cache"),
                 Pattern.compile("assets/gallery"),
-                Pattern.compile("assets/components/easycomm"),
-                Pattern.compile("assets/components/minishop2"),
-                Pattern.compile("assets/components/gallery/"),
+                Pattern.compile("assets/images"),
+                Pattern.compile("assets/snippets")
         });
         mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
                 Pattern.compile("easyCommConfig"),
                 Pattern.compile("miniShop2Config"),
+                Pattern.compile("assets/components/easycomm"),
+                Pattern.compile("assets/components/minishop2"),
+                Pattern.compile("assets/components/gallery"),
+                Pattern.compile("assets/components/ajaxform")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
         pathAnalyzer.checkViaPaths(LOW, ACCEPT_CODES, new String[] {
