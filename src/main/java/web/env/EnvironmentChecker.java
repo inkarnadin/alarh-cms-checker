@@ -10,7 +10,7 @@ public class EnvironmentChecker extends AbstractChecker {
     public void check(Params params) {
         Connector phpMyAdminConnector = EnvironmentFactory.getEnvironmentConnector(EnvType.PHP_MY_ADMIN);
         phpMyAdminConnector.configure(params);
-        phpMyAdminConnector.checkVersion();
+        phpMyAdminConnector.check();
 
         System.out.println();
 
