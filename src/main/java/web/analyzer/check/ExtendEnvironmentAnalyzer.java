@@ -6,14 +6,18 @@ import okhttp3.Response;
 import web.env.EnvType;
 import web.http.Host;
 import web.http.Request;
+import web.http.ResponseBodyHandler;
+import web.parser.TextParser;
 import web.struct.Destination;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 public class ExtendEnvironmentAnalyzer {
 
     private final Request request;
+    private final TextParser<String> textParser;
     private final Destination destination;
 
     private Host host;
@@ -34,7 +38,24 @@ public class ExtendEnvironmentAnalyzer {
         return this;
     }
 
-    public void checkViaHeaders(String header) {
+    public void checkPhpMyAdmin(String[] paths) {
+        Pattern pattern = Pattern.compile("<title>.*phpMyAdmin\\s(.*?)\\s");
+        String version = "";
+
+        for (String path : paths) {
+            host.setPath(path);
+            try (Response response = request.send(host)) {
+                String body = ResponseBodyHandler.readBody(response);
+                textParser.configure(pattern, 1);
+                version = textParser.parse(body);
+                if (!"unknown".equals(version))
+                    break;
+            }
+        }
+        destination.insert(0, String.format("  ** %s version = %s", entityType, version));
+    }
+
+    public void checkWebServer(String header) {
         String value = mainPageHeaders.get(header);
         String webServer = Objects.nonNull(value) ? value : "unknown";
 
