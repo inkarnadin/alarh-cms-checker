@@ -25,7 +25,7 @@ public class GetRequest extends AbstractRequest {
 
             return client.execute(builder.build());
         } catch (Exception xep) {
-            return error(xep.getLocalizedMessage());
+            return error(xep.getLocalizedMessage(), host);
         }
     }
 

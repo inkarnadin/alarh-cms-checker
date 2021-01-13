@@ -19,10 +19,10 @@ public abstract class AbstractRequest implements Request {
         return null;
     }
 
-    protected Response error(String msg) {
+    protected Response error(String msg, Host host) {
         return new Response.Builder()
                 .request(new okhttp3.Request.Builder()
-                        .url("http://wrong.url.example.com")
+                        .url(host.createUrl())
                         .build())
                 .protocol(Protocol.HTTP_2)
                 .code(400)
