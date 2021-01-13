@@ -2,8 +2,9 @@
 App for check installed modules by Joomla/Wordpress CMS.
 
 ## Base Modifiers
-* -m - activate main CMS checking module (optional);
-* -e - activate extend info checking module (optional).
+* -mm - disable main CMS checking module (optional);
+* -em - disable extend info checking module (optional);
+* -li - disable low importance results filter (optional).
 
 ## Example
-`Set target host [example.com]: localhost -m -e`
+`Set target host [example.com]: localhost -em -li`
