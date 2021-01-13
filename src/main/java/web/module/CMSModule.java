@@ -33,6 +33,7 @@ import web.cms.react.annotation.React;
 import web.cms.shopify.annotation.Shopify;
 import web.cms.tilda.annotation.Tilda;
 import web.cms.ukit.annotation.Ukit;
+import web.cms.umi.annotation.Umi;
 import web.cms.vamshop.annotation.VamShop;
 import web.cms.vigbo.annotation.Vigbo;
 import web.cms.vue.annotation.Vue;
@@ -82,6 +83,7 @@ public class CMSModule extends AbstractModule {
         bind(Connector.class).annotatedWith(Shopify.class).toProvider(ShopifyProvider.class);
         bind(Connector.class).annotatedWith(Ukit.class).toProvider(UkitProvider.class);
         bind(Connector.class).annotatedWith(HostCms.class).toProvider(HostCmsProvider.class);
+        bind(Connector.class).annotatedWith(Umi.class).toProvider(UmiProvider.class);
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(MogutaVersion.class).to(MogutaVersionProcessor.class);
         bind(Connector.class).annotatedWith(Moguta.class).toProvider(MogutaProvider.class);

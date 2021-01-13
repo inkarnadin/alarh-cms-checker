@@ -26,6 +26,7 @@ import web.cms.react.ReactCheckProcessor;
 import web.cms.shopify.ShopifyCheckProcessor;
 import web.cms.tilda.TildaCheckProcessor;
 import web.cms.ukit.UkitCheckProcessor;
+import web.cms.umi.UmiCheckProcessor;
 import web.cms.vamshop.VamShopCheckProcessor;
 import web.cms.vigbo.VigboCheckProcessor;
 import web.cms.vue.VueCheckProcessor;
@@ -78,6 +79,7 @@ public class MainModule extends AbstractModule {
         processorCheckMultibinder.addBinding().to(ShopifyCheckProcessor.class);
         processorCheckMultibinder.addBinding().to(UkitCheckProcessor.class);
         processorCheckMultibinder.addBinding().to(HostCmsCheckProcessor.class);
+        processorCheckMultibinder.addBinding().to(UmiCheckProcessor.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
 

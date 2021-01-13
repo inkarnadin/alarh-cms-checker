@@ -23,6 +23,7 @@ public enum CMSType {
     MOGUTA_CMS              (110, "Moguta.CMS",       MogutaProvider.class),
     SHOPIFY                 (111, "Shopify",          ShopifyProvider.class),
     HOST_CMS                (112, "HostCMS",          HostCmsProvider.class),
+    UMI_CMS                 (113, "UMI.CMS",          UmiProvider.class),
 
     LAVAREL                 (201, "Lavarel",         LavarelProvider.class),
     YII                     (202, "Yii Framework",   YiiProvider.class),
