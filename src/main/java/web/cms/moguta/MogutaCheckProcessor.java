@@ -39,6 +39,7 @@ public class MogutaCheckProcessor extends AbstractCMSProcessor {
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
         mainPageAnalyzer.checkViaMainPageKeywords(LOW, DublinCoreExtractor.getElements());
+        mainPageAnalyzer.checkViaMainPageMetaTag(HIGH, new String[] { "mogutacms" });
         mainPageAnalyzer.checkViaMainPageKeywords(MEDIUM, new Pattern[] {
                 Pattern.compile("<!--Базовые метатеги страницы--> "),
                 Pattern.compile("<!--Кодировка страницы-->"),

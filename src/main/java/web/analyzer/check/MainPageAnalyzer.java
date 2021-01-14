@@ -44,6 +44,18 @@ public class MainPageAnalyzer {
         setResultValue(false, importance);
     }
 
+    public void checkViaMainPageMetaTag(Importance importance, String[] keywords) {
+        for (String keyword : keywords) {
+            Pattern pattern = Pattern.compile(String.format("<meta name=\"(%s)\" content", keyword));
+            parser.configure(pattern, 0);
+            if (parser.parse(responseBody)) {
+                setResultValue(true, importance);
+                return;
+            }
+        }
+        setResultValue(false, importance);
+    }
+
     public void checkViaMainPageKeywords(Importance importance, Pattern[] patterns) {
         for (Pattern pattern : patterns) {
             parser.configure(pattern, 0);
