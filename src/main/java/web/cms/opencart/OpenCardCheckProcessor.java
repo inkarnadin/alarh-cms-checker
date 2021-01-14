@@ -43,7 +43,10 @@ public class OpenCardCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("cart-alert"),
                 Pattern.compile("cart-no"),
                 Pattern.compile("cart-wishlist"),
-                Pattern.compile("cart-quantity")
+                Pattern.compile("cart-quantity"),
+                Pattern.compile("cart-total"),
+                Pattern.compile("cart-effect"),
+                Pattern.compile("cart-toggle")
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "admin" }, new Pattern[] {
