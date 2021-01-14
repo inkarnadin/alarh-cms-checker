@@ -73,7 +73,7 @@ public class VersionAnalyzer {
         return this;
     }
 
-    public void checkViaMainPageGenerator(Pattern[] patterns) {
+    public void checkViaMainPageMetaTag(Pattern[] patterns) {
         String version = "unknown";
         for (Pattern pattern : patterns) {
             textParser.configure(pattern, 1);

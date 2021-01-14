@@ -26,7 +26,7 @@ public class WordPressVersionProcessor extends AbstractCMSProcessor {
     public void process() {
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination);
         versionAnalyzer.prepare(protocol, server, CMSType.WORDPRESS);
-        versionAnalyzer.checkViaMainPageGenerator(new Pattern[] {
+        versionAnalyzer.checkViaMainPageMetaTag(new Pattern[] {
                 Pattern.compile("<meta name=\"[gG]enerator\" content=\"WordPress\\s(.*?)\" />")
         });
         versionAnalyzer.checkViaSinceScript(Pattern.compile("@since\\s(.*?)\\s"), new String[] {

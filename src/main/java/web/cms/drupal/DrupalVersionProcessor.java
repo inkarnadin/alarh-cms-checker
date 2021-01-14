@@ -26,7 +26,7 @@ public class DrupalVersionProcessor extends AbstractCMSProcessor {
     public void process() {
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination);
         versionAnalyzer.prepare(protocol, server, cmsType);
-        versionAnalyzer.checkViaMainPageGenerator(new Pattern[] {
+        versionAnalyzer.checkViaMainPageMetaTag(new Pattern[] {
                 Pattern.compile("<meta name=\"[gG]enerator\" content=\"Drupal\\s(.+?)\\s")
         });
         versionAnalyzer.checkViaHeaders(Pattern.compile("drupal\\s(.*)\\s"), "x-generator");

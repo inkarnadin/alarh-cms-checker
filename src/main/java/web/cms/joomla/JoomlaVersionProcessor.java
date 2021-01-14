@@ -31,7 +31,7 @@ public class JoomlaVersionProcessor extends AbstractCMSProcessor {
     public void process() {
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, xmlParser, destination);
         versionAnalyzer.prepare(protocol, server, cmsType);
-        versionAnalyzer.checkViaMainPageGenerator(new Pattern[] {
+        versionAnalyzer.checkViaMainPageMetaTag(new Pattern[] {
                 Pattern.compile("<meta name=\"generator\".*Version\\s(.*)\" />")
         });
         versionAnalyzer.checkViaXMlFiles(new String[] { TEXT_XML, APPLICATION_XML }, "administrator/manifests/files/joomla.xml");
