@@ -4,11 +4,13 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
+import web.analyzer.check.HeaderAnalyzer;
 import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
+import web.http.ContentType;
 import web.http.Request;
 import web.parser.TextParser;
 import web.struct.Destination;
@@ -18,9 +20,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.AnalyzeConst.BASE_PATH;
 import static web.analyzer.AnalyzeConst.SUCCESS_CODES;
-import static web.analyzer.Importance.HIGH;
-import static web.analyzer.Importance.LOW;
+import static web.analyzer.Importance.*;
 import static web.http.ContentType.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
@@ -57,6 +59,8 @@ public class OpenCardCheckProcessor extends AbstractCMSProcessor {
                 "admin/view/javascript/common.js",
                 "catalog/view/javascript/common.js"
         });
+        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
+        headerAnalyzer.checkViaCookies(HIGH, BASE_PATH, new Pattern[] { Pattern.compile("OCSESSID") });
 
         assign(destination, result, cmsType);
     }
