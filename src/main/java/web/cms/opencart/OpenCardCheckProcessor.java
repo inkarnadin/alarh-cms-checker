@@ -57,7 +57,8 @@ public class OpenCardCheckProcessor extends AbstractCMSProcessor {
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
         pathAnalyzer.checkViaFiles(LOW, SUCCESS_CODES, new String[] { APPLICATION_JAVASCRIPT, APPLICATION_X_JAVASCRIPT }, new String[] {
                 "admin/view/javascript/common.js",
-                "catalog/view/javascript/common.js"
+                "catalog/view/javascript/common.js",
+                "catalog/view/javascript/support.js"
         });
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
         headerAnalyzer.checkViaCookies(HIGH, BASE_PATH, new Pattern[] { Pattern.compile("OCSESSID") });
