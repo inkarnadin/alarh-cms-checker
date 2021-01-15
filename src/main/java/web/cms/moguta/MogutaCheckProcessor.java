@@ -3,7 +3,7 @@ package web.cms.moguta;
 import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
-import web.analyzer.DublinCoreExtractor;
+import web.analyzer.DublinCoreSignStorage;
 import web.analyzer.Importance;
 import web.analyzer.check.HeaderAnalyzer;
 import web.analyzer.check.MainPageAnalyzer;
@@ -38,7 +38,7 @@ public class MogutaCheckProcessor extends AbstractCMSProcessor {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
-        mainPageAnalyzer.checkViaMainPageKeywords(LOW, DublinCoreExtractor.getElements());
+        mainPageAnalyzer.checkViaMainPageKeywords(LOW, DublinCoreSignStorage.getElements());
         mainPageAnalyzer.checkViaMainPageMetaTag(HIGH, new String[] { "mogutacms" });
         mainPageAnalyzer.checkViaMainPageKeywords(MEDIUM, new Pattern[] {
                 Pattern.compile("<!--Базовые метатеги страницы--> "),

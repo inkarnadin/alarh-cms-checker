@@ -4,7 +4,7 @@ import lombok.Getter;
 
 import java.util.regex.Pattern;
 
-public class DublinCoreExtractor implements Extractor {
+public class DublinCoreSignStorage implements SignStorage {
 
     @Getter
     private static final Pattern[] elements = new Pattern[] {
