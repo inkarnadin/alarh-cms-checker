@@ -10,7 +10,6 @@ import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
-import web.http.ContentType;
 import web.http.Request;
 import web.parser.TextParser;
 import web.struct.Destination;
