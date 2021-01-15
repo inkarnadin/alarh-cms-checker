@@ -9,7 +9,7 @@ public class CMSFactory {
 
     public static Connector getCMSConnector(CMSType cmsType) {
         Injector injector = Guice.createInjector(new CMSModule());
-        return injector.getInstance(cmsType.getProvider()).get();
+        return injector.getInstance(cmsType.getConnector());
     }
 
 }

@@ -1,9 +1,9 @@
 package web.cms.joomla;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import okhttp3.Response;
 import web.cms.AbstractCMSProcessor;
-import web.cms.joomla.annotation.JoomlaPlugin;
 import web.http.Host;
 import web.http.Request;
 import web.http.RequestErrorHandler;
@@ -14,6 +14,8 @@ import web.validator.HttpValidator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static web.cms.CMSMarker.JOOMLA_PLUGIN;
 
 @Deprecated
 public class JoomlaPluginsProcessor extends AbstractCMSProcessor {
@@ -27,7 +29,7 @@ public class JoomlaPluginsProcessor extends AbstractCMSProcessor {
 
     @Inject
     JoomlaPluginsProcessor(Request request,
-                           @JoomlaPlugin Source source) {
+                           @Named(JOOMLA_PLUGIN) Source source) {
         this.request = request;
         this.source = source;
     }

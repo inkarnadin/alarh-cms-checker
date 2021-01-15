@@ -1,10 +1,10 @@
 package web.cms.wordpress;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import okhttp3.Response;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
-import web.cms.wordpress.annotation.WordPressPlugin;
 import web.http.Host;
 import web.http.Request;
 import web.http.RequestErrorHandler;
@@ -15,6 +15,8 @@ import web.validator.HttpValidator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static web.cms.CMSMarker.WORDPRESS_PLUGIN;
 
 @Deprecated
 public class WordPressPluginProcessor extends AbstractCMSProcessor {
@@ -30,7 +32,7 @@ public class WordPressPluginProcessor extends AbstractCMSProcessor {
 
     @Inject
     WordPressPluginProcessor(Request request,
-                             @WordPressPlugin Source source) {
+                             @Named(WORDPRESS_PLUGIN) Source source) {
         this.request = request;
         this.source = source;
     }
