@@ -19,7 +19,7 @@ import web.http.Request;
 import web.env.phpmyadmin.PhpMyAdminProcessor;
 import web.struct.SimpleDestination;
 
-import static web.EnvMarker.*;
+import static web.env.EnvMarker.*;
 
 public class EnvModule extends AbstractModule {
 

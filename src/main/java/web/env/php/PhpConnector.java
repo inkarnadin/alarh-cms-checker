@@ -7,7 +7,7 @@ import web.env.AbstractEnvConnector;
 import web.env.EnvType;
 import web.struct.Processor;
 
-import static web.EnvMarker.PHP;
+import static web.env.EnvMarker.PHP;
 
 @RequiredArgsConstructor(onConstructor_ = @__(@Inject))
 public class PhpConnector extends AbstractEnvConnector {

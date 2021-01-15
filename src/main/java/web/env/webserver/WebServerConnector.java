@@ -12,7 +12,7 @@ import web.struct.Processor;
 
 import java.util.Optional;
 
-import static web.EnvMarker.WEB_SERVER;
+import static web.env.EnvMarker.WEB_SERVER;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject})
 public class WebServerConnector extends AbstractEnvConnector {

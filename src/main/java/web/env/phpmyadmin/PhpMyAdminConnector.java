@@ -12,7 +12,7 @@ import web.env.AbstractEnvConnector;
 
 import java.util.Optional;
 
-import static web.EnvMarker.PHP_MY_ADMIN;
+import static web.env.EnvMarker.PHP_MY_ADMIN;
 
 @RequiredArgsConstructor(onConstructor_ = @__(@Inject))
 public class PhpMyAdminConnector extends AbstractEnvConnector {
