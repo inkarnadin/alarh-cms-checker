@@ -3,29 +3,23 @@ package web.module;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
+import com.google.inject.name.Names;
 import lombok.SneakyThrows;
 import web.env.EnvType;
-import web.env.php.PhpVersionProcessor;
-import web.env.php.annotation.Php;
-import web.env.php.annotation.PhpVersion;
+import web.env.php.PhpProcessor;
 import web.env.webserver.WebServerProcessor;
-import web.env.webserver.annotation.WebServer;
 import web.http.Client;
 import web.http.GetRequest;
 import web.http.HttpClient;
-import web.module.provider.PhpProvider;
-import web.module.provider.WebServerProvider;
 import web.parser.StringReturnTextParser;
 import web.parser.TextParser;
-import web.struct.Connector;
 import web.struct.Destination;
 import web.struct.Processor;
 import web.http.Request;
-import web.env.phpmyadmin.PhpMyAdminVersionProcessor;
-import web.env.phpmyadmin.annotation.PhpMyAdmin;
-import web.env.phpmyadmin.annotation.PhpMyAdminVersion;
-import web.module.provider.PhpMyAdminProvider;
+import web.env.phpmyadmin.PhpMyAdminProcessor;
 import web.struct.SimpleDestination;
+
+import static web.EnvMarker.*;
 
 public class EnvModule extends AbstractModule {
 
@@ -38,14 +32,9 @@ public class EnvModule extends AbstractModule {
 
         bind(new TypeLiteral<TextParser<String>>(){}).to(StringReturnTextParser.class);
 
-        bind(new TypeLiteral<Processor<EnvType>>(){}).annotatedWith(PhpMyAdminVersion.class).to(PhpMyAdminVersionProcessor.class);
-        bind(Connector.class).annotatedWith(PhpMyAdmin.class).toProvider(PhpMyAdminProvider.class);
-
-        bind(new TypeLiteral<Processor<EnvType>>(){}).annotatedWith(PhpVersion.class).to(PhpVersionProcessor.class);
-        bind(Connector.class).annotatedWith(Php.class).toProvider(PhpProvider.class);
-
-        bind(new TypeLiteral<Processor<EnvType>>(){}).annotatedWith(WebServer.class).to(WebServerProcessor.class);
-        bind(Connector.class).annotatedWith(WebServer.class).toProvider(WebServerProvider.class);
+        bind(new TypeLiteral<Processor<EnvType>>(){}).annotatedWith(Names.named(PHP_MY_ADMIN)).to(PhpMyAdminProcessor.class);
+        bind(new TypeLiteral<Processor<EnvType>>(){}).annotatedWith(Names.named(PHP)).to(PhpProcessor.class);
+        bind(new TypeLiteral<Processor<EnvType>>(){}).annotatedWith(Names.named(WEB_SERVER)).to(WebServerProcessor.class);
     }
 
 }

@@ -1,5 +1,7 @@
 package web.env.phpmyadmin;
 
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.cms.CMSType;
@@ -10,9 +12,12 @@ import web.env.AbstractEnvConnector;
 
 import java.util.Optional;
 
-@RequiredArgsConstructor
+import static web.EnvMarker.PHP_MY_ADMIN;
+
+@RequiredArgsConstructor(onConstructor_ = @__(@Inject))
 public class PhpMyAdminConnector extends AbstractEnvConnector {
 
+    @Named(PHP_MY_ADMIN)
     private final Processor<EnvType> processor;
 
     @Override

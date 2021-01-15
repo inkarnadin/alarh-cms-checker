@@ -15,7 +15,7 @@ import web.struct.SimpleDestination;
 import java.util.regex.Pattern;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class PhpVersionProcessor extends AbstractEnvironmentProcessor {
+public class PhpProcessor extends AbstractEnvironmentProcessor {
 
     private final Request request;
     private final TextParser<String> parser;

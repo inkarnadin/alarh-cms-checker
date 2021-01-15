@@ -9,7 +9,7 @@ public class EnvironmentFactory {
 
     public static Connector getEnvironmentConnector(EnvType envType) {
         Injector injector = Guice.createInjector(new EnvModule());
-        return injector.getInstance(envType.getProvider()).get();
+        return injector.getInstance(envType.getConnector());
     }
 
 }
