@@ -23,6 +23,12 @@ public class EnvironmentChecker extends AbstractChecker {
         Connector webServerConnector = EnvironmentFactory.getEnvironmentConnector(EnvType.WEB_SERVER);
         webServerConnector.configure(params);
         webServerConnector.check();
+
+        System.out.println();
+
+        Connector hosterConnector = EnvironmentFactory.getEnvironmentConnector(EnvType.HOSTER);
+        hosterConnector.configure(params);
+        hosterConnector.check();
     }
 
 }

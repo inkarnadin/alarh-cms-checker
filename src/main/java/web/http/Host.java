@@ -32,8 +32,7 @@ public class Host {
         StringBuilder stringBuilder = new StringBuilder(protocol)
                 .append("://")
                 .append(server)
-                .append("/")
-                .append(Objects.nonNull(path) ? path : "");
+                .append(Objects.nonNull(path) ? "/" + path : "");
         return stringBuilder.toString();
     }
 

@@ -2,6 +2,7 @@ package web.env;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import web.env.whois.WhoisConnector;
 import web.env.php.PhpConnector;
 import web.env.phpmyadmin.PhpMyAdminConnector;
 import web.env.webserver.WebServerConnector;
@@ -13,7 +14,8 @@ public enum EnvType {
 
     PHP                     (0, "PHP",          PhpConnector.class),
     PHP_MY_ADMIN            (1, "PhpMyAdmin",   PhpMyAdminConnector.class),
-    WEB_SERVER              (2, "WebServer",    WebServerConnector.class);
+    WEB_SERVER              (2, "WebServer",    WebServerConnector.class),
+    HOSTER                  (3, "Hoster",       WhoisConnector.class);
 
     private final int id;
     private final String name;

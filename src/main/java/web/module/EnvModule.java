@@ -6,6 +6,7 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
 import lombok.SneakyThrows;
 import web.env.EnvType;
+import web.env.whois.WhoisCheckProcessor;
 import web.env.php.PhpProcessor;
 import web.env.webserver.WebServerProcessor;
 import web.http.Client;
@@ -35,6 +36,7 @@ public class EnvModule extends AbstractModule {
         bind(new TypeLiteral<Processor<EnvType>>(){}).annotatedWith(Names.named(PHP_MY_ADMIN)).to(PhpMyAdminProcessor.class);
         bind(new TypeLiteral<Processor<EnvType>>(){}).annotatedWith(Names.named(PHP)).to(PhpProcessor.class);
         bind(new TypeLiteral<Processor<EnvType>>(){}).annotatedWith(Names.named(WEB_SERVER)).to(WebServerProcessor.class);
+        bind(new TypeLiteral<Processor<EnvType>>(){}).annotatedWith(Names.named(WHOIS)).to(WhoisCheckProcessor.class);
     }
 
 }

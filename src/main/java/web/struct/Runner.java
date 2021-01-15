@@ -16,7 +16,7 @@ public class Runner {
 
     public void run() {
         System.out.println("===========================================================");
-        System.out.println("Welcome! This is application for check info about different CMS");
+        System.out.println("Welcome! This is application for check whois about different CMS");
         System.out.println("In current time it is support next systems:");
         System.out.println(" * Joomla! (version)");
         System.out.println(" * WordPress (version)");
@@ -67,7 +67,7 @@ public class Runner {
                 printSplit();
 
                 if (Preferences.isActiveExtendModule()) {
-                    System.out.println("Extend info module activated...");
+                    System.out.println("Extend whois module activated...");
                     injector.getInstance(EnvironmentChecker.class).check(params);
                     System.out.println("Done!");
                 } else {
