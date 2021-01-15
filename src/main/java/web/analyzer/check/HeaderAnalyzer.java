@@ -70,7 +70,7 @@ public class HeaderAnalyzer {
     }
 
     /**
-     * Find whois in x-generator
+     * Find info in x-generator
      */
     public void checkViaXGenerator(Importance importance, String[] paths, Pattern pattern) {
         for (String path : paths) {
