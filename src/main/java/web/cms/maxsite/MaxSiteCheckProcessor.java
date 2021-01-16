@@ -31,7 +31,7 @@ public class MaxSiteCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageGenerator(HIGH, new String[] { "MaxSite CMS" });
         mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
                 Pattern.compile("application/maxsite"),

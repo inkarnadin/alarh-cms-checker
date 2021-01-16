@@ -32,7 +32,7 @@ public class UkitCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
+        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
         headerAnalyzer.checkViaHeaderValues(HIGH, BASE_PATH, new Pattern[] {
                 Pattern.compile("ukit")
         });

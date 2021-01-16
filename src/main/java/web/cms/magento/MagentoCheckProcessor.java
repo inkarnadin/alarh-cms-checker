@@ -36,7 +36,7 @@ public class MagentoCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageKeywords(MEDIUM, new Pattern[] {
                 Pattern.compile("Mage\\.Cookies")
         });
@@ -48,11 +48,11 @@ public class MagentoCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("Magento_Theme"),
                 Pattern.compile("Magento_Company")
         });
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "admin" }, new Pattern[] {
                 Pattern.compile("Magento is a trademark of Magento")
         });
-        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
+        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
         pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, new String[] { APPLICATION_JAVASCRIPT, TEXT_JAVASCRIPT }, new String[] {
                 "js/mage/captcha.js",
                 "js/mage/adminhtml/form.js",

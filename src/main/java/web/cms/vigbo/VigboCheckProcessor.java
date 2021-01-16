@@ -32,11 +32,11 @@ public class VigboCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
                 Pattern.compile("Vigbo-cms")
         });
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol,server, result);
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH,new String[] { "admin/login" }, new Pattern[] {
                 Pattern.compile("Vigbo-cms"),
                 Pattern.compile("vigbo__logo")

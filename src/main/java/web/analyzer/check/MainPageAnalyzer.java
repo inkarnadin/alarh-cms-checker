@@ -22,10 +22,8 @@ public class MainPageAnalyzer {
     private List<Pair<Boolean, Importance>> result;
     private String responseBody = "";
 
-    public MainPageAnalyzer prepare(String protocol, String server, List<Pair<Boolean, Importance>> result) {
+    public MainPageAnalyzer prepare(Host host, List<Pair<Boolean, Importance>> result) {
        this.result = result;
-
-       Host host = new Host(protocol, server);
        try (Response response = request.send(host)) {
            responseBody = ResponseBodyHandler.readBody(response);
        }

@@ -34,11 +34,11 @@ public class RubyOnRailsCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(LOW, new String[] { "login" }, new Pattern[] {
                 Pattern.compile("authenticity_token")
         });
-        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
+        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
         headerAnalyzer.checkViaHeaders(HIGH, BASE_PATH, new String[] {
                 "X-Rack-Cache",
                 "X-Runtime"

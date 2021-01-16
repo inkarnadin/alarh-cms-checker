@@ -37,17 +37,17 @@ public class HostCmsCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
+        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
         headerAnalyzer.checkViaHeaderValues(HIGH, BASE_PATH, new Pattern[] {
                 Pattern.compile("HostCMS")
         });
-        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
+        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
         pathAnalyzer.checkViaPaths(LOW, DENIED_CODES, new String[] { "modules", "admin" });
         pathAnalyzer.checkViaPaths(HIGH, DENIED_CODES, new String[] { "hostcmsfiles" });
         pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, new String[] { APPLICATION_X_JAVASCRIPT }, new String[] {
                 "modules/skin/bootstrap/js/hostcms.js"
         });
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "admin" }, new Pattern[] {
                 Pattern.compile("Вход в центр администрирования HostCMS"),
         });

@@ -37,7 +37,7 @@ public class WordPressCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageGenerator(HIGH, new String[] {
                 "WordPress"
         });
@@ -54,7 +54,7 @@ public class WordPressCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("wp-block"),
                 Pattern.compile("wp-smiley")
         });
-        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
+        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
         pathAnalyzer.checkViaPaths(LOW, ACCEPT_CODES, new String[] {
                 "wp-content",
                 "wp-includes"
@@ -71,7 +71,7 @@ public class WordPressCheckProcessor extends AbstractCMSProcessor {
 
                 "wp-includes/js/wp-embed.min.js"
         });
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "wp-login.php" }, new Pattern[] {
                 Pattern.compile("Powered by .*WordPress"),
                 Pattern.compile("wp-pwd"),
@@ -81,7 +81,7 @@ public class WordPressCheckProcessor extends AbstractCMSProcessor {
         pageAnalyzer.checkViaPageKeywords(LOW, new String[] { "xmlrpc.php" }, new Pattern[] {
                 Pattern.compile("XML-RPC server accepts POST requests only")
         });
-        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
+        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
         headerAnalyzer.checkViaCookies(HIGH, new String[] { "wp-login.php" }, new Pattern[] {
                 Pattern.compile("wordpress_test_cookie")
         });

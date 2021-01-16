@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import web.analyzer.version.VersionAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
+import web.http.Host;
 import web.http.Request;
 import web.parser.TextParser;
 import web.struct.Destination;
@@ -30,7 +31,7 @@ public class DataLifeVersionProcessor extends AbstractCMSProcessor {
     @Override
     public void process() {
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, null, destination);
-        versionAnalyzer.prepare(protocol, server, cmsType);
+        versionAnalyzer.prepare(host, cmsType);
         versionAnalyzer.checkViaLogoFiles(logoMap, new String[] { IMAGE_JPG, IMAGE_PNG }, new String[] {
                 "engine/skins/images/logos.jpg",
                 "engine/skins/images/logo.png",

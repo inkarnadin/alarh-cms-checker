@@ -37,7 +37,7 @@ public class MogutaCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageKeywords(LOW, DublinCoreSignStorage.getElements());
         mainPageAnalyzer.checkViaMainPageMetaTag(HIGH, new String[] { "mogutacms" });
         mainPageAnalyzer.checkViaMainPageKeywords(MEDIUM, new Pattern[] {
@@ -61,13 +61,13 @@ public class MogutaCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("mg-templates"),
                 Pattern.compile("mg-plugins")
         });
-        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
+        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
         pathAnalyzer.checkViaPaths(LOW, SUCCESS_CODES, new String[] { "enter" });
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "mg-admin" }, new Pattern[] {
                 Pattern.compile("Moguta\\.CMS")
         });
-        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
+        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
         headerAnalyzer.checkViaHeaderValues(HIGH, BASE_PATH, new Pattern[] {
                 Pattern.compile("mg_to_script")
         });

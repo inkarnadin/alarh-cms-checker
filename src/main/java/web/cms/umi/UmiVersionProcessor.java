@@ -35,7 +35,7 @@ public class UmiVersionProcessor extends AbstractCMSProcessor {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, xmlParser, destination);
-        versionAnalyzer.prepare(protocol, server, cmsType);
+        versionAnalyzer.prepare(host, cmsType);
         versionAnalyzer.checkViaHeaders(Pattern.compile("(.*)"), "X-CMS-Version");
 
         assign(destination, result, cmsType);

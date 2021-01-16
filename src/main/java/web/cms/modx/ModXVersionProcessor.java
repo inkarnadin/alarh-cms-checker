@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import web.analyzer.version.VersionAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
+import web.http.Host;
 import web.http.Request;
 import web.parser.TextParser;
 import web.struct.Destination;
@@ -24,7 +25,7 @@ public class ModXVersionProcessor extends AbstractCMSProcessor {
 
     @Override
     public void process() {
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination).prepare(protocol, server, cmsType);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination).prepare(host, cmsType);
         versionAnalyzer.checkViaPageKeywords("manager", new Pattern[] {
                 Pattern.compile("(Revolution|Evolution)")
         });

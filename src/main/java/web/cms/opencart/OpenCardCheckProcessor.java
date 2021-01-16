@@ -37,7 +37,7 @@ public class OpenCardCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageKeywords(LOW, new Pattern[] {
                 Pattern.compile("cart-panel"),
                 Pattern.compile("cart-url"),
@@ -49,17 +49,17 @@ public class OpenCardCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("cart-effect"),
                 Pattern.compile("cart-toggle")
         });
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "admin" }, new Pattern[] {
                 Pattern.compile("route=common/forgotten")
         });
-        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
+        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
         pathAnalyzer.checkViaFiles(LOW, SUCCESS_CODES, new String[] { APPLICATION_JAVASCRIPT, APPLICATION_X_JAVASCRIPT }, new String[] {
                 "admin/view/javascript/common.js",
                 "catalog/view/javascript/common.js",
                 "catalog/view/javascript/support.js"
         });
-        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
+        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
         headerAnalyzer.checkViaCookies(HIGH, BASE_PATH, new Pattern[] { Pattern.compile("OCSESSID") });
 
         assign(destination, result, cmsType);

@@ -21,9 +21,9 @@ public class SpecificAnalyzer {
     private List<Pair<Boolean, Importance>> result;
     private Host host;
 
-    public SpecificAnalyzer prepare(String protocol, String server, List<Pair<Boolean, Importance>>  result) {
+    public SpecificAnalyzer prepare(Host host, List<Pair<Boolean, Importance>>  result) {
         this.result = result;
-        this.host = new Host(protocol, server);
+        this.host = host;
         return this;
     }
 

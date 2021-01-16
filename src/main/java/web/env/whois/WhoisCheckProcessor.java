@@ -18,7 +18,7 @@ public class WhoisCheckProcessor extends AbstractEnvironmentProcessor {
 
     @Override
     public void process() {
-        ExtendEnvironmentAnalyzer extendEnvironmentAnalyzer = new ExtendEnvironmentAnalyzer(request, null, destination).prepare(protocol, server, EnvType.WHOIS);
+        ExtendEnvironmentAnalyzer extendEnvironmentAnalyzer = new ExtendEnvironmentAnalyzer(request, null, destination).prepare(host, EnvType.WHOIS);
         extendEnvironmentAnalyzer.checkWhoIs();
 
         printer.print(destination);

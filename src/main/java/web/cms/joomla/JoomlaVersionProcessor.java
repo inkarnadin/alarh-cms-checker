@@ -30,7 +30,7 @@ public class JoomlaVersionProcessor extends AbstractCMSProcessor {
     @Override
     public void process() {
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, xmlParser, destination);
-        versionAnalyzer.prepare(protocol, server, cmsType);
+        versionAnalyzer.prepare(host, cmsType);
         versionAnalyzer.checkViaMainPageMetaTag(new Pattern[] {
                 Pattern.compile("<meta name=\"generator\".*Version\\s(.*)\" />")
         });

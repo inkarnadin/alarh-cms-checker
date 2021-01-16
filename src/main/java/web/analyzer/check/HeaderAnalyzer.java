@@ -21,9 +21,9 @@ public class HeaderAnalyzer {
     private List<Pair<Boolean, Importance>> result;
     private Host host;
 
-    public HeaderAnalyzer prepare(String protocol, String server, List<Pair<Boolean, Importance>> result) {
+    public HeaderAnalyzer prepare(Host host, List<Pair<Boolean, Importance>> result) {
         this.result = result;
-        this.host = new Host(protocol, server);
+        this.host = host;
         host.setBegetProtection(true);
 
         return this;

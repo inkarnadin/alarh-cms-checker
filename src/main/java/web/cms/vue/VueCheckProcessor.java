@@ -31,7 +31,7 @@ public class VueCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageScriptName(HIGH,new Pattern[] {
                 Pattern.compile("vue-handle-error\\.js"),
                 Pattern.compile("vue-modal"),

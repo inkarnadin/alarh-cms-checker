@@ -37,7 +37,7 @@ public class BitrixCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageKeywords(MEDIUM, new Pattern[] {
                 Pattern.compile("bitrix/cache"),
                 Pattern.compile("bitrix/js"),
@@ -45,7 +45,7 @@ public class BitrixCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("bitrix/components"),
                 Pattern.compile("bitrix/panel")
         });
-        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
+        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
         pathAnalyzer.checkViaPaths(LOW, DENIED_CODES, new String[] {
                 "/bitrix/.settings.php",
                 "/bitrix/php_interface/dbconn.php",
@@ -61,7 +61,7 @@ public class BitrixCheckProcessor extends AbstractCMSProcessor {
         pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, new String[] { TEXT_XML, APPLICATION_XML }, new String[] {
                 "bitrix/p3p.xml"
         });
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "bitrix/admin" }, new Pattern[] {
                 Pattern.compile("bx-admin-prefix"),
                 Pattern.compile("BX\\.message"),
@@ -71,7 +71,7 @@ public class BitrixCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("BX\\.adminLogin"),
                 Pattern.compile("AUTH_NEW_PASSWORD_CONFIRM_WRONG")
         });
-        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
+        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
         headerAnalyzer.checkViaCookies(HIGH, BASE_PATH, new Pattern[] {
                 Pattern.compile("BITRIX_SM_GUEST_ID"),
                 Pattern.compile("BITRIX_SM_LAST_VISIT"),

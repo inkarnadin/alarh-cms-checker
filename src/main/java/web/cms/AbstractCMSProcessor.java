@@ -2,6 +2,7 @@ package web.cms;
 
 import kotlin.Pair;
 import web.analyzer.Importance;
+import web.http.Host;
 import web.struct.Destination;
 import web.struct.Processor;
 
@@ -15,6 +16,7 @@ public abstract class AbstractCMSProcessor implements Processor<CMSType> {
 
     protected String protocol;
     protected String server;
+    protected Host host;
 
     protected final static String successMessage = "  * %s tags have been found (%s/%s)";
 
@@ -25,6 +27,7 @@ public abstract class AbstractCMSProcessor implements Processor<CMSType> {
 
         this.protocol = protocol;
         this.server = server;
+        this.host = new Host(protocol, server);
     }
 
     @Override

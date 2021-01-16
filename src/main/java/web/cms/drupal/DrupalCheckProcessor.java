@@ -34,7 +34,7 @@ public class DrupalCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageGenerator(HIGH, new String[] { "Drupal" });
         mainPageAnalyzer.checkViaMainPageScriptName(MEDIUM, new Pattern[] {
                 Pattern.compile("misc/drupal\\.js")
@@ -43,11 +43,11 @@ public class DrupalCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("data-drupal-link-system-path"),
                 Pattern.compile("Drupal\\.settings")
         });
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(LOW, new String[] { "xmlrpc.php" }, new Pattern[] {
                 Pattern.compile("XML-RPC server accepts POST requests only")
         });
-        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(protocol, server, result);
+        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
         headerAnalyzer.checkViaXGenerator(HIGH, BASE_PATH, Pattern.compile("drupal"));
         headerAnalyzer.checkViaHeaders(HIGH, BASE_PATH, new String[] {
                 "x-drupal-cache",

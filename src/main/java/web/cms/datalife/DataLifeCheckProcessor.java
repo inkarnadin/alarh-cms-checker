@@ -36,7 +36,7 @@ public class DataLifeCheckProcessor extends AbstractCMSProcessor {
     @Override
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
-        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
 
         mainPageAnalyzer.checkViaMainPageGenerator(HIGH, new String[] { "DataLife Engine" });
         mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
@@ -48,18 +48,18 @@ public class DataLifeCheckProcessor extends AbstractCMSProcessor {
         mainPageAnalyzer.checkViaMainPageScriptName(HIGH, new Pattern[] {
                 Pattern.compile("engine/classes/js/dle_js\\.js")
         });
-        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
+        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
         pathAnalyzer.checkViaFiles(LOW, SUCCESS_CODES, new String[] { IMAGE_JPG, IMAGE_PNG }, new String[] {
                 "engine/skins/images/logos.jpg",
                 "engine/skins/images/logo.png",
                 "templates/Default/images/logotype.png",
                 "templates/Default/images/logo.png"
         });
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(MEDIUM, new String[] { "admin.php" }, new Pattern[] {
                 Pattern.compile("DataLife Engine")
         });
-        SpecificAnalyzer specificAnalyzer = new SpecificAnalyzer(request, parser).prepare(protocol, server, result);
+        SpecificAnalyzer specificAnalyzer = new SpecificAnalyzer(request, parser).prepare(host, result);
         specificAnalyzer.checkViaError404Message(LOW, "administrator", new String[] {
                 "[пП]о данному адресу публикаций на сайте не найдено, либо у [вВ]ас нет доступа для просмотра информации по данному адресу"
         });

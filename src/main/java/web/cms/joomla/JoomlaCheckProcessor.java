@@ -38,10 +38,10 @@ public class JoomlaCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageGenerator(HIGH, new String[] { "Joomla" });
 
-        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
+        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
         pathAnalyzer.checkViaPaths(LOW, ACCEPT_CODES, new String[] {
                 "administrator",
                 "administrator/components/com_config"
@@ -52,7 +52,7 @@ public class JoomlaCheckProcessor extends AbstractCMSProcessor {
                 "administrator/components/com_config/config.xml",
         });
 
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "administrator" }, new Pattern[] {
                 Pattern.compile("login-joomla"),
                 Pattern.compile("joomla-script-options")

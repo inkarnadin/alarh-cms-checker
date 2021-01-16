@@ -25,7 +25,7 @@ public class MogutaVersionProcessor extends AbstractCMSProcessor {
     @Override
     public void process() {
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination);
-        versionAnalyzer.prepare(protocol, server, CMSType.MOGUTA_CMS);
+        versionAnalyzer.prepare(host, cmsType);
         versionAnalyzer.checkViaMainPageMetaTag(new Pattern[] {
                 Pattern.compile("<meta name=\"mogutacms\" content=\"(.*?)\"\\s?/>")
         });

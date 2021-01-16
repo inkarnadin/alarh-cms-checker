@@ -29,7 +29,7 @@ public class BitrixVersionProcessor extends AbstractCMSProcessor {
 
     @Override
     public void process() {
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, xmlParser, destination).prepare(protocol, server, cmsType);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, xmlParser, destination).prepare(host, cmsType);
         versionAnalyzer.checkViaYear(yearMap, new String[] { "bitrix/admin" }, Pattern.compile("Управление сайтом.*Битрикс, (\\d{4})"));
     }
 

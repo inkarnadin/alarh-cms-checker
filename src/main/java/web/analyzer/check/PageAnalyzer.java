@@ -21,9 +21,9 @@ public class PageAnalyzer {
     private List<Pair<Boolean, Importance>> result;
     private Host host;
 
-    public PageAnalyzer prepare(String protocol, String server, List<Pair<Boolean, Importance>> result) {
+    public PageAnalyzer prepare(Host host, List<Pair<Boolean, Importance>> result) {
         this.result = result;
-        this.host = new Host(protocol, server);
+        this.host = host;
         return this;
     }
 

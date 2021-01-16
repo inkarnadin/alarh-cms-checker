@@ -35,7 +35,7 @@ public class ModXCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageKeywords(LOW, new Pattern[] {
                 Pattern.compile("assets/templates"),
                 Pattern.compile("assets/components"),
@@ -52,7 +52,7 @@ public class ModXCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("assets/components/gallery"),
                 Pattern.compile("assets/components/ajaxform")
         });
-        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(protocol, server, result);
+        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
         pathAnalyzer.checkViaPaths(LOW, ACCEPT_CODES, new String[] {
                 "assets/templates",
                 "assets/images",
@@ -60,7 +60,7 @@ public class ModXCheckProcessor extends AbstractCMSProcessor {
                 "assets/js",
                 "manager"
         });
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "manager" }, new Pattern[] {
                 Pattern.compile("modx-form"),
                 Pattern.compile("modx-fl-link"),

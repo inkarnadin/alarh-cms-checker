@@ -34,7 +34,7 @@ public class ShopifyCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
                 Pattern.compile("ShopifyAnalytics"),
                 Pattern.compile("shopify-dynamic-checkout-cart"),
@@ -42,7 +42,7 @@ public class ShopifyCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("shopify-section"),
                 Pattern.compile("shopify-section-footer"),
         });
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, BASE_PATH, new Pattern[] {
                 Pattern.compile("Powered by Shopify")
         });

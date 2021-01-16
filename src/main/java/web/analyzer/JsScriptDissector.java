@@ -24,9 +24,9 @@ public class JsScriptDissector {
     /**
      * Find all javascript file
      *
-     * @param host - server
-     * @param request - request execution class
-     * @return - list of found scripts
+     * @param host      server
+     * @param request   request execution class
+     * @return          list of found scripts
      */
     public static String[] dissect(Host host, Request request) {
         return dissect(host, request, EMPTY);
@@ -35,10 +35,10 @@ public class JsScriptDissector {
     /**
      * Find certain javascript file
      *
-     * @param host - server
-     * @param request - request execution class
-     * @param allowedScripts - sought scripts
-     * @return - list of found scripts
+     * @param host              server
+     * @param request           request execution class
+     * @param allowedScripts    sought scripts
+     * @return                  list of found scripts
      */
     public static String[] dissect(Host host, Request request, String[] allowedScripts) {
         Response response = request.send(host);

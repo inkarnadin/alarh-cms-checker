@@ -20,7 +20,7 @@ public class WebServerProcessor extends AbstractEnvironmentProcessor {
     @Override
     @SneakyThrows
     public void process() {
-        ExtendEnvironmentAnalyzer extendEnvironmentAnalyzer = new ExtendEnvironmentAnalyzer(request, parser, destination).prepare(protocol, server, EnvType.WEB_SERVER);
+        ExtendEnvironmentAnalyzer extendEnvironmentAnalyzer = new ExtendEnvironmentAnalyzer(request, parser, destination).prepare(host, EnvType.WEB_SERVER);
         extendEnvironmentAnalyzer.checkWebServer("server");
         System.out.println(destination.fetch().get(0));
     }

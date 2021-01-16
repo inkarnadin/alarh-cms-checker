@@ -41,31 +41,29 @@ public class VersionAnalyzer {
     /**
      * Preparation for request shipment (for env object)
      *
-     * @param protocol web protocol
-     * @param server   web server
+     * @param host     server
      * @param envType  type of environment object
      * @return         the instance
      */
-    public VersionAnalyzer prepare(String protocol, String server, EnvType envType) {
-        return prepare(protocol, server, envType.getName());
+    public VersionAnalyzer prepare(Host host, EnvType envType) {
+        return prepare(host, envType.getName());
     }
 
     /**
      * Preparation for request shipment (for env cms)
      *
-     * @param protocol web protocol
-     * @param server   web server
+     * @param host     server
      * @param cmsType  type of CMS
      * @return         the instance
      */
-    public VersionAnalyzer prepare(String protocol, String server, CMSType cmsType) {
-        return prepare(protocol, server, cmsType.getName());
+    public VersionAnalyzer prepare(Host host, CMSType cmsType) {
+        return prepare(host, cmsType.getName());
     }
 
-    private VersionAnalyzer prepare(String protocol, String server, String entityType) {
+    private VersionAnalyzer prepare(Host host, String entityType) {
         this.entityType = entityType;
 
-        this.host = new Host(protocol, server);
+        this.host = host;
         try (Response response = request.send(host)) {
             mainPageResponseBody = ResponseBodyHandler.readBody(response);
             mainPageHeaders = response.headers();

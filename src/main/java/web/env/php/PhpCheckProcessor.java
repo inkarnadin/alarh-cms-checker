@@ -24,9 +24,8 @@ public class PhpCheckProcessor extends AbstractEnvironmentProcessor {
     @Override
     @SneakyThrows
     public void process() {
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination).prepare(protocol, server, EnvType.PHP);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination).prepare(host, EnvType.PHP);
         versionAnalyzer.checkViaHeaders(Pattern.compile("php/([\\.\\d]*)"), "x-powered-by");
-        //versionAnalyzer.checkViaHeaders(Pattern.compile("PHP/"), "Server");
         versionAnalyzer.checkViaPageKeywords("phpinfo.php", new Pattern[] {
                 Pattern.compile(">PHP Version (.*?)<")
         });

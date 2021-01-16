@@ -25,7 +25,7 @@ public class DrupalVersionProcessor extends AbstractCMSProcessor {
     @Override
     public void process() {
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination);
-        versionAnalyzer.prepare(protocol, server, cmsType);
+        versionAnalyzer.prepare(host, cmsType);
         versionAnalyzer.checkViaMainPageMetaTag(new Pattern[] {
                 Pattern.compile("<meta name=\"[gG]enerator\" content=\"Drupal\\s(.+?)\\s")
         });

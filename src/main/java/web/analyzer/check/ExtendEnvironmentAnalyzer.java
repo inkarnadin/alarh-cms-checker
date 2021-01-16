@@ -27,19 +27,15 @@ public class ExtendEnvironmentAnalyzer {
     private Headers mainPageHeaders;
 
     private String entityType;
-    private String protocol;
-    private String server;
 
-    public ExtendEnvironmentAnalyzer prepare(String protocol, String server, EnvType envType) {
-        return prepare(protocol, server, envType.getName());
+    public ExtendEnvironmentAnalyzer prepare(Host host, EnvType envType) {
+        return prepare(host, envType.getName());
     }
 
-    private ExtendEnvironmentAnalyzer prepare(String protocol, String server, String entityType) {
+    private ExtendEnvironmentAnalyzer prepare(Host host, String entityType) {
         this.entityType = entityType;
-        this.protocol = protocol;
-        this.server = server;
+        this.host = host;
 
-        this.host = new Host(protocol, server);
         try (Response response = request.send(host)) {
             mainPageHeaders = response.headers();
         }
@@ -75,8 +71,8 @@ public class ExtendEnvironmentAnalyzer {
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            Host host = WhoisLocator.getAvailableWhoisHost(protocol, server);
-            try (Response response = request.send(host)) {
+            Host whoIsHost = WhoisLocator.getAvailableWhoisHost(host.getProtocol(), host.getServer());
+            try (Response response = request.send(whoIsHost)) {
                 String body = Objects.requireNonNull(response.body()).string();
                 WhoisDto dto = objectMapper.readValue(body, WhoisDto.class);
 
