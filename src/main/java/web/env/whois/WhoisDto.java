@@ -3,8 +3,12 @@ package web.env.whois;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.SneakyThrows;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 @Data
 @EqualsAndHashCode
@@ -26,5 +30,19 @@ public class WhoisDto implements Serializable {
     private String as;
     private String query;
     private String message;
+
+    @SneakyThrows
+    @Override
+    public String toString() {
+        StringJoiner stringJoiner = new StringJoiner("\n", "   [\n", "\n   ]");
+        Field[] fields = WhoisDto.class.getDeclaredFields();
+
+        for (Field field : fields) {
+            Object value = field.get(this);
+            if (Objects.nonNull(value) && !"".equals(value.toString()))
+                stringJoiner.add(String.format("    %s = %s", field.getName(), value.toString()));
+        }
+        return stringJoiner.toString();
+    }
 
 }

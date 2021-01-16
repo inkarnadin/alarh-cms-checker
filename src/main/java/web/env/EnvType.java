@@ -15,7 +15,7 @@ public enum EnvType {
     PHP                     (0, "PHP",          PhpConnector.class),
     PHP_MY_ADMIN            (1, "PhpMyAdmin",   PhpMyAdminConnector.class),
     WEB_SERVER              (2, "WebServer",    WebServerConnector.class),
-    HOSTER                  (3, "Hoster",       WhoisConnector.class);
+    WHOIS                   (3, "WhoIs Info",   WhoisConnector.class);
 
     private final int id;
     private final String name;

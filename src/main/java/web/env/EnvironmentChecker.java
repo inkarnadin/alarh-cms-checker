@@ -3,6 +3,7 @@ package web.env;
 import web.struct.AbstractChecker;
 import web.struct.Connector;
 import web.struct.Params;
+import web.struct.Preferences;
 
 public class EnvironmentChecker extends AbstractChecker {
 
@@ -24,11 +25,12 @@ public class EnvironmentChecker extends AbstractChecker {
         webServerConnector.configure(params);
         webServerConnector.check();
 
-        System.out.println();
-
-        Connector hosterConnector = EnvironmentFactory.getEnvironmentConnector(EnvType.HOSTER);
-        hosterConnector.configure(params);
-        hosterConnector.check();
+        if (Preferences.isEnableWhoIsInfo()) {
+            System.out.println();
+            Connector hosterConnector = EnvironmentFactory.getEnvironmentConnector(EnvType.WHOIS);
+            hosterConnector.configure(params);
+            hosterConnector.check();
+        }
     }
 
 }

@@ -49,7 +49,7 @@ public class CMSChecker extends AbstractChecker {
     }
 
     private static Map<CMSType, Destination> filterLowImportance(Map<CMSType, Destination> determinate) {
-        if (determinate.size() > 1 && !Preferences.isLowImportance()) {
+        if (determinate.size() > 1 && !Preferences.isEnableLowImportance()) {
             return determinate.entrySet().stream()
                     .filter(x -> x.getValue().getImportance().ordinal() > 1)
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));

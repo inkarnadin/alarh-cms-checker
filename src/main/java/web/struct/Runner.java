@@ -16,7 +16,7 @@ public class Runner {
 
     public void run() {
         System.out.println("===========================================================");
-        System.out.println("Welcome! This is application for check whois about different CMS");
+        System.out.println("Welcome! This is application for check info about different CMS");
         System.out.println("In current time it is support next systems:");
         System.out.println(" * Joomla! (version)");
         System.out.println(" * WordPress (version)");
@@ -57,7 +57,7 @@ public class Runner {
                 params.setServer(args[0]);
                 printSplit();
 
-                if (Preferences.isActiveMainModule()) {
+                if (Preferences.isEnableMainModule()) {
                     System.out.println("CMS module activated...");
                     injector.getInstance(CMSChecker.class).check(params);
                     System.out.println("Done!");
@@ -66,8 +66,8 @@ public class Runner {
                 }
                 printSplit();
 
-                if (Preferences.isActiveExtendModule()) {
-                    System.out.println("Extend whois module activated...");
+                if (Preferences.isEnableExtendModule()) {
+                    System.out.println("Extend info module activated...");
                     injector.getInstance(EnvironmentChecker.class).check(params);
                     System.out.println("Done!");
                 } else {
@@ -87,6 +87,7 @@ public class Runner {
         Preferences.manageMainModule(!Arrays.asList(args).contains("-mm"));
         Preferences.manageExtendModule(!Arrays.asList(args).contains("-em"));
         Preferences.manageLowImportanceFilter(Arrays.asList(args).contains("-li"));
+        Preferences.manageWhoIsInfo(Arrays.asList(args).contains("-who"));
     }
 
     private static boolean isAnswer(final String answer) {

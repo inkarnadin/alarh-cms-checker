@@ -11,7 +11,7 @@ import web.parser.TextParser;
 import web.struct.Destination;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class PhpMyAdminProcessor extends AbstractEnvironmentProcessor {
+public class PhpMyAdminCheckProcessor extends AbstractEnvironmentProcessor {
 
     private final Request request;
     private final TextParser<String> parser;
