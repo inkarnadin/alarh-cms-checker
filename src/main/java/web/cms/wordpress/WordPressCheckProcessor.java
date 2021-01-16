@@ -50,7 +50,6 @@ public class WordPressCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("wp-block-library-theme-css"),
                 Pattern.compile("wp-pagenavi-css"),
                 Pattern.compile("wp-mediaelement-css"),
-                Pattern.compile("woocommerce"),
                 Pattern.compile("wp-image"),
                 Pattern.compile("wp-block"),
                 Pattern.compile("wp-smiley")
