@@ -1,6 +1,5 @@
 package web.analyzer;
 
-import lombok.Getter;
 import okhttp3.Response;
 import web.http.Host;
 import web.http.Request;

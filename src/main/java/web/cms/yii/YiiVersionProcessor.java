@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import okhttp3.Response;
+import web.analyzer.JsScriptDissector;
 import web.analyzer.version.VersionAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
@@ -13,6 +14,7 @@ import web.http.ResponseBodyHandler;
 import web.parser.TextParser;
 import web.struct.Destination;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,19 +31,12 @@ public class YiiVersionProcessor extends AbstractCMSProcessor {
     @Override
     public void process() {
         Host host = new Host(protocol, server);
-        Response response = request.send(host);
-        String body = ResponseBodyHandler.readBody(response);
-
-        Matcher matcher = Pattern.compile("/(.*?)/yii.js").matcher(body);
-        if (matcher.find()) {
-            String randomProjectPath = matcher.group(1);
+        List<String> paths = JsScriptDissector.dissect(host, request, new String[] {
+                "yii.js", "yii.activeForm.js", "yii.validation.js", "yii.captcha.js"
+        });
+        if (!paths.isEmpty()) {
             VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination).prepare(protocol, server, cmsType);
-            versionAnalyzer.checkViaSinceScript(Pattern.compile("@since\\s(.*?)\\s"), new String[] {
-                    String.format("/%s/yii.js", randomProjectPath),
-                    String.format("/%s/yii.activeForm.js", randomProjectPath),
-                    String.format("/%s/yii.validation.js", randomProjectPath),
-                    String.format("/%s/yii.captcha.js", randomProjectPath)
-            });
+            versionAnalyzer.checkViaSinceScript(Pattern.compile("@since\\s(.*?)\\s"), paths.toArray(new String[0]));
         }
     }
 
