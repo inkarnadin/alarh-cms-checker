@@ -58,6 +58,7 @@ import web.cms.vue.VueConnector;
 import web.cms.wordpress.*;
 import web.cms.yii.YiiCheckProcessor;
 import web.cms.yii.YiiConnector;
+import web.cms.yii.YiiVersionProcessor;
 import web.http.Client;
 import web.http.GetRequest;
 import web.http.HttpClient;
@@ -120,7 +121,10 @@ public class CMSModule extends AbstractModule {
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(UMI_VERSION)).to(UmiVersionProcessor.class);
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(LAVAREL_CHECK)).to(LavarelCheckProcessor.class);
+
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(YII_CHECK)).to(YiiCheckProcessor.class);
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(YII_VERSION)).to(YiiVersionProcessor.class);
+
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(NUXT_CHECK)).to(NuxtCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(VUE_CHECK)).to(VueCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(RUBY_ON_RAILS_CHECK)).to(RubyOnRailsCheckProcessor.class);

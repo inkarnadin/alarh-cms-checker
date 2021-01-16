@@ -51,6 +51,7 @@ public class CMSMarker {
     public static final String LAVAREL_CHECK = "lavarelCheck";
 
     public static final String YII_CHECK = "yiiCheck";
+    public static final String YII_VERSION = "yiiVersion";
 
     public static final String NUXT_CHECK = "nuxtCheck";
 
