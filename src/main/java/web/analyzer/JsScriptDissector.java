@@ -21,11 +21,26 @@ public class JsScriptDissector {
 
     private static final String[] EMPTY = {};
 
-    public static List<String> dissect(Host host, Request request) {
+    /**
+     * Find all javascript file
+     *
+     * @param host - server
+     * @param request - request execution class
+     * @return - list of found scripts
+     */
+    public static String[] dissect(Host host, Request request) {
         return dissect(host, request, EMPTY);
     }
 
-    public static List<String> dissect(Host host, Request request, String[] allowedScripts) {
+    /**
+     * Find certain javascript file
+     *
+     * @param host - server
+     * @param request - request execution class
+     * @param allowedScripts - sought scripts
+     * @return - list of found scripts
+     */
+    public static String[] dissect(Host host, Request request, String[] allowedScripts) {
         Response response = request.send(host);
         String body = ResponseBodyHandler.readBody(response);
 
@@ -53,7 +68,7 @@ public class JsScriptDissector {
             if (!isExcluded && isAllowed)
                 results.add(result);
         }
-        return results;
+        return results.toArray(new String[0]);
     }
 
 }
