@@ -34,9 +34,13 @@ public class YiiVersionProcessor extends AbstractCMSProcessor {
 
         Matcher matcher = Pattern.compile("/(.*?)/yii.js").matcher(body);
         if (matcher.find()) {
+            String randomProjectPath = matcher.group(1);
             VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination).prepare(protocol, server, cmsType);
             versionAnalyzer.checkViaSinceScript(Pattern.compile("@since\\s(.*?)\\s"), new String[] {
-                    String.format("/%s/yii.js", matcher.group(1))
+                    String.format("/%s/yii.js", randomProjectPath),
+                    String.format("/%s/yii.activeForm.js", randomProjectPath),
+                    String.format("/%s/yii.validation.js", randomProjectPath),
+                    String.format("/%s/yii.captcha.js", randomProjectPath)
             });
         }
     }
