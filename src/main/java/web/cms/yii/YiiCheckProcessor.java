@@ -36,12 +36,9 @@ public class YiiCheckProcessor extends AbstractCMSProcessor {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(protocol, server, result);
-        mainPageAnalyzer.checkViaMainPageScriptName(HIGH, new Pattern[] {
-                Pattern.compile("<script src=\".*(yii.js).*\"></script>")
-        });
-        mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
-                Pattern.compile("YII_CSRF_TOKEN")
-        });
+        mainPageAnalyzer.checkViaMainPageScriptName(HIGH, new Pattern[] { Pattern.compile("<script src=\".*(yii.js).*\"></script>") });
+        mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] { Pattern.compile("YII_CSRF_TOKEN") });
+        mainPageAnalyzer.checkViaMainPageKeywords(LOW, new Pattern[] { Pattern.compile("/assets/[\\w\\d]{8}/") });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(protocol, server, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "login", "admin/login", "admin/site/login" }, new Pattern[] {
                 Pattern.compile("Powered by.*Yii Framework"),
