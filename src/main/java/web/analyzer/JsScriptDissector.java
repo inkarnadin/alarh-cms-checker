@@ -1,0 +1,60 @@
+package web.analyzer;
+
+import lombok.Getter;
+import okhttp3.Response;
+import web.http.Host;
+import web.http.Request;
+import web.http.ResponseBodyHandler;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class JsScriptDissector {
+
+    private static final String[] excludedList = {
+            "yandex",
+            "google",
+            "twitter",
+            "facebook"
+    };
+
+    private static final String[] EMPTY = {};
+
+    public static List<String> dissect(Host host, Request request) {
+        return dissect(host, request, EMPTY);
+    }
+
+    public static List<String> dissect(Host host, Request request, String[] allowedScripts) {
+        Response response = request.send(host);
+        String body = ResponseBodyHandler.readBody(response);
+
+        List<String> results = new ArrayList<>();
+        Matcher matcher = Pattern.compile("<script src=\"(.*?)[\"?]").matcher(body);
+        while (matcher.find()) {
+            String result = matcher.group(1);
+
+            boolean isExcluded = false;
+            for (String exclude : excludedList) {
+                if (result.contains(exclude)) {
+                    isExcluded = true;
+                    break;
+                }
+            }
+
+            boolean isAllowed = allowedScripts.length == 0;
+            for (String allow : allowedScripts) {
+                if (result.contains(allow)) {
+                    isAllowed = true;
+                    break;
+                }
+            }
+
+            if (!isExcluded && isAllowed)
+                results.add(result);
+        }
+        return results;
+    }
+
+}
