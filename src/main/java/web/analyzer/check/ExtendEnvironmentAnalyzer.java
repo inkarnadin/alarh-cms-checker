@@ -80,11 +80,10 @@ public class ExtendEnvironmentAnalyzer {
                 String body = Objects.requireNonNull(response.body()).string();
                 WhoisDto dto = objectMapper.readValue(body, WhoisDto.class);
 
-                destination.insert(1,dto.toString());
+                destination.insert(1, dto.toString());
             }
         } catch (Exception xep) {
             destination.insert(1, xep.getMessage());
-            //System.out.println(xep.getMessage());
         }
     }
 
