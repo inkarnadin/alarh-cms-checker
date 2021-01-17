@@ -4,7 +4,9 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
+import web.analyzer.JsScriptDissector;
 import web.analyzer.check.MainPageAnalyzer;
+import web.analyzer.check.PageAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
 import web.http.Request;
@@ -31,12 +33,17 @@ public class NuxtCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
+        String[] paths = JsScriptDissector.dissect(host, request);
+
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
                 Pattern.compile("data-n-head="),
                 Pattern.compile("data-hid="),
                 Pattern.compile("_nuxt")
-
+        });
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
+        pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] {
+                Pattern.compile("nuxt-link")
         });
 
         assign(destination, result, cmsType);
