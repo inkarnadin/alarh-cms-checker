@@ -35,17 +35,18 @@ public class VueCheckProcessor extends AbstractCMSProcessor {
 
         String[] paths = JsScriptDissector.dissect(host, request);
 
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
-        pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] { Pattern.compile("Vue\\.js") });
-
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageScriptName(HIGH, new Pattern[] {
-                Pattern.compile("vue-handle-error\\.js"),
                 Pattern.compile("vue-modal"),
                 Pattern.compile("vue-widget"),
-                Pattern.compile("vue-component"),
+                Pattern.compile("vue-component")
+        });
+        mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
+                Pattern.compile("vue-handle-error\\.js"),
                 Pattern.compile("vue\\.js")
         });
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
+        pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] { Pattern.compile("Vue\\.js") });
 
         assign(destination, result, cmsType);
     }
