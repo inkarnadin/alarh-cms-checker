@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
+import web.analyzer.JsScriptDissector;
 import web.analyzer.check.HeaderAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.cms.AbstractCMSProcessor;
@@ -34,11 +35,14 @@ public class RubyOnRailsCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
+        String[] paths = JsScriptDissector.dissect(host, request);
+
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(LOW, new String[] { "login" }, new Pattern[] {
                 Pattern.compile("authenticity_token"),
                 Pattern.compile("turbolinks")
         });
+        pageAnalyzer.checkViaPageKeywords(LOW, paths, new Pattern[] { Pattern.compile("rails") });
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
         headerAnalyzer.checkViaHeaders(HIGH, BASE_PATH, new String[] {
                 "X-Rack-Cache",
