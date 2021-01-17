@@ -18,12 +18,21 @@ public class VueConnector extends AbstractCMSConnector {
 
     @Named(VUE_CHECK)
     private final Processor<CMSType> checkProcessor;
+    @Named(VUE_VERSION)
+    private final Processor<CMSType> versionProcessor;
 
     @Override
     public Pair<CMSType, Optional<Destination>> check() {
         checkProcessor.configure(params.getProtocol(), params.getServer());
         checkProcessor.process();
         return checkProcessor.transmit();
+    }
+
+    @Override
+    public void checkVersion() {
+        versionProcessor.configure(params.getProtocol(), params.getServer());
+        versionProcessor.process();
+        versionProcessor.transmit().getSecond().ifPresent(x -> x.fetch().forEach(System.out::println));
     }
 
 }

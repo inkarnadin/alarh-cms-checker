@@ -16,7 +16,10 @@ public class JsScriptDissector {
             "yandex",
             "google",
             "twitter",
-            "facebook"
+            "facebook",
+            "http",
+            "https",
+            "//"
     };
 
     private static final String[] EMPTY = {};
@@ -45,9 +48,10 @@ public class JsScriptDissector {
         String body = ResponseBodyHandler.readBody(response);
 
         List<String> results = new ArrayList<>();
-        Matcher matcher = Pattern.compile("<script src=\"(.*?)[\"?]").matcher(body);
+
+        Matcher matcher = Pattern.compile("<script (type=\"text/javascript\" )?src=\"(.*?)[\"?]").matcher(body);
         while (matcher.find()) {
-            String result = matcher.group(1);
+            String result = matcher.group(2);
 
             boolean isExcluded = false;
             for (String exclude : excludedList) {
@@ -65,7 +69,9 @@ public class JsScriptDissector {
                 }
             }
 
-            if (!isExcluded && isAllowed)
+            boolean isJsFile = result.contains("js");
+
+            if (!isExcluded && isAllowed && isJsFile)
                 results.add(result);
         }
         return results.toArray(new String[0]);

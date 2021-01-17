@@ -55,6 +55,7 @@ import web.cms.vigbo.VigboCheckProcessor;
 import web.cms.vigbo.VigboConnector;
 import web.cms.vue.VueCheckProcessor;
 import web.cms.vue.VueConnector;
+import web.cms.vue.VueVersionProcessor;
 import web.cms.wordpress.*;
 import web.cms.yii.YiiCheckProcessor;
 import web.cms.yii.YiiConnector;
@@ -126,7 +127,10 @@ public class CMSModule extends AbstractModule {
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(YII_VERSION)).to(YiiVersionProcessor.class);
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(NUXT_CHECK)).to(NuxtCheckProcessor.class);
+
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(VUE_CHECK)).to(VueCheckProcessor.class);
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(VUE_VERSION)).to(VueVersionProcessor.class);
+
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(RUBY_ON_RAILS_CHECK)).to(RubyOnRailsCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(REACT_CHECK)).to(ReactCheckProcessor.class);
 

@@ -1,4 +1,4 @@
-package web.cms.yii;
+package web.cms.vue;
 
 import com.google.inject.Inject;
 import kotlin.Pair;
@@ -7,7 +7,6 @@ import web.analyzer.JsScriptDissector;
 import web.analyzer.version.VersionAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
-import web.http.Host;
 import web.http.Request;
 import web.parser.TextParser;
 import web.struct.Destination;
@@ -16,9 +15,9 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject})
-public class YiiVersionProcessor extends AbstractCMSProcessor {
+public class VueVersionProcessor extends AbstractCMSProcessor {
 
-    private static final CMSType cmsType = CMSType.YII;
+    private static final CMSType cmsType = CMSType.VUE_JS;
 
     private final Request request;
     private final TextParser<String> parser;
@@ -26,12 +25,10 @@ public class YiiVersionProcessor extends AbstractCMSProcessor {
 
     @Override
     public void process() {
-        String[] paths = JsScriptDissector.dissect(host, request, new String[] {
-                "yii.js", "yii.activeForm.js", "yii.validation.js", "yii.captcha.js"
-        });
+        String[] paths = JsScriptDissector.dissect(host, request);
         if (paths.length != 0) {
             VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination).prepare(host, cmsType);
-            versionAnalyzer.checkViaSinceScript(Pattern.compile("@since\\s(.*?)\\s"), paths, true);
+            versionAnalyzer.checkViaSinceScript(Pattern.compile("Vue\\.js v(.*)"), paths, true);
         }
     }
 

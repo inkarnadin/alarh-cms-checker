@@ -56,6 +56,7 @@ public class CMSMarker {
     public static final String NUXT_CHECK = "nuxtCheck";
 
     public static final String VUE_CHECK = "vueCheck";
+    public static final String VUE_VERSION = "vueVersion";
 
     public static final String RUBY_ON_RAILS_CHECK = "rubyOnRailsCheck";
 

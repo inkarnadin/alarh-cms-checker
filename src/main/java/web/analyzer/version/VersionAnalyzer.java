@@ -183,7 +183,14 @@ public class VersionAnalyzer {
                 String.format("  ** %s version (check #%s) = %s", entityType, attemptCounter.incrementAndGet(), version));
     }
 
-    public void checkViaSinceScript(Pattern pattern, String[] paths) {
+    /**
+     * Checking version via info into script files
+     *
+     * @param pattern - what is find
+     * @param paths - paths script
+     * @param isPrecision - if true - believe that the version is determined exactly, else - just add to output "+"
+     */
+    public void checkViaSinceScript(Pattern pattern, String[] paths, boolean isPrecision) {
         List<ComparableVersion> versions = new ArrayList<>();
         versions.add(new ComparableVersion("unknown"));
 
@@ -193,13 +200,16 @@ public class VersionAnalyzer {
                 String body = ResponseBodyHandler.readBody(response);
                 Matcher matcher = pattern.matcher(body);
 
-                while (matcher.find()) {
+                while (matcher.find())
                     versions.add(new ComparableVersion(matcher.group(1)));
-                }
             }
         }
         destination.insert(attemptCounter.get(),
-                String.format("  ** %s version (check #%s) = %s+", entityType, attemptCounter.incrementAndGet(), Collections.max(versions)));
+                String.format("  ** %s version (check #%s) = %s%s",
+                        entityType,
+                        attemptCounter.incrementAndGet(),
+                        Collections.max(versions),
+                        isPrecision ? "" : "+"));
     }
 
 }

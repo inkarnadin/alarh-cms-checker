@@ -49,7 +49,7 @@ public class WordPressVersionProcessor extends AbstractCMSProcessor {
                 "wp-includes/js/wp-emoji.js",
                 "wp-includes/js/wp-emoji-loader.js",
                 "wp-includes/js/wp-pointer.js",
-        });
+        }, false);
     }
 
     @Override
