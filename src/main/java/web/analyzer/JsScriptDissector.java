@@ -55,7 +55,7 @@ public class JsScriptDissector {
 
             boolean isExcluded = false;
             for (String exclude : excludedList) {
-                if (result.contains(exclude)) {
+                if (result.contains(exclude) && !result.contains(host.getServer())) {
                     isExcluded = true;
                     break;
                 }
