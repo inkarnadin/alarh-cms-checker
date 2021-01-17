@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
+import web.analyzer.JsScriptDissector;
 import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
@@ -34,6 +35,8 @@ public class YiiCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
+        String[] paths = JsScriptDissector.dissect(host, request);
+
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageScriptName(HIGH, new Pattern[] { Pattern.compile("<script src=\".*(yii.js).*\"></script>") });
         mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] { Pattern.compile("YII_CSRF_TOKEN") });
@@ -51,6 +54,7 @@ public class YiiCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("yii\\.activeForm"),
                 Pattern.compile("LoginForm")
         });
+        pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] { Pattern.compile("yii") });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
         pathAnalyzer.checkViaPaths(LOW, DENIED_CODES, new String[] { "vendor/yiisoft/yii2" });
 

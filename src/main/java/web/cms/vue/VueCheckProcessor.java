@@ -4,7 +4,9 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
+import web.analyzer.JsScriptDissector;
 import web.analyzer.check.MainPageAnalyzer;
+import web.analyzer.check.PageAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
 import web.http.Request;
@@ -31,8 +33,13 @@ public class VueCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
+        String[] paths = JsScriptDissector.dissect(host, request);
+
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
+        pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] { Pattern.compile("Vue\\.js") });
+
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
-        mainPageAnalyzer.checkViaMainPageScriptName(HIGH,new Pattern[] {
+        mainPageAnalyzer.checkViaMainPageScriptName(HIGH, new Pattern[] {
                 Pattern.compile("vue-handle-error\\.js"),
                 Pattern.compile("vue-modal"),
                 Pattern.compile("vue-widget"),
