@@ -36,7 +36,8 @@ public class RubyOnRailsCheckProcessor extends AbstractCMSProcessor {
 
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(LOW, new String[] { "login" }, new Pattern[] {
-                Pattern.compile("authenticity_token")
+                Pattern.compile("authenticity_token"),
+                Pattern.compile("turbolinks")
         });
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
         headerAnalyzer.checkViaHeaders(HIGH, BASE_PATH, new String[] {
