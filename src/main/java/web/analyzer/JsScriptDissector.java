@@ -49,7 +49,7 @@ public class JsScriptDissector {
 
         List<String> results = new ArrayList<>();
 
-        Matcher matcher = Pattern.compile("<script (type=\"text/javascript\" )?src=\"(.*?)[\"?]").matcher(body);
+        Matcher matcher = Pattern.compile("<script (type=\"text/javascript\" )?src=\"/?(.*?)[\"?]").matcher(body);
         while (matcher.find()) {
             String result = matcher.group(2);
 
