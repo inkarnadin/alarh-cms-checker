@@ -88,7 +88,8 @@ public class WordPressCheckProcessor extends AbstractCMSProcessor {
         headerAnalyzer.checkViaHeaderValues(HIGH, new String[] { "wp-json" }, new Pattern[] {
                 Pattern.compile("X-WP-Total"),
                 Pattern.compile("X-WP-Nonce"),
-                Pattern.compile("X-WP-TotalPages")
+                Pattern.compile("X-WP-TotalPages"),
+                Pattern.compile("WP Engine")
         });
 
         assign(destination, result, cmsType);
