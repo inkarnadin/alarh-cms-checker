@@ -9,7 +9,7 @@ import web.struct.Runner;
 public class Main {
 
     public static void main(String[] args) {
-        Injector injector = Guice.createInjector(new MainModule());
+        Injector injector = Guice.createInjector(new MainModule(), new CMSModule());
         injector.getInstance(Runner.class).run();
     }
 
