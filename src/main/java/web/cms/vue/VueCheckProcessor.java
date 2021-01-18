@@ -47,6 +47,11 @@ public class VueCheckProcessor extends AbstractCMSProcessor {
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] { Pattern.compile("Vue\\.js") });
+        pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] {
+                Pattern.compile("VUE_SSR_CONTEXT"),
+                Pattern.compile("VUE_DEVTOOLS_GLOBAL_HOOK"),
+                Pattern.compile("VUE_ENV"),
+        });
 
         assign(destination, result, cmsType);
     }
