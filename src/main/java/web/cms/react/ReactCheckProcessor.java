@@ -55,7 +55,7 @@ public class ReactCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("__REACT_DEVTOOLS_GLOBAL_HOOK__"),
                 Pattern.compile("__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED"),
         });
-        pageAnalyzer.checkViaPageKeywords(LOW, paths, new Pattern[] { Pattern.compile("react") });
+        pageAnalyzer.checkViaPageKeywords(LOW, paths, new Pattern[] { Pattern.compile("react\\.") });
 
         assign(destination, result, cmsType);
     }
