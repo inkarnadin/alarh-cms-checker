@@ -1,6 +1,7 @@
 package web.cms;
 
 import com.google.inject.Inject;
+import lombok.RequiredArgsConstructor;
 import web.struct.*;
 
 import java.util.ArrayList;
@@ -9,14 +10,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class CMSChecker extends AbstractChecker {
 
     private final Determinant<CMSType, Destination> determinant;
-
-    @Inject
-    CMSChecker(Determinant<CMSType, Destination> determinant) {
-        this.determinant = determinant;
-    }
 
     @Override
     public void check(Params params) {
