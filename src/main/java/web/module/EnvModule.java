@@ -29,12 +29,7 @@ public class EnvModule extends AbstractModule {
     @SneakyThrows
     @Override
     protected void configure() {
-        bind(Client.class).to(HttpClient.class);
-        bind(Request.class).to(GetRequest.class);
-        bind(Destination.class).to(SimpleDestination.class).in(Scopes.NO_SCOPE);
-        bind(Printer.class).to(CommonPrinter.class);
-
-        bind(new TypeLiteral<TextParser<String>>(){}).to(StringReturnTextParser.class);
+        install(new CommonModule());
 
         bind(new TypeLiteral<Processor<EnvType>>(){}).annotatedWith(Names.named(PHP_MY_ADMIN)).to(PhpMyAdminCheckProcessor.class);
         bind(new TypeLiteral<Processor<EnvType>>(){}).annotatedWith(Names.named(PHP)).to(PhpCheckProcessor.class);

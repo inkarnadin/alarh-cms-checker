@@ -61,11 +61,6 @@ import web.cms.wordpress.*;
 import web.cms.yii.YiiCheckProcessor;
 import web.cms.yii.YiiConnector;
 import web.cms.yii.YiiVersionProcessor;
-import web.http.Client;
-import web.http.GetRequest;
-import web.http.HttpClient;
-import web.http.Request;
-import web.parser.*;
 import web.struct.*;
 
 import static web.cms.CMSMarker.*;
@@ -74,13 +69,7 @@ public class CMSModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(Client.class).to(HttpClient.class);
-        bind(Request.class).to(GetRequest.class);
-        bind(Destination.class).to(SimpleDestination.class);
-
-        bind(new TypeLiteral<TextParser<Boolean>>(){}).to(BooleanReturnTextParser.class);
-        bind(new TypeLiteral<TextParser<String>>(){}).to(StringReturnTextParser.class);
-        bind(new TypeLiteral<XMLParser<String>>(){}).to(VersionXMLParser.class);
+        install(new CommonModule());
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(WORDPRESS_CHECK)).to(WordPressCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(WORDPRESS_VERSION)).to(WordPressVersionProcessor.class);
