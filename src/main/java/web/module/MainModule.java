@@ -19,6 +19,8 @@ public class MainModule extends AbstractModule {
     @Override
     protected void configure() {
         install(new CommonModule());
+        install(new CMSModule());
+        install(new EnvModule());
 
         bind(Checker.class).annotatedWith(Cms.class).to(CMSChecker.class);
         bind(Checker.class).annotatedWith(Env.class).to(EnvironmentChecker.class);
