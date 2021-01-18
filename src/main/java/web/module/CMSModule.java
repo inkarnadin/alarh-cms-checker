@@ -40,6 +40,7 @@ import web.cms.rails.RubyOnRailsCheckProcessor;
 import web.cms.rails.RubyOnRailsConnector;
 import web.cms.react.ReactCheckProcessor;
 import web.cms.react.ReactConnector;
+import web.cms.react.ReactVersionProcessor;
 import web.cms.shopify.ShopifyCheckProcessor;
 import web.cms.shopify.ShopifyConnector;
 import web.cms.tilda.TildaCheckProcessor;
@@ -132,7 +133,9 @@ public class CMSModule extends AbstractModule {
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(VUE_VERSION)).to(VueVersionProcessor.class);
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(RUBY_ON_RAILS_CHECK)).to(RubyOnRailsCheckProcessor.class);
+
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(REACT_CHECK)).to(ReactCheckProcessor.class);
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(REACT_VERSION)).to(ReactVersionProcessor.class);
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(TILDA_CHECK)).to(TildaCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(VIGBO_CHECK)).to(VigboCheckProcessor.class);

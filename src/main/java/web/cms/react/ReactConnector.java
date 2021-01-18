@@ -12,18 +12,28 @@ import web.struct.Processor;
 import java.util.Optional;
 
 import static web.cms.CMSMarker.REACT_CHECK;
+import static web.cms.CMSMarker.REACT_VERSION;
 
 @RequiredArgsConstructor(onConstructor_ = @__(@Inject))
 public class ReactConnector extends AbstractCMSConnector {
 
     @Named(REACT_CHECK)
     private final Processor<CMSType> checkProcessor;
+    @Named(REACT_VERSION)
+    private final Processor<CMSType> versionProcessor;
 
     @Override
     public Pair<CMSType, Optional<Destination>> check() {
         checkProcessor.configure(params.getProtocol(), params.getServer());
         checkProcessor.process();
         return checkProcessor.transmit();
+    }
+
+    @Override
+    public void checkVersion() {
+        versionProcessor.configure(params.getProtocol(), params.getServer());
+        versionProcessor.process();
+        versionProcessor.transmit().getSecond().ifPresent(x -> x.fetch().forEach(System.out::println));
     }
 
 }

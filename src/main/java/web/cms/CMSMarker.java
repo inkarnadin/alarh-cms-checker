@@ -61,6 +61,7 @@ public class CMSMarker {
     public static final String RUBY_ON_RAILS_CHECK = "rubyOnRailsCheck";
 
     public static final String REACT_CHECK = "reactCheck";
+    public static final String REACT_VERSION = "reactVersion";
 
     /**
      * Constructors
