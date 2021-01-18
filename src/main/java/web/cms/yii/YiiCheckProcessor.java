@@ -52,7 +52,7 @@ public class YiiCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("loginform-username"),
                 Pattern.compile("yii\\.validation"),
                 Pattern.compile("yii\\.activeForm"),
-                Pattern.compile("LoginForm")
+                Pattern.compile("LoginForm\\[]")
         });
         pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] { Pattern.compile("yii") });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
