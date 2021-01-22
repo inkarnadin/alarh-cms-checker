@@ -9,6 +9,7 @@ import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.analyzer.check.SpecificAnalyzer;
 import web.cms.AbstractCMSProcessor;
+import web.cms.CMSResultAssigner;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
@@ -25,7 +26,7 @@ import static web.http.ContentType.IMAGE_JPG;
 import static web.http.ContentType.IMAGE_PNG;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class DataLifeCheckProcessor extends AbstractCMSProcessor {
+public class DataLifeCheckProcessor extends AbstractCMSProcessor implements CMSResultAssigner {
 
     private static final CMSType cmsType = CMSType.DATALIFE_ENGINE;
 

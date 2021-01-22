@@ -10,6 +10,7 @@ import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
+import web.cms.CMSResultAssigner;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
@@ -25,7 +26,7 @@ import static web.analyzer.AnalyzeConst.SUCCESS_CODES;
 import static web.analyzer.Importance.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class MogutaCheckProcessor extends AbstractCMSProcessor {
+public class MogutaCheckProcessor extends AbstractCMSProcessor implements CMSResultAssigner {
 
     private static final CMSType cmsType = CMSType.MOGUTA_CMS;
 
