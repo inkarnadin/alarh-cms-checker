@@ -1,7 +1,8 @@
-package web.cms;
+package web.struct.assignment;
 
 import kotlin.Pair;
 import web.analyzer.Importance;
+import web.cms.CMSType;
 import web.struct.Destination;
 
 import java.util.List;

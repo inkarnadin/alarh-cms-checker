@@ -8,7 +8,7 @@ import web.analyzer.JsScriptDissector;
 import web.analyzer.check.HeaderAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.cms.AbstractCMSProcessor;
-import web.cms.CMSResultAssigner;
+import web.struct.assignment.CMSResultAssigner;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;

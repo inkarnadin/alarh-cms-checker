@@ -6,10 +6,10 @@ import lombok.RequiredArgsConstructor;
 import web.analyzer.version.VersionAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
-import web.http.Host;
 import web.http.Request;
 import web.parser.TextParser;
 import web.struct.Destination;
+import web.struct.assignment.VersionAssigner;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 import static web.http.ContentType.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class DataLifeVersionProcessor extends AbstractCMSProcessor {
+public class DataLifeVersionProcessor extends AbstractCMSProcessor implements VersionAssigner {
 
     private static final CMSType cmsType = CMSType.DATALIFE_ENGINE;
 
@@ -30,8 +30,7 @@ public class DataLifeVersionProcessor extends AbstractCMSProcessor {
 
     @Override
     public void process() {
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, null, destination);
-        versionAnalyzer.prepare(host, cmsType);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, null, versionList).prepare(host);
         versionAnalyzer.checkViaLogoFiles(logoMap, new String[] { IMAGE_JPG, IMAGE_PNG }, new String[] {
                 "engine/skins/images/logos.jpg",
                 "engine/skins/images/logo.png",
@@ -44,6 +43,8 @@ public class DataLifeVersionProcessor extends AbstractCMSProcessor {
         versionAnalyzer.checkViaPageKeywords("/engine/ajax/updates.php", new Pattern[] {
                 Pattern.compile("Актуальная версия скрипта: (.*)")
         });
+
+        assign(destination);
     }
 
     @Override

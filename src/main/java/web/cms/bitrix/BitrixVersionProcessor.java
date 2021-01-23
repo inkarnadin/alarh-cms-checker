@@ -11,12 +11,13 @@ import web.http.Request;
 import web.parser.TextParser;
 import web.parser.XMLParser;
 import web.struct.Destination;
+import web.struct.assignment.VersionAssigner;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class BitrixVersionProcessor extends AbstractCMSProcessor {
+public class BitrixVersionProcessor extends AbstractCMSProcessor implements VersionAssigner {
 
     private static final CMSType cmsType = CMSType.BITRIX;
 
@@ -29,7 +30,7 @@ public class BitrixVersionProcessor extends AbstractCMSProcessor {
 
     @Override
     public void process() {
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, xmlParser, destination).prepare(host, cmsType);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, xmlParser, versionList).prepare(host);
         versionAnalyzer.checkViaYear(yearMap, new String[] { "bitrix/admin" }, Pattern.compile("Управление сайтом.*Битрикс, (\\d{4})"));
     }
 

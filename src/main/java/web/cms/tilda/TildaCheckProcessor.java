@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
 import web.analyzer.check.MainPageAnalyzer;
 import web.cms.AbstractCMSProcessor;
-import web.cms.CMSResultAssigner;
+import web.struct.assignment.CMSResultAssigner;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;

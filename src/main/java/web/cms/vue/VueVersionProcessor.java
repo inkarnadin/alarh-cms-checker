@@ -10,12 +10,13 @@ import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
 import web.struct.Destination;
+import web.struct.assignment.VersionAssigner;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject})
-public class VueVersionProcessor extends AbstractCMSProcessor {
+public class VueVersionProcessor extends AbstractCMSProcessor implements VersionAssigner {
 
     private static final CMSType cmsType = CMSType.VUE_JS;
 
@@ -26,8 +27,10 @@ public class VueVersionProcessor extends AbstractCMSProcessor {
     @Override
     public void process() {
         String[] paths = JsScriptDissector.dissect(host, request);
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination).prepare(host, cmsType);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionList).prepare(host);
         versionAnalyzer.checkViaSinceScript(Pattern.compile("Vue\\.js v(.*)"), paths, true);
+
+        assign(destination);
     }
 
     @Override

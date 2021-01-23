@@ -3,7 +3,6 @@ package web.cms.umi;
 import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
-import web.analyzer.Importance;
 import web.analyzer.version.VersionAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
@@ -11,17 +10,13 @@ import web.http.Request;
 import web.parser.TextParser;
 import web.parser.XMLParser;
 import web.struct.Destination;
+import web.struct.assignment.VersionAssigner;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static web.http.ContentType.APPLICATION_XML;
-import static web.http.ContentType.TEXT_XML;
-
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class UmiVersionProcessor extends AbstractCMSProcessor {
+public class UmiVersionProcessor extends AbstractCMSProcessor implements VersionAssigner {
 
     private static final CMSType cmsType = CMSType.UMI_CMS;
 
@@ -32,13 +27,10 @@ public class UmiVersionProcessor extends AbstractCMSProcessor {
 
     @Override
     public void process() {
-        List<Pair<Boolean, Importance>> result = new ArrayList<>();
-
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, xmlParser, destination);
-        versionAnalyzer.prepare(host, cmsType);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, xmlParser, versionList).prepare(host);
         versionAnalyzer.checkViaHeaders(Pattern.compile("(.*)"), "X-CMS-Version");
 
-        assign(destination, result, cmsType);
+        assign(destination);
     }
 
     @Override

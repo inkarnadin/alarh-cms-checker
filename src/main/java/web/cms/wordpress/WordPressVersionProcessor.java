@@ -9,12 +9,13 @@ import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
 import web.struct.Destination;
+import web.struct.assignment.VersionAssigner;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class WordPressVersionProcessor extends AbstractCMSProcessor {
+public class WordPressVersionProcessor extends AbstractCMSProcessor implements VersionAssigner {
 
     private static final CMSType cmsType = CMSType.WORDPRESS;
 
@@ -24,8 +25,7 @@ public class WordPressVersionProcessor extends AbstractCMSProcessor {
 
     @Override
     public void process() {
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination);
-        versionAnalyzer.prepare(host, CMSType.WORDPRESS);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionList).prepare(host);
         versionAnalyzer.checkViaMainPageMetaTag(new Pattern[] {
                 Pattern.compile("<meta name=\"[gG]enerator\" content=\"WordPress\\s(.*?)\" />")
         });
@@ -50,6 +50,8 @@ public class WordPressVersionProcessor extends AbstractCMSProcessor {
                 "wp-includes/js/wp-emoji-loader.js",
                 "wp-includes/js/wp-pointer.js",
         }, false);
+
+        assign(destination);
     }
 
     @Override

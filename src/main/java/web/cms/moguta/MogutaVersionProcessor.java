@@ -9,12 +9,13 @@ import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
 import web.struct.Destination;
+import web.struct.assignment.VersionAssigner;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class MogutaVersionProcessor extends AbstractCMSProcessor {
+public class MogutaVersionProcessor extends AbstractCMSProcessor implements VersionAssigner {
 
     private static final CMSType cmsType = CMSType.MOGUTA_CMS;
 
@@ -24,14 +25,15 @@ public class MogutaVersionProcessor extends AbstractCMSProcessor {
 
     @Override
     public void process() {
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination);
-        versionAnalyzer.prepare(host, cmsType);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionList).prepare(host);
         versionAnalyzer.checkViaMainPageMetaTag(new Pattern[] {
                 Pattern.compile("<meta name=\"mogutacms\" content=\"(.*?)\"\\s?/>")
         });
         versionAnalyzer.checkViaPageKeywords("mg-admin", new Pattern[] {
                 Pattern.compile("<!--.*VER v(.*)\\s-->")
         });
+
+        assign(destination);
     }
 
     @Override

@@ -7,7 +7,7 @@ import web.analyzer.Importance;
 import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.cms.AbstractCMSProcessor;
-import web.cms.CMSResultAssigner;
+import web.struct.assignment.CMSResultAssigner;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
@@ -20,7 +20,6 @@ import java.util.regex.Pattern;
 
 import static web.analyzer.AnalyzeConst.BASE_PATH;
 import static web.analyzer.Importance.HIGH;
-import static web.analyzer.Importance.MEDIUM;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class ShopifyCheckProcessor extends AbstractCMSProcessor implements CMSResultAssigner {

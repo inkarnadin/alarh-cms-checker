@@ -36,24 +36,6 @@ public abstract class AbstractEnvironmentProcessor implements Processor<EnvType>
     @Override
     public void process() {}
 
-    protected void assign(Destination destination, List<Pair<Boolean, Importance>> result, CMSType cmsType) {
-        long count = result.stream().filter(Pair::getFirst).count();
-        Importance max = result.stream()
-                .filter(Pair::getFirst)
-                .map(Pair::getSecond)
-                .max(Importance::compareTo).orElse(UNDEFINED);
-
-        if (count > 0) {
-            destination.setImportance(max);
-            destination.insert(0, String.format(
-                    successMessage,
-                    cmsType.getName(),
-                    count,
-                    result.size())
-            );
-        }
-    }
-
     @Override
     public Pair<EnvType, Optional<Destination>> transmit() {
         return null;

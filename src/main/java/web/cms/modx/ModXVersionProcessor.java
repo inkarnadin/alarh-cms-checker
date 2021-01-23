@@ -10,12 +10,13 @@ import web.http.Host;
 import web.http.Request;
 import web.parser.TextParser;
 import web.struct.Destination;
+import web.struct.assignment.VersionAssigner;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class ModXVersionProcessor extends AbstractCMSProcessor {
+public class ModXVersionProcessor extends AbstractCMSProcessor implements VersionAssigner {
 
     private static final CMSType cmsType = CMSType.MODX;
 
@@ -25,10 +26,12 @@ public class ModXVersionProcessor extends AbstractCMSProcessor {
 
     @Override
     public void process() {
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination).prepare(host, cmsType);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionList).prepare(host);
         versionAnalyzer.checkViaPageKeywords("manager", new Pattern[] {
                 Pattern.compile("(Revolution|Evolution)")
         });
+
+        assign(destination);
     }
 
     @Override
