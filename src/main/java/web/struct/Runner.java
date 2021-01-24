@@ -58,7 +58,7 @@ public class Runner {
                 printSplit();
 
                 if (Preferences.isEnableMainModule()) {
-                    System.out.println("<CMS module activated>");
+                    System.out.println("~CMS module activated~");
                     injector.getInstance(CMSChecker.class).check(params);
                     System.out.println("Done!");
                 } else {
@@ -67,7 +67,7 @@ public class Runner {
                 printSplit();
 
                 if (Preferences.isEnableExtendModule()) {
-                    System.out.println("<Extend info module activated>");
+                    System.out.println("~Extend info module activated~");
                     injector.getInstance(EnvironmentChecker.class).check(params);
                     System.out.println("Done!");
                 } else {
