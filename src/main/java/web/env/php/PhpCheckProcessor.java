@@ -1,10 +1,12 @@
 package web.env.php;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import web.analyzer.version.VersionAnalyzer;
-import web.struct.assignment.VersionAssigner;
+import web.env.EnvType;
+import web.printer.Printer;
 import web.env.AbstractEnvironmentProcessor;
 import web.http.Request;
 import web.parser.TextParser;
@@ -12,12 +14,16 @@ import web.struct.Destination;
 
 import java.util.regex.Pattern;
 
+import static web.printer.PrinterMarker.LIST_PRINTER;
+
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class PhpCheckProcessor extends AbstractEnvironmentProcessor implements VersionAssigner {
+public class PhpCheckProcessor extends AbstractEnvironmentProcessor {
 
     private final Request request;
     private final TextParser<String> parser;
     private final Destination destination;
+    @Named(LIST_PRINTER)
+    private final Printer printer;
 
     @Override
     @SneakyThrows
@@ -29,7 +35,8 @@ public class PhpCheckProcessor extends AbstractEnvironmentProcessor implements V
                 Pattern.compile(">PHP Version (.*?)<")
         });
 
-        assign(destination);
+        assign(destination, EnvType.PHP, versionList);
+        printer.print(destination);
     }
 
 }

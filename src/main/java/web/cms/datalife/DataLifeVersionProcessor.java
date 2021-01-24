@@ -1,29 +1,28 @@
 package web.cms.datalife;
 
 import com.google.inject.Inject;
-import kotlin.Pair;
+import com.google.inject.name.Named;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.version.VersionAnalyzer;
-import web.cms.AbstractCMSProcessor;
-import web.cms.CMSType;
+import web.cms.AbstractCMSVersionProcessor;
 import web.http.Request;
 import web.parser.TextParser;
+import web.printer.Printer;
 import web.struct.Destination;
-import web.struct.assignment.VersionAssigner;
 
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static web.http.ContentType.*;
+import static web.printer.PrinterMarker.VERSION_PRINTER;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class DataLifeVersionProcessor extends AbstractCMSProcessor implements VersionAssigner {
-
-    private static final CMSType cmsType = CMSType.DATALIFE_ENGINE;
+public class DataLifeVersionProcessor extends AbstractCMSVersionProcessor {
 
     private final Request request;
     private final TextParser<String> textParser;
     private final Destination destination;
+    @Named(VERSION_PRINTER)
+    private final Printer printer;
 
     private final DataLifeLogoVersionMap logoMap = new DataLifeLogoVersionMap();
     private final DataLifeScriptVersionMap scriptMap = new DataLifeScriptVersionMap();
@@ -44,14 +43,8 @@ public class DataLifeVersionProcessor extends AbstractCMSProcessor implements Ve
                 Pattern.compile("Актуальная версия скрипта: (.*)")
         });
 
-        assign(destination);
-    }
-
-    @Override
-    public Pair<CMSType, Optional<Destination>> transmit() {
-        return destination.isFull()
-                ? new Pair<>(cmsType, Optional.of(destination))
-                : new Pair<>(cmsType, Optional.empty());
+        assign(destination, versionList);
+        printer.print(destination);
     }
 
 }

@@ -1,35 +1,42 @@
 package web.env.phpmyadmin;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import web.analyzer.check.ExtendEnvironmentAnalyzer;
-import web.cms.CMSType;
+import web.analyzer.version.VersionAnalyzer;
 import web.env.AbstractEnvironmentProcessor;
 import web.env.EnvType;
 import web.http.Request;
 import web.parser.TextParser;
+import web.printer.Printer;
 import web.struct.Destination;
+
+import java.util.regex.Pattern;
+
+import static web.printer.PrinterMarker.LIST_PRINTER;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class PhpMyAdminCheckProcessor extends AbstractEnvironmentProcessor {
 
-    private static final EnvType envType = EnvType.PHP_MY_ADMIN;
-
     private final Request request;
     private final TextParser<String> parser;
     private final Destination destination;
+    @Named(LIST_PRINTER)
+    private final Printer printer;
 
     @Override
     @SneakyThrows
     public void process() {
-        ExtendEnvironmentAnalyzer extendEnvironmentAnalyzer = new ExtendEnvironmentAnalyzer(request, parser, destination).prepare(host, envType);
-        extendEnvironmentAnalyzer.checkPhpMyAdmin(new String[] {
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionList).prepare(host);
+        versionAnalyzer.checkViaSinceScript(Pattern.compile("<title>.*phpMyAdmin\\s(.*?)\\s"), new String[] {
                 "phpmyadmin/doc/html/index.html",
                 "phpmyadmin/Documentation.html",
                 "myadmin/Documentation.html"
-        });
-        System.out.println(destination.fetch().get(0));
+        }, true);
+
+        assign(destination, EnvType.PHP_MY_ADMIN, versionList);
+        printer.print(destination);
     }
 
 }

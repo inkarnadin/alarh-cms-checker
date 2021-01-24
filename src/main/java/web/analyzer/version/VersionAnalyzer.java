@@ -142,8 +142,12 @@ public class VersionAnalyzer {
                 String body = ResponseBodyHandler.readBody(response);
                 Matcher matcher = pattern.matcher(body);
 
-                while (matcher.find())
-                    result.add(new ComparableVersion(matcher.group(1)));
+                while (matcher.find()) {
+                    ComparableVersion version = (isPrecision)
+                            ? new ComparableVersion(matcher.group(1))
+                            : new ComparableVersion(matcher.group(1) + "+");
+                    result.add(version);
+                }
             }
         }
     }

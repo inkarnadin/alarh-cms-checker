@@ -11,7 +11,8 @@ import web.struct.Processor;
 
 import java.util.Optional;
 
-import static web.cms.CMSMarker.*;
+import static web.cms.CMSMarker.DATALIFE_CHECK;
+import static web.cms.CMSMarker.DATALIFE_VERSION;
 
 @RequiredArgsConstructor(onConstructor_ = @__(@Inject))
 public class DataLifeConnector extends AbstractCMSConnector {
@@ -32,7 +33,6 @@ public class DataLifeConnector extends AbstractCMSConnector {
     public void checkVersion() {
         versionProcessor.configure(params.getProtocol(), params.getServer());
         versionProcessor.process();
-        versionProcessor.transmit().getSecond().ifPresent(x -> x.fetch().forEach(System.out::println));
     }
 
 }
