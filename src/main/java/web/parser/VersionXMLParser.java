@@ -1,6 +1,5 @@
 package web.parser;
 
-import lombok.Getter;
 import lombok.SneakyThrows;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -12,7 +11,7 @@ import java.io.ByteArrayInputStream;
 
 public class VersionXMLParser implements XMLParser<String> {
 
-    private String version = "unknown";
+    private String version = "<unknown>";
 
     @Override
     @SneakyThrows

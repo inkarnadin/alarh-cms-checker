@@ -36,7 +36,7 @@ public class VersionAnalyzer {
     private Headers mainPageHeaders;
 
     public VersionAnalyzer prepare(Host host) {
-        result.add(new ComparableVersion("unknown"));
+        result.add(new ComparableVersion("<unknown>"));
         this.host = host;
         try (Response response = request.send(host)) {
             mainPageResponseBody = ResponseBodyHandler.readBody(response);
