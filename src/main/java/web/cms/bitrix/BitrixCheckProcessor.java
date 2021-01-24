@@ -9,6 +9,7 @@ import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
+import web.struct.assignment.CMSResultAssigner;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
@@ -25,7 +26,7 @@ import static web.http.ContentType.APPLICATION_XML;
 import static web.http.ContentType.TEXT_XML;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class BitrixCheckProcessor extends AbstractCMSProcessor {
+public class BitrixCheckProcessor extends AbstractCMSProcessor implements CMSResultAssigner {
 
     private static final CMSType cmsType = CMSType.BITRIX;
 

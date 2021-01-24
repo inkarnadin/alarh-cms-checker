@@ -1,19 +1,17 @@
 package web.env;
 
 import kotlin.Pair;
-import web.analyzer.Importance;
-import web.cms.CMSType;
+import org.apache.maven.artifact.versioning.ComparableVersion;
 import web.http.Host;
 import web.struct.Destination;
 import web.struct.Processor;
+import web.struct.assignment.EnvironmentAssigner;
 
 import java.util.*;
 
-import static web.analyzer.Importance.UNDEFINED;
+public abstract class AbstractEnvironmentProcessor implements Processor<EnvType>, EnvironmentAssigner {
 
-public abstract class AbstractEnvironmentProcessor implements Processor<EnvType> {
-
-    protected final Map<String, Integer> errorMap = new HashMap<>();
+    protected List<ComparableVersion> versionList = new ArrayList<>();
 
     protected String protocol;
     protected String server;
@@ -24,7 +22,6 @@ public abstract class AbstractEnvironmentProcessor implements Processor<EnvType>
 
     @Override
     public void configure(String protocol, String server) {
-        Objects.requireNonNull(protocol, "Empty protocol value!");
         Objects.requireNonNull(server, "Empty url value!");
 
         this.protocol = protocol;
@@ -35,24 +32,6 @@ public abstract class AbstractEnvironmentProcessor implements Processor<EnvType>
 
     @Override
     public void process() {}
-
-    protected void assign(Destination destination, List<Pair<Boolean, Importance>> result, CMSType cmsType) {
-        long count = result.stream().filter(Pair::getFirst).count();
-        Importance max = result.stream()
-                .filter(Pair::getFirst)
-                .map(Pair::getSecond)
-                .max(Importance::compareTo).orElse(UNDEFINED);
-
-        if (count > 0) {
-            destination.setImportance(max);
-            destination.insert(0, String.format(
-                    successMessage,
-                    cmsType.getName(),
-                    count,
-                    result.size())
-            );
-        }
-    }
 
     @Override
     public Pair<EnvType, Optional<Destination>> transmit() {

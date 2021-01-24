@@ -8,6 +8,7 @@ import web.analyzer.JsScriptDissector;
 import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.cms.AbstractCMSProcessor;
+import web.struct.assignment.CMSResultAssigner;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
@@ -21,7 +22,7 @@ import java.util.regex.Pattern;
 import static web.analyzer.Importance.HIGH;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class VueCheckProcessor extends AbstractCMSProcessor {
+public class VueCheckProcessor extends AbstractCMSProcessor implements CMSResultAssigner {
 
     private static final CMSType cmsType = CMSType.VUE_JS;
 

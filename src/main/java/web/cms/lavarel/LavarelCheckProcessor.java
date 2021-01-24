@@ -7,6 +7,7 @@ import web.analyzer.Importance;
 import web.analyzer.check.HeaderAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
+import web.struct.assignment.CMSResultAssigner;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
@@ -22,7 +23,7 @@ import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.LOW;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class LavarelCheckProcessor extends AbstractCMSProcessor {
+public class LavarelCheckProcessor extends AbstractCMSProcessor implements CMSResultAssigner {
 
     private static final CMSType cmsType = CMSType.LAVAREL;
 

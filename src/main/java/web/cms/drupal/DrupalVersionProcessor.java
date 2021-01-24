@@ -1,42 +1,38 @@
 package web.cms.drupal;
 
 import com.google.inject.Inject;
-import kotlin.Pair;
+import com.google.inject.name.Named;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.version.VersionAnalyzer;
-import web.cms.AbstractCMSProcessor;
-import web.cms.CMSType;
+import web.cms.AbstractCMSVersionProcessor;
 import web.http.Request;
 import web.parser.TextParser;
+import web.printer.Printer;
 import web.struct.Destination;
 
-import java.util.Optional;
 import java.util.regex.Pattern;
 
-@RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class DrupalVersionProcessor extends AbstractCMSProcessor {
+import static web.printer.PrinterMarker.VERSION_PRINTER;
 
-    private static final CMSType cmsType = CMSType.DRUPAL;
+@RequiredArgsConstructor(onConstructor_ = { @Inject })
+public class DrupalVersionProcessor extends AbstractCMSVersionProcessor {
 
     private final Request request;
     private final TextParser<String> parser;
     private final Destination destination;
+    @Named(VERSION_PRINTER)
+    private final Printer printer;
 
     @Override
     public void process() {
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination);
-        versionAnalyzer.prepare(host, cmsType);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionList).prepare(host);
         versionAnalyzer.checkViaMainPageMetaTag(new Pattern[] {
                 Pattern.compile("<meta name=\"[gG]enerator\" content=\"Drupal\\s(.+?)\\s")
         });
         versionAnalyzer.checkViaHeaders(Pattern.compile("drupal\\s(.*)\\s"), "x-generator");
-    }
 
-    @Override
-    public Pair<CMSType, Optional<Destination>> transmit() {
-        return destination.isFull()
-                ? new Pair<>(cmsType, Optional.of(destination))
-                : new Pair<>(cmsType, Optional.empty());
+        assign(destination, versionList);
+        printer.print(destination);
     }
 
 }

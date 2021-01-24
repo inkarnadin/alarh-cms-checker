@@ -1,37 +1,35 @@
 package web.cms.datalife;
 
 import com.google.inject.Inject;
-import kotlin.Pair;
+import com.google.inject.name.Named;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.version.VersionAnalyzer;
-import web.cms.AbstractCMSProcessor;
-import web.cms.CMSType;
-import web.http.Host;
+import web.cms.AbstractCMSVersionProcessor;
 import web.http.Request;
 import web.parser.TextParser;
+import web.printer.Printer;
 import web.struct.Destination;
 
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static web.http.ContentType.*;
+import static web.printer.PrinterMarker.VERSION_PRINTER;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class DataLifeVersionProcessor extends AbstractCMSProcessor {
-
-    private static final CMSType cmsType = CMSType.DATALIFE_ENGINE;
+public class DataLifeVersionProcessor extends AbstractCMSVersionProcessor {
 
     private final Request request;
     private final TextParser<String> textParser;
     private final Destination destination;
+    @Named(VERSION_PRINTER)
+    private final Printer printer;
 
     private final DataLifeLogoVersionMap logoMap = new DataLifeLogoVersionMap();
     private final DataLifeScriptVersionMap scriptMap = new DataLifeScriptVersionMap();
 
     @Override
     public void process() {
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, null, destination);
-        versionAnalyzer.prepare(host, cmsType);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, null, versionList).prepare(host);
         versionAnalyzer.checkViaLogoFiles(logoMap, new String[] { IMAGE_JPG, IMAGE_PNG }, new String[] {
                 "engine/skins/images/logos.jpg",
                 "engine/skins/images/logo.png",
@@ -44,13 +42,9 @@ public class DataLifeVersionProcessor extends AbstractCMSProcessor {
         versionAnalyzer.checkViaPageKeywords("/engine/ajax/updates.php", new Pattern[] {
                 Pattern.compile("Актуальная версия скрипта: (.*)")
         });
-    }
 
-    @Override
-    public Pair<CMSType, Optional<Destination>> transmit() {
-        return destination.isFull()
-                ? new Pair<>(cmsType, Optional.of(destination))
-                : new Pair<>(cmsType, Optional.empty());
+        assign(destination, versionList);
+        printer.print(destination);
     }
 
 }

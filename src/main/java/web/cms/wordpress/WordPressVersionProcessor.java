@@ -1,31 +1,33 @@
 package web.cms.wordpress;
 
 import com.google.inject.Inject;
-import kotlin.Pair;
+import com.google.inject.name.Named;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.version.VersionAnalyzer;
 import web.cms.AbstractCMSProcessor;
-import web.cms.CMSType;
+import web.cms.AbstractCMSVersionProcessor;
 import web.http.Request;
 import web.parser.TextParser;
+import web.printer.Printer;
 import web.struct.Destination;
+import web.struct.assignment.VersionAssigner;
 
-import java.util.Optional;
 import java.util.regex.Pattern;
 
-@RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class WordPressVersionProcessor extends AbstractCMSProcessor {
+import static web.printer.PrinterMarker.VERSION_PRINTER;
 
-    private static final CMSType cmsType = CMSType.WORDPRESS;
+@RequiredArgsConstructor(onConstructor_ = { @Inject })
+public class WordPressVersionProcessor extends AbstractCMSVersionProcessor {
 
     private final Request request;
     private final TextParser<String> parser;
     private final Destination destination;
+    @Named(VERSION_PRINTER)
+    private final Printer printer;
 
     @Override
     public void process() {
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, destination);
-        versionAnalyzer.prepare(host, CMSType.WORDPRESS);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionList).prepare(host);
         versionAnalyzer.checkViaMainPageMetaTag(new Pattern[] {
                 Pattern.compile("<meta name=\"[gG]enerator\" content=\"WordPress\\s(.*?)\" />")
         });
@@ -50,13 +52,9 @@ public class WordPressVersionProcessor extends AbstractCMSProcessor {
                 "wp-includes/js/wp-emoji-loader.js",
                 "wp-includes/js/wp-pointer.js",
         }, false);
-    }
 
-    @Override
-    public Pair<CMSType, Optional<Destination>> transmit() {
-        return destination.isFull()
-                ? new Pair<>(cmsType, Optional.of(destination))
-                : new Pair<>(cmsType, Optional.empty());
+        assign(destination, versionList);
+        printer.print(destination);
     }
 
 }

@@ -1,43 +1,40 @@
 package web.cms.bitrix;
 
 import com.google.inject.Inject;
-import kotlin.Pair;
+import com.google.inject.name.Named;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.VersionMap;
 import web.analyzer.version.VersionAnalyzer;
-import web.cms.AbstractCMSProcessor;
-import web.cms.CMSType;
+import web.cms.AbstractCMSVersionProcessor;
 import web.http.Request;
 import web.parser.TextParser;
 import web.parser.XMLParser;
+import web.printer.Printer;
 import web.struct.Destination;
 
-import java.util.Optional;
 import java.util.regex.Pattern;
 
-@RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class BitrixVersionProcessor extends AbstractCMSProcessor {
+import static web.printer.PrinterMarker.VERSION_PRINTER;
 
-    private static final CMSType cmsType = CMSType.BITRIX;
+@RequiredArgsConstructor(onConstructor_ = { @Inject })
+public class BitrixVersionProcessor extends AbstractCMSVersionProcessor {
 
     private final Request request;
     private final XMLParser<String> xmlParser;
     private final TextParser<String> textParser;
     private final Destination destination;
+    @Named(VERSION_PRINTER)
+    private final Printer printer;
 
     private final VersionMap yearMap = new BitrixYearVersionMap();
 
     @Override
     public void process() {
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, xmlParser, destination).prepare(host, cmsType);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, xmlParser, versionList).prepare(host);
         versionAnalyzer.checkViaYear(yearMap, new String[] { "bitrix/admin" }, Pattern.compile("Управление сайтом.*Битрикс, (\\d{4})"));
-    }
 
-    @Override
-    public Pair<CMSType, Optional<Destination>> transmit() {
-        return destination.isFull()
-                ? new Pair<>(cmsType, Optional.of(destination))
-                : new Pair<>(cmsType, Optional.empty());
+        assign(destination, versionList);
+        printer.print(destination);
     }
 
 }

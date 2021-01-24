@@ -3,12 +3,12 @@ package web.cms.host;
 import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
-import web.analyzer.AnalyzeConst;
 import web.analyzer.Importance;
 import web.analyzer.check.HeaderAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
+import web.struct.assignment.CMSResultAssigner;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
@@ -25,7 +25,7 @@ import static web.analyzer.Importance.LOW;
 import static web.http.ContentType.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class HostCmsCheckProcessor extends AbstractCMSProcessor {
+public class HostCmsCheckProcessor extends AbstractCMSProcessor implements CMSResultAssigner {
 
     private static final CMSType cmsType = CMSType.HOST_CMS;
 

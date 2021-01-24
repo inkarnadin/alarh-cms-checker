@@ -13,20 +13,15 @@ public class EnvironmentChecker extends AbstractChecker {
         phpMyAdminConnector.configure(params);
         phpMyAdminConnector.check();
 
-        System.out.println();
-
         Connector phpConnector = EnvironmentFactory.getEnvironmentConnector(EnvType.PHP);
         phpConnector.configure(params);
-        phpConnector.checkVersion();
-
-        System.out.println();
+        phpConnector.check();
 
         Connector webServerConnector = EnvironmentFactory.getEnvironmentConnector(EnvType.WEB_SERVER);
         webServerConnector.configure(params);
         webServerConnector.check();
 
         if (Preferences.isEnableWhoIsInfo()) {
-            System.out.println();
             Connector hosterConnector = EnvironmentFactory.getEnvironmentConnector(EnvType.WHOIS);
             hosterConnector.configure(params);
             hosterConnector.check();

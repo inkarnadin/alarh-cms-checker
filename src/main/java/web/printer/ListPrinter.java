@@ -2,7 +2,7 @@ package web.printer;
 
 import web.struct.Destination;
 
-public class CommonPrinter implements Printer {
+public class ListPrinter implements Printer {
 
     @Override
     public void print(Destination destination) {

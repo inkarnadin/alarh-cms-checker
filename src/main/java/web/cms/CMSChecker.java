@@ -1,7 +1,9 @@
 package web.cms;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import lombok.RequiredArgsConstructor;
+import web.printer.Printer;
 import web.struct.*;
 
 import java.util.ArrayList;
@@ -14,12 +16,14 @@ import java.util.stream.Collectors;
 public class CMSChecker extends AbstractChecker {
 
     private final Determinant<CMSType, Destination> determinant;
+    @Named("checkPrinter")
+    private final Printer printer;
 
     @Override
     public void check(Params params) {
         Map<CMSType, Destination> determinate = filterLowImportance(sortByValue(determinant.define(params)));
         determinate.forEach((cmsType, destination) -> {
-            System.out.println(destination.fetch().get(0) + " => " + destination.getImportance());
+            printer.print(destination);
 
             Connector connector = CMSFactory.getCMSConnector(cmsType);
             connector.configure(params);

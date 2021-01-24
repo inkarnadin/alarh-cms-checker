@@ -13,6 +13,7 @@ import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
 import web.struct.Destination;
+import web.struct.assignment.CMSResultAssigner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import static web.http.ContentType.IMAGE_JPG;
 import static web.http.ContentType.IMAGE_PNG;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class DataLifeCheckProcessor extends AbstractCMSProcessor {
+public class DataLifeCheckProcessor extends AbstractCMSProcessor implements CMSResultAssigner {
 
     private static final CMSType cmsType = CMSType.DATALIFE_ENGINE;
 
