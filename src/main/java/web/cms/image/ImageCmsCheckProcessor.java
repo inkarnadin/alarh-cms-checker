@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
+import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
@@ -34,6 +35,10 @@ public class ImageCmsCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
+        mainPageAnalyzer.checkViaMainPageKeywords(LOW, new Pattern[] {
+                Pattern.compile("meta name=\"cmsmagazine\"")
+        });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "admin/login" }, new Pattern[] {
                 Pattern.compile("Панель управления - Image CMS"),
