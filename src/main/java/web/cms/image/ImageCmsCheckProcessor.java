@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
-import web.analyzer.check.HeaderAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
@@ -21,7 +20,6 @@ import java.util.regex.Pattern;
 import static web.analyzer.AnalyzeConst.*;
 import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.LOW;
-import static web.http.ContentType.APPLICATION_X_JAVASCRIPT;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class ImageCmsCheckProcessor extends AbstractCMSProcessor {
@@ -39,6 +37,13 @@ public class ImageCmsCheckProcessor extends AbstractCMSProcessor {
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "admin/login" }, new Pattern[] {
                 Pattern.compile("Панель управления - Image CMS"),
+        });
+        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
+        pathAnalyzer.checkViaFiles(LOW, SUCCESS_CODES, SCRIPTS, new String[] {
+                "templates/administrator/js/scripts.js"
+        });
+        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, IMAGES, new String[] {
+                "templates/administrator/img/logo_login_imagecms.png"
         });
 
         assign(destination, result, cmsType);
