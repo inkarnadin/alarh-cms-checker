@@ -25,6 +25,7 @@ import web.cms.umi.UmiConnector;
 import web.cms.vamshop.VamShopConnector;
 import web.cms.vigbo.VigboConnector;
 import web.cms.vue.VueConnector;
+import web.cms.wix.WixConnector;
 import web.cms.wordpress.WordPressConnector;
 import web.cms.yii.YiiConnector;
 import web.struct.Connector;
@@ -59,7 +60,8 @@ public enum CMSType {
     TILDA                   (301, "Tilda",            TildaConnector.class),
     VIGBO                   (302, "Vigbo CMS",        VigboConnector.class),
     INSALES                 (303, "InSales",          InSalesConnector.class),
-    UKIT                    (304, "uKit",             UkitConnector.class);
+    UKIT                    (304, "uKit",             UkitConnector.class),
+    WIX                     (305, "Wix",              WixConnector.class);
 
     private final int id;
     private final String name;

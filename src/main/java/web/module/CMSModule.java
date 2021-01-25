@@ -59,6 +59,8 @@ import web.cms.vigbo.VigboConnector;
 import web.cms.vue.VueCheckProcessor;
 import web.cms.vue.VueConnector;
 import web.cms.vue.VueVersionProcessor;
+import web.cms.wix.WixCheckProcessor;
+import web.cms.wix.WixConnector;
 import web.cms.wordpress.*;
 import web.cms.yii.YiiCheckProcessor;
 import web.cms.yii.YiiConnector;
@@ -134,6 +136,7 @@ public class CMSModule extends AbstractModule {
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(VIGBO_CHECK)).to(VigboCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(INSALES_CHECK)).to(InSalesCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(UKIT_CHECK)).to(UkitCheckProcessor.class);
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(WIX_CHECK)).to(WixCheckProcessor.class);
 
         Multibinder<Connector> connectorMultibinder = Multibinder.newSetBinder(binder(), new TypeLiteral<>(){});
         connectorMultibinder.addBinding().to(WordPressConnector.class);
@@ -161,6 +164,7 @@ public class CMSModule extends AbstractModule {
         connectorMultibinder.addBinding().to(VigboConnector.class);
         connectorMultibinder.addBinding().to(InSalesConnector.class);
         connectorMultibinder.addBinding().to(UkitConnector.class);
+        connectorMultibinder.addBinding().to(WixConnector.class);
 
         bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
     }

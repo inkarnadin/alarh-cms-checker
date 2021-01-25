@@ -77,4 +77,6 @@ public class CMSMarker {
 
     public static final String UKIT_CHECK = "uKitCheck";
 
+    public static final String WIX_CHECK = "wixCheck";
+
 }
