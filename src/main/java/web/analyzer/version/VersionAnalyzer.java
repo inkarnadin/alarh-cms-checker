@@ -5,19 +5,15 @@ import okhttp3.Headers;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.apache.maven.artifact.versioning.ComparableVersion;
-import web.cms.CMSType;
-import web.env.EnvType;
 import web.http.ContentType;
 import web.http.Host;
 import web.http.Request;
 import web.http.ResponseBodyHandler;
 import web.parser.TextParser;
 import web.parser.XMLParser;
-import web.struct.Destination;
 import web.analyzer.VersionMap;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

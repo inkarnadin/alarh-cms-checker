@@ -21,7 +21,6 @@ import java.util.regex.Pattern;
 import static web.analyzer.AnalyzeConst.*;
 import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.LOW;
-import static web.http.ContentType.APPLICATION_X_JAVASCRIPT;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class HostCmsCheckProcessor extends AbstractCMSProcessor {
@@ -43,7 +42,7 @@ public class HostCmsCheckProcessor extends AbstractCMSProcessor {
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
         pathAnalyzer.checkViaPaths(LOW, DENIED_CODES, new String[] { "modules", "admin" });
         pathAnalyzer.checkViaPaths(HIGH, DENIED_CODES, new String[] { "hostcmsfiles" });
-        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, new String[] { APPLICATION_X_JAVASCRIPT }, new String[] {
+        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, SCRIPT_FILES, new String[] {
                 "modules/skin/bootstrap/js/hostcms.js"
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);

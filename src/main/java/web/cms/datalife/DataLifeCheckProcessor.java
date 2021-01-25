@@ -19,10 +19,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.AnalyzeConst.IMAGE_FILES;
 import static web.analyzer.AnalyzeConst.SUCCESS_CODES;
 import static web.analyzer.Importance.*;
-import static web.http.ContentType.IMAGE_JPG;
-import static web.http.ContentType.IMAGE_PNG;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class DataLifeCheckProcessor extends AbstractCMSProcessor {
@@ -49,7 +48,7 @@ public class DataLifeCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("engine/classes/js/dle_js\\.js")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
-        pathAnalyzer.checkViaFiles(LOW, SUCCESS_CODES, new String[] { IMAGE_JPG, IMAGE_PNG }, new String[] {
+        pathAnalyzer.checkViaFiles(LOW, SUCCESS_CODES, IMAGE_FILES, new String[] {
                 "engine/skins/images/logos.jpg",
                 "engine/skins/images/logo.png",
                 "templates/Default/images/logotype.png",

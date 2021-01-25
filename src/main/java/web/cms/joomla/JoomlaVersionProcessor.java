@@ -13,8 +13,7 @@ import web.struct.Destination;
 
 import java.util.regex.Pattern;
 
-import static web.http.ContentType.APPLICATION_XML;
-import static web.http.ContentType.TEXT_XML;
+import static web.analyzer.AnalyzeConst.XML_FILES;
 import static web.printer.PrinterMarker.VERSION_PRINTER;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
@@ -33,9 +32,9 @@ public class JoomlaVersionProcessor extends AbstractCMSVersionProcessor {
         versionAnalyzer.checkViaMainPageMetaTag(new Pattern[] {
                 Pattern.compile("<meta name=\"generator\".*Version\\s(.*)\" />")
         });
-        versionAnalyzer.checkViaXMlFiles(new String[] { TEXT_XML, APPLICATION_XML }, "administrator/manifests/files/joomla.xml");
-        versionAnalyzer.checkViaXMlFiles(new String[] { TEXT_XML, APPLICATION_XML }, "language/en-GB/en-GB.xml");
-        versionAnalyzer.checkViaXMlFiles(new String[] { TEXT_XML, APPLICATION_XML }, "administrator/components/com_config/config.xml");
+        versionAnalyzer.checkViaXMlFiles(XML_FILES, "administrator/manifests/files/joomla.xml");
+        versionAnalyzer.checkViaXMlFiles(XML_FILES, "language/en-GB/en-GB.xml");
+        versionAnalyzer.checkViaXMlFiles(XML_FILES, "administrator/components/com_config/config.xml");
 
         assign(destination, versionList);
         printer.print(destination);

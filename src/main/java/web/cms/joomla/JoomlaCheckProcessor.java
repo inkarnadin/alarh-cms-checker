@@ -18,12 +18,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static web.analyzer.AnalyzeConst.ACCEPT_CODES;
-import static web.analyzer.AnalyzeConst.SUCCESS_CODES;
+import static web.analyzer.AnalyzeConst.*;
 import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.LOW;
-import static web.http.ContentType.APPLICATION_XML;
-import static web.http.ContentType.TEXT_XML;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class JoomlaCheckProcessor extends AbstractCMSProcessor {
@@ -46,7 +43,7 @@ public class JoomlaCheckProcessor extends AbstractCMSProcessor {
                 "administrator",
                 "administrator/components/com_config"
         });
-        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, new String[] { TEXT_XML, APPLICATION_XML }, new String[] {
+        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, XML_FILES, new String[] {
                 "language/en-GB/en-GB.xml",
                 "administrator/manifests/files/joomla.xml",
                 "administrator/components/com_config/config.xml",

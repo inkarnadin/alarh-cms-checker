@@ -19,10 +19,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static web.analyzer.AnalyzeConst.ACCEPT_CODES;
-import static web.analyzer.AnalyzeConst.SUCCESS_CODES;
+import static web.analyzer.AnalyzeConst.*;
 import static web.analyzer.Importance.*;
-import static web.http.ContentType.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class WordPressCheckProcessor extends AbstractCMSProcessor {
@@ -59,9 +57,9 @@ public class WordPressCheckProcessor extends AbstractCMSProcessor {
                 "wp-content",
                 "wp-includes"
         });
-        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, new String[] { TEXT_XML, APPLICATION_XML }, new String[] { "wp-includes/wlwmanifest.xml" });
-        pathAnalyzer.checkViaFiles(MEDIUM, SUCCESS_CODES, new String[] { APPLICATION_JSON }, new String [] { "wp-json" });
-        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, new String[] { APPLICATION_JAVASCRIPT, APPLICATION_X_JAVASCRIPT }, new String[] {
+        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, XML_FILES, new String[] { "wp-includes/wlwmanifest.xml" });
+        pathAnalyzer.checkViaFiles(MEDIUM, SUCCESS_CODES, JSON_FILES, new String [] { "wp-json" });
+        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, SCRIPT_FILES, new String[] {
                 "wp-includes/js/heartbeat.js",
                 "wp-includes/js/json2.js",
                 "wp-includes/js/wp-api.js",

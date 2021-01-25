@@ -39,10 +39,10 @@ public class ImageCmsCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("Панель управления - Image CMS"),
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
-        pathAnalyzer.checkViaFiles(LOW, SUCCESS_CODES, SCRIPTS, new String[] {
+        pathAnalyzer.checkViaFiles(LOW, SUCCESS_CODES, SCRIPT_FILES, new String[] {
                 "templates/administrator/js/scripts.js"
         });
-        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, IMAGES, new String[] {
+        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, IMAGE_FILES, new String[] {
                 "templates/administrator/img/logo_login_imagecms.png"
         });
 

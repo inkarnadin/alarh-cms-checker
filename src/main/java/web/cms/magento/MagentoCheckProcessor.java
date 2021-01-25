@@ -18,11 +18,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.AnalyzeConst.SCRIPT_FILES;
 import static web.analyzer.AnalyzeConst.SUCCESS_CODES;
 import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.MEDIUM;
-import static web.http.ContentType.APPLICATION_JAVASCRIPT;
-import static web.http.ContentType.TEXT_JAVASCRIPT;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class MagentoCheckProcessor extends AbstractCMSProcessor {
@@ -54,7 +53,7 @@ public class MagentoCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("Magento is a trademark of Magento")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
-        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, new String[] { APPLICATION_JAVASCRIPT, TEXT_JAVASCRIPT }, new String[] {
+        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, SCRIPT_FILES, new String[] {
                 "js/mage/captcha.js",
                 "js/mage/adminhtml/form.js",
                 "js/mage/cookies.js",

@@ -19,12 +19,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static web.analyzer.AnalyzeConst.BASE_PATH;
-import static web.analyzer.AnalyzeConst.SUCCESS_CODES;
+import static web.analyzer.AnalyzeConst.*;
 import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.LOW;
-import static web.http.ContentType.APPLICATION_JAVASCRIPT;
-import static web.http.ContentType.APPLICATION_X_JAVASCRIPT;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class OpenCardCheckProcessor extends AbstractCMSProcessor {
@@ -56,7 +53,7 @@ public class OpenCardCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("route=common/forgotten")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
-        pathAnalyzer.checkViaFiles(LOW, SUCCESS_CODES, new String[] { APPLICATION_JAVASCRIPT, APPLICATION_X_JAVASCRIPT }, new String[] {
+        pathAnalyzer.checkViaFiles(LOW, SUCCESS_CODES, SCRIPT_FILES, new String[] {
                 "admin/view/javascript/common.js",
                 "catalog/view/javascript/common.js",
                 "catalog/view/javascript/support.js"

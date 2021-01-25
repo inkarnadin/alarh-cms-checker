@@ -21,8 +21,6 @@ import java.util.regex.Pattern;
 
 import static web.analyzer.AnalyzeConst.*;
 import static web.analyzer.Importance.*;
-import static web.http.ContentType.APPLICATION_XML;
-import static web.http.ContentType.TEXT_XML;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class BitrixCheckProcessor extends AbstractCMSProcessor {
@@ -58,7 +56,7 @@ public class BitrixCheckProcessor extends AbstractCMSProcessor {
                 "bitrix/tools",
                 "bitrix/components"
         });
-        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, new String[] { TEXT_XML, APPLICATION_XML }, new String[] {
+        pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, XML_FILES, new String[] {
                 "bitrix/p3p.xml"
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);

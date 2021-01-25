@@ -12,7 +12,8 @@ import web.struct.Destination;
 
 import java.util.regex.Pattern;
 
-import static web.http.ContentType.*;
+import static web.analyzer.AnalyzeConst.IMAGE_FILES;
+import static web.analyzer.AnalyzeConst.SCRIPT_FILES;
 import static web.printer.PrinterMarker.VERSION_PRINTER;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
@@ -30,13 +31,13 @@ public class DataLifeVersionProcessor extends AbstractCMSVersionProcessor {
     @Override
     public void process() {
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, null, versionList).prepare(host);
-        versionAnalyzer.checkViaLogoFiles(logoMap, new String[] { IMAGE_JPG, IMAGE_PNG }, new String[] {
+        versionAnalyzer.checkViaLogoFiles(logoMap, IMAGE_FILES, new String[] {
                 "engine/skins/images/logos.jpg",
                 "engine/skins/images/logo.png",
                 "templates/Default/images/logotype.png",
                 "templates/Default/images/logo.png"
         });
-        versionAnalyzer.checkViaScriptLength(scriptMap, new String[] { APPLICATION_X_JAVASCRIPT, APPLICATION_JAVASCRIPT }, new String[] {
+        versionAnalyzer.checkViaScriptLength(scriptMap, SCRIPT_FILES, new String[] {
                 "engine/classes/js/dle_js.js"
         });
         versionAnalyzer.checkViaPageKeywords("/engine/ajax/updates.php", new Pattern[] {
