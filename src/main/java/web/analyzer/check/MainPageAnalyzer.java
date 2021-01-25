@@ -2,7 +2,6 @@ package web.analyzer.check;
 
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
-import okhttp3.Headers;
 import okhttp3.Response;
 import web.analyzer.Importance;
 import web.http.Host;

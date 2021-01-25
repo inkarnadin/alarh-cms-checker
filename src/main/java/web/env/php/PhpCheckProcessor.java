@@ -5,11 +5,11 @@ import com.google.inject.name.Named;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import web.analyzer.version.VersionAnalyzer;
-import web.env.EnvType;
-import web.printer.Printer;
 import web.env.AbstractEnvironmentProcessor;
+import web.env.EnvType;
 import web.http.Request;
 import web.parser.TextParser;
+import web.printer.Printer;
 import web.struct.Destination;
 
 import java.util.regex.Pattern;

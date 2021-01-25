@@ -8,7 +8,9 @@ import web.http.Host;
 import web.http.Request;
 import web.parser.TextParser;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 

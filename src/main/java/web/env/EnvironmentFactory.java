@@ -2,8 +2,8 @@ package web.env;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import web.struct.Connector;
 import web.module.EnvModule;
+import web.struct.Connector;
 
 public class EnvironmentFactory {
 

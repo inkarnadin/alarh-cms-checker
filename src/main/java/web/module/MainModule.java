@@ -1,17 +1,13 @@
 package web.module;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Scopes;
 import lombok.SneakyThrows;
 import web.cms.CMSChecker;
 import web.env.EnvironmentChecker;
-import web.http.Client;
-import web.http.GetRequest;
-import web.http.HttpClient;
-import web.http.Request;
 import web.module.annotation.Cms;
 import web.module.annotation.Env;
-import web.struct.*;
+import web.struct.Checker;
+import web.struct.Runner;
 
 public class MainModule extends AbstractModule {
 

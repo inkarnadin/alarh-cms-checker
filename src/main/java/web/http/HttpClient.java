@@ -1,8 +1,8 @@
 package web.http;
 
 import lombok.SneakyThrows;
-import okhttp3.*;
 import okhttp3.Request;
+import okhttp3.*;
 
 import java.io.File;
 import java.util.Objects;

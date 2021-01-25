@@ -1,8 +1,8 @@
 package web.http;
 
 import com.google.inject.Inject;
-import okhttp3.*;
 import okhttp3.Request;
+import okhttp3.Response;
 
 import static web.http.Headers.COOKIE;
 import static web.http.Headers.USER_AGENT_HEADER;
