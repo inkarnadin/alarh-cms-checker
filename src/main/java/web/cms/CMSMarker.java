@@ -44,6 +44,8 @@ public class CMSMarker {
     public static final String UMI_CHECK = "umiCheck";
     public static final String UMI_VERSION = "umiVersion";
 
+    public static final String IMAGE_CHECK = "imageCheck";
+
     /**
      * Frameworks
      */

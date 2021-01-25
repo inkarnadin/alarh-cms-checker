@@ -17,6 +17,8 @@ import web.cms.drupal.DrupalConnector;
 import web.cms.drupal.DrupalVersionProcessor;
 import web.cms.host.HostCmsCheckProcessor;
 import web.cms.host.HostCmsConnector;
+import web.cms.image.ImageCmsCheckProcessor;
+import web.cms.image.ImageConnector;
 import web.cms.insales.InSalesCheckProcessor;
 import web.cms.insales.InSalesConnector;
 import web.cms.joomla.*;
@@ -111,6 +113,8 @@ public class CMSModule extends AbstractModule {
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(UMI_CHECK)).to(UmiCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(UMI_VERSION)).to(UmiVersionProcessor.class);
 
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(IMAGE_CHECK)).to(ImageCmsCheckProcessor.class);
+
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(LAVAREL_CHECK)).to(LavarelCheckProcessor.class);
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(YII_CHECK)).to(YiiCheckProcessor.class);
@@ -146,6 +150,7 @@ public class CMSModule extends AbstractModule {
         connectorMultibinder.addBinding().to(ShopifyConnector.class);
         connectorMultibinder.addBinding().to(HostCmsConnector.class);
         connectorMultibinder.addBinding().to(UmiConnector.class);
+        connectorMultibinder.addBinding().to(ImageConnector.class);
         connectorMultibinder.addBinding().to(LavarelConnector.class);
         connectorMultibinder.addBinding().to(YiiConnector.class);
         connectorMultibinder.addBinding().to(NuxtConnector.class);

@@ -6,6 +6,7 @@ import web.cms.bitrix.BitrixConnector;
 import web.cms.datalife.DataLifeConnector;
 import web.cms.drupal.DrupalConnector;
 import web.cms.host.HostCmsConnector;
+import web.cms.image.ImageConnector;
 import web.cms.insales.InSalesConnector;
 import web.cms.joomla.JoomlaConnector;
 import web.cms.lavarel.LavarelConnector;
@@ -46,6 +47,7 @@ public enum CMSType {
     SHOPIFY                 (111, "Shopify",          ShopifyConnector.class),
     HOST_CMS                (112, "HostCMS",          HostCmsConnector.class),
     UMI_CMS                 (113, "UMI.CMS",          UmiConnector.class),
+    IMAGE_CMS               (114, "ImageCMS",         ImageConnector.class),
 
     LAVAREL                 (201, "Lavarel",          LavarelConnector.class),
     YII                     (202, "Yii Framework",    YiiConnector.class),

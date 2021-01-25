@@ -40,6 +40,7 @@ public class Runner {
         System.out.println(" * Shopify");
         System.out.println(" * Moguta.CMS (version)");
         System.out.println(" * HostCMS");
+        System.out.println(" * ImageCMS");
         System.out.println("===========================================================");
 
         try (Scanner scanner = new Scanner(System.in)) {
