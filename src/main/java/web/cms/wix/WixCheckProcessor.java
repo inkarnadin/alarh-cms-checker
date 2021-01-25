@@ -43,7 +43,7 @@ public class WixCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("wix-warmup-data"),
         });
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
-        headerAnalyzer.checkViaHeaders(HIGH, BASE_PATH, new String[] { "x-wix-request-id" });
+        headerAnalyzer.checkViaHeaders(HIGH, BASE_PATH, new String[] { "x-wix-request-id", "x-wix-viewer-type" });
 
         assign(destination, result, cmsType);
     }
