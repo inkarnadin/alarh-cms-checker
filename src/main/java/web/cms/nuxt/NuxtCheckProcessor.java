@@ -8,7 +8,6 @@ import web.analyzer.JsScriptDissector;
 import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.cms.AbstractCMSProcessor;
-import web.struct.assignment.CMSResultAssigner;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
@@ -22,7 +21,7 @@ import java.util.regex.Pattern;
 import static web.analyzer.Importance.HIGH;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class NuxtCheckProcessor extends AbstractCMSProcessor implements CMSResultAssigner {
+public class NuxtCheckProcessor extends AbstractCMSProcessor {
 
     private static final CMSType cmsType = CMSType.NUXT_JS;
 

@@ -11,7 +11,7 @@ import web.struct.Processor;
 
 import java.util.Optional;
 
-import static web.cms.CMSMarker.*;
+import static web.cms.CMSMarker.HOST_CHECK;
 
 @RequiredArgsConstructor(onConstructor_ = @__(@Inject))
 public class HostCmsConnector extends AbstractCMSConnector {

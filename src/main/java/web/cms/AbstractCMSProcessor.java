@@ -4,10 +4,14 @@ import kotlin.Pair;
 import web.http.Host;
 import web.struct.Destination;
 import web.struct.Processor;
+import web.struct.assignment.DefaultAssigner;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
-public abstract class AbstractCMSProcessor implements Processor<CMSType> {
+public abstract class AbstractCMSProcessor implements Processor<CMSType>, DefaultAssigner {
 
     protected final Map<String, Integer> errorMap = new HashMap<>();
 

@@ -8,7 +8,6 @@ import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
-import web.struct.assignment.CMSResultAssigner;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
@@ -20,12 +19,13 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static web.analyzer.AnalyzeConst.SUCCESS_CODES;
-import static web.analyzer.Importance.*;
+import static web.analyzer.Importance.HIGH;
+import static web.analyzer.Importance.MEDIUM;
 import static web.http.ContentType.APPLICATION_JAVASCRIPT;
 import static web.http.ContentType.TEXT_JAVASCRIPT;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class MagentoCheckProcessor extends AbstractCMSProcessor implements CMSResultAssigner {
+public class MagentoCheckProcessor extends AbstractCMSProcessor {
 
     private static final CMSType cmsType = CMSType.MAGENTO;
 

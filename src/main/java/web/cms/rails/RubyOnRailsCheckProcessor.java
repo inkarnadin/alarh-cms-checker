@@ -8,7 +8,6 @@ import web.analyzer.JsScriptDissector;
 import web.analyzer.check.HeaderAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.cms.AbstractCMSProcessor;
-import web.struct.assignment.CMSResultAssigner;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
@@ -24,7 +23,7 @@ import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.LOW;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class RubyOnRailsCheckProcessor extends AbstractCMSProcessor implements CMSResultAssigner {
+public class RubyOnRailsCheckProcessor extends AbstractCMSProcessor {
 
     private static final CMSType cmsType = CMSType.RUBY_ON_RAILS;
 

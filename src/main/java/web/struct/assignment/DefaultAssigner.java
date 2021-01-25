@@ -9,7 +9,7 @@ import java.util.List;
 
 import static web.analyzer.Importance.UNDEFINED;
 
-public interface CMSResultAssigner {
+public interface DefaultAssigner {
 
     String successMessage = "  * %s tags have been found (%s/%s)";
 

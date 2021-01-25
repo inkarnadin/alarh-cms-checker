@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
 import web.analyzer.check.HeaderAnalyzer;
 import web.cms.AbstractCMSProcessor;
-import web.struct.assignment.CMSResultAssigner;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
@@ -21,7 +20,7 @@ import static web.analyzer.AnalyzeConst.BASE_PATH;
 import static web.analyzer.Importance.HIGH;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class UkitCheckProcessor extends AbstractCMSProcessor implements CMSResultAssigner {
+public class UkitCheckProcessor extends AbstractCMSProcessor {
 
     private static final CMSType cmsType = CMSType.UKIT;
 

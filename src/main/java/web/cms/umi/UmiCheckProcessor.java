@@ -7,7 +7,6 @@ import web.analyzer.Importance;
 import web.analyzer.check.HeaderAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
-import web.struct.assignment.CMSResultAssigner;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
@@ -18,12 +17,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static web.analyzer.AnalyzeConst.*;
+import static web.analyzer.AnalyzeConst.ACCEPT_CODES;
+import static web.analyzer.AnalyzeConst.BASE_PATH;
 import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.LOW;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class UmiCheckProcessor extends AbstractCMSProcessor implements CMSResultAssigner {
+public class UmiCheckProcessor extends AbstractCMSProcessor {
 
     private static final CMSType cmsType = CMSType.UMI_CMS;
 

@@ -11,7 +11,8 @@ import web.struct.Processor;
 
 import java.util.Optional;
 
-import static web.cms.CMSMarker.*;
+import static web.cms.CMSMarker.MODX_CHECK;
+import static web.cms.CMSMarker.MODX_VERSION;
 
 @RequiredArgsConstructor(onConstructor_ = @__(@Inject))
 public class ModXConnector extends AbstractCMSConnector {

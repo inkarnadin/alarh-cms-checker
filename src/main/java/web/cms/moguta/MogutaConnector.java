@@ -11,7 +11,8 @@ import web.struct.Processor;
 
 import java.util.Optional;
 
-import static web.cms.CMSMarker.*;
+import static web.cms.CMSMarker.MOGUTA_CHECK;
+import static web.cms.CMSMarker.MOGUTA_VERSION;
 
 @RequiredArgsConstructor(onConstructor_ = @__(@Inject))
 public class MogutaConnector extends AbstractCMSConnector {

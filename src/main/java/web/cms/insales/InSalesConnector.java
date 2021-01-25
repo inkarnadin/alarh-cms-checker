@@ -11,7 +11,7 @@ import web.struct.Processor;
 
 import java.util.Optional;
 
-import static web.cms.CMSMarker.*;
+import static web.cms.CMSMarker.INSALES_CHECK;
 
 @RequiredArgsConstructor(onConstructor_ = @__(@Inject))
 public class InSalesConnector extends AbstractCMSConnector {

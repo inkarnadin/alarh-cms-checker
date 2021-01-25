@@ -9,11 +9,11 @@ import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
-import web.struct.assignment.CMSResultAssigner;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
 import web.struct.Destination;
+import web.struct.assignment.DefaultAssigner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +21,11 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static web.analyzer.AnalyzeConst.DENIED_CODES;
-import static web.analyzer.Importance.*;
+import static web.analyzer.Importance.HIGH;
+import static web.analyzer.Importance.LOW;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class YiiCheckProcessor extends AbstractCMSProcessor implements CMSResultAssigner {
+public class YiiCheckProcessor extends AbstractCMSProcessor implements DefaultAssigner {
 
     private static final CMSType cmsType = CMSType.YII;
 

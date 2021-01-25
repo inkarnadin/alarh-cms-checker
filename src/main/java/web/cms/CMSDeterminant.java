@@ -3,7 +3,10 @@ package web.cms;
 import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.SneakyThrows;
-import web.struct.*;
+import web.struct.Connector;
+import web.struct.Destination;
+import web.struct.Determinant;
+import web.struct.Params;
 
 import java.util.*;
 import java.util.concurrent.Callable;

@@ -11,7 +11,8 @@ import web.struct.Processor;
 
 import java.util.Optional;
 
-import static web.cms.CMSMarker.*;
+import static web.cms.CMSMarker.DRUPAL_CHECK;
+import static web.cms.CMSMarker.DRUPAL_VERSION;
 
 @RequiredArgsConstructor(onConstructor_ = @__(@Inject))
 public class DrupalConnector extends AbstractCMSConnector {

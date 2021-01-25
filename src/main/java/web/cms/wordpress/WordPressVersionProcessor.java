@@ -4,13 +4,11 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.version.VersionAnalyzer;
-import web.cms.AbstractCMSProcessor;
 import web.cms.AbstractCMSVersionProcessor;
 import web.http.Request;
 import web.parser.TextParser;
 import web.printer.Printer;
 import web.struct.Destination;
-import web.struct.assignment.VersionAssigner;
 
 import java.util.regex.Pattern;
 

@@ -11,7 +11,8 @@ import web.struct.Processor;
 
 import java.util.Optional;
 
-import static web.cms.CMSMarker.*;
+import static web.cms.CMSMarker.YII_CHECK;
+import static web.cms.CMSMarker.YII_VERSION;
 
 @RequiredArgsConstructor(onConstructor_ = @__(@Inject))
 public class YiiConnector extends AbstractCMSConnector {

@@ -8,7 +8,6 @@ import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
-import web.struct.assignment.CMSResultAssigner;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
@@ -24,7 +23,7 @@ import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.LOW;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class ModXCheckProcessor extends AbstractCMSProcessor implements CMSResultAssigner {
+public class ModXCheckProcessor extends AbstractCMSProcessor {
 
     private static final CMSType cmsType = CMSType.MODX;
 

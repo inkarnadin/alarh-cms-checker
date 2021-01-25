@@ -6,14 +6,13 @@ import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.cms.AbstractCMSConnector;
 import web.cms.CMSType;
-import web.printer.Printer;
 import web.struct.Destination;
 import web.struct.Processor;
 
 import java.util.Optional;
 
-import static web.cms.CMSMarker.*;
-import static web.printer.PrinterMarker.VERSION_PRINTER;
+import static web.cms.CMSMarker.VUE_CHECK;
+import static web.cms.CMSMarker.VUE_VERSION;
 
 @RequiredArgsConstructor(onConstructor_ = @__(@Inject))
 public class VueConnector extends AbstractCMSConnector {
