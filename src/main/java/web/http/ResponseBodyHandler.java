@@ -13,7 +13,7 @@ public class ResponseBodyHandler {
             ResponseBody body = response.body();
             return (Objects.nonNull(body)) ? body.string() : "";
         } catch (IOException xep) {
-            System.out.println(xep.getMessage());
+            System.out.println("Read response exception");
             return "";
         }
     }
