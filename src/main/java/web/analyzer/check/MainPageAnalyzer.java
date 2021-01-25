@@ -32,7 +32,7 @@ public class MainPageAnalyzer {
 
     public void checkViaMainPageGenerator(Importance importance, String[] keywords) {
         for (String keyword : keywords) {
-            Pattern pattern = Pattern.compile(String.format("<meta name=\"[gG]enerator\" content=\"(%s).*", keyword));
+            Pattern pattern = Pattern.compile(String.format("<meta name=\"[gG]enerator\"\\s+content=\"(%s).*", keyword));
             parser.configure(pattern, 0);
             if (parser.parse(responseBody)) {
                 setResultValue(true, importance);

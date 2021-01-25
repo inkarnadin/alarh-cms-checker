@@ -36,6 +36,7 @@ public class ImageCmsCheckProcessor extends AbstractCMSProcessor {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
+        mainPageAnalyzer.checkViaMainPageGenerator(HIGH, new String[] { "ImageCMS" });
         mainPageAnalyzer.checkViaMainPageKeywords(LOW, new Pattern[] {
                 Pattern.compile("meta name=\"cmsmagazine\"")
         });
