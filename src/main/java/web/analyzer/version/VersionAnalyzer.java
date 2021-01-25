@@ -119,7 +119,7 @@ public class VersionAnalyzer {
         String value = mainPageHeaders.get(header);
         if (Objects.nonNull(value)) {
             textParser.configure(pattern, 1);
-            result.add(new ComparableVersion(textParser.parse(value)));
+            result.add(new ComparableVersion(textParser.parse(value.toLowerCase())));
         }
     }
 
