@@ -119,12 +119,11 @@ public class VersionAnalyzer {
         }
     }
 
-
     public void checkViaHeaders(Pattern pattern, String header) {
         String value = mainPageHeaders.get(header);
         if (Objects.nonNull(value)) {
             textParser.configure(pattern, 1);
-            result.add(new ComparableVersion(textParser.parse(value.toLowerCase())));
+            result.add(new ComparableVersion(textParser.parse(value)));
         }
     }
 
