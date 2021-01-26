@@ -31,7 +31,7 @@ public class YiiVersionProcessor extends AbstractCMSVersionProcessor {
         });
         if (paths.length != 0) {
             VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionList).prepare(host);
-            versionAnalyzer.checkViaSinceScript(Pattern.compile("@since\\s(.*?)\\s"), paths, true);
+            versionAnalyzer.checkViaSinceScript(Pattern.compile("@since\\s(.*?)\\s"), paths, false);
         }
 
         assign(destination, versionList);
