@@ -20,6 +20,8 @@ public class GetRequest extends AbstractRequest {
                     .get()
                     .addHeader(USER_AGENT_HEADER, USER_AGENT_HEADER_VALUE);
 
+            headers.forEach(builder::addHeader);
+
             if (host.isBegetProtection())
                 builder.addHeader(COOKIE, BEGET_PROTECTION_COOKIE);
 
