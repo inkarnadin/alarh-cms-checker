@@ -14,6 +14,7 @@ import web.parser.TextParser;
 import web.struct.Destination;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -60,6 +61,12 @@ public class ModXCheckProcessor extends AbstractCMSProcessor {
                 "assets/js",
                 "manager"
         });
+
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Accept-Language", "ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3");
+
+        request.richHeaders(headers);
+
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "manager" }, new Pattern[] {
                 Pattern.compile("modx-form"),
@@ -67,6 +74,7 @@ public class ModXCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("modx-login-password"),
                 Pattern.compile("modx-fl-btn"),
                 Pattern.compile("modx-login-language-select"),
+                Pattern.compile("Evolution CMS Manager Login"),
         });
 
         assign(destination, result, cmsType);
