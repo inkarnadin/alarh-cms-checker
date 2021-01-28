@@ -4,7 +4,9 @@ import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
+import web.analyzer.JsScriptDissector;
 import web.analyzer.check.MainPageAnalyzer;
+import web.analyzer.check.PageAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
 import web.http.Request;
@@ -31,6 +33,8 @@ public class MaxSiteCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
+        String[] paths = JsScriptDissector.dissect(host, request);
+
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageGenerator(HIGH, new String[] { "MaxSite CMS" });
         mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
@@ -38,6 +42,10 @@ public class MaxSiteCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("maxsite/plugins"),
                 Pattern.compile("maxsite/templates"),
                 Pattern.compile("maxsite/common")
+        });
+        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
+        pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] {
+                Pattern.compile("MaxSite CMS")
         });
 
         assign(destination, result, cmsType);
