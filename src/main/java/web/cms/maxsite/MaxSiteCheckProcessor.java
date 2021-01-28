@@ -19,6 +19,7 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static web.analyzer.Importance.HIGH;
+import static web.analyzer.Importance.LOW;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class MaxSiteCheckProcessor extends AbstractCMSProcessor {
@@ -46,6 +47,13 @@ public class MaxSiteCheckProcessor extends AbstractCMSProcessor {
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] {
                 Pattern.compile("MaxSite CMS")
+        });
+        pageAnalyzer.checkViaPageKeywords(LOW, new String[] { "admin" }, new Pattern[] {
+                Pattern.compile("flogin"),
+                Pattern.compile("flogin_redirect"),
+                Pattern.compile("flogin_user"),
+                Pattern.compile("flogin_password"),
+                Pattern.compile("flogin_submit"),
         });
 
         assign(destination, result, cmsType);
