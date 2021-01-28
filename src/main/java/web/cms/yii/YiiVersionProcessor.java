@@ -29,10 +29,10 @@ public class YiiVersionProcessor extends AbstractCMSVersionProcessor {
         String[] paths = JsScriptDissector.dissect(host, request, new String[] {
                 "yii.js", "yii.activeForm.js", "yii.validation.js", "yii.captcha.js"
         });
-        if (paths.length != 0) {
-            VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionList).prepare(host);
+
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionList).prepare(host);
+        if (paths.length != 0)
             versionAnalyzer.checkViaSinceScript(Pattern.compile("@since\\s(.*?)\\s"), paths, false);
-        }
 
         assign(destination, versionList);
         printer.print(destination);
