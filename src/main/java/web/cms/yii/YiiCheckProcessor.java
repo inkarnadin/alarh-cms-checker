@@ -46,14 +46,16 @@ public class YiiCheckProcessor extends AbstractCMSProcessor implements DefaultAs
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "login", "admin/login", "admin/site/login" }, new Pattern[] {
                 Pattern.compile("Powered by.*Yii Framework"),
+                Pattern.compile("yii\\.validation"),
+                Pattern.compile("yii\\.activeForm")
+        });
+        pageAnalyzer.checkViaPageKeywords(LOW, new String[] { "login", "admin/login", "admin/site/login" }, new Pattern[] {
                 Pattern.compile("field-loginform-username"),
                 Pattern.compile("field-loginform-password"),
                 Pattern.compile("field-loginform-email"),
                 Pattern.compile("loginform-rememberme"),
                 Pattern.compile("loginform-password"),
                 Pattern.compile("loginform-username"),
-                Pattern.compile("yii\\.validation"),
-                Pattern.compile("yii\\.activeForm"),
                 Pattern.compile("LoginForm\\[]")
         });
         pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] { Pattern.compile("yii") });
