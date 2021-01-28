@@ -9,6 +9,8 @@ import web.cms.CMSType;
 import web.cms.bitrix.BitrixCheckProcessor;
 import web.cms.bitrix.BitrixConnector;
 import web.cms.bitrix.BitrixVersionProcessor;
+import web.cms.codeigniter.CodeIgniterCheckProcessor;
+import web.cms.codeigniter.CodeIgniterConnector;
 import web.cms.datalife.DataLifeCheckProcessor;
 import web.cms.datalife.DataLifeConnector;
 import web.cms.datalife.DataLifeVersionProcessor;
@@ -132,6 +134,8 @@ public class CMSModule extends AbstractModule {
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(REACT_CHECK)).to(ReactCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(REACT_VERSION)).to(ReactVersionProcessor.class);
 
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(CODE_IGNITER_CHECK)).to(CodeIgniterCheckProcessor.class);
+
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(TILDA_CHECK)).to(TildaCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(VIGBO_CHECK)).to(VigboCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(INSALES_CHECK)).to(InSalesCheckProcessor.class);
@@ -160,6 +164,7 @@ public class CMSModule extends AbstractModule {
         connectorMultibinder.addBinding().to(VueConnector.class);
         connectorMultibinder.addBinding().to(RubyOnRailsConnector.class);
         connectorMultibinder.addBinding().to(ReactConnector.class);
+        connectorMultibinder.addBinding().to(CodeIgniterConnector.class);
         connectorMultibinder.addBinding().to(TildaConnector.class);
         connectorMultibinder.addBinding().to(VigboConnector.class);
         connectorMultibinder.addBinding().to(InSalesConnector.class);

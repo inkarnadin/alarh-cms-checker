@@ -65,6 +65,8 @@ public class CMSMarker {
     public static final String REACT_CHECK = "reactCheck";
     public static final String REACT_VERSION = "reactVersion";
 
+    public static final String CODE_IGNITER_CHECK = "codeIgniterCheck";
+
     /**
      * Constructors
      */

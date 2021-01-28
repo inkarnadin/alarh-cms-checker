@@ -3,6 +3,7 @@ package web.cms;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import web.cms.bitrix.BitrixConnector;
+import web.cms.codeigniter.CodeIgniterConnector;
 import web.cms.datalife.DataLifeConnector;
 import web.cms.drupal.DrupalConnector;
 import web.cms.host.HostCmsConnector;
@@ -56,6 +57,7 @@ public enum CMSType {
     VUE_JS                  (204, "Vue.js",           VueConnector.class),
     RUBY_ON_RAILS           (205, "Ruby on Rails",    RubyOnRailsConnector.class),
     REACT_JS                (206, "ReactJS",          ReactConnector.class),
+    CODE_IGNITER            (207, "CodeIgniter",      CodeIgniterConnector.class),
 
     TILDA                   (301, "Tilda",            TildaConnector.class),
     VIGBO                   (302, "Vigbo CMS",        VigboConnector.class),
