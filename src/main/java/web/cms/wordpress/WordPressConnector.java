@@ -20,6 +20,8 @@ public class WordPressConnector extends AbstractCMSConnector {
     private final Processor<CMSType> checkProcessor;
     @Named(WORDPRESS_VERSION)
     private final Processor<CMSType> versionProcessor;
+    @Named(WORDPRESS_THEME)
+    private final Processor<CMSType> themeProcessor;
     @Named(WORDPRESS_PLUGIN)
     private final Processor<CMSType> pluginProcessor;
 
@@ -34,6 +36,12 @@ public class WordPressConnector extends AbstractCMSConnector {
     public void checkVersion() {
         versionProcessor.configure(params.getProtocol(), params.getServer());
         versionProcessor.process();
+    }
+
+    @Override
+    public void checkTheme() {
+        themeProcessor.configure(params.getProtocol(), params.getServer());
+        themeProcessor.process();
     }
 
     @Override

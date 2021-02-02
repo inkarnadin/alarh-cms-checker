@@ -79,6 +79,7 @@ public class CMSModule extends AbstractModule {
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(WORDPRESS_CHECK)).to(WordPressCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(WORDPRESS_VERSION)).to(WordPressVersionProcessor.class);
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(WORDPRESS_THEME)).to(WordPressThemeProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(WORDPRESS_PLUGIN)).to(WordPressPluginProcessor.class);
         bind(Source.class).annotatedWith(Names.named(WORDPRESS_PLUGIN)).to(WordPressExtensionSource.class);
 

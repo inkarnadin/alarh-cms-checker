@@ -8,6 +8,7 @@ public class CMSMarker {
 
     public static final String WORDPRESS_CHECK = "wordPressCheck";
     public static final String WORDPRESS_VERSION = "wordPressVersion";
+    public static final String WORDPRESS_THEME = "wordPressTheme";
     public static final String WORDPRESS_PLUGIN = "wordPressPlugin";
 
     public static final String JOOMLA_CHECK = "joomlaCheck";
