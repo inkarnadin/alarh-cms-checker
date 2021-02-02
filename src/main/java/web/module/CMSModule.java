@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 import com.google.inject.name.Names;
+import web.analyzer.theme.Extractor;
 import web.cms.CMSDeterminant;
 import web.cms.CMSType;
 import web.cms.bitrix.BitrixCheckProcessor;
@@ -82,6 +83,7 @@ public class CMSModule extends AbstractModule {
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(WORDPRESS_THEME)).to(WordPressThemeProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(WORDPRESS_PLUGIN)).to(WordPressPluginProcessor.class);
         bind(Source.class).annotatedWith(Names.named(WORDPRESS_PLUGIN)).to(WordPressExtensionSource.class);
+        bind(Extractor.class).annotatedWith(Names.named(WORDPRESS_THEME)).to(WordPressThemeExtractor.class);
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(JOOMLA_CHECK)).to(JoomlaCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(JOOMLA_VERSION)).to(JoomlaVersionProcessor.class);
