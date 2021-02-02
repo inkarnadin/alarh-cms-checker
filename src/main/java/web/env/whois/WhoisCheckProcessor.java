@@ -9,12 +9,14 @@ import web.http.Request;
 import web.printer.Printer;
 import web.struct.Destination;
 
+import static web.printer.PrinterMarker.LIST_PRINTER;
+
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class WhoisCheckProcessor extends AbstractEnvironmentProcessor {
 
     private final Request request;
     private final Destination destination;
-    @Named("listPrinter")
+    @Named(LIST_PRINTER)
     private final Printer printer;
 
     @Override

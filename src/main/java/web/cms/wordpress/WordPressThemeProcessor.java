@@ -7,7 +7,6 @@ import okhttp3.Response;
 import web.analyzer.theme.Extractor;
 import web.analyzer.theme.ThemeObject;
 import web.cms.AbstractCMSProcessor;
-import web.env.EnvType;
 import web.http.Request;
 import web.http.ResponseBodyHandler;
 import web.printer.Printer;
@@ -17,6 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static web.cms.CMSMarker.WORDPRESS_THEME;
+import static web.printer.PrinterMarker.LIST_PRINTER;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject})
 public class WordPressThemeProcessor extends AbstractCMSProcessor {
@@ -25,7 +25,7 @@ public class WordPressThemeProcessor extends AbstractCMSProcessor {
     private final Destination destination;
     @Named(WORDPRESS_THEME)
     private final Extractor extractor;
-    @Named("listPrinter")
+    @Named(LIST_PRINTER)
     private final Printer printer;
 
     @Override
