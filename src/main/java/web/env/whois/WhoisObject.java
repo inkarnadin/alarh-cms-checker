@@ -13,7 +13,7 @@ import java.util.StringJoiner;
 @Data
 @EqualsAndHashCode
 @JsonIgnoreProperties
-public class WhoisDto implements Serializable {
+public class WhoisObject implements Serializable {
 
     private String status;
     private String country;
@@ -35,7 +35,7 @@ public class WhoisDto implements Serializable {
     @Override
     public String toString() {
         StringJoiner stringJoiner = new StringJoiner("\n", "   [\n", "\n   ]");
-        Field[] fields = WhoisDto.class.getDeclaredFields();
+        Field[] fields = WhoisObject.class.getDeclaredFields();
 
         for (Field field : fields) {
             Object value = field.get(this);

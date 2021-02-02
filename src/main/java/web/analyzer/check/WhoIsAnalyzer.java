@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import okhttp3.Response;
 import web.env.EnvType;
-import web.env.whois.WhoisDto;
+import web.env.whois.WhoisObject;
 import web.env.whois.WhoisLocator;
 import web.http.Host;
 import web.http.Request;
@@ -27,7 +27,7 @@ public class WhoIsAnalyzer {
             Host whoIsHost = WhoisLocator.getAvailableWhoisHost(host.getProtocol(), host.getServer());
             try (Response response = request.send(whoIsHost)) {
                 String body = Objects.requireNonNull(response.body()).string();
-                WhoisDto dto = objectMapper.readValue(body, WhoisDto.class);
+                WhoisObject dto = objectMapper.readValue(body, WhoisObject.class);
 
                 destination.insert(1, dto.toString());
             }
