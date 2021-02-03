@@ -19,7 +19,7 @@ public class Runner {
         System.out.println("Welcome! This is application for check info about different CMS");
         System.out.println("In current time it is support next systems:");
         System.out.println(" * Joomla! (version)");
-        System.out.println(" * WordPress (version)");
+        System.out.println(" * WordPress (version, theme)");
         System.out.println(" * Yii Framework");
         System.out.println(" * DataLife Engine (version)");
         System.out.println(" * MaxSite CMS");
