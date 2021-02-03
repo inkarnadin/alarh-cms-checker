@@ -12,7 +12,9 @@ import web.http.ResponseBodyHandler;
 import web.printer.Printer;
 import web.struct.Destination;
 import web.struct.Preferences;
+import web.struct.Source;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,6 +28,8 @@ public class WordPressThemeProcessor extends AbstractCMSProcessor {
     private final Destination destination;
     @Named(WORDPRESS_THEME)
     private final Extractor extractor;
+    @Named(WORDPRESS_THEME)
+    private final Source source;
     @Named(LIST_PRINTER)
     private final Printer printer;
 
@@ -44,6 +48,12 @@ public class WordPressThemeProcessor extends AbstractCMSProcessor {
                     String themeResponseBody = ResponseBodyHandler.readBody(themeResponse);
                     themeObject = extractor.extract(themeResponseBody);
                     themeObject.setPath(path);
+
+                    String themeName = (Objects.nonNull(themeObject.getThemeName()))
+                        ? themeObject.getThemeName().toLowerCase()
+                        : "";
+                    boolean isCustom = !source.getSources().contains(themeName);
+                    themeObject.setIsCustom(isCustom);
 
                     if (Preferences.isEnableThemeFullInfo()) {
                         destination.insert(0, "  ** Theme:");

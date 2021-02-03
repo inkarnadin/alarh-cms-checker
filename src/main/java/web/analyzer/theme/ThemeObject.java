@@ -23,12 +23,14 @@ public class ThemeObject {
     private String licenseUri;
     private String textDomain;
     private String tags;
+    private Boolean isCustom = true;
 
     public String getShortInfo() {
+        String custom = isCustom ? " (Custom)" : " (Popular)";
         if (Objects.nonNull(themeName) && Objects.nonNull(version))
-            return themeName + " v" + version;
+            return themeName + " v" + version + custom;
         else if (Objects.nonNull(themeName))
-            return themeName;
+            return themeName + custom;
         else
             return "<unknown>";
     }

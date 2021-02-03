@@ -8,14 +8,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Stream;
 
-public class WordPressExtensionSource extends AbstractSource {
+public class WordPressThemeSource extends AbstractSource {
 
     @SneakyThrows
-    WordPressExtensionSource() {
-        InputStream in = getClass().getResourceAsStream("/wordpress/wordpress-extensions-core.txt");
+    WordPressThemeSource() {
+        InputStream in = getClass().getResourceAsStream("/wordpress/themes.txt");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
             Stream<String> lines = reader.lines();
-            lines.forEach(sources::add);
+            lines.map(String::toLowerCase).forEach(sources::add);
             lines.close();
         }
     }
