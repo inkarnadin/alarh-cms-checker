@@ -13,6 +13,7 @@ import web.printer.Printer;
 import web.struct.Destination;
 import web.struct.Preferences;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,25 +37,27 @@ public class WordPressThemeProcessor extends AbstractCMSProcessor {
             Pattern pattern = Pattern.compile("wp-content/themes/(.*?)/");
             Matcher matcher = pattern.matcher(responseBody);
 
+            ThemeObject themeObject = new ThemeObject();
             if (matcher.find()) {
-                host.setPath(matcher.group(0) + "/style.css");
+                String path = matcher.group(0);
+                host.setPath(path + "/style.css");
                 try (Response themeResponse = request.send(host)) {
                     String themeResponseBody = ResponseBodyHandler.readBody(themeResponse);
-                    ThemeObject themeObject = extractor.extract(themeResponseBody);
+                    themeObject = extractor.extract(themeResponseBody);
+                    themeObject.setPath(path);
 
                     if (Preferences.isEnableThemeFullInfo()) {
                         destination.insert(0, "  ** Theme:");
                         destination.insert(1, themeObject.toString());
                     } else {
-                        destination.insert(0, String.format("  ** Theme: %s v%s",
-                                themeObject.getThemeName(),
-                                themeObject.getVersion())
-                        );
+                        destination.insert(0, String.format("  ** Theme: %s", themeObject.getShortInfo()));
                     }
-
-                    printer.print(destination);
                 }
+            } else {
+                destination.insert(0, String.format("  ** Theme: %s", themeObject.getShortInfo()));
             }
+
+            printer.print(destination);
         }
     }
 }

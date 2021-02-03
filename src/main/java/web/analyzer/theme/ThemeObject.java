@@ -3,7 +3,6 @@ package web.analyzer.theme;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.SneakyThrows;
-import web.env.whois.WhoisObject;
 
 import java.lang.reflect.Field;
 import java.util.Objects;
@@ -13,6 +12,7 @@ import java.util.StringJoiner;
 @EqualsAndHashCode
 public class ThemeObject {
 
+    private String path;
     private String themeName;
     private String themeUri;
     private String author;
@@ -23,6 +23,15 @@ public class ThemeObject {
     private String licenseUri;
     private String textDomain;
     private String tags;
+
+    public String getShortInfo() {
+        if (Objects.nonNull(themeName) && Objects.nonNull(version))
+            return themeName + " v" + version;
+        else if (Objects.nonNull(themeName))
+            return themeName;
+        else
+            return "<unknown>";
+    }
 
     @SneakyThrows
     @Override
