@@ -13,7 +13,6 @@ import web.printer.Printer;
 import web.struct.Destination;
 import web.struct.Preferences;
 
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
