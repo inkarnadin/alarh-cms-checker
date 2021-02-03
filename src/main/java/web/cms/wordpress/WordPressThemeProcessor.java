@@ -11,6 +11,7 @@ import web.http.Request;
 import web.http.ResponseBodyHandler;
 import web.printer.Printer;
 import web.struct.Destination;
+import web.struct.Preferences;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,8 +42,15 @@ public class WordPressThemeProcessor extends AbstractCMSProcessor {
                     String themeResponseBody = ResponseBodyHandler.readBody(themeResponse);
                     ThemeObject themeObject = extractor.extract(themeResponseBody);
 
-                    destination.insert(0, "  ** Theme:");
-                    destination.insert(1, themeObject.toString());
+                    if (Preferences.isEnableThemeFullInfo()) {
+                        destination.insert(0, "  ** Theme:");
+                        destination.insert(1, themeObject.toString());
+                    } else {
+                        destination.insert(0, String.format("  ** Theme: %s v%s",
+                                themeObject.getThemeName(),
+                                themeObject.getVersion())
+                        );
+                    }
 
                     printer.print(destination);
                 }

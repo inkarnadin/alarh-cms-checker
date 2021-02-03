@@ -90,6 +90,7 @@ public class Runner {
         Preferences.manageExtendModule(!Arrays.asList(args).contains("-em"));
         Preferences.manageLowImportanceFilter(Arrays.asList(args).contains("-li"));
         Preferences.manageWhoIsInfo(Arrays.asList(args).contains("-who"));
+        Preferences.manageThemeFullInfo(Arrays.asList(args).contains("-th"));
     }
 
     private static boolean isAnswer(final String answer) {

@@ -12,6 +12,8 @@ public class Preferences {
     private static boolean isEnableLowImportance;
     @Getter
     private static boolean isEnableWhoIsInfo;
+    @Getter
+    private static boolean isEnableThemeFullInfo;
 
     public static void manageMainModule(boolean value) {
         isEnableMainModule = value;
@@ -27,6 +29,10 @@ public class Preferences {
 
     public static void manageWhoIsInfo(boolean value) {
         isEnableWhoIsInfo = value;
+    }
+
+    public static void manageThemeFullInfo(boolean value) {
+        isEnableThemeFullInfo = value;
     }
 
 }
