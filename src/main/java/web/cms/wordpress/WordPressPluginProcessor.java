@@ -2,69 +2,53 @@ package web.cms.wordpress;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+import lombok.RequiredArgsConstructor;
 import okhttp3.Response;
 import web.cms.AbstractCMSProcessor;
-import web.cms.CMSType;
-import web.http.Host;
 import web.http.Request;
-import web.http.RequestErrorHandler;
-import web.struct.ResultStorage;
+import web.http.ResponseBodyHandler;
+import web.printer.Printer;
+import web.struct.Destination;
 import web.struct.Source;
-import web.validator.HttpValidator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static web.cms.CMSMarker.WORDPRESS_PLUGIN;
+import static web.printer.PrinterMarker.PLUGIN_PRINTER;
 
-@Deprecated
+@RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class WordPressPluginProcessor extends AbstractCMSProcessor {
 
-    private static final CMSType cmsType = CMSType.WORDPRESS;
-
-    private final String path = "/wp-content/plugins/";
-
     private final Request request;
+    private final Destination destination;
+    @Named(WORDPRESS_PLUGIN)
     private final Source source;
-
-    private final Integer[] codes = { 200, 403 };
-
-    @Inject
-    WordPressPluginProcessor(Request request,
-                             @Named(WORDPRESS_PLUGIN) Source source) {
-        this.request = request;
-        this.source = source;
-    }
+    @Named(PLUGIN_PRINTER)
+    private final Printer printer;
 
     @Override
     public void process() {
-        List<String> extensions = source.getSources();
+        HashSet<String> plugins = new HashSet<>();
 
-        int success = 0;
-        int failure = 0;
-        int remain = extensions.size();
+        try (Response response = request.send(host)) {
+            String responseBody = ResponseBodyHandler.readBody(response);
 
-        List<String> result = new ArrayList<>();
-        for (String ext : extensions) {
-            Host host = new Host(protocol, server, path + ext);
-            try (Response response = request.send(host)) {
-                remain--;
+            Pattern pattern = Pattern.compile("wp-content\\\\?/plugins\\\\?/(.*?)/");
+            Matcher matcher = pattern.matcher(responseBody);
 
-                Integer code = response.code();
-                if (Arrays.asList(codes).contains(code) && !HttpValidator.isRedirect(response)) {
-                    result.add(ext);
-                    success++;
-                } else {
-                    errorMap.put(response.message(), response.code());
-                    failure++;
-                }
-            }
-            System.out.printf("\rRemain: %1s, found: %2s, not found: %3s", remain, success, failure);
+            while (matcher.find())
+                plugins.add(matcher.group(1).replace("\\", ""));
         }
 
-        RequestErrorHandler.printError(errorMap);
-        ResultStorage.save(null, result);
+        destination.insert(0, "  ** Plugins:");
+
+        int i = 1;
+        for (String plugin : plugins)
+            destination.insert(i++, plugin);
+
+        printer.print(destination);
     }
 
 }

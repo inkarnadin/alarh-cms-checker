@@ -9,10 +9,7 @@ import web.http.GetRequest;
 import web.http.HttpClient;
 import web.http.Request;
 import web.parser.*;
-import web.printer.CheckPrinter;
-import web.printer.ListPrinter;
-import web.printer.Printer;
-import web.printer.VersionPrinter;
+import web.printer.*;
 import web.struct.Destination;
 import web.struct.SimpleDestination;
 
@@ -33,6 +30,7 @@ public class CommonModule extends AbstractModule {
         bind(Printer.class).annotatedWith(Names.named(LIST_PRINTER)).to(ListPrinter.class);
         bind(Printer.class).annotatedWith(Names.named(CHECK_PRINTER)).to(CheckPrinter.class);
         bind(Printer.class).annotatedWith(Names.named(VERSION_PRINTER)).to(VersionPrinter.class);
+        bind(Printer.class).annotatedWith(Names.named(PLUGIN_PRINTER)).to(PluginPrinter.class);
     }
 
 }
