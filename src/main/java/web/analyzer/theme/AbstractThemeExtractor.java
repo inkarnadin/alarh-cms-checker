@@ -1,6 +1,6 @@
 package web.analyzer.theme;
 
-abstract public class AbstractExtractor implements Extractor {
+abstract public class AbstractThemeExtractor implements Extractor<ThemeObject> {
 
     protected final ThemeObject themeObject = new ThemeObject();
 

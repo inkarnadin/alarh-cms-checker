@@ -1,7 +1,7 @@
 package web.analyzer.theme;
 
-public interface Extractor {
+public interface Extractor<T> {
 
-    ThemeObject extract(String responseBody);
+    T extract(String responseBody);
 
 }

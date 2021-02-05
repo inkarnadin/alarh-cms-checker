@@ -27,7 +27,7 @@ public class WordPressThemeProcessor extends AbstractCMSProcessor {
     private final Request request;
     private final Destination destination;
     @Named(WORDPRESS_THEME)
-    private final Extractor extractor;
+    private final Extractor<ThemeObject> extractor;
     @Named(WORDPRESS_THEME)
     private final Source source;
     @Named(LIST_PRINTER)

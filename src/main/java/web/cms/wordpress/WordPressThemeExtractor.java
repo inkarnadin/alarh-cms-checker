@@ -1,12 +1,12 @@
 package web.cms.wordpress;
 
-import web.analyzer.theme.AbstractExtractor;
+import web.analyzer.theme.AbstractThemeExtractor;
 import web.analyzer.theme.ThemeObject;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class WordPressThemeExtractor extends AbstractExtractor {
+public class WordPressThemeExtractor extends AbstractThemeExtractor {
 
     private final static Pattern namePattern = Pattern.compile("Theme Name:\\s*(.*)");
     private final static Pattern descPattern = Pattern.compile("Description:\\s*(.*)");

@@ -30,7 +30,7 @@ public class CMSChecker extends AbstractChecker {
 
             connector.checkVersion();
             connector.checkTheme();
-            //connector.checkPlugins();
+            connector.checkPlugins();
 
             System.out.println();
         });
