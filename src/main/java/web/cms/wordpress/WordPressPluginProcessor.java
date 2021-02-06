@@ -85,7 +85,7 @@ public class WordPressPluginProcessor extends AbstractCMSProcessor {
                         pluginObject.setName(preName);
                         destination.insert(i++, String.format("   * %s", pluginObject.toString()));
                     } else {
-                        destination.insert(i++, String.format("   * %s (?): %s", (preName.length() > 0) ? preName : plugin, "<unknown>"));
+                        destination.insert(i++, String.format("   * %s: %s", (preName.length() > 0) ? preName : plugin + " (?)", "<unknown>"));
                     }
                 }
             }
