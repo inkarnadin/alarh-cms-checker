@@ -41,7 +41,7 @@ public class WordPressPluginProcessor extends AbstractCMSProcessor {
         try (Response response = request.send(host)) {
             String responseBody = ResponseBodyHandler.readBody(response);
 
-            Pattern pattern = Pattern.compile("wp-content\\\\?/plugins\\\\?/(.*?)/");
+            Pattern pattern = Pattern.compile("wp-content\\\\?/plugins\\\\?/(.*?)[/\"]");
             Matcher matcher = pattern.matcher(responseBody);
 
             while (matcher.find())
