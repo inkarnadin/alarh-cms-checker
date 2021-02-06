@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum WordPressPlugin {
 
+    // wordpress.org
     CF7                     ("contact-form-7",                                              "Contact Form 7"),
     CF7_POPUP_MESSAGE       ("popup-message-for-contact-form-7",                            "Popup Message Contact Form 7"),
     CF7_DRAG_AND_DROP       ("drag-and-drop-multiple-file-upload-contact-form-7",           "Drag and Drop Multiple File Upload – Contact Form 7"),
@@ -49,6 +50,11 @@ public enum WordPressPlugin {
     ML_SLIDER_LIGHTBOX      ("ml-slider-lightbox",                                          "MetaSlider Lightbox"),
     ALL_IN_ONE_WP_MIGRATION ("all-in-one-wp-migration",                                     "All-in-One WP Migration"),
     SG_OPTIMIZER            ("sg-cachepress",                                               "SG Optimizer"),
+    WP_SEO                  ("wordpress-seo",                                               "Yoast SEO"),
+
+    // codecanyon.net
+    JS_COMPOSER             ("js_composer",                                                 "WPBakery Page Builder WordPress plugin"),
+    REVSLIDER               ("revslider",                                                   "Slider Revolution Responsive WordPress Plugin"),
     ;
 
     private final String path;
