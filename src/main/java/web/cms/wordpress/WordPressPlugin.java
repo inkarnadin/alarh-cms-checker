@@ -51,10 +51,14 @@ public enum WordPressPlugin {
     ALL_IN_ONE_WP_MIGRATION ("all-in-one-wp-migration",                                     "All-in-One WP Migration"),
     SG_OPTIMIZER            ("sg-cachepress",                                               "SG Optimizer"),
     WP_SEO                  ("wordpress-seo",                                               "Yoast SEO"),
+    DUPLICATOR              ("duplicator",                                                  "Duplicator - WordPress Migration Plugin"),
+    WP_MAIL_SMTP            ("wp-mail-smtp",                                                "WP Mail SMTP by WPForms"),
 
-    // codecanyon.net
+    // others
     JS_COMPOSER             ("js_composer",                                                 "WPBakery Page Builder WordPress plugin"),
     REVSLIDER               ("revslider",                                                   "Slider Revolution Responsive WordPress Plugin"),
+    SITEPRESS_MULTILING_CMS ("sitepress-multilingual-cms",                                  "WPML Sitepress Multilingual Cms"),
+    WP_POST_VIEW            ("wp-postviews",                                                    "WP-PostViews"),
     ;
 
     private final String path;
