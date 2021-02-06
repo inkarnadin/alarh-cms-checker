@@ -58,7 +58,7 @@ public enum WordPressPlugin {
     JS_COMPOSER             ("js_composer",                                                 "WPBakery Page Builder WordPress plugin"),
     REVSLIDER               ("revslider",                                                   "Slider Revolution Responsive WordPress Plugin"),
     SITEPRESS_MULTILING_CMS ("sitepress-multilingual-cms",                                  "WPML Sitepress Multilingual Cms"),
-    WP_POST_VIEW            ("wp-postviews",                                                    "WP-PostViews"),
+    WP_POST_VIEW            ("wp-postviews",                                                "WP-PostViews"),
     ;
 
     private final String path;
