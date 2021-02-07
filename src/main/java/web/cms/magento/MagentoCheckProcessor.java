@@ -55,7 +55,6 @@ public class MagentoCheckProcessor extends AbstractCMSProcessor {
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
         pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, SCRIPT_FILES, new String[] {
                 "js/mage/captcha.js",
-                "js/mage/adminhtml/form.js",
                 "js/mage/cookies.js",
                 "js/mage/translate.js"
         });
