@@ -54,7 +54,8 @@ public class JoomlaCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("joomla-script-options")
         });
         pageAnalyzer.checkViaRobots(HIGH, new Pattern[] {
-                Pattern.compile("# If the Joomla site is installed within a folder")
+                Pattern.compile("# If the Joomla site is installed within a folder"),
+                Pattern.compile("\\?option="),
         });
 
         assign(destination, result, cmsType);
