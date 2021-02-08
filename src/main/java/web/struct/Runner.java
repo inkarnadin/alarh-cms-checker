@@ -19,7 +19,7 @@ public class Runner {
         System.out.println("Welcome! This is application for check info about different CMS");
         System.out.println("In current time it is support next systems:");
         System.out.println(" * Joomla! (version)");
-        System.out.println(" * WordPress (version, theme)");
+        System.out.println(" * WordPress (version, themes, plugins)");
         System.out.println(" * Yii Framework");
         System.out.println(" * DataLife Engine (version)");
         System.out.println(" * MaxSite CMS");
@@ -42,7 +42,7 @@ public class Runner {
         System.out.println(" * HostCMS");
         System.out.println(" * ImageCMS");
         System.out.println(" * Wix");
-        System.out.println("===========================================================");
+        System.out.println("=======================DEBUG-MODE==========================");
 
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
@@ -77,10 +77,10 @@ public class Runner {
                 }
                 printSplit();
 
-                System.out.print("Try again? (y/n): ");
+                //System.out.print("Try again? (y/n): ");
 
-                if (!isAnswer(scanner.nextLine()))
-                    System.exit(1);
+                //if (!isAnswer(scanner.nextLine()))
+                //    System.exit(1);
             }
         }
     }
