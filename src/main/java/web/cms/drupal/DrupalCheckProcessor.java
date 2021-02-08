@@ -47,6 +47,9 @@ public class DrupalCheckProcessor extends AbstractCMSProcessor {
         pageAnalyzer.checkViaPageKeywords(LOW, new String[] { "xmlrpc.php" }, new Pattern[] {
                 Pattern.compile("XML-RPC server accepts POST requests only")
         });
+        pageAnalyzer.checkViaRobots(HIGH, new Pattern[] {
+                Pattern.compile("# This file is to prevent the crawling and indexing of certain parts")
+        });
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
         headerAnalyzer.checkViaXGenerator(HIGH, BASE_PATH, Pattern.compile("drupal"));
         headerAnalyzer.checkViaHeaders(HIGH, BASE_PATH, new String[] {
