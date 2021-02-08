@@ -51,7 +51,6 @@ public class WordPressPluginProcessor extends AbstractCMSProcessor {
             if (plugins.contains(src.getPath()))
                 continue;
 
-            // FIXME запрос выполняется дважды, по сути, так как некоторые сайты могут всегда возрващать код 200, приходится проверять, что вернули действительно readme
             host.setPath(String.format("wp-content/plugins/%s/readme.txt", src.getPath()));
             try (Response response = headRequest.send(host)) {
                 String contentType = ContentType.defineContentType(response.header(CONTENT_TYPE));
