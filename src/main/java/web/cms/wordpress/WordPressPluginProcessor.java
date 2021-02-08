@@ -12,7 +12,6 @@ import web.http.Request;
 import web.http.ResponseBodyHandler;
 import web.printer.Printer;
 import web.struct.Destination;
-
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -56,7 +55,7 @@ public class WordPressPluginProcessor extends AbstractCMSProcessor {
             host.setPath(String.format("wp-content/plugins/%s/readme.txt", src.getPath()));
             try (Response response = headRequest.send(host)) {
                 String contentType = ContentType.defineContentType(response.header(CONTENT_TYPE));
-                if (contentType.equals(ContentType.TEXT_PLAIN))
+                if (contentType.equals(ContentType.TEXT_PLAIN) && response.code() != 404)
                     plugins.add(src.getPath());
             }
         }
