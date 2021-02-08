@@ -2,6 +2,8 @@ package web.validator;
 
 import okhttp3.Response;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -22,6 +24,20 @@ public class HttpValidator implements Validator {
             return Pattern.compile(originalHost).matcher(location).find();
         }
         return true;
+    }
+
+    public static Boolean isHiddenNotFound(Response response) {
+        List<Integer> codes = new ArrayList<>();
+
+        Response resp = response;
+        codes.add(resp.code());
+
+        while (Objects.nonNull(resp.priorResponse())) {
+            resp = resp.priorResponse();
+            codes.add(resp.code());
+        }
+
+        return codes.contains(404);
     }
 
 }
