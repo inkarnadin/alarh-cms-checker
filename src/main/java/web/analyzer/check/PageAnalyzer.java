@@ -4,6 +4,7 @@ import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import okhttp3.Response;
 import web.analyzer.Importance;
+import web.http.ContentType;
 import web.http.Host;
 import web.http.Request;
 import web.http.ResponseBodyHandler;
@@ -27,6 +28,13 @@ public class PageAnalyzer {
         return this;
     }
 
+    /**
+     * Check via special keywords on a page
+     *
+     * @param importance - importance level of check
+     * @param paths - list of checking paths
+     * @param patterns - list of finding patterns
+     */
     public void checkViaPageKeywords(Importance importance, String[] paths, Pattern[] patterns) {
         for (String path : paths) {
             host.setPath(path);
@@ -39,6 +47,29 @@ public class PageAnalyzer {
                         setResultValue(true, importance);
                         return;
                     }
+                }
+            }
+        }
+        setResultValue(false, importance);
+    }
+
+    /**
+     * Special case of <code>checkViaPageKeywords</code> - checking via robots.txt
+     *
+     * @param importance - importance level of check
+     * @param patterns - list of finding patterns
+     */
+    public void checkViaRobots(Importance importance, Pattern[] patterns) {
+        host.setPath("robots.txt");
+        try (Response response = request.send(host)) {
+            String responseBody = ResponseBodyHandler.readBody(response);
+            String contentType = ContentType.defineContentType(response.header("Content-Type"));
+
+            for (Pattern pattern : patterns) {
+                parser.configure(pattern, 0);
+                if (parser.parse(responseBody) && response.code() != 404 && contentType.equals(ContentType.TEXT_PLAIN)) {
+                    setResultValue(true, importance);
+                    return;
                 }
             }
         }
