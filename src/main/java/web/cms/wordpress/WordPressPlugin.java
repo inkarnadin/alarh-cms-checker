@@ -76,6 +76,7 @@ public enum WordPressPlugin {
     WP_FILE_MANAGER             ("wp-file-manager",                                             "WP File Manager"),
     WP_SITEMAP_PAGE             ("wp-sitemap-page",                                             "WP Sitemap Page"),
     DUPLICATE_POST              ("copy-delete-posts",                                           "Duplicate Post"),
+    YOAST_DUPLICATE_POST        ("duplicate-post",                                              "Yoast Duplicate Post"),
     ELEMENTOR                   ("elementor",                                                   "Elementor Website Builder"),
     WP_IMPORTER                 ("wordpress-importer",                                          "WordPress Importer"),
     BACK_WP_UP                  ("backwpup",                                                    "BackWPup – WordPress Backup Plugin"),
@@ -156,6 +157,7 @@ public enum WordPressPlugin {
     GOOGLE_RECAPTCHA            ("google-captcha",                                              "reCaptcha by BestWebSoft"),
     CLEANTALK_SPAM_PROTECT      ("cleantalk-spam-protect",                                      "Spam protection, AntiSpam, FireWall by CleanTalk"),
     SITEORIGIN_PANELS           ("siteorigin-panels",                                           "Page Builder by SiteOrigin"),
+    GUTENBERG                   ("gutenberg",                                                   "Gutenberg"),
 
     // others
     JS_COMPOSER                 ("js_composer",                                                 "WPBakery Page Builder WordPress plugin"),
