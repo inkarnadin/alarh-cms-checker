@@ -48,11 +48,13 @@ public class JoomlaCheckProcessor extends AbstractCMSProcessor {
                 "administrator/manifests/files/joomla.xml",
                 "administrator/components/com_config/config.xml",
         });
-
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "administrator" }, new Pattern[] {
                 Pattern.compile("login-joomla"),
                 Pattern.compile("joomla-script-options")
+        });
+        pageAnalyzer.checkViaRobots(HIGH, new Pattern[] {
+                Pattern.compile("# If the Joomla site is installed within a folder")
         });
 
         assign(destination, result, cmsType);
