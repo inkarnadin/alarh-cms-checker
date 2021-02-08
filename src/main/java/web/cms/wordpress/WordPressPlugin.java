@@ -155,6 +155,7 @@ public enum WordPressPlugin {
     NOCAPTCHA_RECAPTCHA         ("advanced-nocaptcha-recaptcha",                                "Advanced noCaptcha & invisible Captcha (v2 & v3)"),
     GOOGLE_RECAPTCHA            ("google-captcha",                                              "reCaptcha by BestWebSoft"),
     CLEANTALK_SPAM_PROTECT      ("cleantalk-spam-protect",                                      "Spam protection, AntiSpam, FireWall by CleanTalk"),
+    SITEORIGIN_PANELS           ("siteorigin-panels",                                           "Page Builder by SiteOrigin"),
 
     // others
     JS_COMPOSER                 ("js_composer",                                                 "WPBakery Page Builder WordPress plugin"),
