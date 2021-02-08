@@ -76,6 +76,9 @@ public class ModXCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("modx-login-language-select"),
                 Pattern.compile("Evolution CMS Manager Login"),
         });
+        pageAnalyzer.checkViaRobots(HIGH, new Pattern[] {
+                Pattern.compile("# Default modx exclusions")
+        });
 
         assign(destination, result, cmsType);
     }
