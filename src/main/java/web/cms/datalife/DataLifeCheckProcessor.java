@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static web.analyzer.AnalyzeConst.IMAGE_FILES;
-import static web.analyzer.AnalyzeConst.SUCCESS_CODES;
+import static web.analyzer.AnalyzeConst.*;
 import static web.analyzer.Importance.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
@@ -54,12 +53,19 @@ public class DataLifeCheckProcessor extends AbstractCMSProcessor {
                 "templates/Default/images/logotype.png",
                 "templates/Default/images/logo.png"
         });
+        pathAnalyzer.checkViaFiles(LOW, SUCCESS_CODES, SCRIPT_FILES, new String[] {
+                "engine/classes/js/dle_js.js"
+        });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
-        pageAnalyzer.checkViaPageKeywords(MEDIUM, new String[] { "admin.php" }, new Pattern[] {
+        pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "admin.php" }, new Pattern[] {
                 Pattern.compile("DataLife Engine")
         });
+        pageAnalyzer.checkViaRobots(MEDIUM, new Pattern[] {
+                Pattern.compile("do=.*"),
+                Pattern.compile("engine/go.php")
+        });
         SpecificAnalyzer specificAnalyzer = new SpecificAnalyzer(request, parser).prepare(host, result);
-        specificAnalyzer.checkViaError404Message(LOW, "administrator", new String[] {
+        specificAnalyzer.checkViaError404Message(MEDIUM, "administrator", new String[] {
                 "[пП]о данному адресу публикаций на сайте не найдено, либо у [вВ]ас нет доступа для просмотра информации по данному адресу"
         });
 
