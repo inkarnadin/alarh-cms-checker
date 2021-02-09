@@ -18,7 +18,7 @@ public class Runner {
         System.out.println("===========================================================");
         System.out.println("Welcome! This is application for check info about different CMS");
         System.out.println("In current time it is support next systems:");
-        System.out.println(" * Joomla! (version)");
+        System.out.println(" * Joomla! (version, plugins)");
         System.out.println(" * WordPress (version, themes, plugins)");
         System.out.println(" * Yii Framework");
         System.out.println(" * DataLife Engine (version)");

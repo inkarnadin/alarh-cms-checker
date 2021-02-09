@@ -38,8 +38,8 @@ public class JoomlaConnector extends AbstractCMSConnector {
 
     @Override
     public void checkPlugins() {
-        //pluginProcessor.configure(params.getProtocol(), params.getServer());
-        //pluginProcessor.process();
+        pluginProcessor.configure(params.getProtocol(), params.getServer());
+        pluginProcessor.process();
     }
 
 }
