@@ -67,6 +67,14 @@ public class MogutaCheckProcessor extends AbstractCMSProcessor {
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "mg-admin" }, new Pattern[] {
                 Pattern.compile("Moguta\\.CMS")
         });
+        pageAnalyzer.checkViaRobots(LOW, new Pattern[] {
+               Pattern.compile("mg-admin"),
+               Pattern.compile("mg-formvalid"),
+               Pattern.compile("mg-core"),
+               Pattern.compile("mg-pages"),
+               Pattern.compile("mg-plugins"),
+               Pattern.compile("mg-templates")
+        });
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
         headerAnalyzer.checkViaHeaderValues(HIGH, BASE_PATH, new Pattern[] {
                 Pattern.compile("mg_to_script")
