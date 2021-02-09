@@ -52,6 +52,11 @@ public class OpenCardCheckProcessor extends AbstractCMSProcessor {
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "admin" }, new Pattern[] {
                 Pattern.compile("route=common/forgotten")
         });
+        pageAnalyzer.checkViaRobots(LOW, new Pattern[] {
+                Pattern.compile("route=account"),
+                Pattern.compile("route=affiliate"),
+                Pattern.compile("route=checkout")
+        });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
         pathAnalyzer.checkViaFiles(LOW, SUCCESS_CODES, SCRIPT_FILES, new String[] {
                 "admin/view/javascript/common.js",
