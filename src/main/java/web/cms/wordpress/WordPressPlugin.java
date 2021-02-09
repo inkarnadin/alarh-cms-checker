@@ -158,6 +158,7 @@ public enum WordPressPlugin {
     CLEANTALK_SPAM_PROTECT      ("cleantalk-spam-protect",                                      "Spam protection, AntiSpam, FireWall by CleanTalk"),
     SITEORIGIN_PANELS           ("siteorigin-panels",                                           "Page Builder by SiteOrigin"),
     GUTENBERG                   ("gutenberg",                                                   "Gutenberg"),
+    HYPER_CACHE                 ("hyper-cache",                                                 "Hyper Cache"),
 
     // others
     JS_COMPOSER                 ("js_composer",                                                 "WPBakery Page Builder WordPress plugin"),
