@@ -87,10 +87,11 @@ public class WordPressPluginProcessor extends AbstractCMSProcessor {
                     }
                 }
             }
-            printer.print(destination);
         } else {
             destination.insert(0, "  ** Plugins: <unknown>");
         }
+
+        printer.print(destination);
     }
 
 }
