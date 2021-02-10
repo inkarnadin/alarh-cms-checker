@@ -5,10 +5,7 @@ import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
 import web.analyzer.JsScriptDissector;
-import web.analyzer.check.HeaderAnalyzer;
-import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
-import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
 import web.http.Request;
@@ -20,9 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static web.analyzer.AnalyzeConst.*;
 import static web.analyzer.Importance.HIGH;
-import static web.analyzer.Importance.LOW;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class PrestaShopCheckProcessor extends AbstractCMSProcessor {

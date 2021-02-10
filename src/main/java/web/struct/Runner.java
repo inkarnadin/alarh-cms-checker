@@ -41,6 +41,7 @@ public class Runner {
         System.out.println(" * Moguta.CMS (version)");
         System.out.println(" * HostCMS");
         System.out.println(" * ImageCMS");
+        System.out.println(" * PrestaShop");
         System.out.println(" * Wix");
         System.out.println("=======================DEBUG-MODE==========================");
 
