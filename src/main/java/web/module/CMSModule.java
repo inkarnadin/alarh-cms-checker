@@ -43,6 +43,8 @@ import web.cms.nuxt.NuxtCheckProcessor;
 import web.cms.nuxt.NuxtConnector;
 import web.cms.opencart.OpenCardCheckProcessor;
 import web.cms.opencart.OpenCartConnector;
+import web.cms.prestashop.PrestaShopCheckProcessor;
+import web.cms.prestashop.PrestaShopConnector;
 import web.cms.rails.RubyOnRailsCheckProcessor;
 import web.cms.rails.RubyOnRailsConnector;
 import web.cms.react.ReactCheckProcessor;
@@ -125,6 +127,8 @@ public class CMSModule extends AbstractModule {
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(IMAGE_CHECK)).to(ImageCmsCheckProcessor.class);
 
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(PRESTASHOP_CHECK)).to(PrestaShopCheckProcessor.class);
+
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(LAVAREL_CHECK)).to(LavarelCheckProcessor.class);
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(YII_CHECK)).to(YiiCheckProcessor.class);
@@ -164,6 +168,8 @@ public class CMSModule extends AbstractModule {
         connectorMultibinder.addBinding().to(HostCmsConnector.class);
         connectorMultibinder.addBinding().to(UmiConnector.class);
         connectorMultibinder.addBinding().to(ImageConnector.class);
+        connectorMultibinder.addBinding().to(PrestaShopConnector.class);
+
         connectorMultibinder.addBinding().to(LavarelConnector.class);
         connectorMultibinder.addBinding().to(YiiConnector.class);
         connectorMultibinder.addBinding().to(NuxtConnector.class);
@@ -171,6 +177,7 @@ public class CMSModule extends AbstractModule {
         connectorMultibinder.addBinding().to(RubyOnRailsConnector.class);
         connectorMultibinder.addBinding().to(ReactConnector.class);
         connectorMultibinder.addBinding().to(CodeIgniterConnector.class);
+
         connectorMultibinder.addBinding().to(TildaConnector.class);
         connectorMultibinder.addBinding().to(VigboConnector.class);
         connectorMultibinder.addBinding().to(InSalesConnector.class);

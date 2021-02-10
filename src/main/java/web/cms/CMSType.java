@@ -17,6 +17,7 @@ import web.cms.modx.ModXConnector;
 import web.cms.moguta.MogutaConnector;
 import web.cms.nuxt.NuxtConnector;
 import web.cms.opencart.OpenCartConnector;
+import web.cms.prestashop.PrestaShopConnector;
 import web.cms.rails.RubyOnRailsConnector;
 import web.cms.react.ReactConnector;
 import web.cms.shopify.ShopifyConnector;
@@ -50,6 +51,7 @@ public enum CMSType {
     HOST_CMS                (112, "HostCMS",          HostCmsConnector.class),
     UMI_CMS                 (113, "UMI.CMS",          UmiConnector.class),
     IMAGE_CMS               (114, "ImageCMS",         ImageConnector.class),
+    PRESTA_SHOP             (115, "PrestaShop",       PrestaShopConnector.class),
 
     LAVAREL                 (201, "Lavarel",          LavarelConnector.class),
     YII                     (202, "Yii Framework",    YiiConnector.class),

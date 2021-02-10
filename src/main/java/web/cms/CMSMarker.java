@@ -47,6 +47,8 @@ public class CMSMarker {
 
     public static final String IMAGE_CHECK = "imageCheck";
 
+    public static final String PRESTASHOP_CHECK = "prestaShopCheck";
+
     /**
      * Frameworks
      */
