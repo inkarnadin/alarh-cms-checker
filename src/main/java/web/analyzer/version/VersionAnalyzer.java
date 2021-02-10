@@ -166,7 +166,7 @@ public class VersionAnalyzer {
                     String res = matcher.group(0);
                     long count = Stream.of(excludes).filter(res::contains).count();
                     if (count == 0L)
-                        result.add(new ComparableVersion(matcher.group(1)));
+                        result.add(new ComparableVersion(matcher.group(2)));
                 }
             }
         }
