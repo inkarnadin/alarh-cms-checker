@@ -27,10 +27,10 @@ public class VueVersionProcessor extends AbstractCMSVersionProcessor {
     @Override
     public void process() {
         String[] paths = JsScriptDissector.dissect(host, request);
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionList).prepare(host);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionSet).prepare(host);
         versionAnalyzer.checkViaSinceScript(Pattern.compile("Vue\\.js v(.*)"), paths, true);
 
-        assign(destination, versionList);
+        assign(destination, versionSet);
         printer.print(destination);
     }
 

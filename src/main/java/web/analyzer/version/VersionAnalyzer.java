@@ -13,11 +13,10 @@ import web.http.ResponseBodyHandler;
 import web.parser.TextParser;
 import web.parser.XMLParser;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import static web.http.Headers.CONTENT_TYPE;
 
@@ -27,7 +26,7 @@ public class VersionAnalyzer {
     private final Request request;
     private final TextParser<String> textParser;
     private final XMLParser<String> xmlParser;
-    private final List<ComparableVersion> result;
+    private final Set<ComparableVersion> result;
 
     private Host host;
     private String mainPageResponseBody = "";
@@ -126,7 +125,7 @@ public class VersionAnalyzer {
     }
 
     /**
-     * Checking version via info into script files
+     * Check version via info into script files
      *
      * @param pattern - what is find
      * @param paths - paths script
@@ -144,6 +143,30 @@ public class VersionAnalyzer {
                             ? new ComparableVersion(matcher.group(1))
                             : new ComparableVersion(matcher.group(1) + "+");
                     result.add(version);
+                }
+            }
+        }
+    }
+
+    /**
+     * Check version via info about version, found on main page.
+     * Exclude potential plugins versions.
+     *
+     * @param path - path to page
+     * @param patterns - patterns for search
+     * @param excludes - list of exclusion keywords
+     */
+    public void checkViaMainPageLookVersion(String path, Pattern[] patterns, String[] excludes) {
+        host.setPath(path);
+        try (Response response = request.send(host)) {
+            String body = ResponseBodyHandler.readBody(response);
+            for (Pattern pattern : patterns) {
+                Matcher matcher = pattern.matcher(body);
+                while (matcher.find()) {
+                    String res = matcher.group(0);
+                    long count = Stream.of(excludes).filter(res::contains).count();
+                    if (count == 0L)
+                        result.add(new ComparableVersion(matcher.group(1)));
                 }
             }
         }

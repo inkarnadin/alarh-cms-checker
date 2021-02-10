@@ -27,10 +27,10 @@ public class ReactVersionProcessor extends AbstractCMSVersionProcessor {
     @Override
     public void process() {
         String[] paths = JsScriptDissector.dissect(host, request);
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionList).prepare(host);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionSet).prepare(host);
         versionAnalyzer.checkViaSinceScript(Pattern.compile("version:\"(.*?)\".*?SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED"), paths, true);
 
-        assign(destination, versionList);
+        assign(destination, versionSet);
         printer.print(destination);
     }
 

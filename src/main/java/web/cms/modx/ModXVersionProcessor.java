@@ -28,14 +28,12 @@ public class ModXVersionProcessor extends AbstractCMSVersionProcessor {
 
     @Override
     public void process() {
-        List<ComparableVersion> versionList = new ArrayList<>();
-
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionList).prepare(host);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionSet).prepare(host);
         versionAnalyzer.checkViaPageKeywords("manager", new Pattern[] {
                 Pattern.compile("(Revolution|Evolution)")
         });
 
-        assign(destination, versionList);
+        assign(destination, versionSet);
         printer.print(destination);
     }
 

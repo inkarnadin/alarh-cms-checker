@@ -30,7 +30,7 @@ public class DataLifeVersionProcessor extends AbstractCMSVersionProcessor {
 
     @Override
     public void process() {
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, null, versionList).prepare(host);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, null, versionSet).prepare(host);
         versionAnalyzer.checkViaLogoFiles(logoMap, IMAGE_FILES, new String[] {
                 "engine/skins/images/logos.jpg",
                 "engine/skins/images/logo.png",
@@ -44,7 +44,7 @@ public class DataLifeVersionProcessor extends AbstractCMSVersionProcessor {
                 Pattern.compile("Актуальная версия скрипта: (.*)")
         });
 
-        assign(destination, versionList);
+        assign(destination, versionSet);
         printer.print(destination);
     }
 

@@ -7,14 +7,11 @@ import web.struct.Destination;
 import web.struct.Processor;
 import web.struct.assignment.EnvironmentAssigner;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public abstract class AbstractEnvironmentProcessor implements Processor<EnvType>, EnvironmentAssigner {
 
-    protected List<ComparableVersion> versionList = new ArrayList<>();
+    protected Set<ComparableVersion> versionSet = new HashSet<>();
 
     protected String protocol;
     protected String server;

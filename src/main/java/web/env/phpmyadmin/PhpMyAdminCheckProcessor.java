@@ -28,14 +28,14 @@ public class PhpMyAdminCheckProcessor extends AbstractEnvironmentProcessor {
     @Override
     @SneakyThrows
     public void process() {
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionList).prepare(host);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionSet).prepare(host);
         versionAnalyzer.checkViaSinceScript(Pattern.compile("<title>.*phpMyAdmin\\s(.*?)\\s"), new String[] {
                 "phpmyadmin/doc/html/index.html",
                 "phpmyadmin/Documentation.html",
                 "myadmin/Documentation.html"
         }, true);
 
-        assign(destination, EnvType.PHP_MY_ADMIN, versionList);
+        assign(destination, EnvType.PHP_MY_ADMIN, versionSet);
         printer.print(destination);
     }
 

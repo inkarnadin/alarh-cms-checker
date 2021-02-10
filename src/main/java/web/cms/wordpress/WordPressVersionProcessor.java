@@ -25,10 +25,14 @@ public class WordPressVersionProcessor extends AbstractCMSVersionProcessor {
 
     @Override
     public void process() {
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionList).prepare(host);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionSet).prepare(host);
         versionAnalyzer.checkViaMainPageMetaTag(new Pattern[] {
                 Pattern.compile("<meta name=\"[gG]enerator\" content=\"WordPress\\s(.*?)\"\\s?/>")
         });
+        versionAnalyzer.checkViaMainPageLookVersion("", new Pattern[] {
+                Pattern.compile("(wp-includes|wp-content).*?js\\?ver=([\\d.]*)"),
+                Pattern.compile("(wp-includes|wp-content).*?css\\?ver=([\\d.]*)"),
+        }, new String[] { "plugins", "jquery" });
         versionAnalyzer.checkViaSinceScript(Pattern.compile("@since\\s(.*?)\\s"), new String[] {
                 "wp-includes/js/admin-bar.js",
                 "wp-includes/js/api-request.js",
@@ -51,7 +55,7 @@ public class WordPressVersionProcessor extends AbstractCMSVersionProcessor {
                 "wp-includes/js/wp-pointer.js",
         }, false);
 
-        assign(destination, versionList);
+        assign(destination, versionSet);
         printer.print(destination);
     }
 

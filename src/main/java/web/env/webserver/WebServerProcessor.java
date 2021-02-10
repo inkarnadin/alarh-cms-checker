@@ -28,10 +28,10 @@ public class WebServerProcessor extends AbstractEnvironmentProcessor {
     @Override
     @SneakyThrows
     public void process() {
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionList).prepare(host);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionSet).prepare(host);
         versionAnalyzer.checkViaHeaders(Pattern.compile("(.*)"), "server");
 
-        assign(destination, EnvType.WEB_SERVER, versionList);
+        assign(destination, EnvType.WEB_SERVER, versionSet);
         printer.print(destination);
     }
 

@@ -30,11 +30,11 @@ public class YiiVersionProcessor extends AbstractCMSVersionProcessor {
                 "yii.js", "yii.activeForm.js", "yii.validation.js", "yii.captcha.js"
         });
 
-        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionList).prepare(host);
+        VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionSet).prepare(host);
         if (paths.length != 0)
             versionAnalyzer.checkViaSinceScript(Pattern.compile("@since\\s(.*?)\\s"), paths, false);
 
-        assign(destination, versionList);
+        assign(destination, versionSet);
         printer.print(destination);
     }
 
