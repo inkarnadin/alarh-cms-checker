@@ -54,6 +54,7 @@ public class WordPressCheckProcessor extends AbstractCMSProcessor {
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
         pathAnalyzer.checkViaPaths(LOW, ACCEPT_CODES, new String[] {
+                "wp-admin",
                 "wp-content",
                 "wp-includes"
         });

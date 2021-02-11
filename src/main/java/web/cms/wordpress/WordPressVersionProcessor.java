@@ -9,9 +9,11 @@ import web.http.Request;
 import web.parser.TextParser;
 import web.printer.Printer;
 import web.struct.Destination;
+import web.struct.Validator;
 
 import java.util.regex.Pattern;
 
+import static web.cms.CMSMarker.WORDPRESS_VERSION;
 import static web.printer.PrinterMarker.VERSION_PRINTER;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
@@ -20,6 +22,8 @@ public class WordPressVersionProcessor extends AbstractCMSVersionProcessor {
     private final Request request;
     private final TextParser<String> parser;
     private final Destination destination;
+    @Named(WORDPRESS_VERSION)
+    private final Validator validator;
     @Named(VERSION_PRINTER)
     private final Printer printer;
 
@@ -32,7 +36,7 @@ public class WordPressVersionProcessor extends AbstractCMSVersionProcessor {
         versionAnalyzer.checkViaMainPageLookVersion("", new Pattern[] {
                 Pattern.compile("(wp-includes|wp-content).*?js\\?ver=([\\d.]*)"),
                 Pattern.compile("(wp-includes|wp-content).*?css\\?ver=([\\d.]*)"),
-        }, new String[] { "plugins", "jquery" });
+        }, new String[] { "plugins", "jquery", "theme" }, validator);
         versionAnalyzer.checkViaSinceScript(Pattern.compile("@since\\s(.*?)\\s"), new String[] {
                 "wp-includes/js/admin-bar.js",
                 "wp-includes/js/api-request.js",

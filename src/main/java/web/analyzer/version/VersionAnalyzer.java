@@ -12,6 +12,7 @@ import web.http.Request;
 import web.http.ResponseBodyHandler;
 import web.parser.TextParser;
 import web.parser.XMLParser;
+import web.struct.Validator;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -150,13 +151,14 @@ public class VersionAnalyzer {
 
     /**
      * Check version via info about version, found on main page.
-     * Exclude potential plugins versions.
+     * Exclude potential plugins versions && wrong numeration version via validator.
      *
      * @param path - path to page
      * @param patterns - patterns for search
-     * @param excludes - list of exclusion keywords
+     * @param excludes - list of excludes keywords
+     * @param validator - version validator
      */
-    public void checkViaMainPageLookVersion(String path, Pattern[] patterns, String[] excludes) {
+    public void checkViaMainPageLookVersion(String path, Pattern[] patterns, String[] excludes, Validator validator) {
         host.setPath(path);
         try (Response response = request.send(host)) {
             String body = ResponseBodyHandler.readBody(response);
@@ -164,9 +166,10 @@ public class VersionAnalyzer {
                 Matcher matcher = pattern.matcher(body);
                 while (matcher.find()) {
                     String res = matcher.group(0);
+                    String ver = matcher.group(2);
                     long count = Stream.of(excludes).filter(res::contains).count();
-                    if (count == 0L)
-                        result.add(new ComparableVersion(matcher.group(2)));
+                    if (count == 0L && validator.validate(ver))
+                        result.add(new ComparableVersion(ver));
                 }
             }
         }
