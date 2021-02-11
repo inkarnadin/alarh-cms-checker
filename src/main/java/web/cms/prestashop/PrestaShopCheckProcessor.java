@@ -21,7 +21,6 @@ import java.util.regex.Pattern;
 
 import static web.analyzer.AnalyzeConst.BASE_PATH;
 import static web.analyzer.Importance.HIGH;
-import static web.analyzer.Importance.MEDIUM;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class PrestaShopCheckProcessor extends AbstractCMSProcessor {
