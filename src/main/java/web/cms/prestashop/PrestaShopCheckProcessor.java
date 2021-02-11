@@ -5,6 +5,7 @@ import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
 import web.analyzer.JsScriptDissector;
+import web.analyzer.check.HeaderAnalyzer;
 import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.cms.AbstractCMSProcessor;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.AnalyzeConst.BASE_PATH;
 import static web.analyzer.Importance.HIGH;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
@@ -41,6 +43,10 @@ public class PrestaShopCheckProcessor extends AbstractCMSProcessor {
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] { Pattern.compile("[Pp]resta[Ss]hop") });
+        HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
+        headerAnalyzer.checkViaHeaderValues(HIGH, BASE_PATH, new Pattern[] {
+                Pattern.compile("thirty bees")
+        });
 
         assign(destination, result, cmsType);
     }
