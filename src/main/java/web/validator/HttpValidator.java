@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public class HttpValidator implements Validator {
+public class HttpValidator implements WebValidator {
 
     public static Boolean isRedirect(Response response) {
         if (Objects.nonNull(response.priorResponse())) {
