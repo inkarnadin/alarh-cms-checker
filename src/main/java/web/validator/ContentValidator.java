@@ -5,7 +5,7 @@ import web.http.ResponseBodyHandler;
 
 import java.util.regex.Pattern;
 
-public class ContentValidator implements WebValidator {
+public class ContentValidator implements ResponseValidator {
 
     public static boolean isGenerated(Response response) {
         String responseBody = ResponseBodyHandler.readBody(response);
