@@ -1,3 +1,3 @@
-package web.validator;
+package web.http.validator;
 
 public interface ResponseValidator {}

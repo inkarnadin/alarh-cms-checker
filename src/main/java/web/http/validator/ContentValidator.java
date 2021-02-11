@@ -1,4 +1,4 @@
-package web.validator;
+package web.http.validator;
 
 import okhttp3.Response;
 import web.http.ResponseBodyHandler;

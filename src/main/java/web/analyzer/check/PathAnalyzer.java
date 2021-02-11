@@ -7,8 +7,8 @@ import web.analyzer.Importance;
 import web.http.ContentType;
 import web.http.Host;
 import web.http.Request;
-import web.validator.ContentValidator;
-import web.validator.HttpValidator;
+import web.http.validator.ContentValidator;
+import web.http.validator.HttpValidator;
 
 import java.util.Arrays;
 import java.util.List;
