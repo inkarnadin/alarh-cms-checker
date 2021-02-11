@@ -5,6 +5,7 @@ import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
 import web.analyzer.JsScriptDissector;
+import web.analyzer.check.MainPageAnalyzer;
 import web.analyzer.check.PageAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
@@ -33,6 +34,11 @@ public class PrestaShopCheckProcessor extends AbstractCMSProcessor {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
         String[] paths = JsScriptDissector.dissect(host, request);
 
+        MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
+        mainPageAnalyzer.checkViaMainPageGenerator(HIGH, new String[] {
+                "thirty bees",
+                "[Pp]resta[Ss]hop"
+        });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] { Pattern.compile("[Pp]resta[Ss]hop") });
 
