@@ -8,14 +8,16 @@ In this time supports next:
   * MaxSite CMS
   * Drupal
   * 1C-Bitrix
-  * ModX
+  * ModX (+ EvolutionCMS)
   * VamShop
   * Magento
-  * OpenCart (ocStore)
+  * OpenCart (+ ocStore)
   * Moguta.CMS
   * Shopify
   * HostCMS
   * UMI.CMS
+  * ImageCMS
+  * PrestaShop (+ ThirtyBees)
 * Web Frameworks:
   * Lavarel
   * Yii Framework
