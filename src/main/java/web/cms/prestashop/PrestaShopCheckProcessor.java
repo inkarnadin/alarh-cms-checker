@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 
 import static web.analyzer.AnalyzeConst.BASE_PATH;
 import static web.analyzer.Importance.HIGH;
+import static web.analyzer.Importance.MEDIUM;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class PrestaShopCheckProcessor extends AbstractCMSProcessor {
@@ -46,6 +47,9 @@ public class PrestaShopCheckProcessor extends AbstractCMSProcessor {
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
         headerAnalyzer.checkViaHeaderValues(HIGH, BASE_PATH, new Pattern[] {
                 Pattern.compile("thirty bees")
+        });
+        headerAnalyzer.checkViaCookies(HIGH, BASE_PATH, new Pattern[] {
+                Pattern.compile("thirtybees")
         });
 
         assign(destination, result, cmsType);
