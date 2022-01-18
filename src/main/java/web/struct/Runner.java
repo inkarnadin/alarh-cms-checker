@@ -77,11 +77,6 @@ public class Runner {
                     System.out.println("Skipped...");
                 }
                 printSplit();
-
-                //System.out.print("Try again? (y/n): ");
-
-                //if (!isAnswer(scanner.nextLine()))
-                //    System.exit(1);
             }
         }
     }
@@ -92,21 +87,6 @@ public class Runner {
         Preferences.manageLowImportanceFilter(Arrays.asList(args).contains("-li"));
         Preferences.manageWhoIsInfo(Arrays.asList(args).contains("-who"));
         Preferences.manageThemeFullInfo(Arrays.asList(args).contains("-th"));
-    }
-
-    private static boolean isAnswer(final String answer) {
-        if (Objects.isNull(answer))
-            return false;
-
-        switch (answer.toLowerCase()) {
-            case "y":
-            case "yes":
-                return true;
-            case "n":
-            case "no":
-            default:
-                return false;
-        }
     }
 
     private static void printSplit() {

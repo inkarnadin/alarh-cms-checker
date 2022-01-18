@@ -18,8 +18,6 @@ public abstract class AbstractEnvironmentProcessor implements Processor<EnvType>
 
     protected Host host;
 
-    protected final static String successMessage = "  * %s tags have been found (%s/%s)";
-
     @Override
     public void configure(String protocol, String server) {
         Objects.requireNonNull(server, "Empty url value!");
