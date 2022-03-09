@@ -1,0 +1,27 @@
+Welcome! This is application for check info about different CMS
+In current time it is support next systems:
+ * Joomla! (version, plugins)
+ * WordPress (version, themes, plugins)
+ * Yii Framework
+ * DataLife Engine (version)
+ * MaxSite CMS
+ * Drupal (version)
+ * MODx
+ * 1C-Bitrix (version)
+ * Tilda
+ * Lavarel
+ * VamShop
+ * Nuxt.js
+ * Magento
+ * OpenCart CMS
+ * InSales
+ * Vigbo CMS
+ * RailsOnRuby
+ * Vue.js
+ * uKit
+ * Shopify
+ * Moguta.CMS (version)
+ * HostCMS
+ * ImageCMS
+ * PrestaShop
+ * Wix

@@ -5,44 +5,33 @@ import com.google.inject.Injector;
 import web.cms.CMSChecker;
 import web.env.EnvironmentChecker;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * Main runner for starting scanner menu.<br/>
+ * Show all available CMS for checking.
+ *
+ * @author inkarnadin
+ */
 public class Runner {
 
     @Inject
     Injector injector;
 
+    /**
+     * Start scanning lifecycle.
+     */
     public void run() {
         System.out.println("===========================================================");
-        System.out.println("Welcome! This is application for check info about different CMS");
-        System.out.println("In current time it is support next systems:");
-        System.out.println(" * Joomla! (version, plugins)");
-        System.out.println(" * WordPress (version, themes, plugins)");
-        System.out.println(" * Yii Framework");
-        System.out.println(" * DataLife Engine (version)");
-        System.out.println(" * MaxSite CMS");
-        System.out.println(" * Drupal (version)");
-        System.out.println(" * MODx");
-        System.out.println(" * 1C-Bitrix (version)");
-        System.out.println(" * Tilda");
-        System.out.println(" * Lavarel");
-        System.out.println(" * VamShop");
-        System.out.println(" * Nuxt.js");
-        System.out.println(" * Magento");
-        System.out.println(" * OpenCart CMS");
-        System.out.println(" * InSales");
-        System.out.println(" * Vigbo CMS");
-        System.out.println(" * RailsOnRuby");
-        System.out.println(" * Vue.js");
-        System.out.println(" * uKit");
-        System.out.println(" * Shopify");
-        System.out.println(" * Moguta.CMS (version)");
-        System.out.println(" * HostCMS");
-        System.out.println(" * ImageCMS");
-        System.out.println(" * PrestaShop");
-        System.out.println(" * Wix");
+        try {
+            Files.readAllLines(Path.of("src/main/resources/description.txt")).forEach(System.out::println);
+        } catch (Exception xep) {
+            xep.printStackTrace();
+            System.out.println("No description: " + xep.getClass());
+        }
         System.out.println("=======================DEBUG-MODE==========================");
 
         try (Scanner scanner = new Scanner(System.in)) {
