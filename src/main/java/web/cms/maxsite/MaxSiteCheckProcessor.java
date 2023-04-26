@@ -3,6 +3,7 @@ package web.cms.maxsite;
 import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
+import web.analyzer.DissectorResult;
 import web.analyzer.Importance;
 import web.analyzer.JsScriptDissector;
 import web.analyzer.check.MainPageAnalyzer;
@@ -34,7 +35,9 @@ public class MaxSiteCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        String[] paths = JsScriptDissector.dissect(host, request);
+        DissectorResult dissectorResult = JsScriptDissector.dissect(host, request);
+        String[] paths = dissectorResult.getPaths();
+        boolean isOverWrittenBasePath = dissectorResult.isOverWrittenBasePath();
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageGenerator(HIGH, new String[] { "MaxSite CMS" });
@@ -47,7 +50,7 @@ public class MaxSiteCheckProcessor extends AbstractCMSProcessor {
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] {
                 Pattern.compile("MaxSite CMS")
-        });
+        }, isOverWrittenBasePath);
         pageAnalyzer.checkViaPageKeywords(LOW, new String[] { "admin" }, new Pattern[] {
                 Pattern.compile("flogin"),
                 Pattern.compile("flogin_redirect"),

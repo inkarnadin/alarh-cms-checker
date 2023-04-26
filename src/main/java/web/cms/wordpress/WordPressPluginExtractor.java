@@ -4,7 +4,9 @@ import org.apache.maven.artifact.versioning.ComparableVersion;
 import web.analyzer.plugin.AbstractPluginExtractor;
 import web.analyzer.plugin.PluginObject;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

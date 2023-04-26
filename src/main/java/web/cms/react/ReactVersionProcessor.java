@@ -3,6 +3,7 @@ package web.cms.react;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import lombok.RequiredArgsConstructor;
+import web.analyzer.DissectorResult;
 import web.analyzer.JsScriptDissector;
 import web.analyzer.version.VersionAnalyzer;
 import web.cms.AbstractCMSVersionProcessor;
@@ -26,9 +27,14 @@ public class ReactVersionProcessor extends AbstractCMSVersionProcessor {
 
     @Override
     public void process() {
-        String[] paths = JsScriptDissector.dissect(host, request);
+        DissectorResult dissectorResult = JsScriptDissector.dissect(host, request);
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionSet).prepare(host);
-        versionAnalyzer.checkViaSinceScript(Pattern.compile("version:\"(.*?)\".*?SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED"), paths, true);
+        versionAnalyzer.checkViaSinceScript(
+                Pattern.compile("version:\"(.*?)\".*?SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED"),
+                dissectorResult.getPaths(),
+                dissectorResult.isOverWrittenBasePath(),
+                true
+        );
 
         assign(destination, versionSet);
         printer.print(destination);

@@ -57,7 +57,7 @@ public class WordPressVersionProcessor extends AbstractCMSVersionProcessor {
                 "wp-includes/js/wp-emoji.js",
                 "wp-includes/js/wp-emoji-loader.js",
                 "wp-includes/js/wp-pointer.js",
-        }, false);
+        }, false, false);
 
         assign(destination, versionSet);
         printer.print(destination);

@@ -33,7 +33,7 @@ public class PhpMyAdminCheckProcessor extends AbstractEnvironmentProcessor {
                 "phpmyadmin/doc/html/index.html",
                 "phpmyadmin/Documentation.html",
                 "myadmin/Documentation.html"
-        }, true);
+        }, false, true);
 
         assign(destination, EnvType.PHP_MY_ADMIN, versionSet);
         printer.print(destination);

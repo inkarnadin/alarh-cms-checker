@@ -3,7 +3,6 @@ package web.cms.modx;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import lombok.RequiredArgsConstructor;
-import org.apache.maven.artifact.versioning.ComparableVersion;
 import web.analyzer.version.VersionAnalyzer;
 import web.cms.AbstractCMSVersionProcessor;
 import web.http.Request;
@@ -11,8 +10,6 @@ import web.parser.TextParser;
 import web.printer.Printer;
 import web.struct.Destination;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 import static web.printer.PrinterMarker.VERSION_PRINTER;

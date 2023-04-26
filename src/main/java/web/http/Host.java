@@ -16,6 +16,8 @@ public class Host {
     @Setter
     private String path;
     @Setter
+    private String overWrittenBasePath;
+    @Setter
     private boolean isBegetProtection;
 
     public Host(String protocol, String server, String path) {
@@ -29,11 +31,9 @@ public class Host {
     }
 
     public String createUrl() {
-        StringBuilder stringBuilder = new StringBuilder(protocol)
-                .append("://")
-                .append(server)
-                .append(Objects.nonNull(path) ? "/" + path : "");
-        return stringBuilder.toString();
+        return (Objects.nonNull(overWrittenBasePath))
+                ? protocol + "://" + overWrittenBasePath
+                : protocol + "://" + server + (Objects.nonNull(path) ? "/" + path : "");
     }
 
 }

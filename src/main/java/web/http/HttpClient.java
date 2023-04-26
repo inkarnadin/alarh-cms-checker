@@ -4,7 +4,10 @@ import lombok.SneakyThrows;
 import okhttp3.Request;
 import okhttp3.*;
 
-import javax.net.ssl.*;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
 import java.io.File;
 import java.security.SecureRandom;
 import java.util.Objects;

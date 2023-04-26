@@ -3,6 +3,7 @@ package web.cms.yii;
 import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
+import web.analyzer.DissectorResult;
 import web.analyzer.Importance;
 import web.analyzer.JsScriptDissector;
 import web.analyzer.check.MainPageAnalyzer;
@@ -37,7 +38,9 @@ public class YiiCheckProcessor extends AbstractCMSProcessor implements DefaultAs
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        String[] paths = JsScriptDissector.dissect(host, request);
+        DissectorResult dissectorResult = JsScriptDissector.dissect(host, request);
+        String[] paths = dissectorResult.getPaths();
+        boolean isOverWrittenBasePath = dissectorResult.isOverWrittenBasePath();
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageScriptName(HIGH, new Pattern[] { Pattern.compile("<script src=\".*(yii.js).*\"></script>") });
@@ -58,7 +61,7 @@ public class YiiCheckProcessor extends AbstractCMSProcessor implements DefaultAs
                 Pattern.compile("loginform-username"),
                 Pattern.compile("LoginForm\\[]")
         });
-        pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] { Pattern.compile("yii") });
+        pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] { Pattern.compile("yii") }, isOverWrittenBasePath);
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
         pathAnalyzer.checkViaPaths(LOW, DENIED_CODES, new String[] { "vendor/yiisoft/yii2" });
 

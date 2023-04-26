@@ -14,7 +14,9 @@ import web.parser.TextParser;
 import web.parser.XMLParser;
 import web.struct.Validator;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -126,15 +128,20 @@ public class VersionAnalyzer {
     }
 
     /**
-     * Check version via info into script files
+     * Check version via info into script files.
      *
-     * @param pattern - what is find
-     * @param paths - paths script
-     * @param isPrecision - if true - believe that the version is determined exactly, else - just add to output "+"
+     * @param pattern pattern of expression
+     * @param paths paths to scripts
+     * @param isOverwrittenBasePath if true - base path was overwritten
+     * @param isPrecision if true - believe that the version is determined exactly, else - just add to output "+"
      */
-    public void checkViaSinceScript(Pattern pattern, String[] paths, boolean isPrecision) {
+    public void checkViaSinceScript(Pattern pattern, String[] paths, boolean isOverwrittenBasePath, boolean isPrecision) {
         for (String path : paths) {
-            host.setPath(path);
+            if (isOverwrittenBasePath) {
+                host.setOverWrittenBasePath(path);
+            } else {
+                host.setPath(path);
+            }
             try (Response response = request.send(host)) {
                 String body = ResponseBodyHandler.readBody(response);
                 Matcher matcher = pattern.matcher(body);
@@ -147,6 +154,8 @@ public class VersionAnalyzer {
                 }
             }
         }
+        host.setOverWrittenBasePath(null);
+        host.setPath(null);
     }
 
     /**

@@ -3,6 +3,7 @@ package web.cms.vue;
 import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
+import web.analyzer.DissectorResult;
 import web.analyzer.Importance;
 import web.analyzer.JsScriptDissector;
 import web.analyzer.check.MainPageAnalyzer;
@@ -19,6 +20,7 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static web.analyzer.Importance.HIGH;
+import static web.analyzer.Importance.MEDIUM;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class VueCheckProcessor extends AbstractCMSProcessor {
@@ -33,7 +35,9 @@ public class VueCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        String[] paths = JsScriptDissector.dissect(host, request);
+        DissectorResult dissectorResult = JsScriptDissector.dissect(host, request);
+        String[] paths = dissectorResult.getPaths();
+        boolean isOverWrittenBasePath = dissectorResult.isOverWrittenBasePath();
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageScriptName(HIGH, new Pattern[] {
@@ -45,13 +49,16 @@ public class VueCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("vue-handle-error\\.js"),
                 Pattern.compile("vue\\.js")
         });
+        mainPageAnalyzer.checkViaMainPageKeywords(MEDIUM, new Pattern[] {
+                Pattern.compile("build/js/utils\\.js")
+        });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
-        pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] { Pattern.compile("Vue\\.js") });
+        pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] { Pattern.compile("[Vv]ue\\.js") }, isOverWrittenBasePath);
         pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] {
                 Pattern.compile("VUE_SSR_CONTEXT"),
                 Pattern.compile("VUE_DEVTOOLS_GLOBAL_HOOK"),
                 Pattern.compile("VUE_ENV"),
-        });
+        }, isOverWrittenBasePath);
 
         assign(destination, result, cmsType);
     }

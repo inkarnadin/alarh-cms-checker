@@ -3,6 +3,7 @@ package web.cms.vue;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import lombok.RequiredArgsConstructor;
+import web.analyzer.DissectorResult;
 import web.analyzer.JsScriptDissector;
 import web.analyzer.version.VersionAnalyzer;
 import web.cms.AbstractCMSVersionProcessor;
@@ -26,9 +27,14 @@ public class VueVersionProcessor extends AbstractCMSVersionProcessor {
 
     @Override
     public void process() {
-        String[] paths = JsScriptDissector.dissect(host, request);
+        DissectorResult dissectorResult = JsScriptDissector.dissect(host, request);
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionSet).prepare(host);
-        versionAnalyzer.checkViaSinceScript(Pattern.compile("Vue\\.js v(.*)"), paths, true);
+        versionAnalyzer.checkViaSinceScript(
+                Pattern.compile("Vue\\.js v(.*)"),
+                dissectorResult.getPaths(),
+                dissectorResult.isOverWrittenBasePath(),
+                true
+        );
 
         assign(destination, versionSet);
         printer.print(destination);

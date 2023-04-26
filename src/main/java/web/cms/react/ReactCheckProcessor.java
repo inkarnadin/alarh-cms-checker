@@ -3,6 +3,7 @@ package web.cms.react;
 import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
+import web.analyzer.DissectorResult;
 import web.analyzer.Importance;
 import web.analyzer.JsScriptDissector;
 import web.analyzer.check.MainPageAnalyzer;
@@ -33,7 +34,9 @@ public class ReactCheckProcessor extends AbstractCMSProcessor {
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
-        String[] paths = JsScriptDissector.dissect(host, request);
+        DissectorResult dissectorResult = JsScriptDissector.dissect(host, request);
+        String[] paths = dissectorResult.getPaths();
+        boolean isOverWrittenBasePath = dissectorResult.isOverWrittenBasePath();
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
@@ -54,8 +57,8 @@ public class ReactCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("reactInternalInstance"),
                 Pattern.compile("__REACT_DEVTOOLS_GLOBAL_HOOK__"),
                 Pattern.compile("__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED"),
-        });
-        pageAnalyzer.checkViaPageKeywords(LOW, paths, new Pattern[] { Pattern.compile("react\\.") });
+        }, isOverWrittenBasePath);
+        pageAnalyzer.checkViaPageKeywords(LOW, paths, new Pattern[] { Pattern.compile("react\\.") }, isOverWrittenBasePath);
 
         assign(destination, result, cmsType);
     }

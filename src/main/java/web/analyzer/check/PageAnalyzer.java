@@ -29,15 +29,19 @@ public class PageAnalyzer {
     }
 
     /**
-     * Check via special keywords on a page
+     * Check via special keywords on a page.
      *
-     * @param importance - importance level of check
-     * @param paths - list of checking paths
-     * @param patterns - list of finding patterns
+     * @param importance importance level of check
+     * @param paths list of checking paths
+     * @param patterns list of finding patterns
      */
-    public void checkViaPageKeywords(Importance importance, String[] paths, Pattern[] patterns) {
+    public void checkViaPageKeywords(Importance importance, String[] paths, Pattern[] patterns, boolean isOverwrittenBasePath) {
         for (String path : paths) {
-            host.setPath(path);
+            if (isOverwrittenBasePath) {
+                host.setOverWrittenBasePath(path);
+            } else {
+                host.setPath(path);
+            }
             host.setBegetProtection(true);
             try (Response response = request.send(host)) {
                 String responseBody = ResponseBodyHandler.readBody(response);
@@ -51,6 +55,17 @@ public class PageAnalyzer {
             }
         }
         setResultValue(false, importance);
+    }
+
+    /**
+     * Check via special keywords on a page.
+     *
+     * @param importance importance level of check
+     * @param paths list of checking paths
+     * @param patterns list of finding patterns
+     */
+    public void checkViaPageKeywords(Importance importance, String[] paths, Pattern[] patterns) {
+        checkViaPageKeywords(importance, paths, patterns, false);
     }
 
     /**

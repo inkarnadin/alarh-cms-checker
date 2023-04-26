@@ -3,6 +3,7 @@ package web.cms.prestashop;
 import com.google.inject.Inject;
 import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
+import web.analyzer.DissectorResult;
 import web.analyzer.Importance;
 import web.analyzer.JsScriptDissector;
 import web.analyzer.check.HeaderAnalyzer;
@@ -34,7 +35,9 @@ public class PrestaShopCheckProcessor extends AbstractCMSProcessor {
     @Override
     public void process() {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
-        String[] paths = JsScriptDissector.dissect(host, request);
+        DissectorResult dissectorResult = JsScriptDissector.dissect(host, request);
+        String[] paths = dissectorResult.getPaths();
+        boolean isOverWrittenBasePath = dissectorResult.isOverWrittenBasePath();
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageGenerator(HIGH, new String[] {
@@ -42,7 +45,7 @@ public class PrestaShopCheckProcessor extends AbstractCMSProcessor {
                 "[Pp]resta[Ss]hop"
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
-        pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] { Pattern.compile("[Pp]resta[Ss]hop") });
+        pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] { Pattern.compile("[Pp]resta[Ss]hop") }, isOverWrittenBasePath);
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
         headerAnalyzer.checkViaHeaderValues(HIGH, BASE_PATH, new Pattern[] {
                 Pattern.compile("thirty bees")

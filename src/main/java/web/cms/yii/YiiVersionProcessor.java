@@ -3,6 +3,7 @@ package web.cms.yii;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import lombok.RequiredArgsConstructor;
+import web.analyzer.DissectorResult;
 import web.analyzer.JsScriptDissector;
 import web.analyzer.version.VersionAnalyzer;
 import web.cms.AbstractCMSVersionProcessor;
@@ -26,13 +27,17 @@ public class YiiVersionProcessor extends AbstractCMSVersionProcessor {
 
     @Override
     public void process() {
-        String[] paths = JsScriptDissector.dissect(host, request, new String[] {
+        DissectorResult dissectorResult = JsScriptDissector.dissect(host, request, new String[]{
                 "yii.js", "yii.activeForm.js", "yii.validation.js", "yii.captcha.js"
         });
 
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionSet).prepare(host);
-        if (paths.length != 0)
-            versionAnalyzer.checkViaSinceScript(Pattern.compile("@since\\s(.*?)\\s"), paths, false);
+        versionAnalyzer.checkViaSinceScript(
+                Pattern.compile("@since\\s(.*?)\\s"),
+                dissectorResult.getPaths(),
+                dissectorResult.isOverWrittenBasePath(),
+                false
+        );
 
         assign(destination, versionSet);
         printer.print(destination);
