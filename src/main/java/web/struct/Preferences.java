@@ -2,6 +2,11 @@ package web.struct;
 
 import lombok.Getter;
 
+/**
+ * Global application preferences.
+ *
+ * @author inkarnadin
+ */
 public class Preferences {
 
     @Getter
