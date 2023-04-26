@@ -50,7 +50,8 @@ public class VueCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("vue\\.js")
         });
         mainPageAnalyzer.checkViaMainPageKeywords(MEDIUM, new Pattern[] {
-                Pattern.compile("build/js/utils\\.js")
+                Pattern.compile("build/js/utils\\.js"),
+                Pattern.compile("build/css")
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] { Pattern.compile("[Vv]ue\\.js") }, isOverWrittenBasePath);
