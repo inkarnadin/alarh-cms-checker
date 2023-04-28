@@ -30,9 +30,7 @@ public class WordPressVersionProcessor extends AbstractCMSVersionProcessor {
     @Override
     public void process() {
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionSet).prepare(host);
-        versionAnalyzer.checkViaMainPageMetaTag(new Pattern[] {
-                Pattern.compile("<meta name=\"[gG]enerator\" content=\"WordPress\\s(.*?)\"\\s?/>")
-        });
+        versionAnalyzer.checkViaMainPageGenerator(Pattern.compile("<meta name=\"[gG]enerator\" content=\"WordPress\\s(.*?)\"\\s?/>"));
         versionAnalyzer.checkViaMainPageLookVersion("", new Pattern[] {
                 Pattern.compile("(wp-includes|wp-content).*?js\\?ver=([\\d.]*)"),
                 Pattern.compile("(wp-includes|wp-content).*?css\\?ver=([\\d.]*)"),

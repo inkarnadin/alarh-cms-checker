@@ -45,7 +45,12 @@ public class VersionAnalyzer {
         return this;
     }
 
-    public void checkViaMainPageMetaTag(Pattern[] patterns) {
+    public void checkViaMainPageGenerator(Pattern pattern) {
+        textParser.configure(pattern, 1);
+        result.add(new ComparableVersion(textParser.parse(mainPageResponseBody)));
+    }
+
+    public void checkViaMainPageKeywords(Pattern[] patterns) {
         for (Pattern pattern : patterns) {
             textParser.configure(pattern, 1);
             result.add(new ComparableVersion(textParser.parse(mainPageResponseBody)));

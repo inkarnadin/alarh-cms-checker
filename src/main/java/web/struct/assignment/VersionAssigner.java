@@ -6,20 +6,30 @@ import web.struct.Destination;
 import java.util.Collections;
 import java.util.Set;
 
+/**
+ * Компонент анализа найденных версий для выявления актуальной.
+ *
+ * @author inkarnadin
+ * on 23-01-2021
+ */
 public interface VersionAssigner {
 
     /**
-     * Define and put to destination actual version.
-     * If found unrefined version marked as "+" symbol, to look the same version in list without the mark for refine.
+     * Метод определения актуальной версии.
+     * <p>Изначально в качестве основной выбирается максимальная определенная версия. Если эта версия маркирована символом "+", что
+     * означает примерное определение, производится поиск аналогичной версии, добавленной в список какой-либо другой методикой без
+     * символа "+". Если поиск подтверждает наличие такой версии в списке, версия считается определенной однозначно и будет возвращена.
+     * В противном случае версия возвращается неуточненной, то есть, помеченной знаком "+".
      *
-     * @param destination - result object
-     * @param versionSet - list of versions
+     * @param destination объект, содержащий результат
+     * @param versionSet список найденных версий
      */
     default void assign(Destination destination, Set<ComparableVersion> versionSet) {
         ComparableVersion maxVersion = Collections.max(versionSet);
         ComparableVersion refinedVersion = new ComparableVersion(maxVersion.toString().replace("+", ""));
-        if (versionSet.contains(refinedVersion))
+        if (versionSet.contains(refinedVersion)) {
             maxVersion = refinedVersion;
+        }
         destination.insert(0, maxVersion.toString());
     }
 

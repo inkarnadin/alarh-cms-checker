@@ -24,6 +24,7 @@ import web.cms.host.HostCmsCheckProcessor;
 import web.cms.host.HostCmsConnector;
 import web.cms.hugo.HugoCheckProcessor;
 import web.cms.hugo.HugoConnector;
+import web.cms.hugo.HugoVersionProcessor;
 import web.cms.image.ImageCmsCheckProcessor;
 import web.cms.image.ImageConnector;
 import web.cms.insales.InSalesCheckProcessor;
@@ -154,7 +155,9 @@ public class CMSModule extends AbstractModule {
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(INSALES_CHECK)).to(InSalesCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(UKIT_CHECK)).to(UkitCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(WIX_CHECK)).to(WixCheckProcessor.class);
+
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(HUGO_CHECK)).to(HugoCheckProcessor.class);
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(HUGO_VERSION)).to(HugoVersionProcessor.class);
 
         Multibinder<Connector> connectorMultibinder = Multibinder.newSetBinder(binder(), new TypeLiteral<>(){});
         connectorMultibinder.addBinding().to(WordPressConnector.class);

@@ -29,9 +29,7 @@ public class JoomlaVersionProcessor extends AbstractCMSVersionProcessor {
     @Override
     public void process() {
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, xmlParser, versionSet).prepare(host);
-        versionAnalyzer.checkViaMainPageMetaTag(new Pattern[] {
-                Pattern.compile("<meta name=\"generator\".*Version\\s(.*)\" />")
-        });
+        versionAnalyzer.checkViaMainPageGenerator(Pattern.compile("<meta name=\"generator\".*Version\\s(.*)\" />"));
         versionAnalyzer.checkViaXMlFiles(XML_FILES, "administrator/manifests/files/joomla.xml");
         versionAnalyzer.checkViaXMlFiles(XML_FILES, "language/en-GB/en-GB.xml");
         versionAnalyzer.checkViaXMlFiles(XML_FILES, "administrator/components/com_config/config.xml");

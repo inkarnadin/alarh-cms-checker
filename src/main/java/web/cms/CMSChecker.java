@@ -4,7 +4,12 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import lombok.RequiredArgsConstructor;
 import web.printer.Printer;
-import web.struct.*;
+import web.struct.AbstractChecker;
+import web.struct.Connector;
+import web.struct.Destination;
+import web.struct.Determinant;
+import web.struct.Params;
+import web.struct.Preferences;
 
 import java.util.ArrayList;
 import java.util.Comparator;
