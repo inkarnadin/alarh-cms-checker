@@ -87,4 +87,10 @@ public class CMSMarker {
     public static final String HUGO_CHECK = "hugoCheck";
     public static final String HUGO_VERSION = "hugoVersion";
 
+    /**
+     * Boards
+     */
+
+    public static final String IPS_CHECK = "IPSCheck";
+
 }

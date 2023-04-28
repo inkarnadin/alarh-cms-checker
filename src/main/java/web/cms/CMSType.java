@@ -2,41 +2,43 @@ package web.cms;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import web.cms.bitrix.BitrixConnector;
-import web.cms.codeigniter.CodeIgniterConnector;
-import web.cms.datalife.DataLifeConnector;
-import web.cms.drupal.DrupalConnector;
-import web.cms.host.HostCmsConnector;
-import web.cms.hugo.HugoConnector;
-import web.cms.image.ImageConnector;
-import web.cms.insales.InSalesConnector;
-import web.cms.joomla.JoomlaConnector;
-import web.cms.lavarel.LavarelConnector;
-import web.cms.magento.MagentoConnector;
-import web.cms.maxsite.MaxSiteConnector;
-import web.cms.modx.ModXConnector;
-import web.cms.moguta.MogutaConnector;
-import web.cms.nuxt.NuxtConnector;
-import web.cms.opencart.OpenCartConnector;
-import web.cms.prestashop.PrestaShopConnector;
-import web.cms.rails.RubyOnRailsConnector;
-import web.cms.react.ReactConnector;
-import web.cms.shopify.ShopifyConnector;
-import web.cms.tilda.TildaConnector;
-import web.cms.ukit.UkitConnector;
-import web.cms.umi.UmiConnector;
-import web.cms.vamshop.VamShopConnector;
-import web.cms.vigbo.VigboConnector;
-import web.cms.vue.VueConnector;
-import web.cms.wix.WixConnector;
-import web.cms.wordpress.WordPressConnector;
-import web.cms.yii.YiiConnector;
+import web.cms.board.ips.IPSConnector;
+import web.cms.classic.bitrix.BitrixConnector;
+import web.cms.framework.codeigniter.CodeIgniterConnector;
+import web.cms.classic.datalife.DataLifeConnector;
+import web.cms.classic.drupal.DrupalConnector;
+import web.cms.classic.host.HostCmsConnector;
+import web.cms.construct.hugo.HugoConnector;
+import web.cms.classic.image.ImageConnector;
+import web.cms.construct.insales.InSalesConnector;
+import web.cms.classic.joomla.JoomlaConnector;
+import web.cms.framework.lavarel.LavarelConnector;
+import web.cms.classic.magento.MagentoConnector;
+import web.cms.classic.maxsite.MaxSiteConnector;
+import web.cms.classic.modx.ModXConnector;
+import web.cms.classic.moguta.MogutaConnector;
+import web.cms.framework.nuxt.NuxtConnector;
+import web.cms.classic.opencart.OpenCartConnector;
+import web.cms.classic.prestashop.PrestaShopConnector;
+import web.cms.framework.rails.RubyOnRailsConnector;
+import web.cms.framework.react.ReactConnector;
+import web.cms.classic.shopify.ShopifyConnector;
+import web.cms.construct.tilda.TildaConnector;
+import web.cms.construct.ukit.UkitConnector;
+import web.cms.classic.umi.UmiConnector;
+import web.cms.classic.vamshop.VamShopConnector;
+import web.cms.construct.vigbo.VigboConnector;
+import web.cms.framework.vue.VueConnector;
+import web.cms.construct.wix.WixConnector;
+import web.cms.classic.wordpress.WordPressConnector;
+import web.cms.framework.yii.YiiConnector;
 import web.struct.Connector;
 
 @Getter
 @RequiredArgsConstructor
 public enum CMSType {
 
+    // классические CMS
     WORDPRESS               (100, "WordPress",        WordPressConnector.class),
     JOOMLA                  (101, "Joomla!",          JoomlaConnector.class),
     DATALIFE_ENGINE         (102, "DataLife Engine",  DataLifeConnector.class),
@@ -54,6 +56,7 @@ public enum CMSType {
     IMAGE_CMS               (114, "ImageCMS",         ImageConnector.class),
     PRESTA_SHOP             (115, "PrestaShop",       PrestaShopConnector.class),
 
+    // фреймворки
     LAVAREL                 (201, "Lavarel",          LavarelConnector.class),
     YII                     (202, "Yii Framework",    YiiConnector.class),
     NUXT_JS                 (203, "Nuxt.js",          NuxtConnector.class),
@@ -62,12 +65,16 @@ public enum CMSType {
     REACT_JS                (206, "ReactJS",          ReactConnector.class),
     CODE_IGNITER            (207, "CodeIgniter",      CodeIgniterConnector.class),
 
+    // конструкторы
     TILDA                   (301, "Tilda",            TildaConnector.class),
     VIGBO                   (302, "Vigbo CMS",        VigboConnector.class),
     INSALES                 (303, "InSales",          InSalesConnector.class),
     UKIT                    (304, "uKit",             UkitConnector.class),
     WIX                     (305, "Wix",              WixConnector.class),
-    HUGO                    (306, "Hugo",             HugoConnector .class);
+    HUGO                    (306, "Hugo",             HugoConnector .class),
+
+    // форумные движки
+    IPS                     (401, "IP.Board",         IPSConnector.class);
 
     private final int id;
     private final String name;
