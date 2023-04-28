@@ -11,10 +11,11 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 /**
- * Main runner for starting scanner menu.<br/>
- * Show all available CMS for checking.
+ * Основной компонент приложения.
+ * <p>Представляет начальное консольное меню для управления сканированием и отображает перечень возможностей.
  *
  * @author inkarnadin
+ * on 21-11-2020
  */
 public class Runner {
 

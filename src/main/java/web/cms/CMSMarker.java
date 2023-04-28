@@ -84,4 +84,6 @@ public class CMSMarker {
 
     public static final String WIX_CHECK = "wixCheck";
 
+    public static final String HUGO_CHECK = "hugoCheck";
+
 }

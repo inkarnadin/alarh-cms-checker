@@ -7,6 +7,7 @@ import web.cms.codeigniter.CodeIgniterConnector;
 import web.cms.datalife.DataLifeConnector;
 import web.cms.drupal.DrupalConnector;
 import web.cms.host.HostCmsConnector;
+import web.cms.hugo.HugoConnector;
 import web.cms.image.ImageConnector;
 import web.cms.insales.InSalesConnector;
 import web.cms.joomla.JoomlaConnector;
@@ -65,7 +66,8 @@ public enum CMSType {
     VIGBO                   (302, "Vigbo CMS",        VigboConnector.class),
     INSALES                 (303, "InSales",          InSalesConnector.class),
     UKIT                    (304, "uKit",             UkitConnector.class),
-    WIX                     (305, "Wix",              WixConnector.class);
+    WIX                     (305, "Wix",              WixConnector.class),
+    HUGO                    (306, "Hugo",             HugoConnector .class);
 
     private final int id;
     private final String name;
