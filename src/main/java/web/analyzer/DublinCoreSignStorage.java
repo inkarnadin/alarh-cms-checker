@@ -1,9 +1,18 @@
 package web.analyzer;
 
 import lombok.Getter;
+import lombok.experimental.UtilityClass;
 
 import java.util.regex.Pattern;
 
+/**
+ * Статическое хранилище атрибутов метаданных "Дублинского ядра".
+ * <p>В некоторых CMS встроено по умолчанию и может служить косвенным признаком использования.
+ *
+ * @author inkarnadin
+ * on 28-12-2020
+ */
+@UtilityClass
 public class DublinCoreSignStorage implements SignStorage {
 
     @Getter

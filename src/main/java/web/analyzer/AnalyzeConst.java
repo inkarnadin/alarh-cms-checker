@@ -1,7 +1,23 @@
 package web.analyzer;
 
-import static web.http.ContentType.*;
+import lombok.experimental.UtilityClass;
 
+import static web.http.ContentType.APPLICATION_JAVASCRIPT;
+import static web.http.ContentType.APPLICATION_JSON;
+import static web.http.ContentType.APPLICATION_XML;
+import static web.http.ContentType.APPLICATION_X_JAVASCRIPT;
+import static web.http.ContentType.IMAGE_JPG;
+import static web.http.ContentType.IMAGE_PNG;
+import static web.http.ContentType.TEXT_JAVASCRIPT;
+import static web.http.ContentType.TEXT_XML;
+
+/**
+ * Вспомогательный класс, который содержит базовые константы, необходимые для анализа.
+ *
+ * @author inkarnadin
+ * on 29-11-2020
+ */
+@UtilityClass
 public class AnalyzeConst {
 
     public static final String[] BASE_PATH = new String[] { "" };
