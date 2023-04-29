@@ -17,6 +17,7 @@ import web.cms.classic.magento.MagentoConnector;
 import web.cms.classic.maxsite.MaxSiteConnector;
 import web.cms.classic.modx.ModXConnector;
 import web.cms.classic.moguta.MogutaConnector;
+import web.cms.framework.nodejs.NodeJsConnector;
 import web.cms.framework.nuxt.NuxtConnector;
 import web.cms.classic.opencart.OpenCartConnector;
 import web.cms.classic.prestashop.PrestaShopConnector;
@@ -64,6 +65,7 @@ public enum CMSType {
     RUBY_ON_RAILS           (205, "Ruby on Rails",    RubyOnRailsConnector.class),
     REACT_JS                (206, "ReactJS",          ReactConnector.class),
     CODE_IGNITER            (207, "CodeIgniter",      CodeIgniterConnector.class),
+    NODE_JS                 (208, "NodeJS",           NodeJsConnector.class),
 
     // конструкторы
     TILDA                   (301, "Tilda",            TildaConnector.class),

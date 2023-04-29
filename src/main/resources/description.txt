@@ -25,3 +25,4 @@ In current time it is support next systems:
  * ImageCMS
  * PrestaShop
  * Wix
+ * Node.js

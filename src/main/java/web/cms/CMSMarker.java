@@ -70,6 +70,8 @@ public class CMSMarker {
 
     public static final String CODE_IGNITER_CHECK = "codeIgniterCheck";
 
+    public static final String NODE_JS_CHECK = "nodeJsCheck";
+
     /**
      * Constructors
      */

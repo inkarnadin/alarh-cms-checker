@@ -42,8 +42,9 @@ public class CMSChecker extends AbstractChecker {
         list.sort(new Comparator<Map.Entry<CMSType, ResultContainer>>() {
             @Override
             public int compare(Map.Entry<CMSType, ResultContainer> o1, Map.Entry<CMSType, ResultContainer> o2) {
-                if (o1.getValue().getImportance().ordinal() > o2.getValue().getImportance().ordinal())
+                if (o1.getValue().getImportance().ordinal() > o2.getValue().getImportance().ordinal()) {
                     return 1;
+                }
                 return 0;
             }
         });
