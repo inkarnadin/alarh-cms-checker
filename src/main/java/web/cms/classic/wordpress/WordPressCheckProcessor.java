@@ -80,7 +80,7 @@ public class WordPressCheckProcessor extends AbstractCMSProcessor {
         pageAnalyzer.checkViaPageKeywords(LOW, new String[] { "xmlrpc.php" }, new Pattern[] {
                 Pattern.compile("XML-RPC server accepts POST requests only")
         });
-        pageAnalyzer.checkViaRobots(HIGH, new Pattern[] { Pattern.compile("wp-\\.*") });
+        pageAnalyzer.checkViaRobots(MEDIUM, new Pattern[] { Pattern.compile("wp-\\.*") });
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
         headerAnalyzer.checkViaCookies(HIGH, new String[] { "wp-login.php" }, new Pattern[] {
                 Pattern.compile("wordpress_test_cookie")
