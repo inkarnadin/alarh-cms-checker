@@ -9,7 +9,7 @@ import web.http.Request;
 import web.parser.TextParser;
 import web.parser.XMLParser;
 import web.printer.Printer;
-import web.struct.Destination;
+import web.struct.ResultContainer;
 
 import java.util.regex.Pattern;
 
@@ -22,7 +22,7 @@ public class JoomlaVersionProcessor extends AbstractCMSVersionProcessor {
     private final Request request;
     private final XMLParser<String> xmlParser;
     private final TextParser<String> textParser;
-    private final Destination destination;
+    private final ResultContainer resultContainer;
     @Named(VERSION_PRINTER)
     private final Printer printer;
 
@@ -34,8 +34,8 @@ public class JoomlaVersionProcessor extends AbstractCMSVersionProcessor {
         versionAnalyzer.checkViaXMlFiles(XML_FILES, "language/en-GB/en-GB.xml");
         versionAnalyzer.checkViaXMlFiles(XML_FILES, "administrator/components/com_config/config.xml");
 
-        assign(destination, versionSet);
-        printer.print(destination);
+        assign(resultContainer, versionSet);
+        printer.print(resultContainer);
     }
 
 }

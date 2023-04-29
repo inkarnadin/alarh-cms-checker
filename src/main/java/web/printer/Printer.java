@@ -1,9 +1,9 @@
 package web.printer;
 
-import web.struct.Destination;
+import web.struct.ResultContainer;
 
 public interface Printer {
 
-    void print(Destination destination);
+    void print(ResultContainer resultContainer);
 
 }

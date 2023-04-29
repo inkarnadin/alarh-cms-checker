@@ -10,7 +10,7 @@ import web.env.EnvType;
 import web.http.Request;
 import web.parser.TextParser;
 import web.printer.Printer;
-import web.struct.Destination;
+import web.struct.ResultContainer;
 
 import java.util.regex.Pattern;
 
@@ -21,7 +21,7 @@ public class PhpMyAdminCheckProcessor extends AbstractEnvironmentProcessor {
 
     private final Request request;
     private final TextParser<String> parser;
-    private final Destination destination;
+    private final ResultContainer resultContainer;
     @Named(LIST_PRINTER)
     private final Printer printer;
 
@@ -35,8 +35,8 @@ public class PhpMyAdminCheckProcessor extends AbstractEnvironmentProcessor {
                 "myadmin/Documentation.html"
         }, false, true);
 
-        assign(destination, EnvType.PHP_MY_ADMIN, versionSet);
-        printer.print(destination);
+        assign(resultContainer, EnvType.PHP_MY_ADMIN, versionSet);
+        printer.print(resultContainer);
     }
 
 }

@@ -9,7 +9,7 @@ public interface Connector {
 
     void configure(Params params);
 
-    default Pair<CMSType, Optional<Destination>> check() {
+    default Pair<CMSType, Optional<ResultContainer>> check() {
         return null;
     }
 

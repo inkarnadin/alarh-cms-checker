@@ -10,7 +10,7 @@ import web.env.EnvType;
 import web.http.Request;
 import web.parser.TextParser;
 import web.printer.Printer;
-import web.struct.Destination;
+import web.struct.ResultContainer;
 
 import java.util.regex.Pattern;
 
@@ -21,7 +21,7 @@ public class WebServerProcessor extends AbstractEnvironmentProcessor {
 
     private final Request request;
     private final TextParser<String> parser;
-    private final Destination destination;
+    private final ResultContainer resultContainer;
     @Named(LIST_PRINTER)
     private final Printer printer;
 
@@ -31,8 +31,8 @@ public class WebServerProcessor extends AbstractEnvironmentProcessor {
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, parser, null, versionSet).prepare(host);
         versionAnalyzer.checkViaHeaders(Pattern.compile("(.*)"), "server");
 
-        assign(destination, EnvType.WEB_SERVER, versionSet);
-        printer.print(destination);
+        assign(resultContainer, EnvType.WEB_SERVER, versionSet);
+        printer.print(resultContainer);
     }
 
 }

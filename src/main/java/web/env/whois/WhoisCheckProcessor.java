@@ -7,7 +7,7 @@ import web.analyzer.check.WhoIsAnalyzer;
 import web.env.AbstractEnvironmentProcessor;
 import web.http.Request;
 import web.printer.Printer;
-import web.struct.Destination;
+import web.struct.ResultContainer;
 
 import static web.printer.PrinterMarker.LIST_PRINTER;
 
@@ -15,16 +15,16 @@ import static web.printer.PrinterMarker.LIST_PRINTER;
 public class WhoisCheckProcessor extends AbstractEnvironmentProcessor {
 
     private final Request request;
-    private final Destination destination;
+    private final ResultContainer resultContainer;
     @Named(LIST_PRINTER)
     private final Printer printer;
 
     @Override
     public void process() {
-        WhoIsAnalyzer whoIsEnvironmentAnalyzer = new WhoIsAnalyzer(request, destination, host);
+        WhoIsAnalyzer whoIsEnvironmentAnalyzer = new WhoIsAnalyzer(request, resultContainer, host);
         whoIsEnvironmentAnalyzer.checkWhoIs();
 
-        printer.print(destination);
+        printer.print(resultContainer);
     }
 
 }

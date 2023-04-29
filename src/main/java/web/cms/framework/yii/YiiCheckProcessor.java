@@ -13,7 +13,7 @@ import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
-import web.struct.Destination;
+import web.struct.ResultContainer;
 import web.struct.assignment.DefaultAssigner;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class YiiCheckProcessor extends AbstractCMSProcessor implements DefaultAs
 
     private final Request request;
     private final TextParser<Boolean> parser;
-    private final Destination destination;
+    private final ResultContainer resultContainer;
 
     @Override
     public void process() {
@@ -65,13 +65,13 @@ public class YiiCheckProcessor extends AbstractCMSProcessor implements DefaultAs
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
         pathAnalyzer.checkViaPaths(LOW, DENIED_CODES, new String[] { "vendor/yiisoft/yii2" });
 
-        assign(destination, result, cmsType);
+        assign(resultContainer, result, cmsType);
     }
 
     @Override
-    public Pair<CMSType, Optional<Destination>> transmit() {
-        return destination.isFull()
-                ? new Pair<>(cmsType, Optional.of(destination))
+    public Pair<CMSType, Optional<ResultContainer>> transmit() {
+        return resultContainer.isSuccess()
+                ? new Pair<>(cmsType, Optional.of(resultContainer))
                 : new Pair<>(cmsType, Optional.empty());
     }
 

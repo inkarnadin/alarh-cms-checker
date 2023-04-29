@@ -9,7 +9,7 @@ import web.http.Request;
 import web.http.ResponseBodyHandler;
 import web.parser.XMLParser;
 import web.printer.Printer;
-import web.struct.Destination;
+import web.struct.ResultContainer;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -24,7 +24,7 @@ import static web.printer.PrinterMarker.LIST_PRINTER;
 public class JoomlaPluginsProcessor extends AbstractCMSProcessor {
 
     private final Request request;
-    private final Destination destination;
+    private final ResultContainer resultContainer;
     private final XMLParser<String> parser;
     @Named(LIST_PRINTER)
     private final Printer printer;
@@ -45,7 +45,7 @@ public class JoomlaPluginsProcessor extends AbstractCMSProcessor {
 
         int counter = 0;
         if (components.size() > 0) {
-            destination.insert(counter++, String.format("  ** Components (%s):", components.size()));
+            resultContainer.insert(counter++, String.format("  ** Components (%s):", components.size()));
 
             for (String component : components) {
                 host.setPath(String.format("administrator/components/%s/%s.xml", component, component.replace("com_", "")));
@@ -56,11 +56,11 @@ public class JoomlaPluginsProcessor extends AbstractCMSProcessor {
                     String version = (Arrays.asList(XML_FILES).contains(contentType))
                             ? parser.parse(componentBody)
                             : "<unknown>";
-                    destination.insert(counter++, String.format("   * %s: %s", component, version));
+                    resultContainer.insert(counter++, String.format("   * %s: %s", component, version));
                 }
             }
         } else {
-            destination.insert(counter++, "  ** Components (0): <unknown>");
+            resultContainer.insert(counter++, "  ** Components (0): <unknown>");
         }
 
         Matcher modMatcher = Pattern.compile("[/|\"](mod_.*?)[/|\"]").matcher(responseBody);
@@ -68,16 +68,16 @@ public class JoomlaPluginsProcessor extends AbstractCMSProcessor {
             modules.add(modMatcher.group(1));
 
         if (modules.size() > 0) {
-            destination.insert(counter++, String.format("  ** Modules (%s):", modules.size()));
+            resultContainer.insert(counter++, String.format("  ** Modules (%s):", modules.size()));
 
             for (String module : modules) {
-                destination.insert(counter++, String.format("   * %s", module));
+                resultContainer.insert(counter++, String.format("   * %s", module));
             }
         } else {
-            destination.insert(counter, "  ** Modules (0): <unknown>");
+            resultContainer.insert(counter, "  ** Modules (0): <unknown>");
         }
 
-        printer.print(destination);
+        printer.print(resultContainer);
     }
 
 }

@@ -11,7 +11,7 @@ import web.http.ContentType;
 import web.http.Request;
 import web.http.ResponseBodyHandler;
 import web.printer.Printer;
-import web.struct.Destination;
+import web.struct.ResultContainer;
 
 import java.util.HashSet;
 import java.util.regex.Matcher;
@@ -25,7 +25,7 @@ import static web.printer.PrinterMarker.LIST_PRINTER;
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class WordPressPluginProcessor extends AbstractCMSProcessor {
 
-    private final Destination destination;
+    private final ResultContainer resultContainer;
     private final Request request;
     @Named(HEAD)
     private final Request headRequest;
@@ -61,7 +61,7 @@ public class WordPressPluginProcessor extends AbstractCMSProcessor {
         }
 
         if (plugins.size() > 0) {
-            destination.insert(0, String.format("  ** Plugins (%s):", plugins.size()));
+            resultContainer.insert(0, String.format("  ** Plugins (%s):", plugins.size()));
 
             int i = 1;
             for (String plugin : plugins) {
@@ -82,17 +82,17 @@ public class WordPressPluginProcessor extends AbstractCMSProcessor {
                                         ? pluginObject.getName()
                                         : plugin;
                         pluginObject.setName(preName);
-                        destination.insert(i++, String.format("   * %s", pluginObject.toString()));
+                        resultContainer.insert(i++, String.format("   * %s", pluginObject.toString()));
                     } else {
-                        destination.insert(i++, String.format("   * %s: %s", (preName.length() > 0) ? preName : plugin + " (?)", "<unknown>"));
+                        resultContainer.insert(i++, String.format("   * %s: %s", (preName.length() > 0) ? preName : plugin + " (?)", "<unknown>"));
                     }
                 }
             }
         } else {
-            destination.insert(0, "  ** Plugins (0): <unknown>");
+            resultContainer.insert(0, "  ** Plugins (0): <unknown>");
         }
 
-        printer.print(destination);
+        printer.print(resultContainer);
     }
 
 }

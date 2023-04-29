@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import web.cms.CMSType;
 import web.env.AbstractEnvConnector;
 import web.env.EnvType;
-import web.struct.Destination;
+import web.struct.ResultContainer;
 import web.struct.Processor;
 
 import java.util.Optional;
@@ -21,7 +21,7 @@ public class PhpMyAdminConnector extends AbstractEnvConnector {
     private final Processor<EnvType> processor;
 
     @Override
-    public Pair<CMSType, Optional<Destination>> check() {
+    public Pair<CMSType, Optional<ResultContainer>> check() {
         processor.configure(params.getProtocol(), params.getServer());
         processor.process();
         return null;

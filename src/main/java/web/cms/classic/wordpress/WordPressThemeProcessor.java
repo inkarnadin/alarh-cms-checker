@@ -10,7 +10,7 @@ import web.cms.AbstractCMSProcessor;
 import web.http.Request;
 import web.http.ResponseBodyHandler;
 import web.printer.Printer;
-import web.struct.Destination;
+import web.struct.ResultContainer;
 import web.struct.Preferences;
 import web.struct.Source;
 
@@ -25,7 +25,7 @@ import static web.printer.PrinterMarker.LIST_PRINTER;
 public class WordPressThemeProcessor extends AbstractCMSProcessor {
 
     private final Request request;
-    private final Destination destination;
+    private final ResultContainer resultContainer;
     @Named(WORDPRESS_THEME)
     private final Extractor<ThemeObject> extractor;
     @Named(WORDPRESS_THEME)
@@ -56,17 +56,17 @@ public class WordPressThemeProcessor extends AbstractCMSProcessor {
                     themeObject.setIsCustom(isCustom);
 
                     if (Preferences.isEnableThemeFullInfo()) {
-                        destination.insert(0, "  ** Theme:");
-                        destination.insert(1, themeObject.toString());
+                        resultContainer.insert(0, "  ** Theme:");
+                        resultContainer.insert(1, themeObject.toString());
                     } else {
-                        destination.insert(0, String.format("  ** Theme: %s", themeObject.getShortInfo()));
+                        resultContainer.insert(0, String.format("  ** Theme: %s", themeObject.getShortInfo()));
                     }
                 }
             } else {
-                destination.insert(0, String.format("  ** Theme: %s", themeObject.getShortInfo()));
+                resultContainer.insert(0, String.format("  ** Theme: %s", themeObject.getShortInfo()));
             }
 
-            printer.print(destination);
+            printer.print(resultContainer);
         }
     }
 }

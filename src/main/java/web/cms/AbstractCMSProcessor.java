@@ -2,7 +2,7 @@ package web.cms;
 
 import kotlin.Pair;
 import web.http.Host;
-import web.struct.Destination;
+import web.struct.ResultContainer;
 import web.struct.Processor;
 import web.struct.assignment.DefaultAssigner;
 
@@ -49,7 +49,7 @@ public abstract class AbstractCMSProcessor implements Processor<CMSType>, Defaul
      * @return результат анализа
      */
     @Override
-    public Pair<CMSType, Optional<Destination>> transmit() {
+    public Pair<CMSType, Optional<ResultContainer>> transmit() {
         return null;
     }
 

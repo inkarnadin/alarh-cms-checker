@@ -89,12 +89,8 @@ import web.cms.construct.wix.WixConnector;
 import web.cms.framework.yii.YiiCheckProcessor;
 import web.cms.framework.yii.YiiConnector;
 import web.cms.framework.yii.YiiVersionProcessor;
-import web.struct.Connector;
-import web.struct.Destination;
-import web.struct.Determinant;
-import web.struct.Processor;
-import web.struct.Source;
-import web.struct.Validator;
+import web.struct.*;
+import web.struct.ResultContainer;
 
 import static web.cms.CMSMarker.BITRIX_CHECK;
 import static web.cms.CMSMarker.BITRIX_VERSION;
@@ -259,7 +255,7 @@ public class CMSModule extends AbstractModule {
 
         connectorMultibinder.addBinding().to(IPSConnector.class);
 
-        bind(new TypeLiteral<Determinant<CMSType, Destination>>(){}).to(CMSDeterminant.class);
+        bind(new TypeLiteral<Determinant<CMSType, ResultContainer>>(){}).to(CMSDeterminant.class);
     }
 
 }

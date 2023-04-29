@@ -10,7 +10,7 @@ import web.http.Request;
 import web.parser.TextParser;
 import web.parser.XMLParser;
 import web.printer.Printer;
-import web.struct.Destination;
+import web.struct.ResultContainer;
 
 import java.util.regex.Pattern;
 
@@ -22,7 +22,7 @@ public class BitrixVersionProcessor extends AbstractCMSVersionProcessor {
     private final Request request;
     private final XMLParser<String> xmlParser;
     private final TextParser<String> textParser;
-    private final Destination destination;
+    private final ResultContainer resultContainer;
     @Named(VERSION_PRINTER)
     private final Printer printer;
 
@@ -33,8 +33,8 @@ public class BitrixVersionProcessor extends AbstractCMSVersionProcessor {
         VersionAnalyzer versionAnalyzer = new VersionAnalyzer(request, textParser, xmlParser, versionSet).prepare(host);
         versionAnalyzer.checkViaYear(yearMap, new String[] { "bitrix/admin" }, Pattern.compile("Управление сайтом.*Битрикс, (\\d{4})"));
 
-        assign(destination, versionSet);
-        printer.print(destination);
+        assign(resultContainer, versionSet);
+        printer.print(resultContainer);
     }
 
 }

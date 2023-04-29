@@ -3,7 +3,7 @@ package web.struct.assignment;
 import kotlin.Pair;
 import web.analyzer.Importance;
 import web.cms.CMSType;
-import web.struct.Destination;
+import web.struct.ResultContainer;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface DefaultAssigner {
 
     String successMessage = "  * %s tags have been found (%s/%s)";
 
-    default void assign(Destination destination, List<Pair<Boolean, Importance>> result, CMSType cmsType) {
+    default void assign(ResultContainer resultContainer, List<Pair<Boolean, Importance>> result, CMSType cmsType) {
         long count = result.stream().filter(Pair::getFirst).count();
         Importance max = result.stream()
                 .filter(Pair::getFirst)
@@ -21,8 +21,8 @@ public interface DefaultAssigner {
                 .max(Importance::compareTo).orElse(UNDEFINED);
 
         if (count > 0) {
-            destination.setImportance(max);
-            destination.insert(0, String.format(
+            resultContainer.setImportance(max);
+            resultContainer.insert(0, String.format(
                     successMessage,
                     cmsType.getName(),
                     count,

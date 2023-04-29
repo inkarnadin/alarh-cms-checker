@@ -1,7 +1,7 @@
 package web.struct.assignment;
 
 import org.apache.maven.artifact.versioning.ComparableVersion;
-import web.struct.Destination;
+import web.struct.ResultContainer;
 
 import java.util.Collections;
 import java.util.Set;
@@ -21,16 +21,16 @@ public interface VersionAssigner {
      * символа "+". Если поиск подтверждает наличие такой версии в списке, версия считается определенной однозначно и будет возвращена.
      * В противном случае версия возвращается неуточненной, то есть, помеченной знаком "+".
      *
-     * @param destination объект, содержащий результат
+     * @param resultContainer объект, содержащий результат
      * @param versionSet список найденных версий
      */
-    default void assign(Destination destination, Set<ComparableVersion> versionSet) {
+    default void assign(ResultContainer resultContainer, Set<ComparableVersion> versionSet) {
         ComparableVersion maxVersion = Collections.max(versionSet);
         ComparableVersion refinedVersion = new ComparableVersion(maxVersion.toString().replace("+", ""));
         if (versionSet.contains(refinedVersion)) {
             maxVersion = refinedVersion;
         }
-        destination.insert(0, maxVersion.toString());
+        resultContainer.insert(0, maxVersion.toString());
     }
 
 }

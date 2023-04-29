@@ -8,7 +8,7 @@ import web.cms.AbstractCMSVersionProcessor;
 import web.http.Request;
 import web.parser.TextParser;
 import web.printer.Printer;
-import web.struct.Destination;
+import web.struct.ResultContainer;
 
 import java.util.regex.Pattern;
 
@@ -21,7 +21,7 @@ public class DataLifeVersionProcessor extends AbstractCMSVersionProcessor {
 
     private final Request request;
     private final TextParser<String> textParser;
-    private final Destination destination;
+    private final ResultContainer resultContainer;
     @Named(VERSION_PRINTER)
     private final Printer printer;
 
@@ -44,8 +44,8 @@ public class DataLifeVersionProcessor extends AbstractCMSVersionProcessor {
                 Pattern.compile("Актуальная версия скрипта: (.*)")
         });
 
-        assign(destination, versionSet);
-        printer.print(destination);
+        assign(resultContainer, versionSet);
+        printer.print(resultContainer);
     }
 
 }

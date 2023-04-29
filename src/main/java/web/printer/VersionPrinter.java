@@ -1,12 +1,12 @@
 package web.printer;
 
-import web.struct.Destination;
+import web.struct.ResultContainer;
 
 public class VersionPrinter implements Printer {
 
     @Override
-    public void print(Destination destination) {
-        System.out.printf("  ** Version: %s%n", destination.fetch().get(0));
+    public void print(ResultContainer resultContainer) {
+        System.out.printf("  ** Version: %s%n", resultContainer.fetch().get(0));
     }
 
 }

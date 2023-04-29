@@ -10,7 +10,7 @@ import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
-import web.struct.Destination;
+import web.struct.ResultContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class LavarelCheckProcessor extends AbstractCMSProcessor {
 
     private final Request request;
     private final TextParser<Boolean> parser;
-    private final Destination destination;
+    private final ResultContainer resultContainer;
 
     @Override
     public void process() {
@@ -41,13 +41,13 @@ public class LavarelCheckProcessor extends AbstractCMSProcessor {
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
         pathAnalyzer.checkViaPaths(LOW, SUCCESS_CODES, new String[] { "register" });
 
-        assign(destination, result, cmsType);
+        assign(resultContainer, result, cmsType);
     }
 
     @Override
-    public Pair<CMSType, Optional<Destination>> transmit() {
-        return destination.isFull()
-                ? new Pair<>(cmsType, Optional.of(destination))
+    public Pair<CMSType, Optional<ResultContainer>> transmit() {
+        return resultContainer.isSuccess()
+                ? new Pair<>(cmsType, Optional.of(resultContainer))
                 : new Pair<>(cmsType, Optional.empty());
     }
 

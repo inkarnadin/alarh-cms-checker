@@ -10,6 +10,6 @@ public interface Processor<T> {
 
     void process();
 
-    Pair<T, Optional<Destination>> transmit();
+    Pair<T, Optional<ResultContainer>> transmit();
 
 }

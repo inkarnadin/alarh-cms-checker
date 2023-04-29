@@ -8,7 +8,7 @@ import web.cms.AbstractCMSVersionProcessor;
 import web.http.Request;
 import web.parser.TextParser;
 import web.printer.Printer;
-import web.struct.Destination;
+import web.struct.ResultContainer;
 
 import java.util.regex.Pattern;
 
@@ -19,7 +19,7 @@ public class DrupalVersionProcessor extends AbstractCMSVersionProcessor {
 
     private final Request request;
     private final TextParser<String> parser;
-    private final Destination destination;
+    private final ResultContainer resultContainer;
     @Named(VERSION_PRINTER)
     private final Printer printer;
 
@@ -29,8 +29,8 @@ public class DrupalVersionProcessor extends AbstractCMSVersionProcessor {
         versionAnalyzer.checkViaMainPageGenerator(Pattern.compile("<meta name=\"[gG]enerator\" content=\"Drupal\\s(.+?)\\s"));
         versionAnalyzer.checkViaHeaders(Pattern.compile("drupal\\s(.*)\\s"), "x-generator");
 
-        assign(destination, versionSet);
-        printer.print(destination);
+        assign(resultContainer, versionSet);
+        printer.print(resultContainer);
     }
 
 }

@@ -3,7 +3,7 @@ package web.env;
 import kotlin.Pair;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 import web.http.Host;
-import web.struct.Destination;
+import web.struct.ResultContainer;
 import web.struct.Processor;
 import web.struct.assignment.EnvironmentAssigner;
 
@@ -35,7 +35,7 @@ public abstract class AbstractEnvironmentProcessor implements Processor<EnvType>
     public void process() {}
 
     @Override
-    public Pair<EnvType, Optional<Destination>> transmit() {
+    public Pair<EnvType, Optional<ResultContainer>> transmit() {
         return null;
     }
 

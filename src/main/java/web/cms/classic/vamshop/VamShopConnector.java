@@ -6,7 +6,7 @@ import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import web.cms.AbstractCMSConnector;
 import web.cms.CMSType;
-import web.struct.Destination;
+import web.struct.ResultContainer;
 import web.struct.Processor;
 
 import java.util.Optional;
@@ -20,7 +20,7 @@ public class VamShopConnector extends AbstractCMSConnector {
     private final Processor<CMSType> checkProcessor;
 
     @Override
-    public Pair<CMSType, Optional<Destination>> check() {
+    public Pair<CMSType, Optional<ResultContainer>> check() {
         checkProcessor.configure(params.getProtocol(), params.getServer());
         checkProcessor.process();
         return checkProcessor.transmit();
