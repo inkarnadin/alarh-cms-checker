@@ -7,6 +7,7 @@ import web.analyzer.Importance;
 import web.http.Host;
 import web.http.Request;
 import web.parser.TextParser;
+import web.struct.CreationHeader;
 
 import java.util.Collection;
 import java.util.List;
@@ -50,7 +51,7 @@ public class HeaderAnalyzer {
     }
 
     /**
-     * Find certain values in headers
+     * Метод поиска определенных значений в заголовоках.
      */
     public void checkViaHeaderValues(Importance importance, String[] paths, Pattern[] patterns) {
         for (String path : paths) {
@@ -72,13 +73,13 @@ public class HeaderAnalyzer {
     }
 
     /**
-     * Find info in x-generator
+     * Метод поиска информации по тегу x-generator.
      */
-    public void checkViaXGenerator(Importance importance, String[] paths, Pattern pattern) {
+    public void checkViaSpecialHeader(Importance importance, String[] paths, CreationHeader header, Pattern pattern) {
         for (String path : paths) {
             host.setPath(path);
             try (Response response = request.send(host)) {
-                String xGenerator = response.headers().get("x-generator");
+                String xGenerator = response.headers().get(header.getTag());
                 if (Objects.nonNull(xGenerator)) {
                     parser.configure(pattern, 0);
                     if (parser.parse(xGenerator.toLowerCase())) {

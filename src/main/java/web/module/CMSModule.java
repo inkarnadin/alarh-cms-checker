@@ -45,6 +45,8 @@ import web.cms.classic.image.ImageCmsCheckProcessor;
 import web.cms.classic.image.ImageConnector;
 import web.cms.construct.insales.InSalesCheckProcessor;
 import web.cms.construct.insales.InSalesConnector;
+import web.cms.framework.expressjs.ExpressJsCheckProcessor;
+import web.cms.framework.expressjs.ExpressJsConnector;
 import web.cms.framework.lavarel.LavarelCheckProcessor;
 import web.cms.framework.lavarel.LavarelConnector;
 import web.cms.classic.magento.MagentoCheckProcessor;
@@ -169,6 +171,8 @@ public class CMSModule extends AbstractModule {
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(NODE_JS_CHECK)).to(NodeJsCheckProcessor.class);
 
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(EXPRESS_JS_CHECK)).to(ExpressJsCheckProcessor.class);
+
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(TILDA_CHECK)).to(TildaCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(VIGBO_CHECK)).to(VigboCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(INSALES_CHECK)).to(InSalesCheckProcessor.class);
@@ -206,6 +210,7 @@ public class CMSModule extends AbstractModule {
         connectorMultibinder.addBinding().to(ReactConnector.class);
         connectorMultibinder.addBinding().to(CodeIgniterConnector.class);
         connectorMultibinder.addBinding().to(NodeJsConnector.class);
+        connectorMultibinder.addBinding().to(ExpressJsConnector.class);
 
         connectorMultibinder.addBinding().to(TildaConnector.class);
         connectorMultibinder.addBinding().to(VigboConnector.class);

@@ -72,6 +72,8 @@ public class CMSMarker {
 
     public static final String NODE_JS_CHECK = "nodeJsCheck";
 
+    public static final String EXPRESS_JS_CHECK = "expressJsCheck";
+
     /**
      * Constructors
      */

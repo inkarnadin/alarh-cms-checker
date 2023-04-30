@@ -1,4 +1,4 @@
-package web.cms.classic.drupal;
+package web.cms.framework.expressjs;
 
 import com.google.inject.Inject;
 import kotlin.Pair;
@@ -6,12 +6,10 @@ import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
 import web.analyzer.check.HeaderAnalyzer;
 import web.analyzer.check.MainPageAnalyzer;
-import web.analyzer.check.PageAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
 import web.http.Request;
 import web.parser.TextParser;
-import web.struct.CreationHeader;
 import web.struct.ResultContainer;
 
 import java.util.ArrayList;
@@ -20,13 +18,14 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static web.analyzer.AnalyzeConst.BASE_PATH;
-import static web.analyzer.Importance.*;
+import static web.analyzer.Importance.HIGH;
+import static web.analyzer.Importance.LOW;
 import static web.struct.CreationHeader.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
-public class DrupalCheckProcessor extends AbstractCMSProcessor {
+public class ExpressJsCheckProcessor extends AbstractCMSProcessor {
 
-    private static final CMSType cmsType = CMSType.DRUPAL;
+    private static final CMSType cmsType = CMSType.EXPRESS_JS;
 
     private final Request request;
     private final TextParser<Boolean> parser;
@@ -37,27 +36,11 @@ public class DrupalCheckProcessor extends AbstractCMSProcessor {
         List<Pair<Boolean, Importance>> result = new ArrayList<>();
 
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
-        mainPageAnalyzer.checkViaMainPageGenerator(HIGH, new String[] { "Drupal" });
-        mainPageAnalyzer.checkViaMainPageScriptName(MEDIUM, new Pattern[] {
-                Pattern.compile("misc/drupal\\.js")
-        });
-        mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
-                Pattern.compile("data-drupal-link-system-path"),
-                Pattern.compile("Drupal\\.settings")
-        });
-        PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
-        pageAnalyzer.checkViaPageKeywords(LOW, new String[] { "xmlrpc.php" }, new Pattern[] {
-                Pattern.compile("XML-RPC server accepts POST requests only")
-        });
-        pageAnalyzer.checkViaRobots(HIGH, new Pattern[] {
-                Pattern.compile("# This file is to prevent the crawling and indexing of certain parts")
+        mainPageAnalyzer.checkViaMainPageKeywords(LOW, new Pattern[] {
+                Pattern.compile("react-md-spinner-animation")
         });
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
-        headerAnalyzer.checkViaSpecialHeader(HIGH, BASE_PATH, X_GENERATOR, Pattern.compile("drupal"));
-        headerAnalyzer.checkViaHeaders(HIGH, BASE_PATH, new String[] {
-                "x-drupal-cache",
-                "x-drupal-dynamic-cache"
-        });
+        headerAnalyzer.checkViaSpecialHeader(HIGH, BASE_PATH, X_POWERED_BY, Pattern.compile("[Ee]xpress"));
 
         assign(resultContainer, result, cmsType);
     }

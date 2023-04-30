@@ -12,6 +12,7 @@ import web.cms.construct.hugo.HugoConnector;
 import web.cms.classic.image.ImageConnector;
 import web.cms.construct.insales.InSalesConnector;
 import web.cms.classic.joomla.JoomlaConnector;
+import web.cms.framework.expressjs.ExpressJsConnector;
 import web.cms.framework.lavarel.LavarelConnector;
 import web.cms.classic.magento.MagentoConnector;
 import web.cms.classic.maxsite.MaxSiteConnector;
@@ -66,6 +67,7 @@ public enum CMSType {
     REACT_JS                (206, "ReactJS",          ReactConnector.class),
     CODE_IGNITER            (207, "CodeIgniter",      CodeIgniterConnector.class),
     NODE_JS                 (208, "NodeJS",           NodeJsConnector.class),
+    EXPRESS_JS              (209, "ExpressJs",        ExpressJsConnector.class),
 
     // конструкторы
     TILDA                   (301, "Tilda",            TildaConnector.class),
