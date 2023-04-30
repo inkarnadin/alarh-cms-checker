@@ -40,13 +40,13 @@ public class JoomlaPluginsProcessor extends AbstractCMSProcessor {
         }
 
         Matcher comMatcher = Pattern.compile("[/|\"](com_.*?)[/|\"]").matcher(responseBody);
-        while (comMatcher.find())
+        while (comMatcher.find()) {
             components.add(comMatcher.group(1));
+        }
 
         int counter = 0;
         if (components.size() > 0) {
-            resultContainer.insert(counter++, String.format("  ** Components (%s):", components.size()));
-
+            resultContainer.add(counter++, String.format("  ** Components (%s):", components.size()));
             for (String component : components) {
                 host.setPath(String.format("administrator/components/%s/%s.xml", component, component.replace("com_", "")));
                 try (Response response = request.send(host)) {
@@ -56,11 +56,11 @@ public class JoomlaPluginsProcessor extends AbstractCMSProcessor {
                     String version = (Arrays.asList(XML_FILES).contains(contentType))
                             ? parser.parse(componentBody)
                             : "<unknown>";
-                    resultContainer.insert(counter++, String.format("   * %s: %s", component, version));
+                    resultContainer.add(counter++, String.format("   * %s: %s", component, version));
                 }
             }
         } else {
-            resultContainer.insert(counter++, "  ** Components (0): <unknown>");
+            resultContainer.add(counter++, "  ** Components (0): <unknown>");
         }
 
         Matcher modMatcher = Pattern.compile("[/|\"](mod_.*?)[/|\"]").matcher(responseBody);
@@ -68,13 +68,12 @@ public class JoomlaPluginsProcessor extends AbstractCMSProcessor {
             modules.add(modMatcher.group(1));
 
         if (modules.size() > 0) {
-            resultContainer.insert(counter++, String.format("  ** Modules (%s):", modules.size()));
-
+            resultContainer.add(counter++, String.format("  ** Modules (%s):", modules.size()));
             for (String module : modules) {
-                resultContainer.insert(counter++, String.format("   * %s", module));
+                resultContainer.add(counter++, String.format("   * %s", module));
             }
         } else {
-            resultContainer.insert(counter, "  ** Modules (0): <unknown>");
+            resultContainer.add(counter, "  ** Modules (0): <unknown>");
         }
 
         printer.print(resultContainer);

@@ -22,7 +22,7 @@ public interface DefaultAssigner {
 
         if (count > 0) {
             resultContainer.setImportance(max);
-            resultContainer.insert(0, String.format(
+            resultContainer.add(0, String.format(
                     successMessage,
                     cmsType.getName(),
                     count,

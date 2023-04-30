@@ -50,7 +50,7 @@ public class BaseResultContainer implements ResultContainer {
      * @param row   значение
      */
     @Override
-    public void insert(Integer index, String row) {
+    public void add(Integer index, String row) {
         result.put(index, row);
     }
 

@@ -56,14 +56,14 @@ public class WordPressThemeProcessor extends AbstractCMSProcessor {
                     themeObject.setIsCustom(isCustom);
 
                     if (Preferences.isEnableThemeFullInfo()) {
-                        resultContainer.insert(0, "  ** Theme:");
-                        resultContainer.insert(1, themeObject.toString());
+                        resultContainer.add(0, "  ** Theme:");
+                        resultContainer.add(1, themeObject.toString());
                     } else {
-                        resultContainer.insert(0, String.format("  ** Theme: %s", themeObject.getShortInfo()));
+                        resultContainer.add(0, String.format("  ** Theme: %s", themeObject.getShortInfo()));
                     }
                 }
             } else {
-                resultContainer.insert(0, String.format("  ** Theme: %s", themeObject.getShortInfo()));
+                resultContainer.add(0, String.format("  ** Theme: %s", themeObject.getShortInfo()));
             }
 
             printer.print(resultContainer);

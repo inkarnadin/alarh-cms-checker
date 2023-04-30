@@ -20,7 +20,7 @@ public class WhoIsAnalyzer {
     private final Host host;
 
     public void checkWhoIs() {
-        resultContainer.insert(0, String.format("  * %s", EnvType.WHOIS.getName()));
+        resultContainer.add(0, String.format("  * %s", EnvType.WHOIS.getName()));
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -29,10 +29,10 @@ public class WhoIsAnalyzer {
                 String body = Objects.requireNonNull(response.body()).string();
                 WhoisObject dto = objectMapper.readValue(body, WhoisObject.class);
 
-                resultContainer.insert(1, dto.toString());
+                resultContainer.add(1, dto.toString());
             }
         } catch (Exception xep) {
-            resultContainer.insert(1, xep.getMessage());
+            resultContainer.add(1, xep.getMessage());
         }
     }
 

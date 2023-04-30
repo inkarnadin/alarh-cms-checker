@@ -10,7 +10,7 @@ public interface ResultContainer {
 
     Importance getImportance();
 
-    void insert(Integer index, String row);
+    void add(Integer index, String row);
 
     List<String> fetch();
 

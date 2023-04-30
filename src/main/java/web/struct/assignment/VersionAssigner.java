@@ -30,7 +30,7 @@ public interface VersionAssigner {
         if (versionSet.contains(refinedVersion)) {
             maxVersion = refinedVersion;
         }
-        resultContainer.insert(0, maxVersion.toString());
+        resultContainer.add(0, maxVersion.toString());
     }
 
 }

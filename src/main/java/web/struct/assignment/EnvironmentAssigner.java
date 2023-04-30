@@ -12,7 +12,7 @@ public interface EnvironmentAssigner {
     String successMessage = "  * %s: %s";
 
     default void assign(ResultContainer resultContainer, EnvType entity, Set<ComparableVersion> versionSet) {
-        resultContainer.insert(0, String.format(successMessage, entity.getName(), Collections.max(versionSet).toString()));
+        resultContainer.add(0, String.format(successMessage, entity.getName(), Collections.max(versionSet).toString()));
     }
 
 }

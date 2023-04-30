@@ -61,7 +61,7 @@ public class WordPressPluginProcessor extends AbstractCMSProcessor {
         }
 
         if (plugins.size() > 0) {
-            resultContainer.insert(0, String.format("  ** Plugins (%s):", plugins.size()));
+            resultContainer.add(0, String.format("  ** Plugins (%s):", plugins.size()));
 
             int i = 1;
             for (String plugin : plugins) {
@@ -82,14 +82,14 @@ public class WordPressPluginProcessor extends AbstractCMSProcessor {
                                         ? pluginObject.getName()
                                         : plugin;
                         pluginObject.setName(preName);
-                        resultContainer.insert(i++, String.format("   * %s", pluginObject.toString()));
+                        resultContainer.add(i++, String.format("   * %s", pluginObject.toString()));
                     } else {
-                        resultContainer.insert(i++, String.format("   * %s: %s", (preName.length() > 0) ? preName : plugin + " (?)", "<unknown>"));
+                        resultContainer.add(i++, String.format("   * %s: %s", (preName.length() > 0) ? preName : plugin + " (?)", "<unknown>"));
                     }
                 }
             }
         } else {
-            resultContainer.insert(0, "  ** Plugins (0): <unknown>");
+            resultContainer.add(0, "  ** Plugins (0): <unknown>");
         }
 
         printer.print(resultContainer);
