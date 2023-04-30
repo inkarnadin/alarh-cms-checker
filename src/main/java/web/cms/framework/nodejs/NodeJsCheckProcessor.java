@@ -16,12 +16,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static web.analyzer.Importance.*;
+import static web.analyzer.Importance.LOW;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class NodeJsCheckProcessor extends AbstractCMSProcessor {
 
-    private static final CMSType cmsType = CMSType.REACT_JS;
+    private static final CMSType cmsType = CMSType.NODE_JS;
 
     private final Request request;
     private final TextParser<Boolean> parser;
