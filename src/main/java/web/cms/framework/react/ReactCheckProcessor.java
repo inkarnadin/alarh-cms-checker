@@ -45,8 +45,12 @@ public class ReactCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("react-root"),
                 Pattern.compile("React-prod")
         });
-        mainPageAnalyzer.checkViaMainPageKeywords(MEDIUM, new Pattern[] {
-                Pattern.compile("div id=\"root\"")
+        mainPageAnalyzer.checkViaMainPageKeywords(LOW, new Pattern[] {
+                Pattern.compile("div id=\"root\""),
+
+        });
+        mainPageAnalyzer.checkViaMainPageKeywords(LOW, new Pattern[]{
+                Pattern.compile("react-md-spinner-animation")
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, paths, new Pattern[] {
