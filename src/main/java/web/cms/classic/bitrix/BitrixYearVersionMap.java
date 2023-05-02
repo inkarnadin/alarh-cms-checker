@@ -11,7 +11,7 @@ public class BitrixYearVersionMap implements VersionMap {
 
     BitrixYearVersionMap() {
         versionMap.put(2007L, "6.0.0+");
-        versionMap.put(2008L, "6.0.0,+");
+        versionMap.put(2008L, "7.0.0+");
         versionMap.put(2009L, "8.0.0+");
         versionMap.put(2010L, "9.0.0+");
         versionMap.put(2011L, "10.0.0+");

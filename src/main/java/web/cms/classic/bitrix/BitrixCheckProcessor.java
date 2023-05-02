@@ -41,7 +41,15 @@ public class BitrixCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("bitrix/js"),
                 Pattern.compile("bitrix/tools"),
                 Pattern.compile("bitrix/components"),
-                Pattern.compile("bitrix/panel")
+                Pattern.compile("bitrix/panel"),
+        });
+        mainPageAnalyzer.checkViaMainPageKeywords(MEDIUM, new Pattern[] {
+                Pattern.compile("bxSession"),
+                Pattern.compile("window\\.BX"),
+                Pattern.compile("top\\.BX"),
+                Pattern.compile("BX\\.setCSSList"),
+                Pattern.compile("BX\\.setJSList"),
+                Pattern.compile("BX\\.message"),
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
         pathAnalyzer.checkViaPaths(LOW, DENIED_CODES, new String[] {
@@ -61,12 +69,19 @@ public class BitrixCheckProcessor extends AbstractCMSProcessor {
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
         pageAnalyzer.checkViaPageKeywords(HIGH, new String[] { "bitrix/admin" }, new Pattern[] {
+                Pattern.compile("bxSession"),
                 Pattern.compile("bx-admin-prefix"),
+                Pattern.compile("bx-panel-error"),
+                Pattern.compile("bx-admin-auth-form"),
+                Pattern.compile("BX\\.adminLogin"),
                 Pattern.compile("BX\\.message"),
                 Pattern.compile("BX\\.addClass"),
                 Pattern.compile("BX\\.removeClass"),
                 Pattern.compile("BX\\.ready"),
-                Pattern.compile("BX\\.adminLogin"),
+                Pattern.compile("BX\\.authFormAuthorize"),
+                Pattern.compile("BX\\.authFormForgotPasswordMessage"),
+                Pattern.compile("BX\\.defer"),
+                Pattern.compile("BX\\.COpener"),
                 Pattern.compile("AUTH_NEW_PASSWORD_CONFIRM_WRONG")
         });
         pageAnalyzer.checkViaRobots(HIGH, new Pattern[] {
