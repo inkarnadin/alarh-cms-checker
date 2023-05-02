@@ -12,6 +12,7 @@ import web.struct.Processor;
 import java.util.Optional;
 
 import static web.cms.CMSMarker.BITRIX_CHECK;
+import static web.cms.CMSMarker.BITRIX_DATA;
 import static web.cms.CMSMarker.BITRIX_VERSION;
 
 @RequiredArgsConstructor(onConstructor_ = @__(@Inject))
@@ -21,6 +22,8 @@ public class BitrixConnector extends AbstractCMSConnector {
     private final Processor<CMSType> checkProcessor;
     @Named(BITRIX_VERSION)
     private final Processor<CMSType> versionProcessor;
+    @Named(BITRIX_DATA)
+    private final Processor<CMSType> dataProcessor;
 
     @Override
     public Pair<CMSType, Optional<ResultContainer>> check() {
@@ -33,6 +36,12 @@ public class BitrixConnector extends AbstractCMSConnector {
     public void checkVersion() {
         versionProcessor.configure(params.getProtocol(), params.getServer());
         versionProcessor.process();
+    }
+
+    @Override
+    public void checkData() {
+        dataProcessor.configure(params.getProtocol(), params.getServer());
+        dataProcessor.process();
     }
 
 }

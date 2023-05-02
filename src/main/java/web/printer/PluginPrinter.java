@@ -15,7 +15,7 @@ public class PluginPrinter implements Printer {
             stringJoiner.add(String.format("    %s", list.get(i)));
 
         System.out.println(list.get(0));
-        System.out.println(stringJoiner.toString());
+        System.out.println(stringJoiner);
     }
 
 }

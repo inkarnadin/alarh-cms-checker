@@ -37,8 +37,9 @@ public class HttpClient implements Client {
     @SneakyThrows
     @Override
     public void evictAll() {
-        if (Objects.nonNull(okClient.cache()))
-            okClient.cache().evictAll();
+        if (Objects.nonNull(okClient.cache())) {
+            Objects.requireNonNull(okClient.cache()).evictAll();
+        }
     }
 
     private Interceptor provideCacheInterceptor () {

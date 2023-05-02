@@ -49,14 +49,16 @@ public class WordPressPluginProcessor extends AbstractCMSProcessor {
         }
 
         for (WordPressPlugin src : WordPressPlugin.values()) {
-            if (plugins.contains(src.getPath()))
+            if (plugins.contains(src.getPath())) {
                 continue;
+            }
 
             host.setPath(String.format("wp-content/plugins/%s/readme.txt", src.getPath()));
             try (Response response = headRequest.send(host)) {
                 String contentType = ContentType.defineContentType(response.header(CONTENT_TYPE));
-                if (contentType.equals(ContentType.TEXT_PLAIN) && response.code() != 404)
+                if (contentType.equals(ContentType.TEXT_PLAIN) && response.code() != 404) {
                     plugins.add(src.getPath());
+                }
             }
         }
 
@@ -82,7 +84,7 @@ public class WordPressPluginProcessor extends AbstractCMSProcessor {
                                         ? pluginObject.getName()
                                         : plugin;
                         pluginObject.setName(preName);
-                        resultContainer.add(i++, String.format("   * %s", pluginObject.toString()));
+                        resultContainer.add(i++, String.format("   * %s", pluginObject));
                     } else {
                         resultContainer.add(i++, String.format("   * %s: %s", (preName.length() > 0) ? preName : plugin + " (?)", "<unknown>"));
                     }

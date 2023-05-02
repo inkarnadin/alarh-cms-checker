@@ -13,6 +13,7 @@ import web.cms.board.ips.IPSCheckProcessor;
 import web.cms.board.ips.IPSConnector;
 import web.cms.classic.bitrix.BitrixCheckProcessor;
 import web.cms.classic.bitrix.BitrixConnector;
+import web.cms.classic.bitrix.BitrixInfoProcessor;
 import web.cms.classic.bitrix.BitrixVersionProcessor;
 import web.cms.classic.joomla.JoomlaCheckProcessor;
 import web.cms.classic.joomla.JoomlaConnector;
@@ -96,7 +97,54 @@ import web.cms.framework.yii.YiiVersionProcessor;
 import web.struct.*;
 import web.struct.ResultContainer;
 
-import static web.cms.CMSMarker.*;
+import static web.cms.CMSMarker.BITRIX_CHECK;
+import static web.cms.CMSMarker.BITRIX_DATA;
+import static web.cms.CMSMarker.BITRIX_VERSION;
+import static web.cms.CMSMarker.CODE_IGNITER_CHECK;
+import static web.cms.CMSMarker.DATALIFE_CHECK;
+import static web.cms.CMSMarker.DATALIFE_VERSION;
+import static web.cms.CMSMarker.DRUPAL_CHECK;
+import static web.cms.CMSMarker.DRUPAL_VERSION;
+import static web.cms.CMSMarker.EXPRESS_JS_CHECK;
+import static web.cms.CMSMarker.HOST_CHECK;
+import static web.cms.CMSMarker.HUGO_CHECK;
+import static web.cms.CMSMarker.HUGO_VERSION;
+import static web.cms.CMSMarker.IMAGE_CHECK;
+import static web.cms.CMSMarker.INSALES_CHECK;
+import static web.cms.CMSMarker.IPS_CHECK;
+import static web.cms.CMSMarker.JOOMLA_CHECK;
+import static web.cms.CMSMarker.JOOMLA_PLUGIN;
+import static web.cms.CMSMarker.JOOMLA_VERSION;
+import static web.cms.CMSMarker.LAVAREL_CHECK;
+import static web.cms.CMSMarker.MAGENTO_CHECK;
+import static web.cms.CMSMarker.MAXSITE_CHECK;
+import static web.cms.CMSMarker.MODX_CHECK;
+import static web.cms.CMSMarker.MODX_VERSION;
+import static web.cms.CMSMarker.MOGUTA_CHECK;
+import static web.cms.CMSMarker.MOGUTA_VERSION;
+import static web.cms.CMSMarker.NODE_JS_CHECK;
+import static web.cms.CMSMarker.NUXT_CHECK;
+import static web.cms.CMSMarker.OPENCART_CHECK;
+import static web.cms.CMSMarker.PRESTASHOP_CHECK;
+import static web.cms.CMSMarker.REACT_CHECK;
+import static web.cms.CMSMarker.REACT_VERSION;
+import static web.cms.CMSMarker.RUBY_ON_RAILS_CHECK;
+import static web.cms.CMSMarker.SHOPIFY_CHECK;
+import static web.cms.CMSMarker.TILDA_CHECK;
+import static web.cms.CMSMarker.UKIT_CHECK;
+import static web.cms.CMSMarker.UMI_CHECK;
+import static web.cms.CMSMarker.UMI_VERSION;
+import static web.cms.CMSMarker.VAMSHOP_CHECK;
+import static web.cms.CMSMarker.VIGBO_CHECK;
+import static web.cms.CMSMarker.VUE_CHECK;
+import static web.cms.CMSMarker.VUE_VERSION;
+import static web.cms.CMSMarker.WIX_CHECK;
+import static web.cms.CMSMarker.WORDPRESS_CHECK;
+import static web.cms.CMSMarker.WORDPRESS_PLUGIN;
+import static web.cms.CMSMarker.WORDPRESS_THEME;
+import static web.cms.CMSMarker.WORDPRESS_VERSION;
+import static web.cms.CMSMarker.YII_CHECK;
+import static web.cms.CMSMarker.YII_VERSION;
 
 public class CMSModule extends AbstractModule {
 
@@ -128,6 +176,7 @@ public class CMSModule extends AbstractModule {
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(BITRIX_CHECK)).to(BitrixCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(BITRIX_VERSION)).to(BitrixVersionProcessor.class);
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(BITRIX_DATA)).to(BitrixInfoProcessor.class);
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(MODX_CHECK)).to(ModXCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(MODX_VERSION)).to(ModXVersionProcessor.class);

@@ -25,6 +25,7 @@ public class CMSMarker {
 
     public static final String BITRIX_CHECK = "bitrixCheck";
     public static final String BITRIX_VERSION = "bitrixVersion";
+    public static final String BITRIX_DATA = "bitrixData";
 
     public static final String MODX_CHECK = "modXCheck";
     public static final String MODX_VERSION = "modXVersion";

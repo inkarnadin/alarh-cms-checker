@@ -30,6 +30,7 @@ public class CMSChecker extends AbstractChecker {
             connector.configure(params);
 
             connector.checkVersion();
+            connector.checkData();
             connector.checkTheme();
             connector.checkPlugins();
 
@@ -53,12 +54,14 @@ public class CMSChecker extends AbstractChecker {
     }
 
     private static Map<CMSType, ResultContainer> filterLowImportance(Map<CMSType, ResultContainer> determinate) {
+        Map<CMSType, ResultContainer> result = determinate;
         if (determinate.size() > 1 && !Preferences.isEnableLowImportance()) {
-            return determinate.entrySet().stream()
+            result = determinate.entrySet().stream()
                     .filter(x -> x.getValue().getImportance().ordinal() > 1)
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         }
-        return determinate;
+        Context.update(determinate.keySet().toArray(new CMSType[0]));
+        return result;
     }
 
 }

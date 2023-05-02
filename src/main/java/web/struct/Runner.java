@@ -37,6 +37,7 @@ public class Runner {
 
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
+                Context.evict();
                 Params params = new Params();
 
                 printSplit();

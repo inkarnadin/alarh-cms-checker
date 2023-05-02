@@ -19,8 +19,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static web.analyzer.AnalyzeConst.*;
-import static web.analyzer.Importance.*;
+import static web.analyzer.AnalyzeConst.ACCEPT_CODES;
+import static web.analyzer.AnalyzeConst.BASE_PATH;
+import static web.analyzer.AnalyzeConst.DENIED_CODES;
+import static web.analyzer.AnalyzeConst.SUCCESS_CODES;
+import static web.analyzer.AnalyzeConst.XML_FILES;
+import static web.analyzer.Importance.HIGH;
+import static web.analyzer.Importance.LOW;
+import static web.analyzer.Importance.MEDIUM;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class BitrixCheckProcessor extends AbstractCMSProcessor {

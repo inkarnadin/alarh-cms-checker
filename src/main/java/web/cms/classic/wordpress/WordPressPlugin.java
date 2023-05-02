@@ -181,9 +181,11 @@ public enum WordPressPlugin {
     private final String name;
 
     public static String search(String path) {
-        for (WordPressPlugin plugin : values())
-            if (plugin.path.equals(path))
+        for (WordPressPlugin plugin : values()) {
+            if (plugin.path.equals(path)) {
                 return plugin.name;
+            }
+        }
         return "";
     }
 
