@@ -56,7 +56,8 @@ public class WordPressCheckProcessor extends AbstractCMSProcessor {
         pathAnalyzer.checkViaPaths(LOW, ACCEPT_CODES, new String[] {
                 "wp-admin",
                 "wp-content",
-                "wp-includes"
+                "wp-includes",
+                "wp-register"
         });
         pathAnalyzer.checkViaFiles(HIGH, SUCCESS_CODES, XML_FILES, new String[] { "wp-includes/wlwmanifest.xml" });
         pathAnalyzer.checkViaFiles(MEDIUM, SUCCESS_CODES, JSON_FILES, new String [] { "wp-json" });
