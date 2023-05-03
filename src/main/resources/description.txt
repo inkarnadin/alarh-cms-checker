@@ -27,3 +27,4 @@ In current time it is support next systems:
  * Wix
  * Node.js
  * Express.js
+ * Django

@@ -46,6 +46,8 @@ import web.cms.classic.image.ImageCmsCheckProcessor;
 import web.cms.classic.image.ImageConnector;
 import web.cms.construct.insales.InSalesCheckProcessor;
 import web.cms.construct.insales.InSalesConnector;
+import web.cms.framework.django.DjangoCheckProcessor;
+import web.cms.framework.django.DjangoConnector;
 import web.cms.framework.expressjs.ExpressJsCheckProcessor;
 import web.cms.framework.expressjs.ExpressJsConnector;
 import web.cms.framework.lavarel.LavarelCheckProcessor;
@@ -97,54 +99,7 @@ import web.cms.framework.yii.YiiVersionProcessor;
 import web.struct.*;
 import web.struct.ResultContainer;
 
-import static web.cms.CMSMarker.BITRIX_CHECK;
-import static web.cms.CMSMarker.BITRIX_DATA;
-import static web.cms.CMSMarker.BITRIX_VERSION;
-import static web.cms.CMSMarker.CODE_IGNITER_CHECK;
-import static web.cms.CMSMarker.DATALIFE_CHECK;
-import static web.cms.CMSMarker.DATALIFE_VERSION;
-import static web.cms.CMSMarker.DRUPAL_CHECK;
-import static web.cms.CMSMarker.DRUPAL_VERSION;
-import static web.cms.CMSMarker.EXPRESS_JS_CHECK;
-import static web.cms.CMSMarker.HOST_CHECK;
-import static web.cms.CMSMarker.HUGO_CHECK;
-import static web.cms.CMSMarker.HUGO_VERSION;
-import static web.cms.CMSMarker.IMAGE_CHECK;
-import static web.cms.CMSMarker.INSALES_CHECK;
-import static web.cms.CMSMarker.IPS_CHECK;
-import static web.cms.CMSMarker.JOOMLA_CHECK;
-import static web.cms.CMSMarker.JOOMLA_PLUGIN;
-import static web.cms.CMSMarker.JOOMLA_VERSION;
-import static web.cms.CMSMarker.LAVAREL_CHECK;
-import static web.cms.CMSMarker.MAGENTO_CHECK;
-import static web.cms.CMSMarker.MAXSITE_CHECK;
-import static web.cms.CMSMarker.MODX_CHECK;
-import static web.cms.CMSMarker.MODX_VERSION;
-import static web.cms.CMSMarker.MOGUTA_CHECK;
-import static web.cms.CMSMarker.MOGUTA_VERSION;
-import static web.cms.CMSMarker.NODE_JS_CHECK;
-import static web.cms.CMSMarker.NUXT_CHECK;
-import static web.cms.CMSMarker.OPENCART_CHECK;
-import static web.cms.CMSMarker.PRESTASHOP_CHECK;
-import static web.cms.CMSMarker.REACT_CHECK;
-import static web.cms.CMSMarker.REACT_VERSION;
-import static web.cms.CMSMarker.RUBY_ON_RAILS_CHECK;
-import static web.cms.CMSMarker.SHOPIFY_CHECK;
-import static web.cms.CMSMarker.TILDA_CHECK;
-import static web.cms.CMSMarker.UKIT_CHECK;
-import static web.cms.CMSMarker.UMI_CHECK;
-import static web.cms.CMSMarker.UMI_VERSION;
-import static web.cms.CMSMarker.VAMSHOP_CHECK;
-import static web.cms.CMSMarker.VIGBO_CHECK;
-import static web.cms.CMSMarker.VUE_CHECK;
-import static web.cms.CMSMarker.VUE_VERSION;
-import static web.cms.CMSMarker.WIX_CHECK;
-import static web.cms.CMSMarker.WORDPRESS_CHECK;
-import static web.cms.CMSMarker.WORDPRESS_PLUGIN;
-import static web.cms.CMSMarker.WORDPRESS_THEME;
-import static web.cms.CMSMarker.WORDPRESS_VERSION;
-import static web.cms.CMSMarker.YII_CHECK;
-import static web.cms.CMSMarker.YII_VERSION;
+import static web.cms.CMSMarker.*;
 
 public class CMSModule extends AbstractModule {
 
@@ -222,6 +177,8 @@ public class CMSModule extends AbstractModule {
 
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(EXPRESS_JS_CHECK)).to(ExpressJsCheckProcessor.class);
 
+        bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(DJANGO_CHECK)).to(DjangoCheckProcessor.class);
+
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(TILDA_CHECK)).to(TildaCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(VIGBO_CHECK)).to(VigboCheckProcessor.class);
         bind(new TypeLiteral<Processor<CMSType>>(){}).annotatedWith(Names.named(INSALES_CHECK)).to(InSalesCheckProcessor.class);
@@ -260,6 +217,7 @@ public class CMSModule extends AbstractModule {
         connectorMultibinder.addBinding().to(CodeIgniterConnector.class);
         connectorMultibinder.addBinding().to(NodeJsConnector.class);
         connectorMultibinder.addBinding().to(ExpressJsConnector.class);
+        connectorMultibinder.addBinding().to(DjangoConnector.class);
 
         connectorMultibinder.addBinding().to(TildaConnector.class);
         connectorMultibinder.addBinding().to(VigboConnector.class);

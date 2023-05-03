@@ -93,7 +93,11 @@ public class HeaderAnalyzer {
     }
 
     /**
-     * Find certain value in cookies
+     * Метод поиска определенных значений в Cookies.
+     *
+     * @param importance важность
+     * @param paths список относительных путей до ресурса
+     * @param patterns шаблоны поиска
      */
     public void checkViaCookies(Importance importance, String[] paths, Pattern[] patterns) {
         for (String path : paths) {
@@ -106,6 +110,33 @@ public class HeaderAnalyzer {
                         setResultValue(true, importance);
                         return;
                     }
+                }
+            }
+        }
+        setResultValue(false, importance);
+    }
+
+    /**
+     * Метод поиска значений определенной длины в Cookies.
+     * <p>Фиксированные примеры использования:
+     * <pre>
+     *     Django вставляет в куки <i>csrftoken</i> длиной 65 символов
+     * </pre>
+     *
+     * @param importance важность
+     * @param paths список относительных путей до ресурса
+     * @param pattern шаблон поиска
+     * @param length ожидаемая длина значения
+     */
+    public void checkViaCookiesValueLength(Importance importance, String[] paths, Pattern pattern, int length) {
+        for (String path : paths) {
+            host.setPath(path);
+            try (Response response = request.send(host)) {
+                String cookies = String.join("", response.headers().values("set-cookie"));
+                parser.configure(pattern, 1);
+                if (parser.parse(cookies)) {
+                    setResultValue(true, importance);
+                    return;
                 }
             }
         }

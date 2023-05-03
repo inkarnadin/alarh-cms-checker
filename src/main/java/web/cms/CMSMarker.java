@@ -75,6 +75,8 @@ public class CMSMarker {
 
     public static final String EXPRESS_JS_CHECK = "expressJsCheck";
 
+    public static final String DJANGO_CHECK = "djangoCheck";
+
     /**
      * Constructors
      */
