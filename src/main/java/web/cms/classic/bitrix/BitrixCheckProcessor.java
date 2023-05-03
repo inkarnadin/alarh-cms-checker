@@ -91,7 +91,7 @@ public class BitrixCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("BX\\.COpener"),
                 Pattern.compile("AUTH_NEW_PASSWORD_CONFIRM_WRONG")
         });
-        pageAnalyzer.checkViaRobots(HIGH, new Pattern[] {
+        pageAnalyzer.checkViaRobots(LOW, new Pattern[] {
                 Pattern.compile("bitrix")
         });
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
