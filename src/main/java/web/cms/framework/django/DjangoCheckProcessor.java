@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import web.analyzer.Importance;
 import web.analyzer.check.HeaderAnalyzer;
 import web.analyzer.check.MainPageAnalyzer;
+import web.analyzer.check.PathAnalyzer;
 import web.cms.AbstractCMSProcessor;
 import web.cms.CMSType;
 import web.http.Request;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static web.analyzer.AnalyzeConst.ACCEPT_CODES;
 import static web.analyzer.AnalyzeConst.BASE_PATH;
 import static web.analyzer.Importance.*;
 import static web.struct.CreationHeader.X_POWERED_BY;
@@ -37,6 +39,13 @@ public class DjangoCheckProcessor extends AbstractCMSProcessor {
         MainPageAnalyzer mainPageAnalyzer = new MainPageAnalyzer(request, parser).prepare(host, result);
         mainPageAnalyzer.checkViaMainPageKeywords(HIGH, new Pattern[] {
                 Pattern.compile("csrfmiddlewaretoken")
+        });
+        PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
+        pathAnalyzer.checkViaPaths(LOW, ACCEPT_CODES, new String[] {
+                "static/img",
+                "static/js",
+                "static/fonts",
+                "static/css"
         });
         HeaderAnalyzer headerAnalyzer = new HeaderAnalyzer(request, parser).prepare(host, result);
         headerAnalyzer.checkViaCookies(LOW, BASE_PATH, new Pattern[] {

@@ -68,7 +68,6 @@ public class WordPressCheckProcessor extends AbstractCMSProcessor {
                 "wp-includes/js/wp-util.js",
                 "wp-includes/js/wpdialog.js",
                 "wp-includes/js/autosave.js",
-
                 "wp-includes/js/wp-embed.min.js"
         });
         PageAnalyzer pageAnalyzer = new PageAnalyzer(request, parser).prepare(host, result);
