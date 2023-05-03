@@ -19,9 +19,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static web.analyzer.AnalyzeConst.ACCEPT_CODES;
-import static web.analyzer.Importance.HIGH;
-import static web.analyzer.Importance.LOW;
+import static web.analyzer.AnalyzeConst.*;
+import static web.analyzer.Importance.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class ModXCheckProcessor extends AbstractCMSProcessor {
@@ -54,12 +53,20 @@ public class ModXCheckProcessor extends AbstractCMSProcessor {
                 Pattern.compile("assets/components/ajaxform")
         });
         PathAnalyzer pathAnalyzer = new PathAnalyzer(request).prepare(host, result);
+        pathAnalyzer.checkViaFiles(HIGH, ACCEPT_CODES, IMAGE_FILES, new String[] {
+                "manager/templates/default/images/modx-logo-color.svg"
+        });
         pathAnalyzer.checkViaPaths(LOW, ACCEPT_CODES, new String[] {
                 "assets/templates",
                 "assets/images",
                 "assets/cache",
                 "assets/js",
                 "manager"
+        });
+        pathAnalyzer.checkViaPaths(MEDIUM, DENIED_CODES, new String[] {
+                "core/",
+                "connectors/",
+                "assets/components/"
         });
 
         HashMap<String, String> headers = new HashMap<>();
@@ -78,6 +85,11 @@ public class ModXCheckProcessor extends AbstractCMSProcessor {
         });
         pageAnalyzer.checkViaRobots(HIGH, new Pattern[] {
                 Pattern.compile("# Default modx exclusions")
+        });
+        pageAnalyzer.checkViaRobots(LOW, new Pattern[] {
+                Pattern.compile("core/?"),
+                Pattern.compile("connectors/?"),
+                Pattern.compile("assets/.*")
         });
 
         assign(resultContainer, result, cmsType);

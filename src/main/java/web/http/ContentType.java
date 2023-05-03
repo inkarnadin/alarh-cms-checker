@@ -19,6 +19,8 @@ public class ContentType {
 
     public static final String IMAGE_JPG = "image/jpeg";
     public static final String IMAGE_PNG = "image/png";
+    public static final String IMAGE_SVG = "image/svg";
+    public static final String IMAGE_SVG_XML = "image/svg+xml";
 
     public static String defineContentType(String contentType) {
         if (Objects.isNull(contentType))
