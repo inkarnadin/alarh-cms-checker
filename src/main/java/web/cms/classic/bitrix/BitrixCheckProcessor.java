@@ -27,6 +27,7 @@ import static web.analyzer.AnalyzeConst.XML_FILES;
 import static web.analyzer.Importance.HIGH;
 import static web.analyzer.Importance.LOW;
 import static web.analyzer.Importance.MEDIUM;
+import static web.struct.CreationHeader.*;
 
 @RequiredArgsConstructor(onConstructor_ = { @Inject })
 public class BitrixCheckProcessor extends AbstractCMSProcessor {
@@ -105,6 +106,8 @@ public class BitrixCheckProcessor extends AbstractCMSProcessor {
         headerAnalyzer.checkViaHeaderValues(HIGH, new String[] { "bitrix/admin" }, new Pattern[] {
                 Pattern.compile("Bitrix")
         });
+        headerAnalyzer.checkViaSpecialHeader(HIGH, BASE_PATH, X_POWERED_CMS, Pattern.compile("Bitrix"));
+        headerAnalyzer.checkViaSpecialHeader(HIGH, BASE_PATH, X_DEVSRV_CMS, Pattern.compile("Bitrix"));
 
         assign(resultContainer, result, cmsType);
     }
